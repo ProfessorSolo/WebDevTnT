@@ -1,0 +1,98 @@
+---
+title: CSS Gradients
+sidebar:
+  label: CSS Gradients
+  order: 1
+---
+
+## CSS Gradients
+
+CSS Gradients allow us to create colorful visual backgrounds without using images.
+
+They are written as a value of the background property.
+
+We can create:
+
+### linear gradients
+
+```css {2-6}
+#linear-gradient {
+  background: linear-gradient(
+    0deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}
+```
+
+![alt_text](/assets/lessons/d1-gradient-linear.png 'image_tooltip')
+
+### radial gradients
+
+```css {2-6}
+#radial-gradient {
+  background: radial-gradient(
+    circle,
+    rgba(245, 242, 38, 1) 0%,
+    rgba(253, 29, 29, 1) 100%
+  );
+}
+```
+
+![alt_text](/assets/lessons/d1-gradient-radial.png 'image_tooltip')
+
+### conic gradients
+
+```css {2}
+#conic-gradient {
+  background: conic-gradient(red, yellow);
+}
+```
+
+![alt_text](/assets/lessons/d1-gradient-conic.png 'image_tooltip')
+
+### repeating gradients
+
+```css {2-6}
+#repeating-gradient {
+  background: repeating-conic-gradient(
+    from 45deg at 50% 100%,
+    red 0deg 15deg,
+    yellow 30deg 60deg
+  );
+}
+```
+
+![alt_text](/assets/lessons/d1-gradient-repeating.png 'image_tooltip')
+
+### Multiple Gradients
+
+We can also define multiple gradients by specifying them as a comma separated list. In this case, they are stacked (first on top).
+
+```css {2-12}
+#multiple-gradient {
+  background: linear-gradient(
+      0deg,
+      rgb(24, 14, 216) 0%,
+      rgba(0, 212, 255, 0.8) 20%,
+      rgba(0, 212, 255, 0) 30%
+    ), radial-gradient(circle, rgba(245, 242, 38, 1) 0%, rgba(247, 235, 50, 1) 20%, rgba(
+          253,
+          29,
+          29,
+          1
+        ) 30%, rgba(252, 176, 69, 1) 100%);
+}
+```
+
+![alt_text](/assets/lessons/d1-gradient-multiple-sunset.png 'image_tooltip')
+
+### Reference Links
+
+The syntax for CSS gradients can be quite complex, so it is common to use a generator
+
+[https://cssgradient.io/](https://cssgradient.io/)
+
+...and, as always, check the MDN Web Docs
+
+[https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Images/Using_CSS_gradients)

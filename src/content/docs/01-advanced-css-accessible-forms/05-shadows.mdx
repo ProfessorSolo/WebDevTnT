@@ -1,0 +1,96 @@
+---
+title: Shadows
+sidebar:
+  label: Shadows
+  order: 5
+---
+
+## Box Shadows
+
+Box shadow adds a drop shadow to HTML elements.
+
+### **Simple Box Shadow**
+
+```
+box-shadow: 1rem 1rem 1rem -0.2rem black;
+```
+
+![alt_text](/assets/lessons/d1-shadow-box.png 'image_tooltip')
+
+### **Inset Box Shadow**
+
+```
+box-shadow: inset 1rem 1rem 1rem 1rem black;
+```
+
+![alt_text](/assets/lessons/d1-shadow-inset.png 'image_tooltip')
+
+### **Box Shadow Parameters**
+
+- Inset (optional)
+  - Determines whether the shadow is inset or not
+  - If omitted the browser will assume that the box shadow is a regular drop shadow
+- offset-x (required)
+  - Sets the x axis offset of the drop shadow
+- offset-y (required)
+  - Sets the y axis offset of the drop shadow
+- blur-radius (optional)
+  - Sets the blur of the shadow
+- spread-radius (optional)
+  - Sets how much the shadow will expand or shrink
+  - Positive values will cause the shadow to expand
+  - Negative values will cause the shadow to shrink
+
+### Box Shadow Deconstructed
+
+![alt_text](/assets/lessons/d1-shadow-box-deconstructed.png 'image_tooltip')
+
+## Multiple Shadows
+
+To add multiple shadows, set the value of the box-shadow property to a comma separated list of the shadow parameters.
+
+```
+box-shadow: 0 0 0 2rem yellow, 0 0 0 3rem black;
+```
+
+![alt_text](/assets/lessons/d1-shadow-multiple.png 'image_tooltip')
+
+## Text Shadows
+
+Text shadow adds a drop shadow to text.
+
+```
+text-shadow: 0.5rem 0.5rem 0.5rem grey;
+```
+
+![alt_text](/assets/lessons/d1-shadow-text.png 'image_tooltip')
+
+You can also add multiple text-shadows by specifying them in comma separated lists of parameters.
+
+```
+color: aqua;
+text-shadow:
+```
+
+`0.2rem 0.2rem 0 blue,`
+
+`0.4rem 0.4rem 0 yellow,`
+
+`0.6rem 0.6rem 0 blue,`
+
+```
+ 0.8rem 0.8rem 0 blue;
+```
+
+![alt_text](/assets/lessons/d1-shadow-eighties-text.png 'image_tooltip')
+
+### **Text Shadow Parameters**
+
+- Color (optional)
+  - Can be placed at the beginning or end of the style declaration
+- offset-x (required)
+  - Sets the x axis offset of the drop shadow
+- offset-y (required)
+  - Sets the y axis offset of the drop shadow
+- blur-radius (optional)
+  - Sets the blur of the shadow

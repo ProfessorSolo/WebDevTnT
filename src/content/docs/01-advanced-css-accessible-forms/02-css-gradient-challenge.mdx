@@ -1,0 +1,65 @@
+---
+title: CSS Gradient Challenge - Nightscape
+description: Hands-on practice creating a nightscape using multiple gradients.
+sidebar:
+  label: CSS Gradient Challenge - Nightscape
+  order: 2
+---
+
+## 🌃 Practice Exercise: CSS Nightscape Scene (15 Min)
+
+This practice is **not graded** but is essential for mastering multi-stop linear gradients.
+
+See how far you can get in 15 minutes (but feel free to continue at home).
+
+### The Goal: Create a Night Scene
+
+You previously saw how to combine and stop colors to create a warm, vibrant sunset. Your task is to apply those same techniques to create a **cool, deep blue night sky** with a soft, glowing **moon** or **aurora effect**.
+
+### The Setup
+
+We'll use a single container element in HTML for this exercise:
+
+```html
+<div class="night-scene"></div>
+```
+
+### 1\. Build the Gradients (10 Minutes)
+
+Using the `.night-scene` class, define at least **two separate gradients** on the `background` property to simulate depth and color variation:
+
+- **Linear Gradient (Sky Color):** Create a linear gradient using deep, dark, cool colors. Start with a very dark indigo or black at the top and transition to a slightly lighter navy blue at the bottom.
+  - _Hint:_ Use color stops (e.g., `50%`, `90%`) to control the sharpness of the transition.
+- **Radial Gradient (Moon Glow):** Overlay a radial gradient to simulate a soft moon glow or a subtle nebula. Use a transparent or very light blue/white color in the center, quickly fading out to transparent.
+  - _Hint:_ You can use the `at <position>` syntax to place the moon in the corner (e.g., `radial-gradient(...) at 10% 10%`).
+
+```css
+/* Your CSS goes here */
+.night-scene {
+  height: 400px;
+  width: 100%;
+  background: 
+    /* [Add your Radial Gradient here for the moon/glow effect] */ ,
+    /* [Add your Linear Gradient here for the night sky] */;
+}
+```
+
+### 2\. Challenge / Debugging (5 Minutes)
+
+- **Overlay:** Ensure your `radial-gradient` is listed **first** so it sits on top of your `linear-gradient` sky layer.
+- **Opacity:** Experiment with semi-transparent colors (using `rgba()`) in your radial gradient to make the glow soft and atmospheric. We'll be covering rgba() in more detail in a moment...
+
+### 3\. Extra Challenges
+
+- Add some stars
+- Add some planets too!
+
+---
+
+### 4\. AI Exploration
+
+- Prompt the AI of your choice to generate the nightscape
+- Compare with your own code
+- Work with AI to refine the result
+
+- **Lots of AI powered exploration and learning to be had!!**
