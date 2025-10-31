@@ -1,0 +1,25 @@
+Professor Solo Code License
+Version 1.0 – January 2025
+© 2025 Joshua Solomon (Professor Solo). All rights reserved.
+
+Permission is granted to view, use, and modify the accompanying source code
+and related materials (the “Work”) for personal learning, research,
+and educational demonstration purposes.
+
+The Work may not be redistributed, published, sublicensed, or used,
+in whole or in part, for any commercial purpose without the express
+written permission of the copyright holder.
+
+Derivative works and adaptations created for personal or classroom use
+must retain this notice and a clear reference to the original author.
+
+The Work may not be incorporated into any dataset or service used for
+training or fine-tuning artificial intelligence or machine learning models
+without explicit written consent from the copyright holder.
+
+THE WORK IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+For permissions and licensing inquiries, contact:
+   Professor Solo, professorsolo.com (contact address pending)
