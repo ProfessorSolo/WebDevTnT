@@ -14,12 +14,12 @@ const COURSE_MODULES = [
   {
     label: 'CSS Dynamite: Styling That Pops',
     directory: '01-css-dynamite',
-    released: false,
+    released: true,
   },
   {
     label: 'Form Factor: Portal to Data',
     directory: '02-form-factor',
-    released: false,
+    released: true,
   },
   {
     label: 'Version Control with Git and GitHub',
