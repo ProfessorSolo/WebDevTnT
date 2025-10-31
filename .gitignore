@@ -28,3 +28,6 @@ vite.config.timestamp-*
 # Tests / coverage
 coverage/
 .junit/
+
+# Drafts
+.drafts-bin
