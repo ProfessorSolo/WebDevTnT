@@ -1,0 +1,36 @@
+---
+title: Optgroup
+sidebar:
+  label: Optgroup
+  order: 11
+---
+
+## `<optgroup>`
+
+The `<optgroup>` element is used inside a `<select>` to visually and semantically group related `<option>` elements.  
+It helps organize long dropdown lists into meaningful categories, improving both usability and accessibility.
+
+Each `<optgroup>` must include a **label** attribute, which provides the visible heading for that group.  
+Options nested inside an `<optgroup>` are selectable; the `<optgroup>` itself is not.
+
+You can include multiple optgroups within the same select element to create distinct categories.
+
+```html
+<form action="/registration" method="post" name="languageSelect">
+  <label for="language">Choose your preferred language:</label>
+  <select id="language" name="language" required>
+    <optgroup label="Frontend Languages">
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="javascript">JavaScript</option>
+    </optgroup>
+    <optgroup label="Backend Languages">
+      <option value="node">Node.js</option>
+      <option value="python">Python</option>
+      <option value="java">Java</option>
+    </optgroup>
+  </select>
+
+  <input type="submit" value="Submit" />
+</form>
+```

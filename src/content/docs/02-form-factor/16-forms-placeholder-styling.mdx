@@ -1,0 +1,34 @@
+---
+title: Styling Placeholders
+sidebar:
+  label: Styling Placeholders
+  order: 16
+---
+
+## Styling Placeholders
+
+Even though placeholders are not sufficient for accessibility (a11y), we can still use them — **as long as each input also has a proper label**, even if that label is visually hidden.
+
+Styling placeholders, however, can be a little tricky.
+
+From a CSS perspective, placeholder text is a **pseudo-element**, not the actual content of the input.  
+To control its styling, use the `::placeholder` pseudo-element selector.
+
+```css
+input::placeholder {
+  color: blue;
+  opacity: 1;
+}
+```
+
+By default, Firefox renders placeholder text with reduced opacity.  
+To maintain consistent appearance across browsers, explicitly set the **opacity** value.
+
+> 💡 **Tip:** You can apply the same pseudo-element to other form elements such as `<textarea>`:
+>
+> ```css
+> textarea::placeholder {
+>   color: #666;
+>   opacity: 1;
+> }
+> ```

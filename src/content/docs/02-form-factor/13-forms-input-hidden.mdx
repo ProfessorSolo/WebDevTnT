@@ -1,0 +1,42 @@
+---
+title: Hidden Input
+sidebar:
+  label: Hidden Input
+  order: 13
+---
+
+import CautionBox from '../../../components/CautionBox.astro';
+
+## `<input type="hidden" ... >`
+
+An input with `type="hidden"` is not displayed visually, but its **value** is still sent as part of the form data when the form is submitted.
+
+This can be useful when you want to send data along with the form that you do not want — or need — the user to enter themselves.
+
+For example, if a user is logged in to your website, their **user ID** could be included as a hidden value when they submit a checkout or contact form, allowing you to associate the submission with their account without exposing or editable that data in the UI.
+
+```html
+<form action="/checkout" method="post" name="orderForm">
+  <label for="product">Product:</label>
+  <select id="product" name="product" required>
+    <option value="">-- Select a product --</option>
+    <option value="widget">Widget</option>
+    <option value="gadget">Gadget</option>
+  </select>
+
+  <!-- hidden field storing user ID -->
+  <input type="hidden" name="userId" value="12345" />
+
+  <br /><br />
+
+  <input type="submit" value="Purchase" />
+</form>
+```
+
+<CautionBox>
+  ⚠️ **Caution:** Although password inputs visually hide the characters on
+  screen, the data is *not encrypted or secure* by default. Password values can
+  still be inspected in the browser’s DevTools or intercepted if the form is not
+  submitted over HTTPS. Always handle password data securely on the server and
+  use HTTPS for all authentication-related forms.
+</CautionBox>

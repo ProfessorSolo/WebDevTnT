@@ -1,0 +1,23 @@
+---
+title: Input Focus
+sidebar:
+  label: Input Focus
+  order: 17
+---
+
+## `:focus` Pseudo-Class
+
+When users navigate a form — either by clicking into fields or tabbing between them — changing the visual style of the currently focused input helps them understand **where they are** within the form.
+
+This can be achieved using the `:focus` pseudo-class in CSS.
+
+```css
+input:focus {
+  outline: 2px solid dodgerblue;
+  background-color: #eef6ff;
+}
+```
+
+This rule will highlight the active input with a blue outline and a subtle background color, improving both usability and accessibility.
+
+> 💡 **Tip:** Always ensure your focus styles are visible and meet contrast requirements — never remove outlines without providing an accessible replacement.

@@ -1,0 +1,41 @@
+---
+title: HTML5 Form Validation
+sidebar:
+  label: HTML5 Form Validation
+  order: 18
+---
+
+## HTML5 Form Validation
+
+HTML5 introduced built-in validation mechanisms that run **in the browser** before form data is sent to the server.
+
+For example, adding the **required** attribute to an input element forces the user to enter data before the form can be submitted.
+
+Some of the newer input types, such as `<input type="email">`, go further and automatically validate user input against predefined rules.  
+For instance, email addresses must include characters before and after an **@** symbol, a **.**, and at least one character following the dot.
+
+```html
+<form action="/signup" method="post" name="validationExample">
+  <label for="email">Email Address:</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="you@example.com"
+    required
+  />
+
+  <br /><br />
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" min="18" max="99" required />
+
+  <br /><br />
+
+  <input type="submit" value="Submit" />
+</form>
+```
+
+The `:valid` and `:invalid` CSS pseudo-classes are automatically applied based on each field’s current value, allowing you to visually indicate whether the data entered is acceptable.
+
+> 💡 **Tip:** HTML5 validation improves usability but doesn’t replace server-side validation — always validate form data again on the server for security.

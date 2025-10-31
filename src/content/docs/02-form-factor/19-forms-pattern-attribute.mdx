@@ -1,0 +1,42 @@
+---
+title: Pattern Attribute
+sidebar:
+  label: Pattern Attribute
+  order: 19
+---
+
+## Pattern Attribute
+
+Beyond the built-in validation provided by **required** and input type–specific rules (`email`, `url`, etc.), HTML5 also provides the **pattern** attribute, allowing you to validate input against a **regular expression** (regex).
+
+Regular expressions are patterns that the browser uses to test strings of text against defined rules.  
+You can read more about regex on [MDN’s Regular Expressions Cheatsheet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Cheatsheet).
+
+With the `pattern` attribute, you can validate things like credit card numbers, postal codes, phone numbers, and more.
+
+Regex syntax can be challenging, but there are great resources with pre-written HTML5 patterns such as [html5pattern.com](https://www.html5pattern.com/).
+
+You can use the **title** attribute on an input to define helper text displayed when the value fails validation.  
+Since not all browsers read the validation tooltip aloud, it’s a good idea to include an **aria-label** with the same instructional information for screen readers.
+
+```html
+<form action="/signup" method="post" name="usernameForm">
+  <label for="username">Username:</label>
+  <input
+    type="text"
+    name="username"
+    id="username"
+    placeholder="Username..."
+    required
+    pattern="[a-zA-Z0-9]+"
+    title="Username can only contain alpha-numeric characters"
+    aria-label="Username containing only alpha-numeric characters"
+  />
+
+  <input type="submit" value="Create Account" />
+</form>
+```
+
+Any field that fails validation can be styled using the `:invalid` pseudo-class to provide visual feedback for users.
+
+> 💡 **Tip:** Combine `pattern`, `title`, and `aria-label` attributes to ensure both usability and accessibility in your form validation.

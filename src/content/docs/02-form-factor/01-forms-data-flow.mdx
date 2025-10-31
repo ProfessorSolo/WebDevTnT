@@ -1,0 +1,19 @@
+---
+title: Form Data Flow
+sidebar:
+  label: Form Data Flow
+  order: 1
+---
+
+## From Form to Server and Back Again
+
+![alt_text](/assets/lessons/m2-forms-data-flow.png 'image_tooltip')
+
+1. User fills in the input element (fields) of a form
+2. User submits form
+3. User input is validated in their browser
+4. Data from the form is sent to a form processing script (Node.js or PHP, usually)
+   1. Not all forms are sent to a server. Some forms such as calculators can be processed locally.
+5. Form data is processed (either client-side or server-side)
+6. Processor returns a status and often response data
+7. Visual feedback (optionally) given to the user

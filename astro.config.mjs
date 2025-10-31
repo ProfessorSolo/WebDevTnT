@@ -1,7 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import fs from 'node:fs';
+import path from 'node:path';
 
+// Define all course modules here:
 const COURSE_MODULES = [
   {
     label: 'Course Information',
@@ -9,8 +12,13 @@ const COURSE_MODULES = [
     released: false,
   },
   {
-    label: 'Advanced CSS and Accessible Forms',
-    directory: '01-advanced-css-accessible-forms',
+    label: 'CSS Dynamite: Styling That Pops',
+    directory: '01-css-dynamite',
+    released: false,
+  },
+  {
+    label: 'Form Factor: Portal to Data',
+    directory: '02-form-factor',
     released: false,
   },
   {
@@ -64,31 +72,45 @@ const visibleSidebarModules = COURSE_MODULES
     collapsed: true,
   }));
 
+function assertNoDraftsInReleased() {
+  return {
+    name: 'assert-no-drafts-in-released',
+    hooks: {
+      'astro:build:start': async () => {
+        if (import.meta.env.DEV) return;
+        const releasedDirs = COURSE_MODULES.filter((m) => m.released).map(
+          (m) => m.directory
+        );
+        for (const dir of releasedDirs) {
+          const root = path.join(process.cwd(), 'src', 'content', 'docs', dir);
+          if (!fs.existsSync(root)) continue;
+          const files = fs.readdirSync(root, { withFileTypes: true });
+          for (const f of files) {
+            if (!f.isFile()) continue;
+            if (!/\.(md|mdx)$/i.test(f.name)) continue;
+            const src = fs.readFileSync(path.join(root, f.name), 'utf8');
+            if (/^\s*---[\s\S]*?\bdraft:\s*true\b[\s\S]*?---/m.test(src)) {
+              throw new Error(
+                `Draft found in released module "${dir}": ${f.name}`
+              );
+            }
+          }
+        }
+      },
+    },
+  };
+}
+
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://professorsolo.com',
+  base: '/',
+  output: 'static',
   integrations: [
     starlight({
       title: 'Web Dev TnT',
-      social: [
-        {
-          icon: 'github',
-          label: 'GitHub',
-          href: 'https://github.com/withastro/starlight',
-        },
-      ],
       sidebar: visibleSidebarModules,
-      //   [
-      //     {
-      //       label: 'Course Information',
-      //       autogenerate: { directory: '00-introduction' },
-      //       collapsed: true,
-      //     },
-      //     {
-      //       label: 'Day 01: Adv CSS and  Forms', // Your course unit name
-      //       autogenerate: { directory: '01-borders-shadows-and-forms' },
-      //       collapsed: true,
-      //     },
-      //   ],
     }),
   ],
+  vite: { plugins: [assertNoDraftsInReleased()] },
 });

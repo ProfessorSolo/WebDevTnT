@@ -1,0 +1,38 @@
+---
+title: Fieldset and Legend Elements
+sidebar:
+  label: Fieldset and Legend Elements
+  order: 5
+---
+
+## \<fieldset\> \<legend\> ... \<\/fieldset\>
+
+```html {2-3,12}
+<form action="/preferences" method="post" name="preferencesForm">
+  <fieldset>
+    <legend>Contact Preferences</legend>
+    <label>
+      <input type="checkbox" name="contact" value="email" />
+      Email
+    </label>
+    <label>
+      <input type="checkbox" name="contact" value="phone" />
+      Phone Call
+    </label>
+  </fieldset>
+
+  <input type="submit" value="Save Preferences" />
+</form>
+```
+
+### **fieldset**
+
+The fieldset element provides a grouping mechanism for a set of inputs as well as their labels.
+
+Aside from providing a container for CSS styling, fieldsets allow disabling groups of inputs at once.
+
+### **legend**
+
+The legend element provides a caption for its parent fieldset.
+
+[MDN legend and fieldset documentation](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/legend)

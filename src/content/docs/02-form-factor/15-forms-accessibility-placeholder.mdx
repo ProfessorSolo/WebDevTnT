@@ -1,0 +1,64 @@
+---
+title: Placeholder Attribute Accessibility Issues
+sidebar:
+  label: Placeholder Accessibility
+  order: 15
+---
+
+## Placeholder Attribute Accessibility Issues
+
+Most text-based inputs have an optional **placeholder** attribute, which can be used to provide a hint about the expected data or format for that field.
+
+This can seem useful and visually clean — but **placeholders are _not_ a substitute for labels**.
+
+> ❌ **Important:** Placeholders are _not read_ by screen readers, while labels — associated with inputs via the `for` and `id` attributes — _are_.  
+> Users relying on assistive technology will miss your form’s purpose entirely if you omit labels.
+
+---
+
+### Always Use Labels
+
+**Never** omit `<label>` tags in your markup.  
+People using screen readers depend on labels to understand and navigate forms correctly.
+
+If you want to hide labels for aesthetic reasons, you can visually hide them while keeping them accessible.  
+However, using `display: none;` or `visibility: hidden;` will also hide them from screen readers.
+
+---
+
+### ✅ Correct Approach
+
+Use a visually hidden class to keep labels accessible but invisible on screen.
+
+```css
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+```
+
+---
+
+### 💡 Tip
+
+Frameworks like **Bootstrap** already include this as `.visually-hidden` (previously `.sr-only`).
+
+---
+
+### 🧠 Developer’s Rule
+
+> ⚠️ **Do not be a lazy developer!**  
+> Always include `<label>` tags and tie them to their inputs using `for` on the label and a matching `id` on the input.
+
+---
+
+### 🔗 Further Reading
+
+[Hiding content responsibly (a11y)](https://kittygiraudel.com/2021/02/17/hiding-content-responsibly/)

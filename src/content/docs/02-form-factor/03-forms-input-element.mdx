@@ -1,0 +1,66 @@
+---
+title: The Input Element
+sidebar:
+  label: The Input Element
+  order: 3
+---
+
+## \<input\>
+
+The input element(s), within a form, are the fields that a user fills out.
+
+```html
+<form action="/signup" method="post" name="signupForm">
+  <label for="username">Username:</label>
+  <input
+    type="text"
+    id="username"
+    name="username"
+    placeholder="Enter your username"
+    required
+  />
+
+  <label for="email">Email:</label>
+  <input
+    type="email"
+    id="email"
+    name="email"
+    placeholder="you@example.com"
+    required
+  />
+
+  <label for="password">Password:</label>
+  <input
+    type="password"
+    id="password"
+    name="password"
+    pattern=".{8,}"
+    placeholder="Minimum 8 characters"
+    required
+  />
+
+  <input type="submit" value="Create Account" />
+</form>
+```
+
+There are a variety of input "types" which determine the type of data that should be entered by the user. We'll look at the most common input types momentarily.
+
+Common input tag attributes include:
+
+- type
+  - determines the type of data expected
+- name
+  - identifies the input for the server
+  - used by radio and checkbox input types for grouping
+- id
+  - used to uniquely identify the input for CSS/JS as well as for associating labels with a specific input
+- disabled
+  - prevents user input and does not send a value for this input to the server
+- readonly
+  - similar to disabled, but does send a value to the server
+- required
+  - prevents form submission until there is a value entered
+- placeholder
+  - displays prompt text in text inputs. note: this attribute is not read by screen readers and requires a workaround for accessibility
+- pattern
+  - defines a regular expression pattern that is used for data validation before the form data is sent - without JavaScript

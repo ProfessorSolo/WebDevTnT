@@ -1,0 +1,34 @@
+---
+title: The Form Element
+sidebar:
+  label: The Form Element
+  order: 2
+---
+
+## \<form\> ... \<\/form\>
+
+The form element wraps input fields and controls how and where the data is sent.
+
+```html
+<form action="/submit-form" method="post" name="contactForm">
+  <!-- form fields go here -->
+</form>
+```
+
+The form tag should include, at minimum, the following attributes:
+
+- action
+  - The URL of the form processing endpoint (file)
+- method
+
+  - How the data is sent for processing \
+
+    - get
+      - data is sent via URL parameters
+      - useful for search and other non-sensitive data
+    - post
+      - data is sent in the body of the HTTP request
+      - this is the most common method
+
+- name
+  - offers a way to identify the form to the server

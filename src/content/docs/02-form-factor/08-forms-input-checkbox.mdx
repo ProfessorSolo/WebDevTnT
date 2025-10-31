@@ -1,0 +1,41 @@
+---
+title: Checkbox Input
+sidebar:
+  label: Checkbox Input
+  order: 8
+---
+
+## `<input type="checkbox" ... >`
+
+Checkboxes allow users to select multiple options as part of a single “question.”
+
+Checkbox inputs are self-closing and each checkbox should have a **value** attribute.
+
+They are grouped together via the **name** attribute, and if multiple checkboxes are checked, the form data is sent as a comma-separated list of their values.
+
+To control whether checkboxes are initially checked when the page loads, use the **checked** attribute.
+
+```html
+<form action="/subscribe" method="post" name="newsletterForm">
+  <fieldset>
+    <legend>Select your interests</legend>
+
+    <label>
+      <input type="checkbox" name="topics" value="javascript" checked />
+      JavaScript
+    </label>
+
+    <label>
+      <input type="checkbox" name="topics" value="css" />
+      CSS
+    </label>
+
+    <label>
+      <input type="checkbox" name="topics" value="html" />
+      HTML
+    </label>
+
+    <input type="submit" value="Subscribe" />
+  </fieldset>
+</form>
+```

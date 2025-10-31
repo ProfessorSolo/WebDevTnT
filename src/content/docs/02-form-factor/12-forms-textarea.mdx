@@ -1,0 +1,39 @@
+---
+title: Textarea
+sidebar:
+  label: Textarea
+  order: 12
+---
+
+## `<textarea>`
+
+The `<textarea>` element is used to accept multiple lines or large amounts of text — for example, comment boxes or feedback forms.
+
+Unlike text inputs, `<textarea>` is **not** a self-closing tag.
+
+In addition to the **name** and **id** attributes, useful attributes for textarea elements include:
+
+- **rows** — controls the height of the element, expressed as the number of lines of text to display
+- **cols** — defines the width of the element, similar to the `size` attribute of text inputs
+
+> **Note:** The `<textarea>` element does **not** use the `value` attribute to set its initial contents.  
+> To pre-populate a textarea, place the desired text between the opening and closing `<textarea>` tags.
+
+```html
+<form action="/feedback" method="post" name="commentForm">
+  <label for="comments">Your Comments:</label>
+  <textarea
+    id="comments"
+    name="comments"
+    rows="5"
+    cols="40"
+    placeholder="Enter your feedback here..."
+    required
+  >
+I really enjoyed this course!
+</textarea
+  >
+
+  <input type="submit" value="Submit" />
+</form>
+```

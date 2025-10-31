@@ -1,0 +1,41 @@
+---
+title: Radio Input
+sidebar:
+  label: Radio Input
+  order: 9
+---
+
+## `<input type="radio" ... >`
+
+Similar to `<input type="checkbox">`, radio inputs allow the user to select between a group of values — but in a mutually exclusive manner.
+
+Radio inputs are grouped by their shared **name** attribute.
+
+The data that is sent when the form is submitted is based on the **value** attribute of the currently checked item.
+
+The **checked** attribute controls which of the radio buttons is selected when the form initially loads.
+
+```html
+<form action="/survey" method="post" name="favoriteLanguage">
+  <fieldset>
+    <legend>Select your favorite programming language</legend>
+
+    <label>
+      <input type="radio" name="language" value="javascript" checked />
+      JavaScript
+    </label>
+
+    <label>
+      <input type="radio" name="language" value="python" />
+      Python
+    </label>
+
+    <label>
+      <input type="radio" name="language" value="java" />
+      Java
+    </label>
+
+    <input type="submit" value="Submit" />
+  </fieldset>
+</form>
+```

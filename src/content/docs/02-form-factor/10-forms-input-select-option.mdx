@@ -1,0 +1,50 @@
+---
+title: Select and Option
+sidebar:
+  label: Select and Option
+  order: 10
+---
+
+## Dropdowns
+
+### `<select> ... </select>`
+
+The `<select>` element creates a dropdown list that lets users choose one or more options.  
+Each `<option>` element inside defines one of the selectable choices.
+
+The **name** attribute of the `<select>` defines the key used when the form is submitted, and the **id** attribute allows a label to be associated with the dropdown.
+
+To make a dropdown that allows multiple selections, add the **multiple** attribute to the `<select>` tag.
+
+### `<option>`
+
+Each `<option>` should include a **value** attribute — the data sent when the form is submitted.  
+It’s common for the first option to have an empty value and text such as “— please select an option —”.
+
+The **selected** attribute determines which option is initially chosen when the page loads.
+
+```html
+<form action="/registration" method="post" name="languageSelect">
+  <label for="language">Preferred Language:</label>
+  <select id="language" name="language" required>
+    <option value="">-- Please select an option --</option>
+    <option value="html">HTML</option>
+    <option value="css">CSS</option>
+    <option value="javascript" selected>JavaScript</option>
+  </select>
+
+  <br /><br />
+
+  <label for="tools">Select Your Tools (multiple allowed):</label>
+  <select id="tools" name="tools" multiple size="4">
+    <option value="vscode">VS Code</option>
+    <option value="figma">Figma</option>
+    <option value="git">Git</option>
+    <option value="chrome">Chrome DevTools</option>
+  </select>
+
+  <br /><br />
+
+  <input type="submit" value="Submit" />
+</form>
+```
