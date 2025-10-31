@@ -1,0 +1,39 @@
+---
+const gradient =
+  "linear-gradient(135deg, #ff0080, #7928ca, #0070f3, #00dfd8)";
+---
+
+<section
+  style={{
+    background: gradient,
+    backgroundSize: "400% 400%",
+    animation: "gradientShift 10s ease infinite",
+    color: "#fff",
+    padding: "4rem 1rem",
+    textAlign: "center",
+    borderRadius: "1.5rem",
+    boxShadow: "0 0 40px rgba(0,0,0,0.3)",
+    marginBottom: "3rem",
+  }}
+>
+  <h1 style={{ fontSize: "3rem", margin: "0" }}>
+    🚀 <strong>Web Dev TnT</strong>
+  </h1>
+  <p style={{ fontSize: "1.5rem", opacity: 0.9 }}>
+    Explosive Web Development Tools & Techniques
+  </p>
+</section>
+
+<style>
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+</style>
