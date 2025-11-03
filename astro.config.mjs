@@ -103,7 +103,7 @@ function assertNoDraftsInReleased() {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://professorsolo.com',
+  site: 'https://webdevtnt.professorsolo.com',
   base: '/',
   output: 'static',
   integrations: [
