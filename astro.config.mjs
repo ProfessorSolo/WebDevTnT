@@ -56,6 +56,11 @@ const COURSE_MODULES = [
     directory: '08-automated-task-runners-gulp',
     released: false,
   }, // UNRELEASED
+  {
+    label: 'Bits, Bytes, and Bobs: Course Resources, Guides, and Tips',
+    directory: '99-bits-bytes-and-bobs',
+    released: true,
+  }, // UNRELEASED
 ];
 
 // SHOW_ALL_CONTENT is TRUE if running the local dev server.
