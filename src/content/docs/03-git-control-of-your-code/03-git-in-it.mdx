@@ -1,0 +1,196 @@
+---
+title: Initializing a Git Repo
+sidebar:
+  label: git init
+  order: 4
+draft: true
+---
+
+# Let's Git In It
+
+We’ve got Git installed. We’ve configured our name and identity.  
+Now it’s time to flip the switch — to **Git in it**.
+
+This is where the magic begins: we’ll initialize our first repository, make our first commit, and officially enter the world of version control.
+
+---
+
+## 🧱 Step 1: Initialize a Repository
+
+In any folder where we’re about to start a project — whether it’s HTML, CSS, JS, or a top-secret side hustle — we tell Git:
+
+```bash
+git init
+```
+
+This simple command turns an ordinary folder into a **Git-powered time machine**.
+
+Behind the scenes, Git creates a hidden directory called `.git` — its control room.
+
+```
+project-folder/
+ ├── index.html
+ ├── styles.css
+ └── .git/        ← Git’s brain lives here
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+That `.git` folder holds everything — commits, branches, configuration, and history.  
+Delete it, and your repo loses its memory. (So, don’t.)
+
+---
+
+## 🧩 Step 2: Check Git’s Status
+
+After initializing, let’s peek at what Git sees:
+
+```bash
+git status
+```
+
+We’ll see something like this:
+
+```
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    index.html
+    styles.css
+```
+
+🧠 **Translation:**  
+Git knows files exist, but it’s not tracking them yet — they’re just _untracked_.  
+We need to tell Git which ones we care about.
+
+---
+
+## 📦 Step 3: Stage Files for Commit
+
+When we’re ready to include files in our next snapshot, we add them to the **staging area**.
+
+```bash
+git add index.html
+git add styles.css
+```
+
+To add _everything_ in the folder:
+
+```bash
+git add .
+```
+
+⚠️ **Caution:**  
+Use `git add .` with care — it grabs everything that isn’t ignored.  
+(We’ll learn `.gitignore` soon, and it will become our best friend.)
+
+---
+
+## 🧠 What Just Happened?
+
+We told Git: “Watch these files. I might want to save them soon.”  
+They’re not committed yet — just staged for inclusion in the next snapshot.
+
+Think of staging like putting your work in a folder labeled _Ready to Turn In_.
+
+---
+
+## 🧮 Step 4: Make the First Commit
+
+Once we’re happy with what’s staged, we take the first snapshot:
+
+```bash
+git commit -m "Initial commit — project setup"
+```
+
+💡 The `-m` flag lets us include a commit message right in the command.
+
+Each commit records:
+
+- What changed
+- Who made the change
+- When it happened
+- Why (our message!)
+
+---
+
+## 🧭 Step 5: Verify the Commit
+
+Now let’s check our work:
+
+```bash
+git log --oneline
+```
+
+Output might look like this:
+
+```
+1e9b312 (HEAD -> main) Initial commit — project setup
+```
+
+That’s our first commit — a permanent entry in the project’s history.
+
+ASCII visualization:
+
+```
+HEAD → ●──▶ main
+        ↑
+     Initial commit
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Every time we commit, Git moves `HEAD` — a pointer that shows where we are in time.  
+It’s like a bookmark for our current place in the story.
+
+---
+
+## 🧭 Step 6: Modify, Stage, Commit Again
+
+Let’s add a new line to `index.html`:
+
+```html
+<p>Hello Git!</p>
+```
+
+Then run:
+
+```bash
+git status
+```
+
+Git notices the change.  
+We can repeat our favorite loop:
+
+```bash
+git add index.html
+git commit -m "Add greeting message to home page"
+```
+
+And just like that, our project now has a timeline of two commits — a tiny but mighty history.
+
+```
+HEAD → ●──●──▶ main
+        ↑
+     newest commit
+```
+
+---
+
+## ✅ Mission Check: We’re Officially Git-ing It
+
+By now, we can:
+
+1. Initialize a repository with `git init`
+2. Use `git status` to check what Git sees
+3. Stage files with `git add`
+4. Save changes with `git commit -m "message"`
+5. View our commit history with `git log`
+
+---
+
+💡 **Professor Solo says:**
+
+> “The first commit is like the pilot episode.  
+> It sets the tone for everything that follows.”

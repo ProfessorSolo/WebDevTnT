@@ -1,0 +1,179 @@
+---
+title: Add, Commit, Repeat
+sidebar:
+  label: Add & Commit
+  order: 5
+draft: true
+---
+
+# 3️⃣ Add, Commit, Repeat
+
+Welcome to the heartbeat of Git.  
+Everything we do — every feature, every fix, every experiment — flows through this rhythm:
+
+```
+Edit → Add → Commit → Repeat
+```
+
+We’ve already made our first commit. Now it’s time to understand the loop that keeps every project alive.
+
+---
+
+## 🧠 Step 1: Edit Something Worth Tracking
+
+Let’s imagine we’re working on a simple project called `my-portfolio`.  
+Inside, we have an `index.html` file.
+
+We add a new section:
+
+```html
+<section>
+  <h2>About Me</h2>
+  <p>Web Developer. Lifelong Learner. Coffee Enthusiast.</p>
+</section>
+```
+
+We’ve changed a file — Git notices immediately.  
+But until we **add** it, Git’s just watching quietly, waiting for instructions.
+
+---
+
+## 🧩 Step 2: Stage the Change
+
+Staging is how we tell Git, “Yes, this is part of the next snapshot.”
+
+```bash
+git add index.html
+```
+
+Want to see what’s staged? Run:
+
+```bash
+git status
+```
+
+You’ll see something like:
+
+```
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified: index.html
+```
+
+🧠 **Translation:**  
+We’ve placed this file in the **staging area** — Git’s waiting room for our next commit.
+
+---
+
+## 🧱 Step 3: Commit (Save the Moment)
+
+Now we lock in the change with a **commit** — a permanent entry in our project’s history.
+
+```bash
+git commit -m "Add About Me section to homepage"
+```
+
+💡 The `-m` flag lets us add a **commit message** — short, descriptive, and human-readable.
+
+### ✍️ About Commit Messages
+
+Commit messages are our time machine notes.  
+They tell future-us *why* we did something, not just *what* we did.
+
+Good commit messages are:
+- Written in **present tense** (“Add feature,” not “Added feature”)
+- Short — ideally under 72 characters
+- Focused — one commit = one idea
+
+**Examples:**
+```
+feat: add contact form and email validation
+fix: correct typo in navigation menu
+docs: update README with setup steps
+```
+
+⚠️ **Bad examples:**
+```
+update
+stuff
+fixed it
+final final version (for real this time)
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+A commit message is a story title, not the entire chapter.
+
+---
+
+## 🧮 Step 4: Stage & Commit Multiple Files
+
+If you’ve changed several files:
+
+```bash
+git add .
+git commit -m "Add new portfolio projects section"
+```
+
+That `.` means “everything in this folder that changed.”  
+Use it with caution — Git will happily commit files you didn’t mean to include.
+
+---
+
+## 🧹 Step 5: Keep It Clean with .gitignore
+
+Some files don’t belong in version control — logs, caches, temporary builds, or personal configs.
+
+Create a file named `.gitignore` in your repo root and list what to exclude:
+
+```
+# macOS junk
+.DS_Store
+
+# Node dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# Environment variables
+.env
+```
+
+Once a file is ignored, Git won’t track it anymore.  
+This keeps your repo light and professional.
+
+---
+
+## ⚙️ Step 6: Review History
+
+Let’s take a peek at what we’ve done so far:
+
+```bash
+git log --oneline --graph --decorate
+```
+
+It might look something like:
+
+```
+* e7ab23f (HEAD -> main) Add About Me section to homepage
+* 1e9b312 Initial commit — project setup
+```
+
+💡 Each dot (●) is a snapshot of our project at that moment in time.  
+Git never forgets — and that’s a good thing.
+
+---
+
+## ✅ Mission Check: The Heartbeat of Git
+
+By now, we can:
+1. Edit a file, stage it, and commit it with confidence  
+2. Write clear, meaningful commit messages  
+3. Use `.gitignore` to keep our repo focused  
+4. Understand the flow of **Edit → Add → Commit → Repeat**
+
+---
+
+💡 **Professor Solo says:**  
+> “Every commit is a postcard from your project’s past.  
+> Make it worth sending.”

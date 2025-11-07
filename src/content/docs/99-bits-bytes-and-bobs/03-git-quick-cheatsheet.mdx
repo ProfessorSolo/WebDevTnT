@@ -1,0 +1,229 @@
+---
+title: Git Quick (Cheatsheet)
+sidebar:
+  label: Git Cheatsheet
+  order: 3
+draft: true
+---
+
+# Git Quick or Git Gone (Cheatsheet)
+
+Fast, friendly, and Professor‑approved.  
+Each command comes with a one‑liner so we remember **what** it does at a glance.
+
+> 💡 Tip: When in doubt, run `git status`. It’s Git’s way of narrating the moment.
+
+---
+
+## ⚙️ Setup & Identity
+
+```bash
+git --version
+# Verify Git is installed and reachable on PATH
+
+git config --global user.name "Your Name"
+# Set your display name for all commits on this machine
+
+git config --global user.email "you@example.com"
+# Set your email (shows on GitHub commit history)
+
+git config --global init.defaultBranch main
+# Make 'main' the default branch for new repos
+
+git config --global color.ui auto
+# Enable helpful colored output in the terminal
+```
+
+---
+
+## 🏁 Start a Repo (or Clone One)
+
+```bash
+git init
+# Create a new, empty repository in the current folder
+
+git clone <url>
+# Copy a remote repository (files + full history)
+```
+
+---
+
+## 📝 Stage & Commit
+
+```bash
+git status
+# Show what's changed, what's staged, and what's next
+
+git add <file>
+# Stage one file for the next commit
+
+git add .
+# Stage all new/modified files (respecting .gitignore)
+
+git restore --staged <file>
+# Unstage a file (keep your edits)
+
+git commit -m "Message"
+# Save staged changes as a new snapshot with a message
+```
+
+---
+
+## 🔍 Inspect Changes & History
+
+```bash
+git diff
+# See unstaged changes since the last commit
+
+git diff --staged
+# See staged changes that will go into the next commit
+
+git log --oneline --graph --decorate
+# Compact, visual commit history (branch pointers included)
+
+git show <hash>
+# Display a single commit (message + diff)
+```
+
+---
+
+## 🌿 Branching
+
+```bash
+git branch
+# List local branches
+
+git switch -c feature/new-thing
+# Create and switch to a new branch
+
+git switch main
+# Move back to main
+
+git branch -d feature/new-thing
+# Delete a fully merged branch (local)
+```
+
+---
+
+## 🔀 Merging & Rebase (light touch)
+
+```bash
+git merge <branch>
+# Bring the named branch into your current branch
+
+git pull --rebase
+# Update your branch by replaying your commits on top (clean history)
+```
+
+> ⚠️ Rebase rewrites history; it’s great locally, risky on shared branches.
+
+---
+
+## 🧹 Undo & Rescue
+
+```bash
+git restore <file>
+# Discard local changes in a file (revert to last commit)
+
+git reset --hard HEAD
+# Reset all files to the last commit (destructive for uncommitted work)
+
+git commit --amend
+# Edit the last commit (message and/or staged content)
+
+git stash -m "WIP"
+# Temporarily shelve uncommitted work
+
+git stash list
+# See your stashes (like a clipboard history)
+
+git stash apply stash@{0}
+# Reapply a specific stash (keeps it in the list)
+
+git reflog
+# Show every move of HEAD (ultimate “oops” recovery ledger)
+```
+
+---
+
+## 🌐 Remotes & Sync
+
+```bash
+git remote -v
+# List remotes and their URLs
+
+git remote add origin <url>
+# Link the local repo to a remote named 'origin'
+
+git push -u origin main
+# Push commits and set upstream tracking for 'main'
+
+git push
+# Send local commits to the tracked remote branch
+
+git pull
+# Fetch + merge updates from the tracked remote branch
+
+git fetch
+# Download updates without merging (preview what's new)
+```
+
+---
+
+## 🏷️ Tags & Releases
+
+```bash
+git tag -a v1.0.0 -m "First stable release"
+# Create an annotated tag for a version checkpoint
+
+git push origin v1.0.0
+# Push a single tag to the remote
+
+git push origin --tags
+# Push all local tags to the remote
+```
+
+---
+
+## 🤝 PR Flow (CLI side of the dance)
+
+```bash
+git push origin feature/amazing-idea
+# Publish your branch to GitHub (open PR on the site)
+
+# After merge:
+git branch -d feature/amazing-idea
+# Clean up local
+
+git push origin --delete feature/amazing-idea
+# Clean up remote
+```
+
+---
+
+## 🧰 Helpful Aliases (speed boosters)
+
+```bash
+git config --global alias.st status
+# Use 'git st' instead of 'git status'
+
+git config --global alias.lg "log --oneline --graph --decorate --all"
+# Pretty, compact history view: 'git lg'
+```
+
+---
+
+## 🧠 Mental Models (sticky notes for the brain)
+
+- **Working Directory → Staging Area → Repository** — edit, select, snapshot.
+- **Commit small & often** — tell one story per message.
+- **Branches are timelines** — create them freely, merge with care.
+- **`git status` is the truth** — ask it before you guess.
+- **`reflog` is your parachute** — mistakes are fixable.
+
+---
+
+💡 **Professor Solo says:**
+
+> “Learn the rhythm: _edit → add → commit → push_.  
+> Everything else is just harmony.”

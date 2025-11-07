@@ -1,0 +1,125 @@
+---
+title: Lab of Legends
+sidebar:
+  label: Lab Checklist
+  order: 16
+draft: true
+---
+
+# Lab of Legends
+
+Welcome to the **final boss of Git fundamentals** — your hands‑on proving ground.  
+Every step you take here connects the dots between what you’ve learned and what you can now _do._
+
+Git isn’t just a tool anymore — it’s your creative companion.  
+Let’s put that power to work.
+
+---
+
+## 🧭 The Mission: The 10‑Step Git Workout
+
+1. **Install & Configure Git**  
+   Verify your setup with:
+
+   ```bash
+   git --version
+   git config --list
+   ```
+
+2. **Initialize a Repository**  
+   Create a new folder and turn it into a repo:
+
+   ```bash
+   git init
+   ```
+
+3. **Stage and Commit Files**
+
+   ```bash
+   git add .
+   git commit -m "Initial commit — project setup"
+   ```
+
+4. **Connect to GitHub**
+
+   ```bash
+   git remote add origin https://github.com/your-username/lab-of-legends.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+5. **Create a Feature Branch**
+
+   ```bash
+   git switch -c feature/add-readme
+   ```
+
+6. **Add New Content and Commit**  
+   Edit `README.md`, then:
+
+   ```bash
+   git add README.md
+   git commit -m "Add project overview to README"
+   ```
+
+7. **Merge Back into Main**
+
+   ```bash
+   git switch main
+   git merge feature/add-readme
+   ```
+
+8. **Tag a Release**
+
+   ```bash
+   git tag -a v1.0.0 -m "First stable release"
+   git push origin --tags
+   ```
+
+9. **Break Something — Then Fix It**  
+   Delete a line, save, panic briefly, and then:
+
+   ```bash
+   git restore <filename>
+   ```
+
+   Congratulations — you just used Git as a safety net.
+
+10. **Celebrate and Reflect**  
+    Look back at your log:
+    ```bash
+    git log --oneline --graph --decorate
+    ```
+    That history is the story of your learning.
+
+---
+
+## ⚙️ Stretch Goals for the Curious
+
+- Try a collaboration test — invite a friend as a collaborator on GitHub.
+- Create an issue and link it to a commit (`Fixes #1`).
+- Practice branching and merging until it feels like muscle memory.
+- Explore `git reflog` and recover a “lost” commit just to flex.
+- Bonus: Write your own `.gitignore` for a real‑world project.
+
+💡 **Professor Solo’s Pro Tip:**  
+Repetition builds fluency. Do this lab again next week — it’ll feel twice as fast and make twice as much sense.
+
+---
+
+## ✅ Mission Check: Legend Status Unlocked
+
+You can now:  
+1. Initialize and configure repos from scratch  
+2. Stage, commit, and merge like a pro  
+3. Tag and release with confidence  
+4. Recover from disaster (you’ve done it before)  
+5. Collaborate gracefully with others  
+6. Think like a version‑controlled developer
+
+---
+
+💡 **Professor Solo says:**
+
+> “You’ve got the tools, the knowledge, and the swagger.  
+> Now go build something worth committing to.”

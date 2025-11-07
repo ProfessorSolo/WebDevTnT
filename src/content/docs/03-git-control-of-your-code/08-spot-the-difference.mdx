@@ -1,0 +1,190 @@
+---
+title: Spot the Difference
+sidebar:
+  label: Diffing
+  order: 8
+draft: true
+---
+
+# Spot the Difference
+
+You’ve been committing like a pro — now let’s learn how to **see** what changed.  
+This is where we become Git detectives, tracing every line of code that moved, shifted, or vanished.
+
+Git has a built-in highlighter for change. It’s called the **diff**.
+
+---
+
+## 🔍 What a Diff Really Is
+
+A _diff_ is a comparison between two versions of your files — a way to visualize what changed between “then” and “now.”
+
+Git uses simple symbols to show these changes:
+
+| Symbol | Meaning                |
+| ------ | ---------------------- |
+| `+`    | A line was **added**   |
+| `-`    | A line was **removed** |
+| none   | Line stayed the same   |
+
+Example:
+
+```
+- color: red;
++ color: #ff0000;
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Git doesn’t judge — it just shows the truth. Every diff tells a story.
+
+---
+
+## 🧩 Step 1: Compare Unstaged Changes
+
+When we modify files but haven’t staged them yet, we can see what changed since the last commit:
+
+```bash
+git diff
+```
+
+This compares our **working directory** to the last committed version.
+
+```
+working dir  →  last commit
+```
+
+Output highlights every addition or deletion line by line.
+
+---
+
+## 🧱 Step 2: Compare Staged Changes
+
+Once we’ve staged changes with `git add`, those files move into the **staging area**.  
+Now, to compare what’s staged (ready to be committed) against the last commit:
+
+```bash
+git diff --staged
+```
+
+```
+staging area  →  last commit
+```
+
+This is your “double-check” moment before sealing the deal with a commit.
+
+💡 **Professor Solo’s Pro Tip:**  
+Think of `git diff` as “what I’m working on” and `git diff --staged` as “what I’m about to submit.”
+
+---
+
+## 🧭 Step 3: Compare Between Commits
+
+Sometimes we need to see what changed between snapshots in history:
+
+```bash
+git diff HEAD~1 HEAD
+```
+
+This compares the most recent commit (`HEAD`) to the one before it (`HEAD~1`).
+
+Or compare by specific commit hashes:
+
+```bash
+git diff a1b2c3d e4f5g6h
+```
+
+💡 Use `git log --oneline` to find those commit hashes quickly.
+
+---
+
+## 🧠 Step 4: See Changes Inside a Commit
+
+We can also inspect the details of a specific commit with:
+
+```bash
+git show <commit-hash>
+```
+
+This shows the commit message, author, date, and diff — everything that changed in that commit.
+
+Example:
+
+```
+commit 1e9b312 (HEAD -> main)
+Author: Professor Solo <solo@example.com>
+Date:   Thu Nov 6 10:24 2025
+
+    Add About Me section to homepage
+
+diff --git a/index.html b/index.html
++ <section id="bio">
++   <h2>About Me</h2>
++ </section>
+```
+
+Git time-travel in one tidy command.
+
+---
+
+## 🧩 Step 5: Explore with git log -p
+
+If we want to see the diff for each commit in history:
+
+```bash
+git log -p
+```
+
+That’s the “documentary mode” of our project — every change, frame by frame.
+
+Press `q` to quit viewing when you’re done.
+
+---
+
+## ⚙️ Step 6: Diffing Branches
+
+To see how two branches differ before merging:
+
+```bash
+git diff main feature/add-bio
+```
+
+This shows what would change if we merged `feature/add-bio` into `main`.
+
+ASCII visualization:
+
+```
+main ──●──●──●──▶
+          \
+           └──●──●──▶ feature/add-bio
+```
+
+---
+
+## 🧩 Step 7: The HEAD Compass
+
+Remember, `HEAD` is your bookmark — it points to your current position in history.  
+When you diff against `HEAD`, you’re comparing changes relative to where you are now.
+
+```
+Working Directory → Staging Area → HEAD (Last Commit)
+```
+
+Each diff command just asks Git: “Show me the gap between these two.”
+
+---
+
+## ✅ Mission Check: Detective Mode Activated
+
+We can now:
+
+1. Use `git diff` to inspect unstaged changes
+2. Use `git diff --staged` before committing
+3. Compare commits and branches directly
+4. Use `git show` and `git log -p` to analyze commit details
+5. Understand the diff flow from working directory → staging → HEAD
+
+---
+
+💡 **Professor Solo says:**
+
+> “Don’t just code — investigate. Every line tells a story, and Git keeps the receipts.”

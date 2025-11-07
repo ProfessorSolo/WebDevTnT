@@ -1,0 +1,166 @@
+---
+title: Tag, You're It!
+sidebar:
+  label: Tags & Releases
+  order: 13
+draft: true
+---
+
+# Tag, You're It!
+
+Some moments deserve to be remembered forever — your first working prototype, a bug‑free release, or that one time you actually finished before the deadline.  
+That’s what **tags** are for. They mark milestones in your project’s history.
+
+---
+
+## 🧠 What a Tag Really Is
+
+A **tag** is a label attached to a specific commit — a snapshot in time we want to bookmark.
+
+ASCII time‑stamp magic:
+
+```
+●──●──●──●──●──▶
+         ↑
+        v1.0.0  ← tagged commit
+```
+
+Tags don’t change or move. They’re fixed markers in history, perfect for releases and submissions.
+
+💡 **Professor Solo’s Pro Tip:**  
+Commits tell a story, but tags define the chapters.
+
+---
+
+## 🧩 Step 1: Create a Tag
+
+There are two kinds of tags — **lightweight** and **annotated**.
+
+### Lightweight (quick and casual)
+
+```bash
+git tag v1.0.0
+```
+
+Just a label — simple and fast.
+
+### Annotated (professional grade)
+
+```bash
+git tag -a v1.0.0 -m "First stable release"
+```
+
+Includes the author, date, and a message — ideal for official milestones.
+
+---
+
+## 🧱 Step 2: View and Manage Tags
+
+List all tags in your repo:
+
+```bash
+git tag
+```
+
+See details for a specific tag:
+
+```bash
+git show v1.0.0
+```
+
+Delete a tag (if needed):
+
+```bash
+git tag -d v1.0.0
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Tags are like trophies — only delete them if you really didn’t earn them.
+
+---
+
+## 🧮 Step 3: Push Tags to GitHub
+
+By default, `git push` doesn’t send tags.  
+We need to share them explicitly:
+
+```bash
+git push origin --tags
+```
+
+Or push one tag at a time:
+
+```bash
+git push origin v1.0.0
+```
+
+Now the tag appears on GitHub under the **Releases** section — easy for others to download or reference.
+
+---
+
+## 🧭 Step 4: Semantic Versioning (aka SemVer)
+
+Semantic Versioning is the industry’s way of numbering releases meaningfully.
+
+```
+MAJOR.MINOR.PATCH
+```
+
+| Version   | Meaning                                  |
+| --------- | ---------------------------------------- |
+| **1.0.0** | First public or stable release           |
+| **1.1.0** | Added new features (backward compatible) |
+| **1.1.1** | Bug fixes or small improvements          |
+| **2.0.0** | Breaking changes or major redesign       |
+
+💡 **Professor Solo’s Pro Tip:**  
+Start at `v0.1.0` for early projects. Move to `v1.0.0` when it’s showtime.
+
+---
+
+## 🧠 Step 5: Using Tags in the Real World
+
+| Context             | Example          |
+| ------------------- | ---------------- |
+| Student submission  | `v1.0.0-final`   |
+| Midterm checkpoint  | `v0.5.0-midterm` |
+| Production release  | `v2.3.1`         |
+| Experimental branch | `v0.9.0-beta`    |
+
+We can even tag specific commits retroactively:
+
+```bash
+git tag -a v1.1.0 a1b2c3d -m "Add responsive layout"
+```
+
+---
+
+## ⚙️ Step 6: Releases on GitHub
+
+GitHub turns tags into downloadable releases.
+
+1. Go to your repo’s **Releases** tab
+2. Click **Draft a new release**
+3. Choose your tag (or create one)
+4. Add release notes and publish
+
+Perfect for sharing packaged builds, assignment submissions, or project milestones.
+
+---
+
+## ✅ Mission Check: You’ve Been Tagged
+
+By now, we can:
+
+1. Create lightweight and annotated tags
+2. View, delete, and push tags to GitHub
+3. Follow semantic versioning conventions
+4. Use tags to mark milestones and releases
+5. Publish official releases on GitHub
+
+---
+
+💡 **Professor Solo says:**
+
+> “Every project has a story.  
+> Tags are how we name the chapters — and remember the hits.”

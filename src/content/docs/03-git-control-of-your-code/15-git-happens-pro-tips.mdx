@@ -1,0 +1,134 @@
+---
+title: Git Happens: Pro Tips & Pitfalls
+sidebar:
+  label: Pro Tips
+  order: 15
+draft: true
+---
+
+# Git Happens: Pro Tips & Pitfalls
+
+Even the smoothest committers occasionally crash into a merge wall, forget to pull, or nuke `main` by accident.  
+That’s okay — Git happens. What matters is how we recover, learn, and prevent it next time.
+
+This chapter is part wisdom, part cautionary tale, and all **Professor Solo attitude**.
+
+---
+
+## 💡 Top Tips for a Happier Git Life
+
+| 💡 Tip                     | Command / Habit                         | Why It Matters                           |
+| -------------------------- | --------------------------------------- | ---------------------------------------- |
+| Pull before you push       | `git pull --rebase`                     | Avoids “non‑fast‑forward” conflicts      |
+| Review before you commit   | `git diff --staged`                     | Catch typos & stray files early          |
+| Keep `.gitignore` tidy     | `.DS_Store`, `node_modules/`, `/dist`   | Keeps repos lean and clean               |
+| Stash before switching     | `git stash; git switch branch`          | Prevents lost WIP when changing branches |
+| Check your remotes         | `git remote -v`                         | Confirms where your pushes go            |
+| Clean merged branches      | `git branch --merged` → `git branch -d` | Reduces clutter                          |
+| Commit small, commit often | —                                       | Easier rollbacks & clearer history       |
+| Write meaningful messages  | `git commit -m`                         | Saves future‑you from confusion          |
+
+💡 **Professor Solo’s Pro Tip:**  
+Git is a memory system — feed it details, not drama.
+
+---
+
+## ⚠️ Common Pitfalls (and How to Climb Out)
+
+### 🚫 Accidentally deleted everything?
+
+Don’t panic. Git remembers.
+
+```bash
+git reflog
+git switch -c rescue <hash>
+```
+
+You’re back in business.
+
+---
+
+### 🤦 Committed secrets or passwords?
+
+Rotate keys immediately and add sensitive files to `.gitignore`.  
+Use environment variables next time.
+
+```bash
+echo ".env" >> .gitignore
+git rm --cached .env
+git commit -m "Remove .env from repo"
+```
+
+---
+
+### 🌀 Forgot to pull before pushing?
+
+Git will yell: *“non‑fast‑forward” error.*  
+Just pull, merge, and push again.
+
+```bash
+git pull --rebase
+git push
+```
+
+---
+
+### 🔥 Messed up `main` (again)?
+
+Create a fresh branch from a safe commit and start over:
+
+```bash
+git switch -c fix/main <commit‑hash>
+```
+
+Then merge it back once it’s stable.
+
+💡 **Professor Solo says:**
+
+> “We don’t fear mistakes — we version control them.”
+
+---
+
+## 🧩 Habits That Save the Day
+
+- 🕒 Commit at logical milestones (“feature complete,” not “end of day”)
+- 🗂️ Use branches like folders — keep work isolated and organized
+- 🧹 Prune remotes you don’t need (`git remote remove <name>`)
+- 🪣 Never commit build outputs or secrets
+- 🧘 Trust Git, but verify your pushes (`git status`, `git log`)
+- 🪐 Always add a README — even for yourself
+
+💡 **Professor Solo’s Pro Tip:**  
+“Before you hit push, ask — am I pushing progress or panic?”
+
+---
+
+## 🧠 Advanced Wisdom for the Brave
+
+- Use `git cherry‑pick` to grab just one commit from another branch
+- Use `git blame` to trace who changed what (line accountability, not judgment!)
+- Use `git bisect` to find which commit introduced a bug (fast debugging)
+- Use `git log --graph --oneline` to visualize branch history
+- Use `git config --global alias.co checkout` for shorthand speed
+
+⚙️ **Professor Solo’s Challenge:**  
+Make your own Git aliases and share them with the class.  
+Efficiency is contagious.
+
+---
+
+## ✅ Mission Check: From Pitfall to Power Move
+
+By now, we can:  
+1. Avoid common Git blunders (gracefully)  
+2. Recover lost work with `reflog` and `reset`  
+3. Prevent disasters using `.gitignore` and smart branching  
+4. Build productive Git habits that last  
+5. Laugh off mistakes (because we can fix them)
+
+---
+
+💡 **Professor Solo says:**
+
+> “In Git we trust — but we still make backups.”  
+> Keep your branches clean, your commits meaningful, and your sense of humor intact.”

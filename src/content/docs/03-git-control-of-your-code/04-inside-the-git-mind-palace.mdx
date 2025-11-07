@@ -1,0 +1,241 @@
+---
+title: Inside the Git Mind Palace
+sidebar:
+  label: Working, Staging, Committed
+  order: 4
+draft: true
+---
+
+# The Git Mind Palace
+
+Welcome to the inner sanctum of Git — the **Mind Palace**, where every change, fix, and experiment is stored like the memories of a very organized brain.
+
+If Git were alive, this is how it would think — not in folders and files, but in **synapses and snapshots**.
+
+---
+
+## 🧠 Three Chambers of Memory
+
+Every repository is built on three connected chambers — Git’s short-, mid-, and long-term memory.
+
+```
+🧠  Working Directory — sensory input
+💭  Staging Area — short-term memory
+📚  Repository — long-term memory
+```
+
+---
+
+### 🧠 Working Directory — Where Ideas Happen
+
+This is our **sensory input** zone — where the raw ideas form.  
+We write, break, test, and rewrite files here. Nothing is permanent yet.  
+When we’re ready to remember something, we **stage** it.
+
+```bash
+git add index.html
+```
+
+💡 _Think of this as telling Git: “Hey, pay attention to this one.”_
+
+---
+
+### 💭 Staging Area — Short-Term Memory
+
+The Staging Area (also called the _index_) is where Git rehearses before committing to long-term memory.  
+It’s the **filter between chaos and history**.
+
+```bash
+git status
+git add .
+git diff --staged
+```
+
+Here we choose what to remember and what to forget before the next snapshot.
+
+💡 _`git add` stores, `git diff --staged` reviews, `git restore --staged` erases from short-term memory._
+
+---
+
+### 📚 Repository — Long-Term Memory
+
+Once we commit, our ideas become part of the permanent record — **Git’s long-term memory**.
+
+```bash
+git commit -m "Capture the big idea"
+```
+
+Each commit is a neural imprint: who changed what, when, and why.
+
+We can recall or revisit any commit at any time:
+
+```bash
+git log --oneline --graph --decorate
+```
+
+💡 _Git never forgets — unless you tell it to._
+
+---
+
+## ⚙️ The Neural Pathways of Git
+
+If we map the flow, it looks something like this:
+
+```
+Working Directory → Staging Area → Repository
+        ↑                  ↑             │
+        └── restore ───────┘── pull / merge
+```
+
+Git moves information through these pathways with a few key impulses:
+
+- `git add` → encode memory
+- `git commit` → consolidate it permanently
+- `git restore` / `git checkout` → recall an older thought
+- `git diff` → compare memories
+
+---
+
+## ✅ Mission Check: Mind Mastery
+
+We can now:
+
+1. Describe the three stages of Git as memory systems
+2. Explain how `add`, `commit`, and `restore` connect them
+3. Visualize the movement of data between zones
+4. See Git not just as storage, but as cognition
+
+---
+
+💡 **Professor Solo says:**
+
+> “Your code has a memory. Treat it like a mind — curious, organized, and always learning.”
+
+---
+
+## 🧩 Step 1: Peek into Git’s Brain
+
+Let’s see what Git thinks is happening right now.
+
+```bash
+git status
+```
+
+This command tells us:
+
+- which files are new or changed
+- which are staged for commit
+- which are ignored
+
+🧠 **Translation:**  
+“Hey Git, what’s the current state of my working directory?”
+
+---
+
+## 🧱 Step 2: Add to the Staging Area
+
+When we want Git to include a file in the next snapshot, we **stage** it:
+
+```bash
+git add index.html
+git add styles.css
+```
+
+We can even stage everything (carefully):
+
+```bash
+git add .
+```
+
+💡 **Pro Tip:** `.gitignore` is our bouncer. It keeps out files we don’t want tracked — things like `node_modules/`, `.env`, and system clutter.
+
+---
+
+## 🧮 Step 3: Take the Snapshot
+
+Once we’ve staged what we want, we take the photo — we **commit** it.
+
+```bash
+git commit -m "Add home page structure and base styles"
+```
+
+Every commit creates a permanent record in our repo’s timeline.
+
+ASCII time travel visualization:
+
+```
+HEAD → ●──●──●──●──▶
+        ↑
+     current commit
+```
+
+Each dot represents a commit — a complete snapshot of our project at that point in time.
+
+---
+
+## 🧭 Step 4: Review the Timeline
+
+We can view our project’s memory with:
+
+```bash
+git log --oneline --graph --decorate
+```
+
+Output might look like this:
+
+```
+* e7ab23f (HEAD -> main) Add home page structure and base styles
+* 1e9b312 Initial commit
+```
+
+💡 **Pro Tip:**  
+Each commit has a unique hash — a sort of digital fingerprint. We can travel back to any of them at will.
+
+---
+
+## ⚙️ Step 5: Check What Changed
+
+Want to see what’s new before committing?
+
+```bash
+git diff
+```
+
+It’ll show us line-by-line what’s different between the working directory and the last commit.
+
+If we’ve already staged changes:
+
+```bash
+git diff --staged
+```
+
+This compares the staging area to the last commit — great for double-checking what we’re about to commit.
+
+---
+
+## ⚠️ Caution: Git Tracks Content, Not Files
+
+Git doesn’t care about “files” the way humans do.  
+It cares about **changes** — lines, not names.
+
+That’s why if we rename a file, Git can usually figure it out.  
+It’s like it’s saying, “Yeah, I know these lines. They just moved houses.”
+
+---
+
+## ✅ Mission Check: Git’s Brainpower Unlocked
+
+We can now:
+
+1. Explain what the working directory, staging area, and repository are
+2. Use `git status`, `git add`, and `git commit` confidently
+3. Describe the difference between staged and unstaged changes
+4. Understand that Git tracks content, not filenames
+5. Read commit history and see the project evolve over time
+
+---
+
+💡 **Professor Solo says:**
+
+> “Git doesn’t just store files. It remembers moments.  
+> Make those moments count.”

@@ -1,0 +1,188 @@
+---
+title: Branch Out, Level Up
+sidebar:
+  label: Branching
+  order: 7
+draft: true
+---
+
+# 5️⃣ Branch Out, Level Up
+
+We’ve been living a single, linear timeline — one commit after another.  
+But what if we want to try something new *without breaking what’s working*?  
+
+Welcome to **branching**, Git’s superpower for exploring alternate realities.
+
+---
+
+## 🌿 What a Branch Really Is
+
+A branch isn’t a copy of your project — it’s just a pointer to a commit.  
+Think of it as a **timeline bookmark** that can grow in a new direction.
+
+```
+main ──●──●──●──●──▶
+          \
+           └──●──●──▶ feature/add-bio
+```
+
+💡 Each branch can move independently. When we switch branches, we’re essentially *time traveling* between versions of our code.
+
+---
+
+## 🧱 Step 1: Create and Switch Branches
+
+We create a new branch like this:
+
+```bash
+git branch feature/add-bio
+```
+
+That makes the branch, but doesn’t move us to it yet.  
+To hop timelines:
+
+```bash
+git switch feature/add-bio
+```
+
+Or do both in one step:
+
+```bash
+git switch -c feature/add-bio
+```
+
+Now we’re living on our new branch. 🎉
+
+---
+
+## 🧭 Step 2: Work Freely
+
+Edit files, add features, break things, and fix them again — all without touching `main`.
+
+Let’s say we update `index.html` to add a new bio section:
+
+```html
+<section id="bio">
+  <h2>Meet the Developer</h2>
+  <p>Professor Solo: lover of syntax, breaker of bugs.</p>
+</section>
+```
+
+Then commit it:
+
+```bash
+git add index.html
+git commit -m "Add bio section to homepage"
+```
+
+Now our branch has diverged from main — a safe space for creativity.
+
+---
+
+## 🪄 Step 3: Merge Back to Main
+
+Once the branch is ready, we bring those changes home.
+
+```bash
+git switch main
+git merge feature/add-bio
+```
+
+If no one else has changed the same lines, Git merges automatically — known as a **fast-forward** merge.
+
+```
+main ──●──●──●──●──●──●──▶
+                 ↑
+             merged branch
+```
+
+We can now safely delete the branch:
+
+```bash
+git branch -d feature/add-bio
+```
+
+Git keeps the history, even after the branch itself is gone.
+
+---
+
+## 💥 Step 4: Handling Merge Conflicts
+
+Sometimes, two branches change the same file in different ways.  
+That’s when Git taps us on the shoulder:
+
+```
+<<<<<<< HEAD
+<p>Welcome to the Web Dev TnT Lab!</p>
+=======
+<p>Welcome to the Professor Solo Experience!</p>
+>>>>>>> feature/add-bio
+```
+
+We fix the conflict manually — choose what stays, what goes, or even combine both — then:
+
+```bash
+git add index.html
+git commit
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Merge conflicts aren’t failures — they’re conversations between timelines.
+
+---
+
+## 🌲 Step 5: Naming Branches Like a Pro
+
+Good branch names make collaboration clear:
+
+| Type | Prefix | Example |
+|------|---------|----------|
+| New feature | `feature/` | `feature/add-contact-form` |
+| Bug fix | `fix/` | `fix/nav-hover-color` |
+| Hotfix | `hotfix/` | `hotfix/login-error` |
+| Docs | `docs/` | `docs/update-readme` |
+| Release | `release/` | `release/2.0.0` |
+
+💡 Use **kebab-case** (all lowercase, hyphen-separated).  
+Avoid spaces, punctuation, and emojis — no matter how tempting.
+
+---
+
+## 🧩 Step 6: See All Branches
+
+List all local branches:
+
+```bash
+git branch
+```
+
+See remote branches too:
+
+```bash
+git branch -r
+```
+
+And view the branch graph with:
+
+```bash
+git log --oneline --graph --decorate --all
+```
+
+This command shows all the project’s timelines at once — the Git multiverse.
+
+---
+
+## ✅ Mission Check: The Multiverse Awaits
+
+We can now:
+1. Create and switch branches (`git switch -c branch-name`)  
+2. Merge changes back into main (`git merge`)  
+3. Resolve conflicts gracefully  
+4. Follow naming conventions for clarity  
+5. Visualize and manage multiple timelines at once
+
+---
+
+💡 **Professor Solo says:**  
+> “Branching isn’t about breaking things — it’s about building boldly.  
+> Explore your what-ifs, then merge your masterpieces.”

@@ -1,0 +1,181 @@
+---
+/* RegexBossBattleSkinned.astro — themed to WebDevTnT (CSS Dynamite) */
+const pattern = String.raw`^(?=.*[A-Z].*[A-Z].*[A-Z].*[A-Z].*[A-Z])(?=.*\d.*\d.*\d.*\d.*\d.*\d.*\d.*\d)(?=.*[!@#$%^&*()_\-+=\[\{\]};:'",<.>/?\\|].*[!@#$%^&*()_\-+=\[\{\]};:'",<.>/?\\|].*[!@#$%^&*()_\-+=\[\{\]};:'",<.>/?\\|])(?=.*TnT)(?=.*Web Dev)(?=.*Learn)(?!.*p4ssw0rd).{67,}$`;
+---
+<style>
+  /* Use site tokens if present; provide fallbacks */
+  :root{
+    --brand-primary: var(--brand-primary, #ff7a00);
+    --brand-accent: var(--brand-accent, #ffd166);
+    --brand-ink: var(--brand-ink, #0f172a);
+    --brand-muted: var(--brand-muted, #475569);
+    --brand-surface: var(--brand-surface, #ffffff);
+    --brand-line: var(--brand-line, #e2e8f0);
+    --radius: var(--radius, 14px);
+  }
+  *{box-sizing:border-box}
+  .wrap{margin:0 auto; max-width:1100px; padding:1.25rem; min-height:60vh}
+  .hero{
+    position: relative;
+    padding: clamp(1rem, 2vw + 1rem, 2rem);
+    border-radius: var(--radius);
+    background:
+      radial-gradient(1200px 600px at 50% 0%, rgba(255,209,102,.25) 0%, rgba(255,209,102,0) 60%),
+      linear-gradient(135deg, #ff3a8a 0%, #3ad5ff 50%, #7bff7a 100%);
+    color: var(--brand-ink);
+    box-shadow: 0 18px 48px -18px rgba(15, 23, 42, 0.4);
+    border: 1px solid var(--brand-line);
+    overflow: hidden;
+  }
+  .hero h1{margin:0 0 .25rem; font-size: clamp(1.6rem, 2.4vw + 1rem, 2.6rem); letter-spacing:.2px}
+  .pill{display:inline-block; background:#fff3e8; color:#8a2c00; border:1px solid #ffd7b0; padding:.15rem .6rem; border-radius:999px; font-size:.9rem}
+  .tag{color: var(--brand-muted)}
+
+  .card{
+    background: var(--brand-surface);
+    border: 1px solid var(--brand-line);
+    border-radius: var(--radius);
+    box-shadow: 0 18px 48px -18px rgba(15,23,42,.28);
+    padding: 1.25rem;
+    margin: 1rem 0;
+    backdrop-filter: saturate(120%);
+  }
+  label{font-weight:700; display:block; margin-bottom:.35rem}
+  input[type="password"]{
+    width:100%; padding:.9rem 1rem; border:1px solid var(--brand-line);
+    border-radius: calc(var(--radius) - 4px); font-size:1rem; color: var(--brand-ink);
+    background: var(--brand-surface);
+    transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  input[type="password"]:focus{outline: none; box-shadow: 0 0 0 3px rgba(255,122,0,.35), 0 0 0 6px rgba(255,209,102,.25)}
+  .row{display:grid; gap:1rem; grid-template-columns:1fr}
+  @media (min-width: 860px){ .row{ grid-template-columns:1.1fr .9fr } }
+  ul.checks{list-style:none; padding:0; margin:.25rem 0 0 0}
+  ul.checks li{display:flex; align-items:start; gap:.5rem; padding:.35rem 0}
+  .ok,.bad{font-weight:800; width:1.2rem; text-align:center}
+  .ok{color:#22c55e} .bad{color:#ef4444}
+  code{background:#0b1220; color:#e2e8f0; padding:.25rem .5rem; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "JetBrains Mono", monospace}
+  pre{background:#0b1220; color:#e2e8f0; padding:1rem; border-radius:10px; overflow:auto; box-shadow: 0 12px 30px -18px rgba(0,0,0,.35)}
+
+  .footer{
+    position: sticky; bottom: 0; margin-top: 2rem;
+    min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    padding: 0 1.25rem;
+    background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+    border-top: 2px solid var(--brand-primary);
+    backdrop-filter: blur(6px) saturate(140%);
+    color: #111827;
+    box-shadow: 0 -8px 24px -12px rgba(0,0,0,.2);
+    border-bottom-left-radius: var(--radius);
+    border-bottom-right-radius: var(--radius);
+  }
+
+  @media (prefers-color-scheme: dark){
+    .hero{ color: #e5e7eb; }
+    .tag{ color: #9aa4b2; }
+    .card{ background:#111827; border-color:#273142; box-shadow: 0 16px 40px -18px rgba(0,0,0,.85); }
+    input[type="password"]{ background:#0b1220; color:#e5e7eb; border-color:#273142; }
+    .footer{
+      background: linear-gradient(180deg, rgba(15,23,42,.9), rgba(15,23,42,.82));
+      color: #e5e7eb;
+    }
+  }
+</style>
+
+<div class="wrap">
+  <section class="hero card">
+    <h1>Regex Boss Battle <span class="pill">WebDevTnT Skin</span></h1>
+    <p class="tag">Must include <code>TnT</code>, <code>Web Dev</code>, <code>Learn</code>; exclude <code>p4ssw0rd</code>; ≥5 uppercase, ≥8 digits, ≥3 symbols; length ≥ 67.</p>
+  </section>
+
+  <section class="card">
+    <div class="row">
+      <div>
+        <label for="pw">Enter your ultimate password</label>
+        <input id="pw" type="password" placeholder="Type here to battle the regex…" { ...{ pattern } } />
+        <p class="tag" id="status">Waiting for input…</p>
+      </div>
+      <div>
+        <strong>Live Checks</strong>
+        <ul class="checks" id="checks">
+          <li><span class="bad">✖</span><span>Length ≥ 67</span></li>
+          <li><span class="bad">✖</span><span>Uppercase letters ≥ 5</span></li>
+          <li><span class="bad">✖</span><span>Digits ≥ 8</span></li>
+          <li><span class="bad">✖</span><span>Symbols ≥ 3 (set: <code>!@#$%^&*()_-+=[]{};:'",&lt;.&gt;/?\|</code>)</span></li>
+          <li><span class="bad">✖</span><span>Contains <code>TnT</code></span></li>
+          <li><span class="bad">✖</span><span>Contains <code>Web Dev</code></span></li>
+          <li><span class="bad">✖</span><span>Contains <code>Learn</code></span></li>
+          <li><span class="bad">✖</span><span>Does NOT contain <code>p4ssw0rd</code></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>The Pattern</h2>
+    <pre><code>{pattern}</code></pre>
+  </section>
+
+  <section class="card">
+    <h2>Regex &amp; Pattern Resources</h2>
+    <ul class="tag">
+      <li><a href="https://developer.mozilla.org/docs/Web/HTML/Attributes/pattern" target="_blank" rel="noopener">MDN: HTML <code>pattern</code> attribute</a></li>
+      <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Guide/Regular_expressions" target="_blank" rel="noopener">MDN: JavaScript Regular Expressions</a></li>
+      <li><a href="https://regex101.com/" target="_blank" rel="noopener">regex101 (PCRE/JS tester, explanations)</a></li>
+      <li><a href="https://regexr.com/" target="_blank" rel="noopener">RegExr (learn &amp; test)</a></li>
+      <li><a href="https://regexper.com/" target="_blank" rel="noopener">Regexper (railroad diagrams)</a></li>
+      <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP: Password &amp; auth guidance</a></li>
+    </ul>
+  </section>
+
+  <div class="footer">
+    <span class="brand"><strong>Professor Solo · WebDevTnT</strong></span>
+    <span class="tag">© 2025 · “p.s. keep learning.”</span>
+  </div>
+</div>
+
+<script is:inline>
+  const el = document.getElementById('pw');
+  const status = document.getElementById('status');
+  const checks = document.getElementById('checks').querySelectorAll('li');
+
+  const symRe = /[!@#$%^&*()_\-+=\[\{\]};:'",<.>\/?\\|]/g;
+  function countMatches(str, re) {
+    const m = str.match(re);
+    return m ? m.length : 0;
+  }
+  function update() {
+    const v = el.value || "";
+    const uppercase = countMatches(v, /[A-Z]/g);
+    const digits = countMatches(v, /\d/g);
+    const symbols = countMatches(v, symRe);
+    const hasTnT = v.includes("TnT");
+    const hasWebDev = v.includes("Web Dev");
+    const hasLearn = v.includes("Learn");
+    const hasBanned = v.includes("p4ssw0rd");
+    const longEnough = v.length >= 67;
+
+    const results = [
+      longEnough,
+      uppercase >= 5,
+      digits >= 8,
+      symbols >= 3,
+      hasTnT,
+      hasWebDev,
+      hasLearn,
+      !hasBanned
+    ];
+
+    checks.forEach((li, i) => {
+      const badge = li.firstElementChild;
+      if (results[i]) { badge.textContent = "✔"; badge.className = "ok"; }
+      else { badge.textContent = "✖"; badge.className = "bad"; }
+    });
+
+    const allOk = results.every(Boolean);
+    status.textContent = allOk ? "🔥 Regex Victory! Form will validate." : "💀 Keep going… conditions not yet met.";
+    el.setAttribute("pattern", {pattern});
+  }
+  el?.addEventListener('input', update);
+  update();
+</script>

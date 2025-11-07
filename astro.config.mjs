@@ -22,8 +22,8 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: 'Version Control with Git and GitHub',
-    directory: '02-version-control-git-github',
+    label: 'Git Control of Your Code',
+    directory: '03-git-control-of-your-code',
     released: false,
   }, // UNRELEASED
   {

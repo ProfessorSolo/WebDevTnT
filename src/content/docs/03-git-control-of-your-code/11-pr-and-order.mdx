@@ -1,0 +1,150 @@
+---
+title: PR and Order
+sidebar:
+  label: Pull Requests
+  order: 11
+draft: true
+---
+
+# PR and Order
+
+Welcome to **PR and Order** — the courtroom drama of version control, where branches argue their case before being merged into `main`.
+
+This is where collaboration gets real — code is reviewed, feedback is shared, and quality rises.
+
+---
+
+## ⚖️ What a Pull Request Really Is
+
+A **Pull Request** (PR) is a formal way to say:
+
+> “I’ve made changes on this branch. I think they’re ready. Let’s review before merging.”
+
+It’s not just about merging code — it’s about **communication**.
+
+ASCII courtroom sketch:
+
+```
+main ──●──●────────▶
+          \
+           └──●──●──▶ feature/add-form
+```
+
+The PR compares one branch (often `feature/add-form`) against another (often `main`) and asks for judgment.
+
+---
+
+## 🧱 Step 1: Create a Pull Request
+
+1. Commit and push your branch to GitHub
+   ```bash
+   git push origin feature/add-form
+   ```
+2. Go to your repository on GitHub
+3. Click **Compare & pull request**
+4. Write a clear title and description (what you did and why)
+5. Submit for review
+
+💡 **Professor Solo’s Pro Tip:**  
+Titles are headlines. Descriptions are context.  
+If your PR needs a scroll bar, it’s too big — break it up.
+
+---
+
+## 💬 Step 2: The Review Process
+
+Reviews are about improvement, not perfection.  
+When someone reviews your PR, they might:
+
+- Ask questions (“Why this approach?”)
+- Spot bugs or inconsistencies
+- Suggest better naming or structure
+- Compliment clever code (don’t skip that part!)
+
+Example feedback:
+
+> 💬 “Nice accessibility fix! Could we use a semantic `<button>` here instead of a `<div>`?”
+
+Respectful feedback turns reviews into **conversations**, not conflicts.
+
+---
+
+## 🧠 Step 3: Respond and Revise
+
+We can update our PR anytime by pushing more commits to the same branch:
+
+```bash
+git add .
+git commit -m "Refactor header for accessibility"
+git push
+```
+
+GitHub updates the PR automatically.
+
+💡 **Professor Solo’s Pro Tip:**  
+Don’t take code reviews personally. Take them professionally.  
+Every review is a free lesson in better coding.
+
+---
+
+## 🪄 Step 4: Merging the PR
+
+Once everyone’s happy, it’s time to merge.  
+GitHub offers three options:
+
+| Method               | When to Use               | What It Does                                     |
+| -------------------- | ------------------------- | ------------------------------------------------ |
+| **Merge Commit**     | Default option            | Keeps full history                               |
+| **Squash and Merge** | For small/focused PRs     | Combines commits into one clean snapshot         |
+| **Rebase and Merge** | For linear history lovers | Rewrites commit order into one straight timeline |
+
+⚠️ **Caution:** Rebasing rewrites history — great for your branch, risky for shared ones.
+
+---
+
+## 🧩 Step 5: Clean Up the Branch
+
+After merging, keep your repo tidy:
+
+```bash
+git branch -d feature/add-form
+git push origin --delete feature/add-form
+```
+
+A clean repo is a happy repo.  
+Old branches are like leftovers — deal with them before they smell.
+
+---
+
+## 🎓 Step 6: Review Etiquette — The Laws of PR and Order
+
+| Rule           | Why It Matters                                             |
+| -------------- | ---------------------------------------------------------- |
+| Be clear       | Ambiguity wastes time                                      |
+| Be kind        | Reviews are for learning, not ego                          |
+| Be concise     | Nobody likes a wall of text                                |
+| Be accountable | Explain your changes and decisions                         |
+| Be curious     | Ask questions, not just for approval but for understanding |
+
+💡 **Professor Solo’s Pro Tip:**  
+Good reviewers ask, “Can I understand this?” not “Can I improve this?”  
+Clarity beats cleverness every time.
+
+---
+
+## ✅ Mission Check: Order Restored
+
+By now, we can:
+
+1. Create a Pull Request on GitHub
+2. Write clear titles and context
+3. Participate in a respectful review process
+4. Merge PRs with confidence and clarity
+5. Keep repos clean and organized post-merge
+
+---
+
+💡 **Professor Solo says:**
+
+> “In this court of code, clarity is justice.  
+> PRs aren’t paperwork — they’re how we keep chaos civilized.”

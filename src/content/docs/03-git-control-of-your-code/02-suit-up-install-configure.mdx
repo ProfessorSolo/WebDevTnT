@@ -1,0 +1,173 @@
+---
+title: Suit Up - Installing & Configuring Git
+sidebar:
+  label: Install & Configure
+  order: 3
+draft: true
+---
+
+# 1️⃣ Suit Up: Installing & Configuring Git
+
+Before we can travel through time, we need our **gear** — and in our world, that gear is **Git**.
+
+Git is the engine that powers version control.  
+It’s not fancy, but it’s unstoppable — a command-line superhero that quietly tracks every twist and turn of your code’s story.
+
+---
+
+## 🧰 Step 1: Installing Git
+
+Git runs just about everywhere — and installation is usually painless.
+
+| System      | Command or Link                                                                                                         |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Windows** | [gitforwindows.org](https://gitforwindows.org) — includes **Git Bash**, a lightweight terminal for running Git commands |
+| **macOS**   | `brew install git` or download from [git-scm.com/download/mac](https://git-scm.com/download/mac)                        |
+| **Linux**   | `sudo apt install git` (Debian/Ubuntu) or your distro’s package manager                                                 |
+
+After installing, open your terminal (or Git Bash on Windows) and test it:
+
+```bash
+git --version
+```
+
+If you get a version number, you’re good to go.  
+If you get an error, check your PATH — Git needs to be accessible globally.
+
+---
+
+### 🧠 Note: What “Installing Git” Really Means
+
+Installing Git doesn’t just give us one program — it adds a **command-line tool** and a **background system** that remembers changes to files and folders.
+
+When we type commands like `git init` or `git status`, we’re really just telling that system:
+
+> “Hey Git, track what’s happening in this folder.”
+
+That invisible magic happens through a hidden directory called `.git`.  
+(You won’t see it unless you ask Git to show it — but it’s always watching. 👀)
+
+---
+
+## 🪟 Optional: GitHub Desktop
+
+If the command line feels intimidating at first, GitHub Desktop is your friendly training wheels.
+
+- [Download GitHub Desktop](https://desktop.github.com/)
+- Works on both **Mac** and **Windows**
+- Includes Git automatically
+
+💡 **Professor Solo’s Take:**  
+GitHub Desktop is great for visualizing your work and getting started quickly.  
+But… we’ll still learn to use the **CLI (Command Line Interface)** because it’s faster, more precise, and doesn’t change every time the UI does.
+
+If you can drive Git from the command line, you can use _any_ Git tool in the world.
+
+---
+
+## ⚙️ Step 2: Configure Git (Identity & Defaults)
+
+The first time we install Git, it knows nothing about us.  
+Before we start committing, we need to introduce ourselves — politely, like good developers.
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+```
+
+🧠 **What’s Happening Here:**
+
+- `user.name` and `user.email` become your signature.
+- Every commit includes this info, so GitHub and teammates know who did what.
+
+---
+
+### 🪩 Customize Your Experience
+
+We can also tweak how Git behaves:
+
+```bash
+git config --global color.ui auto
+git config --global init.defaultBranch main
+```
+
+- `color.ui auto` gives you pretty color-coded output
+- `init.defaultBranch main` makes “main” the default branch instead of “master” (modern convention)
+
+---
+
+### 💡 Professor Solo’s Pro Tip
+
+Let’s make Git friendlier with some aliases — little shortcuts for the commands we’ll use most:
+
+```bash
+git config --global alias.st status
+git config --global alias.ci commit
+git config --global alias.co checkout
+git config --global alias.br branch
+git config --global alias.lg "log --oneline --graph --decorate --all"
+```
+
+Now we can type things like:
+
+```bash
+git st     # instead of git status
+git lg     # visual log of history
+```
+
+That’s not cheating — that’s efficient rebellion.
+
+---
+
+## 🧩 Step 3: Verify Your Configuration
+
+```bash
+git config --list
+```
+
+This command lists all your active settings — everything Git knows about you and how it’s configured.  
+If something looks off, edit or remove entries with:
+
+```bash
+git config --global --edit
+```
+
+It’ll open your config file in your default text editor.
+
+---
+
+## ⚠️ Caution: Global vs Local Configs
+
+When we use `--global`, we’re changing Git’s settings for **every project** on the computer.
+
+If we just want different settings for one project (say, a school account vs personal account):
+
+```bash
+git config --local user.email "school@example.edu"
+```
+
+Git reads settings in this order:
+
+1. Local (project-specific)
+2. Global (user-wide)
+3. System (machine-wide)
+
+So local overrides global.
+
+---
+
+## ✅ Mission Check: Our First Commit-Ready Setup
+
+When this page’s steps are complete, we should be able to:
+
+1. Open a terminal
+2. Type `git --version` and get a response
+3. Type `git config --list` and see our name, email, and color settings
+4. Feel a tiny spark of power knowing we’ve just joined the league of version-controlled developers
+
+---
+
+💡 **Professor Solo says:**
+
+> “A developer without Git is like a wizard without a wand.  
+> Time to suit up.”

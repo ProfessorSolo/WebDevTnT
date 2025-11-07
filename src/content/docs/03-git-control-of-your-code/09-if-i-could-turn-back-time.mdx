@@ -1,0 +1,176 @@
+---
+title: If I Could Turn Back Time
+sidebar:
+  label: Undo & Restore
+  order: 9
+draft: true
+---
+
+# If I Could Turn Back Time
+
+Even the best of us make mistakes — wrong edits, premature commits, or the dreaded “oops, I deleted the wrong file.”  
+Good news: Git lets us **turn back time** without drama.
+
+We can’t undo a bad hair day, but we _can_ undo a bad commit.
+
+---
+
+## 🧭 Step 1: Unstage Without Losing Work
+
+If we accidentally added the wrong file to staging, we can pull it back out:
+
+```bash
+git restore --staged index.html
+```
+
+This keeps the file’s changes, but removes it from the staging area.
+
+ASCII time machine view:
+
+```
+Working Directory   ← still has your edits
+Staging Area        ← file removed from here
+Repository          ← unchanged
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Think of this as “unchecking a box” — you’re not deleting, just deselecting.
+
+---
+
+## 🧱 Step 2: Discard Changes in the Working Directory
+
+If we’ve changed something and want to go back to how it looked in the last commit:
+
+```bash
+git restore index.html
+```
+
+⚠️ **Caution:** This wipes your current edits — gone for good unless you stashed or committed first.
+
+Use it only when you’re sure you don’t need those changes.
+
+---
+
+## 🧩 Step 3: Undo the Last Commit (Without Losing Work)
+
+Sometimes we commit too soon — maybe forgot a file, or need a better message.
+
+```bash
+git commit --amend
+```
+
+This reopens the last commit, letting us add new changes or rewrite the message.
+
+💡 Git doesn’t replace your commit — it creates a new one behind the scenes.
+
+---
+
+## 🧮 Step 4: Rewind to an Earlier Commit
+
+When we need to step backward through history:
+
+```bash
+git reset --hard HEAD~1
+```
+
+This moves the HEAD pointer back one commit — erasing the most recent commit _and_ the changes.
+
+ASCII flashback moment:
+
+```
+HEAD → ●──●──▶
+         ↑
+     rolled back here
+```
+
+⚠️ **Warning:** `--hard` deletes uncommitted work.  
+Use with care — and maybe a deep breath.
+
+---
+
+## 🧠 Step 5: Safer Alternative — Soft Reset
+
+Want to keep your changes but uncommit them?
+
+```bash
+git reset --soft HEAD~1
+```
+
+This moves HEAD back one commit, but leaves all your work staged and ready to recommit.
+
+💡 Perfect for “oops, wrong message” moments.
+
+---
+
+## 🧹 Step 6: Stash Your Work for Later
+
+Need to switch branches but don’t want to commit unfinished work?
+
+```bash
+git stash -m "Work in progress on homepage"
+```
+
+Your changes vanish from view — but safely tucked away.
+
+List all stashes:
+
+```bash
+git stash list
+```
+
+Bring one back:
+
+```bash
+git stash apply stash@{0}
+```
+
+Git magic: your edits reappear exactly where you left them.
+
+---
+
+## 🕵️ Step 7: Find What Was Lost (reflog)
+
+Even when we think we’ve lost everything, Git keeps a secret diary — the **reflog**.
+
+```bash
+git reflog
+```
+
+It lists every movement of HEAD — commits, resets, checkouts, even detached time travel.
+
+Example output:
+
+```
+a1b2c3d (HEAD -> main) HEAD@{0}: commit: Update footer text
+d4e5f6a HEAD@{1}: reset: moving to HEAD~1
+f7a8b9c HEAD@{2}: commit: Add footer section
+```
+
+If disaster strikes, we can always rescue an old commit with:
+
+```bash
+git switch -c rescue a1b2c3d
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+The reflog is your safety net — it remembers even the moments you regret.
+
+---
+
+## ✅ Mission Check: Time Travel Achieved
+
+By now, we can:
+
+1. Unstage files without deleting them (`git restore --staged`)
+2. Discard local changes safely (`git restore`)
+3. Amend or undo recent commits (`git commit --amend`, `git reset`)
+4. Stash work for later (`git stash`)
+5. Recover from chaos with `git reflog`
+
+---
+
+💡 **Professor Solo says:**
+
+> “If I could turn back time… I’d still use Git.  
+> If I could find a way, I’d stash my mistakes before lunch.”

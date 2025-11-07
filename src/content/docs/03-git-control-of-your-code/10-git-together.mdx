@@ -1,0 +1,156 @@
+---
+title: Git Together
+sidebar:
+  label: Collaboration
+  order: 10
+draft: true
+---
+
+# Git Alone or Git Together
+
+Git isn’t just a tool — it’s a lifestyle choice.  
+We can use it to manage our own creative chaos or to collaborate with an entire team of developers across time zones.
+
+Let’s explore how Git adapts to different worlds: **solo projects**, **teamwork**, and **release management**.
+
+---
+
+## 👤 Solo Developer Mode — The One-Person Orchestra
+
+Even if we’re coding solo, Git is our creative safety net.  
+We can branch, experiment, and tag our milestones without fear of breaking anything.
+
+```bash
+git switch -c feature/add-animation
+# build, test, commit, repeat
+git switch main
+git merge feature/add-animation
+git tag -a v1.0 -m "First full release"
+git push origin main --tags
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Tags are like time capsules. They mark stable points in history — perfect for showing progress or rolling back if needed.
+
+---
+
+### 🧠 When to Branch (Even Alone)
+
+| Situation                 | Why Branch?                        |
+| ------------------------- | ---------------------------------- |
+| Trying a new layout       | Keeps your experiments separate    |
+| Debugging something risky | Lets you fix without wrecking main |
+| Testing a new library     | Easy cleanup if it doesn’t pan out |
+
+Branching keeps solo projects clean and fearless.
+
+---
+
+## 👥 Team Collaboration Mode — The Code Chorus
+
+When multiple people work on the same project, Git becomes the glue that keeps everything in sync.
+
+Here’s the basic flow for collaborating with teammates:
+
+1. Pull the latest changes from `main`
+   ```bash
+   git pull origin main
+   ```
+2. Create a feature branch for your task
+   ```bash
+   git switch -c feature/add-login
+   ```
+3. Commit your changes locally
+   ```bash
+   git add .
+   git commit -m "Add login page and authentication flow"
+   ```
+4. Push your branch to GitHub
+   ```bash
+   git push origin feature/add-login
+   ```
+5. Open a **Pull Request (PR)** on GitHub  
+   Discuss, review, and merge changes when everyone’s happy.
+
+💡 **Professor Solo’s Pro Tip:**  
+Don’t all work on `main` at once. That’s like five chefs using one cutting board. Feature branches keep things tidy and conflict-free.
+
+---
+
+## 🤝 Handling Merge Conflicts with Grace
+
+Even with teamwork, sometimes Git will say: “Hey, we both changed the same file.”
+
+Conflicts happen — and that’s okay. Git marks the problem area, and we fix it manually:
+
+```
+<<<<<<< HEAD
+<p>Welcome to the Web Dev TnT Lab!</p>
+=======
+<p>Welcome to the Professor Solo Experience!</p>
+>>>>>>> feature/add-login
+```
+
+Then:
+
+```bash
+git add .
+git commit
+```
+
+Conflicts resolved, harmony restored.
+
+---
+
+## 🚀 Release Management — The Art of Stability
+
+As projects grow, teams use **release branches** to freeze code for testing and bug fixes.
+
+```bash
+git switch -c release/2.0
+# finalize and test
+git tag -a v2.0 -m "Version 2.0 stable release"
+git push origin --tags
+```
+
+Later, hotfixes can branch directly from main:
+
+```bash
+git switch -c hotfix/urgent-patch
+# fix -> test -> merge -> tag -> deploy
+```
+
+💡 **Professor Solo’s Pro Tip:**  
+Release branches are like staging areas before the show — polish, don’t innovate.
+
+---
+
+## 🌍 Real-World Git Scenarios
+
+| Scenario                 | Git Strategy                          |
+| ------------------------ | ------------------------------------- |
+| Personal portfolio       | Solo repo with version tags           |
+| Class project team       | Shared repo, each on feature branches |
+| Open source contribution | Fork the repo, open PRs for changes   |
+| Production web app       | Develop → Release → Hotfix workflow   |
+
+Git scales with us — from homework to high-stakes deployment.
+
+---
+
+## ✅ Mission Check: Harmony in Version Control
+
+By now, we can:
+
+1. Manage solo projects confidently with tags and branches
+2. Collaborate using feature branches and pull requests
+3. Handle merge conflicts like pros
+4. Create release branches and hotfixes
+5. Adapt Git workflows to fit any team or project size
+
+---
+
+💡 **Professor Solo says:**
+
+> “Whether you’re flying solo or jamming with a full band, Git keeps everyone in tune.  
+> Just remember — commit early, merge often, and always name your branches like you mean it.”
