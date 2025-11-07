@@ -24,8 +24,8 @@ const COURSE_MODULES = [
   {
     label: 'Git Control of Your Code',
     directory: '03-git-control-of-your-code',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'Responsive Images and Navigation',
     directory: '03-day-three',
@@ -60,7 +60,7 @@ const COURSE_MODULES = [
     label: 'Bits, Bytes, and Bobs: Course Resources, Guides, and Tips',
     directory: '99-bits-bytes-and-bobs',
     released: true,
-  }, // UNRELEASED
+  },
 ];
 
 // SHOW_ALL_CONTENT is TRUE if running the local dev server.
