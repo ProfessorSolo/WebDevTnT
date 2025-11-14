@@ -29,7 +29,7 @@ const COURSE_MODULES = [
   {
     label: 'Optimal Image Prime',
     directory: '04-optimal-image-prime',
-    released: false,
+    released: true,
   }, // true
   {
     label: 'Hamburgers on the Menu',
