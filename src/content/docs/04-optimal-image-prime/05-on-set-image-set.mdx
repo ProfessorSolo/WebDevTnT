@@ -1,0 +1,132 @@
+---
+title: 'On Set, image-set()'
+description: 'Give your CSS backgrounds srcset-style superpowers with image-set() for density and format-aware images.'
+sidebar:
+  order: 6
+  label: 'image-set() backgrounds'
+draft: false
+---
+
+# Picture Power, the CSS way`
+
+Sometimes your images don’t live in HTML at all — they live in **CSS** as
+backgrounds for hero sections, cards, and panels. When that happens, you still
+want the browser to pick the **right file** for the current device.
+
+That’s where `image-set()` comes in: it’s the background-image cousin of
+`srcset`.
+
+---
+
+## 🎯 What `image-set()` does
+
+`image-set()` lets the browser:
+
+- switch between **1× and 2× (or higher)** images based on device pixel ratio
+- optionally choose between **different formats** (AVIF vs JPEG, etc.)
+- do all of this **before downloading** the image
+
+You give the browser a menu of options, and it picks the best one.
+
+---
+
+## 🎥 Quick live demo
+
+Resize your browser and, if you can, toggle between 1× and 2× DPR in DevTools.
+This panel uses `image-set()` to choose between a close-up and an extreme
+close-up of the same cat film set.
+
+<div
+  className="on-set-image-set-demo"
+  style={{
+    borderRadius: '1rem',
+    height: '260px',
+    marginBlock: '1.5rem',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundImage:
+      'image-set(\
+      url("/assets/lessons/m4-CatCloseUp-1x.webp") 1x,\
+      url("/assets/lessons/m4-CatExtremeCloseUp-2x.webp") 2x\
+    )',
+  }}
+/>
+
+> You can style `.on-set-image-set-demo` in your global or lesson stylesheet if
+> you’d rather not inline the styles.
+
+Make sure you’ve exported and placed the demo assets at:
+
+```text
+/public/assets/lessons/
+  CatCloseUp-1x.webp
+  CatExtremeCloseUp-2x.webp
+```
+
+---
+
+## 💻 The core pattern
+
+Here’s the minimal version of `image-set()` for density switching:
+
+```css
+.hero {
+  background-image: image-set(url('cats-1x.webp') 1x, url('cats-2x.webp') 2x);
+}
+```
+
+What this means:
+
+- on **1× displays**, the browser uses `cats-1x.webp`
+- on **2× (retina) displays**, it uses `cats-2x.webp`
+- the browser decides which one to download _before_ the request goes out
+
+You still pair this with the usual background styles:
+
+```css
+.hero {
+  background-size: cover;
+  background-position: center;
+}
+```
+
+---
+
+## 🧪 Format-aware backgrounds (optional)
+
+You can also use `image-set()` to prefer a modern format with a safe fallback:
+
+```css
+.hero-format {
+  background-image: url('cats-wide.jpg'); /* fallback */
+
+  background-image: image-set(
+    url('cats-wide.avif') type('image/avif') 1x,
+    url('cats-wide.jpg') type('image/jpeg') 1x
+  );
+}
+```
+
+- Browsers that support AVIF will load `cats-wide.avif`
+- Browsers that don’t will fall back to the JPEG
+
+For live demos, Firefox with the `image.avif.enabled` flag is your best friend.
+
+---
+
+## 🧠 When to use `image-set()` vs `<picture>`
+
+Use **`image-set()`** when:
+
+- the image is a **background** (purely visual, not content)
+- you’re already using `background-image` in CSS
+- you want resolution and/or format negotiation behind the scenes
+
+Use **`<picture>`** when:
+
+- the image is **content** in your HTML
+- you want to change the **composition** (wide vs square, portrait vs landscape)
+- you’re doing full-blown art direction across breakpoints
+
+Together, `srcset`, `<picture>`, and `image-set()` give you a full toolbox for
+**Optimal Image Prime** — the right pixels, right format, right place.

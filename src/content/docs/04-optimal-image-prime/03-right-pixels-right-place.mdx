@@ -1,0 +1,130 @@
+---
+title: 'Right Pixels, Right Place'
+description: 'Teach the browser how to choose the perfect image size for every screen using srcset and sizes.'
+sidebar:
+  order: 3
+  label: 'srcset + sizes'
+draft: false
+---
+
+# srcset and sizes
+
+Once your images are safely contained, it’s time to train the browser to choose
+the **right pixels** for each situation — not too big, not too small, and never wasting bandwidth.
+
+This lesson introduces **`srcset`** and **`sizes`**: the dynamic duo that lets the browser
+pick the most efficient image for any viewport width.
+
+---
+
+## 🎯 The goal
+
+You want:
+
+- small images on small screens
+- big images on wide screens
+- crisp images on retina displays
+- **zero** wasted downloads
+
+And you want the browser to handle this automatically.
+
+That’s where `srcset` and `sizes` step in.
+
+---
+
+## 🧩 The Problem: One Image Doesn’t Fit All
+
+If you load a single 2048px hero image everywhere, then:
+
+- mobile users download way more than they need
+- desktop users might see a blurry image
+- everyone wastes data
+
+And the browser has no idea what size the image will _actually_ render at.
+
+---
+
+## 🛠 The Fix: `srcset` + `sizes`
+
+Here’s the pattern:
+
+```html
+<img
+  src="./images/unicorn-small.jpg"
+  srcset="
+    ./images/unicorn-small.jpg   600w,
+    ./images/unicorn-medium.jpg 1200w,
+    ./images/unicorn-large.jpg  2000w
+  "
+  sizes="(max-width: 600px) 100vw,
+         (max-width: 1200px) 70vw,
+         50vw"
+  alt="A cyberpunk steampunk unicorn in a fantasy landscape"
+/>
+```
+
+### How it works
+
+- **`srcset`** lists the available image widths
+- **`sizes`** tells the browser how big the image will be _on the page_
+- The browser picks the **smallest file** that still looks sharp at that rendered size
+
+Boom: perfect pixel delivery.
+
+---
+
+## 👀 See it in action
+
+<img
+  src="/assets/lessons/m4-right-pixels-right-place-small.jpg"
+  srcset="
+    /assets/lessons/m4-right-pixels-right-place-small.jpg 600w,
+    /assets/lessons/m4-right-pixels-right-place-medium.jpg 1200w,
+    /assets/lessons/m4-right-pixels-right-place-large.jpg 2000w
+  "
+  sizes="(max-width: 600px) 100vw,
+         (max-width: 1200px) 70vw,
+         50vw"
+  alt="A cyberpunk steampunk unicorn in a fantasy landscape"
+  style={{ borderRadius: '1rem', marginBlock: '1rem' }}
+/>
+
+> 💡 Open DevTools → Network → Img → throttle to “Fast 3G,” resize your window,
+> and watch the browser download different images for different breakpoints.
+
+---
+
+## 📐 Understanding `sizes`
+
+This line:
+
+```html
+sizes="(max-width: 600px) 100vw, (max-width: 1200px) 70vw, 50vw"
+```
+
+translates to:
+
+- If the viewport is **600px or smaller** → image will render **full width**
+- If the viewport is **1200px or smaller** → image will render at **70% of the viewport**
+- Otherwise → **50%**
+
+The browser uses these rules _before downloading anything_, ensuring it picks exactly the image it needs.
+
+---
+
+## 🧠 When to use `srcset` + `sizes`
+
+Use this pattern when:
+
+- The same photo should scale across breakpoints
+- You want fewer bytes on mobile and crispness on desktop
+- The image appears **inline**, not as a background
+- You don’t need totally different artwork (that’s what `<picture>` is for)
+
+---
+
+## 🎉 Next Up
+
+Now that your images load the right pixels at the right time, it’s time for a little art direction magic:
+
+**Picture Rolling Action!**

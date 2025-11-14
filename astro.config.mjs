@@ -27,8 +27,13 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: 'Responsive Images and Navigation',
-    directory: '03-day-three',
+    label: 'Optimal Image Prime',
+    directory: '04-optimal-image-prime',
+    released: false,
+  }, // true
+  {
+    label: 'Hamburgers on the Menu',
+    directory: '05-hamburgers-on-the-menu',
     released: false,
   }, // UNRELEASED
   {

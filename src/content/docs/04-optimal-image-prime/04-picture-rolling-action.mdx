@@ -1,0 +1,172 @@
+---
+title: 'Picture Rolling Action!'
+description: 'Use the picture element to swap art direction across breakpoints while keeping performance tight.'
+sidebar:
+  order: 5
+  label: 'picture element'
+draft: false
+---
+
+# Art Direction with `<picture>`
+
+Sometimes you don’t just want a bigger or smaller version of the **same** image —  
+you want a totally different _shot_ at different breakpoints.
+
+That’s **art direction**, and the `<picture>` element is your director’s chair.
+
+In this lesson, we’ll swap between:
+
+- a **wide establishing shot** of the cat film set on larger screens
+- a **square behind-the-scenes shot** on smaller screens
+
+Same scene, different storytelling.
+
+---
+
+## 🎬 The idea
+
+`<picture>` lets you:
+
+- use different files at different viewport widths
+- still use `srcset` for 1x/2x (or more) inside each source
+- fall back cleanly to a regular `<img>` if nothing else matches
+
+This is perfect when the mobile view deserves its own composition instead of just a crop.
+
+---
+
+## 🔧 The Code
+
+```html
+<picture>
+  <!-- Wide screens: landscape shot -->
+  <source srcset=".images/example-wide.jpg" media="(min-width: 768px)" />
+
+  <!-- Small screens: square shot -->
+  <source srcset=".images/example-square.jpg" media="(max-width: 767px)" />
+
+  <!-- Fallback -->
+  <img
+    src=".images/example-square.jpg"
+    alt="Art-directed image that changes shape by screen size"
+  />
+</picture>
+```
+
+## 💡 What This Does
+
+- **Large screens** load the **wide / landscape** image
+- **Small screens** load the **square / mobile-friendly** image
+- The `<img>` fallback ensures broad compatibility
+- Browser checks **media queries first**, then picks the first supported `<source>`
+- This is true **art direction**: the composition, not just the size, changes
+
+---
+
+## 🎥 Live demo — wide to square
+
+Resize your browser to see the art direction swap:
+
+- **Wide viewport (≥ 768px)** → wide establishing shot
+- **Narrow viewport (< 768px)** → square behind-the-scenes shot
+
+<picture className="pra-demo-image">
+  {/* Large screens: wide establishing shot */}
+  <source
+    srcSet="
+      /assets/lessons/m4-CatCityWide-1x.webp 1x,
+      /assets/lessons/m4-CatCityWide-2x.webp 2x
+    "
+    type="image/webp"
+    media="(min-width: 768px)"
+  />
+  <source
+    srcSet="
+      /assets/lessons/m4-CatCityWide-1x.jpg 1x,
+      /assets/lessons/m4-CatCityWide-2x.jpg 2x
+    "
+    type="image/jpeg"
+    media="(min-width: 768px)"
+  />
+
+{/* Small screens: square behind-the-scenes shot */}
+
+{' '}
+
+<source
+  srcSet="
+      /assets/lessons/m4-CatSquareBehindTheScenes-1x.webp 1x,
+      /assets/lessons/m4-CatSquareBehindTheScenes-2x.webp 2x
+    "
+  type="image/webp"
+  media="(max-width: 767px)"
+/>
+<source
+  srcSet="
+      /assets/lessons/m4-CatSquareBehindTheScenes-1x.jpg 1x,
+      /assets/lessons/m4-CatSquareBehindTheScenes-2x.jpg 2x
+    "
+  type="image/jpeg"
+  media="(max-width: 767px)"
+/>
+
+{/* Fallback if nothing else matches */}
+
+  <img
+    src="/assets/lessons/m4-CatSquareBehindTheScenes-1x.jpg"
+    alt="Cat film crew on set in a neon-lit studio"
+    loading="lazy"
+    style={{ borderRadius: '1rem', maxWidth: '100%', height: 'auto' }}
+  />
+</picture>
+
+> 💡 Tip: you can also drop this `<picture>` directly into your Starlight layout
+> and style `.pra-demo-image` with your shared CSS.
+
+---
+
+## 🧠 How `<picture>` makes the call
+
+The browser processes `<picture>` like this:
+
+1. Check each `<source>` **top to bottom**
+2. Ignore sources whose `media` doesn’t match
+3. Among the matching ones, pick the first with a supported `type`
+4. Use that `srcset` to choose the right density (1x / 2x / etc.)
+5. If nothing matches, fall back to the `<img>` at the bottom
+
+So in our case:
+
+- On a small viewport, only the square `media="(max-width: 767px)"` sources apply
+- On a wide viewport, only the wide `media="(min-width: 768px)"` sources apply
+
+Within those, the browser still respects `1x` vs `2x`.
+
+---
+
+## 🔍 Things to point out in DevTools
+
+- Resize the viewport and watch **which file** is requested in **Network → Img**
+- On a retina simulator, see the `2x` versions load instead of `1x`
+- Use the **Elements panel** to show how `<picture>` wraps the `<img>`
+
+This drives home that `<picture>` is:
+
+> art direction at the layout level,  
+> plus resolution negotiation inside each branch.
+
+---
+
+## 🎯 When to reach for `<picture>`
+
+Use `<picture>` when:
+
+- mobile and desktop deserve different compositions
+- you want to swap between square, portrait, and wide shots
+- text or UI overlays are baked into the image
+- the meaning of the shot changes with layout
+
+If the image is purely decorative and lives in CSS, use
+[`image-set()` instead](./on-set-image-set).
+
+Your cat film crew just gave your students a front-row seat to art-directed responsive images.

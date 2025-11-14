@@ -1,0 +1,167 @@
+---
+title: 'Optimal Image Prime'
+description: 'Where performance meets picture-perfect precision — responsive images, modern formats, and adaptive navigation.'
+sidebar:
+  order: 0
+  label: 'Responsive Image Primer'
+draft: true
+---
+
+# **Responsive Image Primer**
+
+## Overview
+
+Welcome to **Optimal Image Prime** — where art direction meets optimization.  
+This module transforms how we handle media on the web: from bulky, one-size-fits-all graphics to lean, device-tuned perfection.
+
+We’ll learn to serve images that scale, adapt, and stay crisp without crushing bandwidth — and we’ll wire it all into a responsive, accessible nav system that behaves beautifully across breakpoints.
+
+---
+
+## Why Responsive Images?
+
+- **Right pixels, right context.** Viewports, densities, and layouts vary — one image can’t fit all.
+- **Performance wins.** Images dominate page weight; optimizing them improves LCP, SEO, and user experience.
+- **Design integrity.** Preserve creative intent from mobile to widescreen without distortion or bloat.
+- **Accessibility & SEO.** Proper `alt` text and format choices support users and search engines alike.
+
+---
+
+## Foundation: Image Formats
+
+| Format   | Best For                      | Pros                                    | Cons                          |
+| -------- | ----------------------------- | --------------------------------------- | ----------------------------- |
+| **JPEG** | Photos, opaque images         | Small, universal                        | No transparency               |
+| **PNG**  | UI, logos, transparency       | Lossless                                | Large file size               |
+| **SVG**  | Icons, infographics           | Infinitely scalable                     | Not for photos                |
+| **WebP** | General purpose modern format | Alpha, animation, smaller than JPEG/PNG | Limited older browser support |
+| **AVIF** | High-end photos               | HDR, very small                         | Slower to encode              |
+
+**Pro tip:** Prefer **AVIF → WebP → JPEG**, using `<picture>` for fallbacks.
+
+---
+
+## Core Techniques
+
+### Contain Our Images
+
+```css
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+### Adaptive Sources with `srcset` and `sizes`
+
+```html
+<img
+  src="images/banner-1200.jpg"
+  alt="Coastal skyline at dusk"
+  srcset="
+    images/banner-400.jpg   400w,
+    images/banner-800.jpg   800w,
+    images/banner-1200.jpg 1200w,
+    images/banner-1800.jpg 1800w
+  "
+  sizes="
+    (min-width: 1200px) 1100px,
+    (min-width: 768px) 90vw,
+    100vw
+  "
+  loading="lazy"
+/>
+```
+
+### Art Direction with `<picture>`
+
+```html
+<picture>
+  <source
+    type="image/avif"
+    srcset="hero-portrait.avif 800w, hero-landscape.avif 1600w"
+    media="(min-width: 600px)"
+  />
+  <source
+    type="image/webp"
+    srcset="hero-portrait.webp 800w, hero-landscape.webp 1600w"
+    media="(min-width: 600px)"
+  />
+  <img
+    src="hero-landscape.jpg"
+    alt="Explorer on a cliff at sunrise"
+    loading="lazy"
+  />
+</picture>
+```
+
+### Gate Background Images by Breakpoint
+
+```css
+@media (min-width: 960px) {
+  .hero {
+    background-image: image-set(
+      url('bg.avif') type('image/avif'),
+      url('bg.webp') type('image/webp'),
+      url('bg.jpg') type('image/jpeg')
+    );
+  }
+}
+```
+
+---
+
+## Lesson Flow
+
+1. **Why optimize** → images dominate page weight.
+2. **Formats quick-chart** → JPEG, PNG, SVG, WebP, AVIF.
+3. **Containment** → `max-width: 100%;`.
+4. **`srcset` + `sizes`** → w-descriptors, slot sizing.
+5. **`<picture>`** → art direction + format fallback.
+6. **DevTools testing** → disable cache, emulate support, verify network.
+7. **Performance** → lazy loading & gated backgrounds.
+8. **Responsive nav** → animated hamburger + accessible focus management.
+
+---
+
+## Assignment 03 — Responsive Images & Navigation
+
+**Course Value:** 15%
+
+**Our Mission:**
+
+- Add `srcset`/`sizes` to banner + gallery.
+- Convert featured image to `<picture>` with a cropped variant.
+- Load background images only for screens ≥ 960px.
+- Build a custom hamburger + responsive navigation.
+
+**Pro Tips:**
+
+- Use DevTools → Network to confirm which file actually loaded.
+- Disable cache in Chrome while testing.
+- Use _real intrinsic widths_ (don’t fake `w` values).
+
+---
+
+## 🔗 Code Demo Repo
+
+Want to explore the full demo for this lesson?  
+Check out the repo on GitHub:
+
+➡️ **[Optimal Image Prime — Code Demos](https://github.com/ProfessorSolo/Optimal-Image-Prime)**
+
+---
+
+## 🎥 Watch the Walkthrough
+
+Prefer to see it in action?  
+Catch the video on the Professor Solo YouTube channel:
+
+➡️ **[Professor Solo on YouTube](https://www.youtube.com/@ProfessorSolo)**
+
+---
+
+### Next Up
+
+**Day 05 · Transformers: CSS Transforms, Transitions & Animation**  
+From _Optimal Image Prime_ to _actual Transformers_ — motion, depth, and delight without the lag.

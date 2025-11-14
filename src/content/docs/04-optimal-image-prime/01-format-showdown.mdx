@@ -1,0 +1,232 @@
+---
+title: 'Image Format Showdown'
+description: 'A quick comparison of JPEG, PNG, WebP, and AVIF with strengths, weaknesses, and when to use each.'
+sidebar:
+  order: 0
+  label: 'Image Format Showdown'
+draft: false
+---
+
+# Web Image Formats
+
+Welcome to **Format Showdown**, where we pit the most common web image formats
+against each other. Each format brings its own strengths, quirks, and ideal use
+cases — your job is to choose the right tool for the right moment.
+
+This lesson gives you a fast, practical comparison so you always know which
+format to reach for during development.
+
+---
+
+## 🕰️ A (Very) Quick History
+
+Web image formats evolved as the web matured:
+
+- **GIF (1987)** — the pixel grandparent: limited colors, looping animations, and the reason PNG needed to exist.
+- **JPEG (1992)** — lossy, tiny, and perfect for photos.
+- **PNG (1996)** — lossless, crisp edges, transparency, born from GIF patent drama.
+- **SVG (1999)** — vector-based, infinitely scalable, essential for UI and icons.
+- **WebP (2010)** — lightweight modern format supporting lossy, lossless, and transparency.
+- **AVIF (2019)** — ultra-efficient high-end codec built from AV1 with incredible compression.
+
+This little timeline gives a sense of _why_ we have so many formats — and why each still matters.
+
+---
+
+## 🎞️ Classic GIF (Legacy but Iconic)
+
+GIF still has a place in the world: memes, retro vibes, and quick looping animation.
+
+<img
+  src="/assets/lessons/DoAnInternet-Imgur.gif"
+  alt="Hyperactive cartoon character rocketing over a keyboard with rainbow thrusters — the legendary 'Do an Internet' GIF in all its meme glory."
+  style={{ maxWidth: '260px', borderRadius: '0.5rem' }}
+/>
+
+---
+
+## 🟦 JPEG — The Old Reliable Workhorse
+
+**Best for:** photos, gradients, high-detail scenes  
+**Strengths:** tiny file sizes, universal support  
+**Weaknesses:** lossy only, no transparency
+
+```md
+Use JPEG when:
+
+- you need maximum compatibility
+- transparency doesn’t matter
+- the image is photographic or noisy
+```
+
+---
+
+## 🟩 PNG — Pixel-Perfect Precision
+
+**Best for:** UI elements, logos, crisp graphics  
+**Strengths:** lossless, supports transparency  
+**Weaknesses:** can be huge compared to JPEG/WebP
+
+```md
+Use PNG when:
+
+- transparency is required
+- edges must stay razor sharp
+- the image shouldn’t lose quality
+```
+
+---
+
+## 🟧 WebP — Modern Default
+
+**Best for:** almost everything  
+**Strengths:** tiny files, lossy + lossless, great quality  
+**Weaknesses:** slightly slower to encode
+
+```md
+Use WebP when:
+
+- you want smaller files without sacrificing quality
+- you need transparency _and_ efficiency
+```
+
+---
+
+## 🟪 AVIF — The High-End Contender
+
+**Best for:** photos, gradients, detailed scenes  
+**Strengths:** excellent compression, HDR support  
+**Weaknesses:** slower encoding, patchy Safari support
+
+```md
+Use AVIF when:
+
+- you want the smallest possible file size at high quality
+- you’re optimizing hero images and background art
+```
+
+---
+
+## 👀 See the formats in action
+
+All four of the images below are exported from the **same source art** at roughly
+the same dimensions. Visually, they should look almost identical — the big
+difference is file size and browser support.
+
+| Format   | Preview                                                  | filename                          |
+| -------- | -------------------------------------------------------- | --------------------------------- |
+| **JPEG** | ![JPEG example](/assets/lessons/m4-format-showdown.jpg)  | <code>format-showdown.jpg</code>  |
+| **PNG**  | ![PNG example](/assets/lessons/m4-format-showdown.png)   | <code>format-showdown.png</code>  |
+| **WebP** | ![WebP example](/assets/lessons/m4-format-showdown.webp) | <code>format-showdown.webp</code> |
+| **AVIF** | ![AVIF example](/assets/lessons/m4-format-showdown.avif) | <code>format-showdown.avif</code> |
+
+> 💡 Now, open DevTools → Network → Img and compare the
+> file sizes. The visuals barely change, but the bytes absolutely do.
+
+---
+
+## 🧠 Quick Comparison Table
+
+| Format   | Transparency | Best Use                         | Support    | Notes                                |
+| -------- | ------------ | -------------------------------- | ---------- | ------------------------------------ |
+| **GIF**  | ❌ (sort of) | Simple animation, legacy content | ⭐⭐⭐⭐⭐ | 256-color limit; only good for memes |
+| **JPEG** | ❌           | Photos                           | ⭐⭐⭐⭐⭐ | Universal fallback                   |
+| **PNG**  | ✅           | Logos/UI                         | ⭐⭐⭐⭐⭐ | Lossless but large                   |
+| **WebP** | ✅           | Everything                       | ⭐⭐⭐⭐☆  | Modern default                       |
+| **AVIF** | ✅           | High-end photo                   | ⭐⭐⭐☆☆   | Best compression                     |
+
+---
+
+## ✨ Embedded SVG (Vector Power)
+
+SVGs aren’t raster; they’re instructions your browser draws live.  
+Here’s a tiny inline SVG you can embed directly in HTML - and style with CSS - and Control with JS! :
+
+<div>
+<svg
+  width="180"
+  height="140"
+  viewBox="0 0 180 140"
+  xmlns="http://www.w3.org/2000/svg"
+  style={{ display: "block", margin: "1rem 0" }}
+>
+  {/* Badge background */}
+  <rect
+    x="10"
+    y="20"
+    rx="18"
+    ry="18"
+    width="160"
+    height="100"
+    fill="#111827"
+    stroke="#f97316"
+    strokeWidth="4"
+  />
+
+    {/* Clapboard top*/}
+
+{' '}
+<path
+  d="M20 30 H160 L145 10 H5 Z"
+  fill="#0f172a"
+  stroke="#facc15"
+  strokeWidth="3"
+/>
+{/* Clapboard Stripes*/}
+<path d="M18 26 L40 14" stroke="#e5e7eb" strokeWidth="4" />
+<path d="M46 26 L68 14" stroke="#e5e7eb" strokeWidth="4" />
+<path d="M74 26 L96 14" stroke="#e5e7eb" strokeWidth="4" />
+<path d="M102 26 L124 14" stroke="#e5e7eb" strokeWidth="4" />
+
+{/* Camera Lens */}
+{' '}
+
+<circle
+  cx="90"
+  cy="74"
+  r="22"
+  fill="#020617"
+  stroke="#38bdf8"
+  strokeWidth="3"
+/>
+<circle cx="90" cy="74" r="10" fill="#0ea5e9" />
+<circle cx="95" cy="69" r="4" fill="#e0f2fe" />
+
+{/* Little "SVG" label */}
+
+  <rect
+    x="28"
+    y="82"
+    rx="6"
+    ry="6"
+    width="40"
+    height="20"
+    fill="#f97316"
+  />
+  <text
+    x="48"
+    y="97"
+    fontSize="11"
+    fontWeight="700"
+    textAnchor="middle"
+    fill="#0b1120"
+  >
+    SVG
+  </text>
+</svg>
+</div>
+> 💡 This stays razor-sharp at any size because it’s vector, not pixels.
+
+---
+
+## 🎯 Summary
+
+If you remember nothing else:
+
+- Use **WebP** for most images
+- Use **PNG** for crisp UI and transparency
+- Use **JPEG** as a universal fallback
+- Use **AVIF** for premium quality and smallest sizes
+
+Once you’ve seen the format showdown in action, you’re ready for the next lesson:
+**Picture Rolling Action!**
