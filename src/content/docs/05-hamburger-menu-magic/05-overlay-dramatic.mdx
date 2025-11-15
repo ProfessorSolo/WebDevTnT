@@ -1,0 +1,298 @@
+---
+title: 'Overlay Dramatic'
+description: 'Crank your nav up to full-screen overlay mode for maximum focus and drama.'
+sidebar:
+  order: 5
+  label: 'Overlay Menu'
+draft: false
+---
+
+# **Take Cover and Navigate**
+
+We’ve dropped menus down.  
+We’ve slid them out.
+
+Now it’s time for the **full-screen takeover** — a cinematic overlay that steals the stage, dims the background, and puts navigation front and center.
+
+This is the “you have my full attention” version of your hamburger menu.
+
+---
+
+## 🎬 Why Go Full Overlay?
+
+Overlay menus shine when:
+
+- you want users to **focus on navigation**, not the page behind it
+- you’re designing a **mobile-first experience** with bold, app-like feel
+- you have multiple sections and want breathing room, not cramped dropdowns
+- you want a hero moment for your brand — logo, accent color, big type
+
+Same button, same basic toggle logic — just a more dramatic layout.
+
+---
+
+## 🧱 HTML: Same Core Shell
+
+We’re still building on the same HTML from earlier chapters:
+
+```html
+<header class="site-header">
+  <div class="brand-lockup">
+    <span class="site-logo">⚡</span>
+    <span class="site-title">WebDevTnT</span>
+  </div>
+
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-nav"
+  >
+    <span class="visually-hidden">Toggle navigation</span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+  </button>
+
+  <nav id="site-nav" class="site-nav" aria-label="Main">
+    <ul class="nav-list">
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Lessons</a></li>
+      <li><a href="#">Demos</a></li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">Resources</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+---
+
+## 💄 CSS Concept: Full-Screen Layer
+
+```css
+.site-nav {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease-out;
+}
+
+.site-nav.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+```
+
+---
+
+## 🧠 JavaScript: Same Toggle, Different Target
+
+```js
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('#site-nav');
+
+if (navToggle && nav) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+```
+
+---
+
+## 🧪 Live Demo: Overlay, But Make It Mini
+
+<div
+  data-demo="overlay-dramatic"
+  style={{
+    marginBlock: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
+    borderRadius: '1.25rem',
+    background: 'linear-gradient(135deg, #020617 0%, #111827 100%)',
+    boxShadow: '0 18px 40px rgba(15,23,42,0.75)',
+  }}
+>
+  <div
+    style={{
+      position: 'relative',
+      width: '100%',
+      maxWidth: '960px',
+      marginInline: 'auto',
+      padding: '0.9rem 1.5rem',
+      borderRadius: '999px',
+      border: '1px solid rgba(148,163,184,0.6)',
+      background: '#020617',
+      color: '#e5e7eb',
+      fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+      fontSize: '0.9rem',
+    }}
+  >
+    {/* Header row */}
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        columnGap: '1rem',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-flex',
+            width: '26px',
+            height: '26px',
+            borderRadius: '999px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background:
+              'radial-gradient(circle at 30% 0%, #f97316, transparent 55%), #0f172a',
+          }}
+        >
+          ⚡
+        </span>
+        <span style={{ fontWeight: 700, letterSpacing: '0.06em' }}>
+          WebDevTnT
+        </span>
+      </div>
+
+      {/* Toggle button stays above the overlay */}
+      <button
+        type="button"
+        aria-expanded="false"
+        aria-controls="overlay-dramatic-panel"
+        onclick="(function(btn){const panel=document.getElementById('overlay-dramatic-panel');if(!panel)return;const open=panel.getAttribute('data-open')==='true';panel.style.opacity=open?'0':'1';panel.style.pointerEvents=open?'none':'auto';panel.setAttribute('data-open',open?'false':'true');btn.setAttribute('aria-expanded',String(!open));})(this)"
+        style={{
+          position: 'relative',
+          zIndex: 3, // 👈 keeps bun clickable even when overlay is up
+          display: 'inline-flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '4px',
+          width: '36px',
+          height: '36px',
+          borderRadius: '999px',
+          border: '1px solid rgba(148,163,184,0.8)',
+          background: 'rgba(15,23,42,0.95)',
+          padding: 0,
+        }}
+      >
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            style={{
+              width: '18px',
+              height: '2px',
+              borderRadius: '999px',
+              background: '#e5e7eb',
+            }}
+          />
+        ))}
+      </button>
+    </div>
+
+    {/* Overlay backdrop + menu */}
+    <div
+      id="overlay-dramatic-panel"
+      data-open="false"
+      style={{
+        position: 'absolute',
+        inset: '-150px',           // covers the whole pill with a soft edge
+        borderRadius: 'inherit',
+        background:
+          'radial-gradient(circle at top, rgba(56,189,248,0.16), transparent 55%), rgba(15,23,42,0.97)',
+        backdropFilter: 'blur(6px)',
+        border: 'none',          // 👈 removes the extra pill outline
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        opacity: 0,
+        pointerEvents: 'none',
+        transition: 'opacity 0.22s ease-out',
+        zIndex: 2,
+      }}
+    >
+      <nav aria-label="Overlay navigation">
+        <ul
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.4rem',       // 👈 tighter vertical spacing
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            textAlign: 'center',
+            textTransform: 'uppercase',
+            letterSpacing: '0.18em',
+            fontSize: '0.9rem',
+          }}
+        >
+          {['Overview', 'Lessons', 'Demos', 'Assignments', 'Resources'].map(
+            (label) => (
+              <li key={label}>
+                <a
+                  href="#"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: '0.1rem 0',  // 👈 smaller hit of space
+                    lineHeight: 1,
+                    textDecorationThickness: '1px',
+                    textUnderlineOffset: '0.18em',
+                  }}
+                >
+                  {label}
+                </a>
+              </li>
+            )
+          )}
+        </ul>
+      </nav>
+    </div>
+
+  </div>
+
+  <p
+    style={{
+      marginTop: '0.85rem',
+      fontSize: '0.8rem',
+      color: '#cbd5f5',
+      textAlign: 'center',
+    }}
+  >
+    Tap the bun to black out the background and spotlight your nav. Tap again to
+    drop back into the page.
+  </p>
+</div>
+
+---
+
+## 🍱 Takeout Notes
+
+- Overlays are just **full-screen nav layers** with `position: fixed` and a bit of drama.
+- `opacity` + `pointer-events` is a clean way to toggle them without layout jumps.
+- The same hamburger + `aria-expanded` pattern works across dropdowns, drawers, and overlays.
+- Pick your flavor per project: dropdown for simple, drawer for structured, overlay for cinematic.
+
+---
+
+## Next Up
+
+You've now built the full **Hamburger Menu Magic** lineup!

@@ -30,12 +30,12 @@ const COURSE_MODULES = [
     label: 'Optimal Image Prime',
     directory: '04-optimal-image-prime',
     released: true,
-  }, // true
+  },
   {
-    label: 'Hamburgers on the Menu',
-    directory: '05-hamburgers-on-the-menu',
-    released: false,
-  }, // UNRELEASED
+    label: 'Hamburger Menu Magic',
+    directory: '05-hamburger-menu-magic',
+    released: true,
+  },
   {
     label: 'CSS Transforms, Transitions, and Animation',
     directory: '04-css-transforms-transitions-animation',

@@ -1,0 +1,393 @@
+---
+title: 'Bun and Done'
+description: 'Introduce a simple hamburger toggle that shows and hides the navigation below the header on small screens.'
+sidebar:
+  order: 3
+  label: 'Hamburger Drop Menu'
+draft: false
+---
+
+# **Hamburger Dropdown To Go**
+
+Time to put a bun on this thing.  
+You’ve tamed the rigid menu with Flexbox — now the nav learns its first _party trick_: the classic hamburger button that shows and hides a dropdown.
+
+This chapter keeps it simple:
+
+- one hamburger button
+- one dropdown panel
+- a tiny JavaScript toggle
+- no animations (yet)
+
+Think: solid baseline before the fancy stuff.
+
+---
+
+## 🍔 Why the Hamburger?
+
+Flexbox helped the menu adapt, but on small screens:
+
+- even “nicely wrapped” nav can hog vertical space
+- dense menus become **scroll-heavy**
+- users expect a compact menu icon they can summon on demand
+
+The hamburger lets you:
+
+- hide the menu off-screen by default
+- show it **on tap**
+- leave plenty of room for content
+
+---
+
+## 🧱 HTML: Button + Dropdown
+
+We start from the shared structure and add a **toggle button** and an `id` for the nav:
+
+```html
+<header class="site-header">
+  <div class="brand-lockup">
+    <span class="site-logo">⚡</span>
+    <span class="site-title">WebDevTnT</span>
+  </div>
+
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-nav"
+  >
+    <span class="visually-hidden">Toggle navigation</span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+  </button>
+
+  <nav id="site-nav" class="site-nav" aria-label="Main">
+    <ul class="nav-list">
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Lessons</a></li>
+      <li><a href="#">Demos</a></li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">Resources</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+The button is always in the DOM; CSS will decide when to show or hide it.
+
+---
+
+## 💄 CSS: Mobile-First Dropdown
+
+On narrow screens the nav is hidden by default and appears **below** the header when open.
+
+```css
+/* Base header layout */
+.site-header {
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Hamburger button */
+.nav-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.nav-toggle-line {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #e5e7eb;
+}
+
+/* Nav panel — hidden by default on mobile */
+.site-nav {
+  position: static;
+  width: 100%;
+  max-width: 960px;
+  margin: 0.75rem auto 0;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  background: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  display: none; /* 👈 default: hidden on small screens */
+}
+
+.site-nav.is-open {
+  display: block; /* 👈 shown when toggled */
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Desktop: show inline menu, hide hamburger, no dropdown */
+@media (min-width: 960px) {
+  .site-header {
+    border-radius: 999px;
+    margin-bottom: 0;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .site-nav {
+    display: block;
+    position: static;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+}
+```
+
+Mobile: compact header + toggle + hidden menu.  
+Desktop: classic inline nav bar, like before.
+
+---
+
+## 🧠 JavaScript: Tiny Toggle Logic
+
+Just enough JS to flip the `is-open` class and keep `aria-expanded` honest.
+
+```js
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('#site-nav');
+
+if (navToggle && nav) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+```
+
+That’s it. No libraries, no framework code, just standard DOM + events.
+
+---
+
+## 🧪 Live Demo: Bun and Done
+
+This one plays nicely — resize away, and tap the bun to drop or hide the menu.
+
+<div
+  style={{
+    marginBlock: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
+    borderRadius: '1.25rem',
+    background: 'linear-gradient(135deg, #020617 0%, #111827 100%)',
+    boxShadow: '0 18px 40px rgba(15,23,42,0.75)',
+  }}
+>
+  {/* Header + button */}
+  <div
+    style={{
+      width: '100%',
+      maxWidth: '960px',
+      marginInline: 'auto',
+      padding: '0.9rem 1.5rem',
+      borderRadius: '999px',
+      border: '1px solid rgba(148,163,184,0.6)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      color: '#e5e7eb',
+      fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+      fontSize: '0.9rem',
+    }}
+  >
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+      }}
+    >
+      <span
+        style={{
+          display: 'inline-flex',
+          width: '26px',
+          height: '26px',
+          borderRadius: '999px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background:
+            'radial-gradient(circle at 30% 0%, #f97316, transparent 55%), #0f172a',
+        }}
+      >
+        ⚡
+      </span>
+      <span style={{ fontWeight: 700, letterSpacing: '0.06em' }}>
+        WebDevTnT
+      </span>
+    </div>
+
+    {/* Demo hamburger button */}
+
+{' '}
+<button
+  type="button"
+  aria-expanded="false"
+  aria-controls="bun-and-done-panel"
+  onclick="
+    const panel = document.getElementById('bun-and-done-panel');
+    if (!panel) return;
+    const isHidden = panel.hasAttribute('hidden');
+    if (isHidden) {
+      panel.removeAttribute('hidden');
+    } else {
+      panel.setAttribute('hidden', '');
+    }
+    this.setAttribute('aria-expanded', String(isHidden));
+  "
+  style={{
+    display: 'inline-flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center', // 👈 keeps the three lines vertically centered
+    gap: '4px',
+    width: '36px',
+    height: '36px',
+    borderRadius: '999px',
+    border: '1px solid rgba(148,163,184,0.8)',
+    background: 'rgba(15,23,42,0.95)',
+    padding: 0, // 👈 no extra vertical padding
+  }}
+>
+  {[0, 1, 2].map((i) => (
+    <span
+      key={i}
+      style={{
+        width: '18px',
+        height: '2px',
+        borderRadius: '999px',
+        background: '#e5e7eb',
+      }}
+    />
+  ))}
+</button>
+
+  </div>
+
+{/* Dropdown panel (starts hidden) */}
+
+{' '}
+
+<div
+  id="bun-and-done-panel"
+  hidden
+  style={{
+    width: '100%',
+    maxWidth: '960px',
+    margin: '0.75rem auto 0',
+    padding: '0.75rem 1.5rem 0.9rem',
+    borderRadius: '1rem',
+    border: '1px solid rgba(148,163,184,0.6)',
+    background: '#020617',
+    color: '#e5e7eb',
+    fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+    fontSize: '0.9rem',
+  }}
+>
+  <ul
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.35rem',
+      listStyle: 'none',
+      margin: 0,
+      padding: 0,
+      textTransform: 'uppercase',
+      letterSpacing: '0.12em',
+    }}
+  >
+    {['Overview', 'Lessons', 'Demos', 'Assignments', 'Resources'].map(
+      (label) => (
+        <li
+          key={label}
+          style={{
+            margin: 0,
+            padding: 0,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <a
+            href="#"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              margin: 0,
+              padding: '0.05rem 0',
+              lineHeight: 1,
+              border: 'none',
+              textDecorationThickness: '1px',
+              textUnderlineOffset: '0.18em',
+            }}
+          >
+            {label}
+          </a>
+        </li>
+      )
+    )}
+  </ul>
+</div>
+
+  <p
+    style={{
+      marginTop: '0.85rem',
+      fontSize: '0.8rem',
+      color: '#cbd5f5',
+      textAlign: 'center',
+    }}
+  >
+    Tap the bun, drop the nav.
+  </p>
+</div>
+
+---
+
+## 🍱 Takeout Notes
+
+Pack these in your mental to-go box:
+
+- The **hamburger button** doesn’t do anything until JS wires it up.
+- `aria-expanded` communicates state to assistive tech — keep it honest.
+- Mobile-first CSS: hide dropdown by default, reveal it with a class (`.is-open`).
+- Desktop can completely ignore the hamburger and just render a normal nav.
+- This pattern is your baseline for **every fancier menu** that follows.
+
+---
+
+## Next Up
+
+**04 · Sneaky Slideout**  
+Same button, same toggle logic — but the menu stops dropping _down_ and starts sliding _in_ from the side.

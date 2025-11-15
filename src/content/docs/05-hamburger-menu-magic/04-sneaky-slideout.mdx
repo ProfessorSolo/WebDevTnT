@@ -1,0 +1,350 @@
+---
+title: 'Sneaky Slideout'
+description: 'Turn your hamburger into an off-canvas drawer that slides in from the side.'
+sidebar:
+  order: 4
+  label: 'Slideout Menu'
+draft: false
+---
+
+# **Slider Time**
+
+The dropdown was cute. The drawer is cooler.
+
+This chapter upgrades your hamburger from a simple show/hide toggle to a **slide-in side menu** that feels more like a real app: nav items live off-canvas until summoned.
+
+No scroll-jank. No links falling off the edge. Just a smooth, contained slide.
+
+---
+
+## 🧭 Why Slide Out Instead of Drop Down?
+
+A slideout drawer shines when:
+
+- you have **more links** than a tiny dropdown can comfortably hold
+- you want a stronger **spatial metaphor** (“the menu lives over here”)
+- your content is tall and you don’t want the nav shoving everything down the page
+- you want something that feels a bit more “app-like” without going full SPA
+
+We keep the same hamburger button and toggle logic — only the layout changes.
+
+---
+
+## 🧱 HTML: Same Shell, New Position
+
+We’re still building on the same basic structure:
+
+```html
+<header class="site-header">
+  <div class="brand-lockup">
+    <span class="site-logo">⚡</span>
+    <span class="site-title">WebDevTnT</span>
+  </div>
+
+  <button
+    class="nav-toggle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="site-nav"
+  >
+    <span class="visually-hidden">Toggle navigation</span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+    <span class="nav-toggle-line"></span>
+  </button>
+
+  <nav id="site-nav" class="site-nav" aria-label="Main">
+    <ul class="nav-list">
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Lessons</a></li>
+      <li><a href="#">Demos</a></li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">Resources</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+The magic is in how the `.site-nav` is positioned and animated on small screens.
+
+---
+
+## 💄 CSS: Off-Canvas Drawer
+
+On mobile, the nav moves off to the left and slides in when open.
+
+```css
+/* Mobile drawer */
+.site-nav {
+  position: fixed;
+  inset: 0 auto 0 0; /* left edge of viewport */
+  width: min(280px, 80vw);
+  padding: 1rem 1.25rem 1.5rem;
+  background: #020617;
+  box-shadow: 12px 0 40px rgba(15, 23, 42, 0.85);
+  transform: translateX(-100%); /* start off-screen */
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.22s ease-out, opacity 0.22s ease-out;
+}
+
+.site-nav.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Desktop: regular inline menu, no drawer */
+@media (min-width: 960px) {
+  .site-nav {
+    position: static;
+    width: auto;
+    padding: 0;
+    box-shadow: none;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-list {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+}
+```
+
+You can optionally add a dimming overlay behind the drawer using a sibling element or a `::before` pseudo-element. The live demo keeps it simple.
+
+---
+
+## 🧠 JavaScript: Same Toggle, New Effect
+
+The JS is nearly identical to Bun and Done — the drawer is just using `transform` instead of `display`.
+
+```js
+const navToggle = document.querySelector('.nav-toggle');
+const nav = document.querySelector('#site-nav');
+
+if (navToggle && nav) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+}
+```
+
+One button, one class, one animation.
+
+---
+
+## 🧪 Live Demo: Sneaky Slideout
+
+This demo shows the **core drawer behavior** inside the lesson itself.
+
+<div
+  data-demo="sneaky-slideout"
+  style={{
+    marginBlock: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
+    borderRadius: '1.25rem',
+    background: 'linear-gradient(135deg, #020617 0%, #111827 100%)',
+    boxShadow: '0 18px 40px rgba(15,23,42,0.75)',
+  }}
+>
+  {/* Demo frame */}
+  <div
+  style={{
+    position: 'relative',
+    width: '100%',
+    maxWidth: '960px',
+    marginInline: 'auto',
+    padding: '0.9rem 1.5rem',
+    borderRadius: '999px',
+    border: '1px solid rgba(148,163,184,0.6)',
+    background: '#020617',
+    color: '#e5e7eb',
+    fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+    fontSize: '0.9rem',
+    overflow: 'visible',  // 👈 or just remove this line
+  }}
+>
+    {/* Header row with brand + burger */}
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        columnGap: '1rem',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{
+            display: 'inline-flex',
+            width: '26px',
+            height: '26px',
+            borderRadius: '999px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background:
+              'radial-gradient(circle at 30% 0%, #f97316, transparent 55%), #0f172a',
+          }}
+        >
+          ⚡
+        </span>
+        <span style={{ fontWeight: 700, letterSpacing: '0.06em' }}>
+          WebDevTnT
+        </span>
+      </div>
+
+      <button
+
+type="button"
+aria-expanded="false"
+aria-controls="sneaky-slideout-panel"
+onclick="(function(btn){const panel=document.getElementById('sneaky-slideout-panel');if(!panel)return;const open=panel.getAttribute('data-open')==='true';panel.style.transform=open?'translateX(-100%)':'translateX(0)';panel.style.opacity=open?'0':'1';panel.setAttribute('data-open',open?'false':'true');btn.setAttribute('aria-expanded',String(!open));})(this)"
+style={{
+    display: 'inline-flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '4px',
+    width: '36px',
+    height: '36px',
+    borderRadius: '999px',
+    border: '1px solid rgba(148,163,184,0.8)',
+    background: 'rgba(15,23,42,0.95)',
+    padding: 0,
+  }}
+
+> {[0, 1, 2].map((i) => (
+
+    <span
+      key={i}
+      style={{
+        width: '18px',
+        height: '2px',
+        borderRadius: '999px',
+        background: '#e5e7eb',
+      }}
+    />
+
+))}
+
+</button>
+    </div>
+
+    {/* Slideout drawer panel */}
+    <div
+
+id="sneaky-slideout-panel"
+data-open="false"
+style={{
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    width: '240px',
+    maxWidth: '80%',
+    marginTop: '0.75rem',
+    padding: '0.85rem 1rem 1rem',
+    borderRadius: '1rem',
+    background: '#020617',
+    border: '1px solid rgba(148,163,184,0.65)',
+    boxShadow: '12px 18px 40px rgba(15,23,42,0.9)',
+    transform: 'translateX(-100%)',
+    opacity: 0,
+    transition: 'transform 0.22s ease-out, opacity 0.22s ease-out',
+    zIndex: 1,
+  }}
+
+>
+
+      <ul
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '0.45rem',
+          listStyle: 'none',
+          margin: 0,
+          padding: 0,
+          textTransform: 'uppercase',
+          letterSpacing: '0.12em',
+          fontSize: '0.85rem',
+        }}
+      >
+        {['Overview', 'Lessons', 'Demos', 'Assignments', 'Resources'].map(
+          (label) => (
+            <li
+              key={label}
+              style={{
+                margin: 0,
+                padding: 0,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <a
+                href="#"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  margin: 0,
+                  padding: '0.15rem 0',
+                  lineHeight: 1,
+                  border: 'none',
+                  textDecorationThickness: '1px',
+                  textUnderlineOffset: '0.18em',
+                }}
+              >
+                {label}
+              </a>
+            </li>
+          )
+        )}
+      </ul>
+    </div>
+
+  </div>
+
+  <p
+    style={{
+      marginTop: '0.85rem',
+      fontSize: '0.8rem',
+      color: '#cbd5f5',
+      textAlign: 'center',
+    }}
+  >
+    Tap the bun to slide the menu in from the side. Tap again to tuck it back
+    into the shadows.
+  </p>
+</div>
+
+---
+
+## 🍱 Takeout Notes
+
+- A slideout drawer lives **off-canvas** until needed.
+- Same toggle logic, different layout: one button, one target, one state.
+- `transform: translateX()` + `transition` is the core of the effect.
+- Desktop doesn’t need the drawer — it can still render a regular inline nav using the same HTML.
+
+---
+
+## Next Up
+
+**05 · Overlay Dramatic**  
+The drawer goes big: the nav stops hugging one side and takes over the whole screen for a full-bleed, cinematic overlay.

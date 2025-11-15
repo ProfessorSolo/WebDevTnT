@@ -1,0 +1,208 @@
+---
+title: 'The Menu That Wouldn’t'
+description: 'Meet the stubborn, non-responsive nav bar that refuses to shrink, wrap, or behave. Then take it apart.'
+sidebar:
+  order: 1
+  label: 'Non-Responsive Menu'
+draft: false
+---
+
+# **It Never Responds**
+
+Every great glow-up starts with a “before” picture — and wow, this one is _rough_.  
+This chapter introduces the classic desktop-only nav that absolutely refuses to play nice on smaller screens.
+
+---
+
+## 😬 What’s Wrong With This Thing?
+
+This menu:
+
+- uses a **fixed desktop width** like it’s 2008
+- forces every link into one long horizontal line
+- won’t wrap, shrink, collapse, or compromise
+- looks fine on a big monitor but **falls apart instantly** on mobile
+
+Perfect. Time to expose the flaws so the glow-up can begin.
+
+---
+
+## 🧱 Baseline HTML
+
+All nav variations in this module build on the same shared structure.  
+Here’s the pure “pre-responsive” version:
+
+```html
+<header class="site-header">
+  <div class="brand-lockup">
+    <span class="site-logo">⚡</span>
+    <span class="site-title">WebDevTnT</span>
+  </div>
+
+  <nav class="site-nav">
+    <ul class="nav-list">
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Lessons</a></li>
+      <li><a href="#">Demos</a></li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">Resources</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+Yep — no hamburger, no toggle, no mercy.
+
+---
+
+## 💄 The Offending CSS
+
+Desktop-locked and proud of it:
+
+```css
+.site-header {
+  width: 960px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 999px;
+}
+
+.nav-list {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: flex-end;
+  white-space: nowrap; /* refuses to wrap */
+}
+```
+
+On small screens?
+
+➡️ Links wander off-screen.  
+➡️ Horizontal scrolling becomes your new awkward companion.
+
+---
+
+## 🧪 Live Mini Demo: “Try Resizing Me”
+
+This tiny demo _looks_ sleek… until it doesn’t.  
+Give it a squeeze and watch the chaos unfold.
+
+<div
+  style={{
+    marginBlock: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
+    borderRadius: '1.25rem',
+    background: 'linear-gradient(135deg, #020617 0%, #111827 100%)',
+    boxShadow: '0 18px 40px rgba(15,23,42,0.75)',
+    overflowX: 'auto',
+  }}
+>
+  <div
+    style={{
+      width: '960px',
+      marginInline: 'auto',
+      padding: '0.9rem 1.5rem',
+      borderRadius: '999px',
+      border: '1px solid rgba(148,163,184,0.6)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      color: '#e5e7eb',
+      fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+      fontSize: '0.9rem',
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <span
+        style={{
+          display: 'inline-flex',
+          width: '26px',
+          height: '26px',
+          borderRadius: '999px',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background:
+            'radial-gradient(circle at 30% 0%, #f97316, transparent 55%), #0f172a',
+        }}
+      >
+        ⚡
+      </span>
+      <span style={{ fontWeight: 700, letterSpacing: '0.06em' }}>
+        WebDevTnT
+      </span>
+    </div>
+
+<ul
+  style={{
+    display: 'flex',
+    gap: '1.5rem',
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+    textTransform: 'uppercase',
+    letterSpacing: '0.16em',
+    whiteSpace: 'nowrap',
+    alignItems: 'center',
+  }}
+>
+  {['Overview', 'Lessons', 'Demos', 'Assignments', 'Resources'].map((label) => (
+    <li
+      key={label}
+      style={{
+        margin: 0,
+        padding: 0,
+      }}
+    >
+      <a
+        href="#"
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          margin: 0,
+          padding: '0.05rem 0', // same for every item
+          lineHeight: 1,
+          border: 'none',
+          textDecorationThickness: '1px',
+          textUnderlineOffset: '0.18em',
+        }}
+      >
+        {label}
+      </a>
+    </li>
+  ))}
+</ul>
+
+  </div>
+  <p
+    style={{
+      marginTop: '0.85rem',
+      fontSize: '0.8rem',
+      color: '#cbd5f5',
+      textAlign: 'center',
+    }}
+  >
+    Shrink the window — this menu refuses to chill. Links slide off-screen, but
+    nothing wraps.
+  </p>
+</div>
+
+---
+
+## 🍱 Takeout Notes
+
+Pack these in your developer bento box:
+
+- Fixed widths age faster than dairy in the sun.
+- “White-space: nowrap” is a sworn enemy of mobile layouts.
+- Horizontal scrolling is a big red flag.
+- This broken baseline is perfect — every future improvement will feel magical.
+
+---
+
+## Next Up
+
+**02 · Flex to Impress**  
+Same HTML. Better attitude.  
+A flexbox layout that actually respects the viewport.

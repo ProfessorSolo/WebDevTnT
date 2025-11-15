@@ -1,0 +1,229 @@
+---
+title: 'Flex to Impress'
+description: 'Refactor the stubborn static menu using Flexbox for a clean, mobile-friendly layout.'
+sidebar:
+  order: 2
+  label: 'Flexbox Menu'
+draft: false
+---
+
+# **Can Flexbox Make the Menu Responsive?**
+
+Time to intervene.  
+Our stubborn, static “desktop-or-nothing” menu finally gets its first makeover — and the star of the show is **Flexbox**.
+
+This chapter transforms the rigid baseline into something that actually _responds_ when the viewport changes. Nothing dramatic yet — just good layout fundamentals and a much better attitude.
+
+---
+
+## ✨ What Flexbox Fixes Instantly
+
+Compared to the old, crusty layout:
+
+- Links finally **wrap or reflow** instead of bailing off-screen
+- Spacing becomes predictable instead of “vibes-based”
+- The nav adapts to different widths — y’know, _responsiveness_
+- No more horizontal scroll of shame
+
+Flexbox = breathing room + instant sanity.
+
+---
+
+## 🧱 Same HTML, New Layout
+
+We keep the exact same markup as before:
+
+```html
+<header class="site-header">
+  <div class="brand-lockup">
+    <span class="site-logo">⚡</span>
+    <span class="site-title">WebDevTnT</span>
+  </div>
+
+  <nav class="site-nav">
+    <ul class="nav-list">
+      <li><a href="#">Overview</a></li>
+      <li><a href="#">Lessons</a></li>
+      <li><a href="#">Demos</a></li>
+      <li><a href="#">Assignments</a></li>
+      <li><a href="#">Resources</a></li>
+    </ul>
+  </nav>
+</header>
+```
+
+The glow-up is 100% CSS.
+
+---
+
+## 💄 Fresh Flexbox Styles
+
+Here’s the “flex it, but keep it classy” version:
+
+```css
+.site-header {
+  width: 100%;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 1rem 1.5rem;
+  background: #020617;
+  color: #e5e7eb;
+  border-radius: 999px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* 👈 allows wrap on small screens */
+}
+
+.nav-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* 👈 this is the magic */
+  font-size: 0.95rem;
+  margin-top: 0.75rem;
+}
+```
+
+The only big ideas:
+
+- **`display: flex`** for alignment
+- **`flex-wrap: wrap`** so items don’t flee the viewport
+- **fluid width** instead of a fixed 960px prison
+
+Small change, big redemption arc.
+
+---
+
+## 🧪 Live Demo: Stretch, Shrink, Behave
+
+This one plays nice(r) — resize and reflow away.
+
+<div
+  style={{
+    marginBlock: '1.5rem 2rem',
+    padding: '1.5rem 1rem',
+    borderRadius: '1.25rem',
+    background: 'linear-gradient(135deg, #020617 0%, #111827 100%)',
+    boxShadow: '0 18px 40px rgba(15,23,42,0.75)',
+  }}
+>
+  <div
+  style={{
+    width: '100%',
+    maxWidth: '960px',
+    marginInline: 'auto',
+    padding: '0.9rem 1.5rem',
+    borderRadius: '999px',
+    border: '1px solid rgba(148,163,184,0.6)',
+    display: 'flex',
+    flexWrap: 'wrap',
+    rowGap: '0.4rem',
+    color: '#e5e7eb',
+    fontFamily: 'system-ui, -apple-system, Segoe UI, sans-serif',
+    fontSize: '0.9rem',
+  }}
+>
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      flexBasis: '100%', // 👈 brand on its own row
+    }}
+  >
+    <span
+      style={{
+        display: 'inline-flex',
+        width: '26px',
+        height: '26px',
+        borderRadius: '999px',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background:
+          'radial-gradient(circle at 30% 0%, #f97316, transparent 55%), #0f172a',
+      }}
+    >
+      ⚡
+    </span>
+    <span style={{ fontWeight: 700, letterSpacing: '0.06em' }}>
+      WebDevTnT
+    </span>
+  </div>
+
+  <ul
+  style={{
+    flexBasis: '100%',
+    display: 'flex',
+    gap: '1rem',
+    flexWrap: 'wrap',
+    listStyle: 'none',
+    margin: 0,
+    padding: 0,
+    textTransform: 'uppercase',
+    letterSpacing: '0.12em',
+  }}
+>
+  {['Overview', 'Lessons', 'Demos', 'Assignments', 'Resources'].map(
+    (label) => (
+      <li
+        key={label}
+        style={{
+          margin: 0,
+          padding: 0,
+          display: 'flex',          // 👈 centers each link inside its slot
+          alignItems: 'center',
+        }}
+      >
+        <a
+          href="#"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            margin: 0,
+            padding: '0.05rem 0',
+            lineHeight: 1,
+            border: 'none',
+            textDecorationThickness: '1px',
+            textUnderlineOffset: '0.18em',
+            verticalAlign: 'middle', // 👈 baseline insurance
+          }}
+        >
+          {label}
+        </a>
+      </li>
+    )
+  )}
+</ul>
+</div>
+  <p
+    style={{
+      marginTop: '0.85rem',
+      fontSize: '0.8rem',
+      color: '#cbd5f5',
+      textAlign: 'center',
+    }}
+  >
+    Resize the window — the menu flexes with the layout instead of bailing
+    off-screen.
+  </p>
+  <p>Cool-ish, but we can cook up something much better</p>
+</div>
+
+---
+
+## 🍱 Takeout Notes
+
+Stuff these flex facts in your apron pocket:
+
+- Flexbox gives you **instant responsive alignment**.
+- `flex-wrap: wrap` is the unsung hero of small-screen layouts.
+- The best refactors don’t change HTML — just behavior.
+- This is the calm before the storm… because next, we add JavaScript. 😏
+
+---
+
+## Next Up
+
+**03 · Bun and Done**  
+The hamburger toggle arrives — and your nav finally learns a new trick.
