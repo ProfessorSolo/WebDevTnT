@@ -39,18 +39,18 @@ const COURSE_MODULES = [
   {
     label: 'Transformative Styling',
     directory: '06-transformative-styling',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'Ion Drive Transition Lab',
     directory: '07-ion-drive-transition-lab',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'Annie Mation',
     directory: '08-annie-mation',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: '....CSS Variables ',
     directory: '05-css-variables-custom-properties',
