@@ -1,0 +1,248 @@
+---
+title: '3D Transforms'
+description: 'Step off the flat plane and give your UI depth with translateZ, rotateX, rotateY, rotateZ, and perspective.'
+sidebar:
+  order: 2
+  label: '3D Basics'
+draft: false
+---
+
+<style is:global>{`
+.ps-stage {
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 1.25rem 0 0.75rem;
+  display: grid;
+  place-items: center;
+
+  /* Perspective belongs on the parent */
+  perspective: 800px;
+}
+
+.ps-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ps-ghost {
+  opacity: 0.18;
+  filter: grayscale(1);
+  transform: none;
+}
+
+.ps-subject {
+  opacity: 1;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 250ms ease;
+}
+
+/* Demos (match code blocks!) */
+.demo-translatez .ps-subject { transform: translateZ(-120px); }
+.demo-rotatex    .ps-subject { transform: rotateX(55deg); }
+.demo-rotatey    .ps-subject { transform: rotateY(-55deg); }
+.demo-rotatez    .ps-subject { transform: rotateZ(35deg); }
+.demo-combo3d    .ps-subject { transform: rotateY(20deg) rotateX(10deg) translateZ(-30px); }
+
+.ps-caption {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0.25rem 0 1rem;
+}
+`}</style>
+
+# **Bending Space in the Third Dimension**
+
+Time to leave the flatlands, folks.
+
+This is where our elements stop behaving like stickers and start acting like **objects in actual space**.
+
+No animation yet — just posing, tilting, flipping, and revealing surfaces our UI never had before.
+
+---
+
+## 🎛 The 3D Tools
+
+In 3D land, you’ll mostly use:
+
+- `translateZ()` — move toward / away from the viewer
+- `rotateX()` — tilt forward / back
+- `rotateY()` — turn left / right
+- `rotateZ()` — spin like 2D rotation
+- `perspective` — the camera that makes depth visible
+
+---
+
+## 🪂 Perspective: the depth-maker
+
+Here’s the rule:  
+**Perspective goes on the parent**, not the thing rotating.
+
+It's hard to maintain perspective from the inside.
+
+```css
+.stage {
+  perspective: 800px;
+}
+```
+
+Without perspective, rotateX/rotateY look flat and kinda sad.
+
+Our demo stage already has perspective baked in.
+
+---
+
+### `translateZ()`
+
+Push/pull an element along the Z axis.
+
+<div
+  class="ps-stage demo-translatez"
+  aria-label="translateZ demo with ghost image"
+>
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey moved forward in 3D space to demonstrate translateZ."
+  />
+</div>
+<p class="ps-caption">Ghost = original plane. Solid = pulled toward you.</p>
+
+Near. Far. Don't be fooled. It only **looks** like ~~grover~~ scaling.
+
+```css
+.monkey {
+  transform: translateZ(-120px);
+}
+```
+
+---
+
+### `rotateX()`
+
+Tilts around the horizontal axis.
+
+Bottoms up, for positive degrees.
+
+<div class="ps-stage demo-rotatex" aria-label="rotateX demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey tilted forward to demonstrate rotateX."
+  />
+</div>
+<p class="ps-caption">In perspective, this looks like a squish-squash.</p>
+
+```css
+.monkey {
+  transform: rotateX(55deg);
+}
+```
+
+---
+
+### `rotateY()`
+
+Turns around the vertical axis — classic “card flip.”
+
+<div class="ps-stage demo-rotatey" aria-label="rotateY demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey turned to the side to demonstrate rotateY."
+  />
+</div>
+<p class="ps-caption">If you're positive, it happens right (side) away.</p>
+
+```css
+.monkey {
+  transform: rotateY(-55deg);
+}
+```
+
+---
+
+### `rotateZ()`
+
+Spin in the flat plane.
+
+Same effect as 2D `rotate()`, just part with the 3D family.
+
+_Watch out. These aren't pushy, but they can obscure!_
+
+<div class="ps-stage demo-rotatez" aria-label="rotateZ demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey spun to demonstrate rotateZ."
+  />
+</div>
+
+```css
+.monkey {
+  transform: rotateZ(35deg);
+}
+```
+
+---
+
+## 🧩 Combine for Shape‑Shifting Goodness
+
+3D transforms can be stacked the same way 2D transforms can:
+
+<div
+  class="ps-stage demo-combo3d"
+  aria-label="Combined 3D transforms demo with ghost image"
+>
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey transformed by rotateY, rotateX, and translateZ."
+  />
+</div>
+
+```css
+.card {
+  transform: rotateY(20deg) rotateX(10deg) translateZ(-30px);
+}
+```
+
+Order still matters, but let's talk origin story next.
+
+---
+
+➡️ Next page: **Transform Origins — pivot like the pros**.

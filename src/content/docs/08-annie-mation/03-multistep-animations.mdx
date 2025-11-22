@@ -1,0 +1,220 @@
+---
+title: 'Multi-Step Animations'
+description: 'Craft bigger, richer motion arcs — multi-stage sequences, combined transforms, and expressive choreography with @keyframes.'
+sidebar:
+  order: 3
+  label: 'Multi‑Step Animations'
+draft: false
+---
+
+# **Step 2, 3, Step, 2, 3, Dip**
+
+Now we level up - again.
+
+We've seen simple 0% → 100% transitions.
+
+But the real magic happens when we break the journey into **multiple beats**, each with its own personality.
+
+Multi‑step animations let us:
+
+- Stage reveals
+- Build anticipation
+- Add overshoots and rebounds
+- Create “stories” inside motion
+- Sync transforms, color shifts, opacity, and more
+
+This is where AnnieMation takes the dancefloor.
+
+---
+
+## 🎭 Three‑Beat Example
+
+```css
+@keyframes revealBoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-8deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.05) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+```
+
+Small → big → settle.  
+Tension → anticipation → release.
+
+---
+
+## 🎚 Complex Motion Arc
+
+```css
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(0);
+  }
+  25% {
+    transform: rotate(90deg) translateX(20px);
+  }
+  50% {
+    transform: rotate(180deg) translateX(0);
+  }
+  75% {
+    transform: rotate(270deg) translateX(-20px);
+  }
+  100% {
+    transform: rotate(360deg) translateX(0);
+  }
+}
+```
+
+This establishes rhythm — a repeatable _pattern of motion_, not just a spin.
+
+---
+
+## 🧩 Coordinate Multiple Properties
+
+Opacity, transforms, shadows, colors — all can live inside the same arc.
+
+```css
+@keyframes glowLift {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+```
+
+That’s animation as **design language**.
+
+---
+
+## 🎞 Staging & Beats
+
+Multi‑step animation is the CSS equivalent of:
+
+- mise‑en‑scène
+- blocking
+- acting beats
+- rhythm
+- choreography
+
+Every step adds clarity.
+
+---
+
+### 🐾 Annie’s Beat Track
+
+Hover the stage and watch Annie hit each beat — crouch → launch → flip → land.
+
+<div class="ms-demo-card" aria-label="Hover to play multi-step Annie animation">
+  <div class="ms-annie" role="img" aria-label="Annie the space dalmatian"></div>
+  <div class="ms-track" aria-hidden="true">
+    <span class="ms-beat">1</span>
+    <span class="ms-beat">2</span>
+    <span class="ms-beat">3</span>
+    <span class="ms-beat">4</span>
+  </div>
+</div>
+
+<style is:global>{`
+  .ms-demo-card{
+    width: 520px;
+    max-width: 100%;
+    height: 320px;
+    display:grid;
+    place-items:center;
+    border-radius:18px;
+    background: radial-gradient(140% 140% at 50% 0%, rgba(120,190,255,.14), rgba(8,16,32,.95));
+    border:1px solid rgba(120,180,255,.3);
+    box-shadow: 0 0 1rem rgba(80,170,255,.2) inset;
+    margin: 1.5rem 0;
+    position:relative;
+  }
+
+  .ms-annie{
+    width:256px;
+    height:256px;
+    background: url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+    transform-origin:50% 85%;
+    transform: translateY(40px) scale(.95);
+    will-change: transform;
+  }
+
+  .ms-track{
+    position:absolute;
+    bottom: .9rem;
+    display:flex;
+    gap:2rem;
+  }
+  .ms-beat{
+    width:44px;
+    height:32px;
+    display:grid;
+    place-items:center;
+    font-size:1rem;
+    color:#cfe7ff;
+    border-radius:999px;
+    background: rgba(20,40,70,.8);
+    border:1px solid rgba(140,200,255,.35);
+    opacity:.6;
+    transform: translateY(0);
+  }
+
+  .ms-demo-card:hover .ms-annie{
+    animation: msAnnieBeats 3200ms ease-in-out forwards;
+  }
+
+  .ms-demo-card:hover .ms-beat:nth-child(1){
+    animation: msBeatLight 3200ms steps(1,end) forwards;
+    animation-delay: 0ms;
+  }
+  .ms-demo-card:hover .ms-beat:nth-child(2){
+    animation: msBeatLight 3200ms steps(1,end) forwards;
+    animation-delay: 800ms;
+  }
+  .ms-demo-card:hover .ms-beat:nth-child(3){
+    animation: msBeatLight 3200ms steps(1,end) forwards;
+    animation-delay: 1800ms;
+  }
+  .ms-demo-card:hover .ms-beat:nth-child(4){
+    animation: msBeatLight 3200ms steps(1,end) forwards;
+    animation-delay: 2500ms;
+  }
+
+  @keyframes msAnnieBeats{
+    0%   { transform: translateY(40px) scale(.65) rotate(0deg); }
+    18%  { transform: translateY(48px) scale(.6)  rotate(-6deg); }
+    45%  { transform: translateY(-200px) scale(2.08) rotate(0deg); }
+    72%  { transform: translateY(-155px) scale(2.02) rotate(360deg); }
+    100% { transform: translateY(40px) scale(.98) rotate(360deg); }
+  }
+
+  @keyframes msBeatLight{
+    0%   { opacity:.6; background: rgba(20,40,70,.8); color:#cfe7ff; box-shadow:none; }
+    1%   { opacity:1;  background: rgba(60,140,255,.95); color:#061325;
+           box-shadow: 0 0 .6rem rgba(80,170,255,.9); }
+    100% { opacity:1;  background: rgba(60,140,255,.95); color:#061325;
+           box-shadow: 0 0 .6rem rgba(80,170,255,.9); }
+  }
+`}</style>
+
+---
+
+➡️ Next page: **Combining Animations — layering, syncing, and orchestrating multiple motion tracks.**

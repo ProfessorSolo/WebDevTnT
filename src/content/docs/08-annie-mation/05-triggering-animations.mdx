@@ -1,0 +1,238 @@
+---
+title: 'Triggering Animations'
+description: 'How animations start: classes, events, toggles, scrolling, intersection, and controlled playback using animation-play-state.'
+sidebar:
+  order: 5
+  label: 'Triggering Animations'
+draft: false
+---
+
+# **Ready, click, go**
+
+Here we go... motion without a trigger is just decoration.  
+**Triggering** is where animation becomes _interactive_, _purposeful_, and _context-aware._
+
+This page covers the essentials:  
+Classes → Events → Scroll → Intersection → Play/Pause control.
+
+---
+
+## 🎛 Triggering with Classes (The Classic)
+
+Still the cleanest approach: toggle a class, fire an animation.
+
+```css
+.card {
+  animation: fadeUp 500ms ease-out forwards;
+  opacity: 0;
+}
+
+.card.reveal {
+  opacity: 1;
+}
+```
+
+```js
+card.classList.add('reveal');
+```
+
+Simple. Direct. No magic.
+
+---
+
+## 🖱 Event-Driven Animation (Clicks, Hovers, Presses)
+
+```js
+button.addEventListener('click', () => {
+  button.classList.add('activate');
+});
+```
+
+This is perfect for:
+
+- button click feedback
+- panel reveals
+- navigation transitions
+- “press and hold” moments (paired with direction/play-state)
+
+---
+
+## 🌀 Restarting an Animation
+
+If we need to rerun an animation:
+
+```js
+el.classList.remove('run');
+void el.offsetWidth; /* Force reflow */
+el.classList.add('run');
+```
+
+Browser jutsu. Works every time.
+
+---
+
+## 📜 Scroll-Triggered Animations
+
+```js
+window.addEventListener('scroll', () => {
+  const top = el.getBoundingClientRect().top;
+  if (top < window.innerHeight * 0.8) {
+    el.classList.add('enter');
+  }
+});
+```
+
+Lightweight. Reliable.  
+A great bridge to intersection observers.
+
+---
+
+## ⏯ Play & Pause with animation-play-state
+
+```css
+.runner {
+  animation: slide 2s linear infinite;
+}
+
+.runner.paused {
+  animation-play-state: paused;
+}
+```
+
+```js
+runner.classList.add('paused');
+runner.classList.remove('paused');
+```
+
+Perfect for:
+
+- scroll-controlled sequences
+- hold-to-activate behaviors
+- drag interactions
+- toggled looping animations
+
+---
+
+### 🐾 Annie’s Trigger Lab
+
+Hover or click each zone to trigger Annie — same motion, different triggers.
+
+<div class="trig-lab">
+
+{' '}
+
+<div class="trig-block trig-hover" aria-label="Hover to trigger animation">
+  <div class="trig-annie"></div>
+  <div class="trig-label">Hover (Class Toggle)</div>
+</div>
+
+{' '}
+
+<div class="trig-block trig-click" aria-label="Click to trigger animation">
+  <input class="trig-toggle" type="checkbox" id="trig-click-toggle" />
+  <label class="trig-btn" for="trig-click-toggle">
+    Click Me
+  </label>
+  <div class="trig-annie click"></div>
+  <div class="trig-label">Click (Event → Add Class)</div>
+</div>
+
+{' '}
+
+<div class="trig-block trig-playpause" aria-label="Play or pause animation">
+  <input class="trig-toggle" type="checkbox" id="trig-pp-toggle" />
+  <label class="trig-btn" for="trig-pp-toggle">
+    Play / Pause
+  </label>
+  <div class="trig-annie pp"></div>
+  <div class="trig-label">animation-play-state</div>
+</div>
+
+</div>
+
+<style is:global>{`
+  .trig-lab{
+    display:grid;
+    gap:1.25rem;
+    margin:1.5rem 0;
+    padding:1rem;
+    border-radius:18px;
+    background: radial-gradient(140% 140% at 50% 0%, rgba(120,190,255,.14), rgba(8,16,32,.95));
+    border:1px solid rgba(120,180,255,.3);
+    box-shadow:0 0 1rem rgba(80,170,255,.18) inset;
+    max-width: 620px;
+  }
+
+  .trig-block{
+    display:grid;
+    place-items:center;
+    gap:.6rem;
+    padding:1.1rem 0 1.6rem;
+    border-radius:16px;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(120,190,255,.18), rgba(10,20,40,.85));
+    border:1px solid rgba(120,180,255,.35);
+    position:relative;
+  }
+
+  .trig-label{
+    font-size:.85rem;
+    color:#cfe7ff;
+    opacity:.85;
+  }
+
+  .trig-annie{
+    width:128px;
+    height:128px;
+    background:url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+    transform-origin:50% 85%;
+    transform: translateY(40px);
+    will-change: transform;
+  }
+
+  @keyframes trigPop{
+    0%   { transform: translateY(40px) scale(.9); }
+    45%  { transform: translateY(-45px) scale(1.06); }
+    100% { transform: translateY(40px) scale(.95); }
+  }
+
+  .trig-hover:hover .trig-annie{
+    animation: trigPop 650ms ease-out;
+  }
+
+  .trig-toggle{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+  }
+
+  .trig-btn{
+    cursor:pointer;
+    background:#4aa8ff;
+    color:#061325;
+    padding:.45rem .9rem;
+    border-radius:8px;
+    font-size:.85rem;
+    font-weight:600;
+    box-shadow:0 0 .5rem rgba(80,170,255,.6);
+    user-select:none;
+  }
+
+  .trig-btn:active{ transform: scale(.96); }
+
+  #trig-click-toggle:checked ~ .click{
+    animation: trigPop 750ms ease-out;
+  }
+
+  .pp{
+    animation: trigPop 1.2s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  #trig-pp-toggle:checked ~ .pp{
+    animation-play-state: running;
+  }
+`}</style>
+
+---
+
+➡️ Next page: **Performance & Best Practices — GPU-friendly motion, avoid jank, and know when to say no.**

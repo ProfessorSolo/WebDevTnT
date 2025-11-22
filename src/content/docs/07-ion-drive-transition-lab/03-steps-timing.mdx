@@ -1,0 +1,170 @@
+---
+title: 'Steps Timing'
+description: 'step-start, step-end, steps(n), and how slicing time changes motion — from countdown jumps to mechanical effects.'
+sidebar:
+  order: 3
+  label: 'Steps Timing'
+draft: false
+---
+
+<style is:global>{`
+.ps-steps-stage {
+  position: relative;
+  width: min(100%, 32rem);
+  aspect-ratio: 21 / 9;
+  margin: 1.25rem 0 1rem;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.2);
+}
+
+/* shared rocket */
+.ps-steps-ship {
+  position: absolute;
+  top: 55%;
+  width: 20%;
+  transform-origin: center;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
+  transition-property: transform, opacity;
+  transition-duration: 800ms;
+}
+
+/* left rocket: step-start */
+.ps-stepstart {
+  left: 28%;
+  opacity: 0.9;
+  transition-timing-function: steps(5, start);
+}
+
+/* right rocket: step-end */
+.ps-stepend {
+  left: 72%;
+  opacity: 0.9;
+  transition-timing-function: steps(5, end);
+}
+
+/* one hover launches both upward */
+.ps-steps-stage:hover .ps-stepstart,
+.ps-steps-stage:hover .ps-stepend {
+  transform: translate(0%, -400%);
+  opacity: 1;
+}
+
+.ps-steps-label {
+  position: absolute;
+  font-size: .85rem;
+  opacity: .9;
+  background: rgba(0,0,0,0.35);
+  padding: .25rem .5rem;
+  border-radius: 6px;
+}
+
+.ps-steps-label.start { left: 12%; top: .6rem; }
+.ps-steps-label.end   { right: 12%; top: .6rem; }
+`}</style>
+
+# **Left. Left. Left, Right, Left.**
+
+Welcome to the choppy, punchy, _mechanical_ side of motion.
+
+While easing curves make motion smooth, **`steps()`** slices time into discrete chunks.
+
+The element doesn’t glide — it **jumps** through time, stochastic-fantastic.
+
+Perfect for:
+
+- sprite animations
+- progress ticks
+- retro UI
+- glitchy / robotic moves
+- anything that should feel more _machine_ than _organic_
+
+---
+
+## The idea
+
+Instead of continuous time…
+
+```css
+transition-timing-function: ease-in-out;
+```
+
+…we get a set number of jumps:
+
+```css
+transition-timing-function: steps(5);
+```
+
+That means **5 distinct positions** between start and end.
+
+---
+
+## `steps(n)` in one line
+
+```css
+steps(n, jumpterm)
+```
+
+- `n` = number of slices (jumps)
+- `jumpterm` = _when_ the jump happens
+
+If you skip `jumpterm`, the default is `end`.
+
+---
+
+## `step-start` vs `step-end`
+
+These are just shortcuts:
+
+```css
+step-start == steps(1, start)
+step-end   == steps(1, end)
+```
+
+- **start** → jump immediately, then wait
+- **end** → wait, then jump at the end of each slice
+
+---
+
+## Live Demo — two rockets, one launch
+
+Hover the stage.  
+Left rocket uses **`steps(5, start)`**.  
+Right rocket uses **`steps(5, end)`**.
+
+<div class="ps-steps-stage" aria-label="Two rockets launching with steps timing functions">
+  <div class="ps-steps-label start"><code>steps(5, start)</code></div>
+  <div class="ps-steps-label end"><code>steps(5, end)</code></div>
+
+{' '}
+
+<img
+  class="ps-steps-ship ps-stepstart"
+  src="/assets/lessons/m5-space-ship-solo-256w.webp"
+  alt="Rocket launching in five step-start jumps."
+/>
+
+  <img
+    class="ps-steps-ship ps-stepend"
+    src="/assets/lessons/m5-space-ship-solo-256w.webp"
+    alt="Rocket launching in five step-end jumps."
+  />
+</div>
+
+---
+
+## Why it matters
+
+Two transitions can have:
+
+- the **same duration**
+- the **same distance**
+- the **same property**
+
+…and still feel totally different because **time was sliced differently**.
+
+That’s steps.
+
+---
+
+➡️ Next page: **Transitioning Transforms — Soft entry, Bouncy hover, Mirror madness, and Zoo breakout.**

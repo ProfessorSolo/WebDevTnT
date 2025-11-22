@@ -1,0 +1,255 @@
+---
+title: 'Performance & Best Practices'
+description: 'Smooth, intentional, GPU‑friendly motion. Avoid jank, avoid overload, and know when animation serves the story.'
+sidebar:
+  order: 6
+  label: 'Performance & Best Practices'
+draft: false
+---
+
+# **The other performance**
+
+Final lap.
+
+AnnieMation is powerful — _too_ powerful if unleashed carelessly.
+
+This page is the safeguard: how to keep motion fast, meaningful, and respectful of user experience.
+
+---
+
+## 🚀 Use GPU-Friendly Properties
+
+Stick to transforms + opacity whenever possible.
+
+```css
+/* Fast */
+transform: translate();
+opacity: 0.8;
+
+/* Slow, layout-triggering */
+width: 200px;
+top: 20px;
+left: 30px;
+```
+
+Transform + opacity = GPU acceleration.  
+Layout-altering properties = reflow city.
+
+---
+
+## 🧼 Keep Keyframes Lightweight
+
+Avoid animating expensive properties:
+
+- `box-shadow` (heavy)
+- `filter` (heavier)
+- `blur()` (heaviest)
+- `height/width` (layout thrash)
+- `border-radius` (surprisingly pricey)
+
+Use sparingly — or fake with transforms.
+
+---
+
+## 🎚 Duration Discipline
+
+Good UI motion is:
+
+- **150–300ms** for interaction
+- **400–600ms** for entrances
+- **700ms+** only for cinematic or storytelling moments
+
+Long animations feel sluggish unless justified.
+
+---
+
+## 📉 Avoid Motion Overload
+
+If _everything_ moves, **nothing** stands out.
+
+Use animation to:
+
+- reinforce hierarchy
+- guide attention
+- enhance clarity
+- support interaction
+
+Not to show off (unless it’s a demo — then go wild).
+
+---
+
+## 🧘 Respect `prefers-reduced-motion`
+
+Always include it. Always.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+  }
+}
+```
+
+Zero effort, huge accessibility win.
+
+---
+
+## 🧩 Test on Low-End Devices
+
+Animations that feel perfect on your M‑series MacBook  
+might stutter on lower‑powered hardware.
+
+If it janks, simplify:
+
+- fewer keyframe steps
+- shorter shadows
+- fewer simultaneous animations
+- reduce blur/filter usage
+- reduce DOM complexity in animated scenes
+
+---
+
+### 🐾 Performance Meter — Speedometer Edition
+
+Left side = GPU-friendly.  
+Right side = jank-prone.
+
+<div class="perf-speedo">
+
+{' '}
+
+<div class="speedo-arc">
+  <div class="arc-zone z-fast"></div>
+  <div class="arc-zone z-mid"></div>
+  <div class="arc-zone z-slow"></div>
+</div>
+
+{' '}
+
+<div class="speedo-zone zone-fast">
+  <div class="perf-annie fast"></div>
+  <div class="speedo-label">transform + opacity</div>
+</div>
+
+{' '}
+
+<div class="speedo-zone zone-medium">
+  <div class="perf-annie medium"></div>
+  <div class="speedo-label">shadow (heavy-ish)</div>
+</div>
+
+{' '}
+
+<div class="speedo-zone zone-slow">
+  <div class="perf-annie slow"></div>
+  <div class="speedo-label">filter / blur</div>
+</div>
+
+</div>
+
+<style is:global>{`
+  .perf-speedo{
+    position:relative;
+    width:380px;
+    height:240px;
+    margin:1.8rem auto 2.2rem;
+  }
+
+.speedo-arc{
+  position:absolute;
+  inset: 0;
+  width:320px;
+  height:160px;
+  margin:0 auto;
+
+  /* no border — that's what caused the top seam */
+  border:none;
+
+  /* perfect semicircle mask */
+  mask-image: radial-gradient(160px 160px at 50% 100%, black 99%, transparent 100%);
+  -webkit-mask-image: radial-gradient(160px 160px at 50% 100%, black 99%, transparent 100%);
+
+  overflow:hidden;
+  position:relative;
+}
+
+/* glow ring via pseudo-element */
+.speedo-arc::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:320px 320px 0 0;
+  border-top:8px solid rgba(120,190,255,.35);
+  filter:drop-shadow(0 -3px 10px rgba(120,190,255,.4));
+  pointer-events:none;
+}
+
+  .arc-zone{
+    position:absolute;
+    top:0; bottom:0;
+    width:34%;
+  }
+  .z-fast{
+    left:0;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(80,255,170,.28), transparent 70%);
+  }
+  .z-mid{
+    left:33%;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(255,220,120,.28), transparent 70%);
+  }
+  .z-slow{
+    right:0;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(255,120,120,.28), transparent 70%);
+  }
+
+  .speedo-zone{
+    position:absolute;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    width:120px;
+  }
+  .zone-fast{ left:0; bottom:10px; }
+  .zone-medium{ left:50%; top:40px; transform:translateX(-50%); }
+  .zone-slow{ right:0; bottom:10px; }
+
+  .perf-annie{
+    width:92px;
+    height:92px;
+    background:url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+    border-radius:14px;
+  }
+
+  .perf-annie.fast{
+    opacity:1;
+    box-shadow:none;
+  }
+
+  .perf-annie.medium{
+    opacity:.9;
+    box-shadow:0 8px 22px rgba(0,0,0,0.35);
+    border-radius:20px;
+  }
+
+  .perf-annie.slow{
+    opacity:.75;
+    filter: blur(2px) brightness(.75);
+    border-radius:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+
+  .speedo-label{
+    margin-top:.4rem;
+    font-size:.8rem;
+    color:#cfe7ff;
+    opacity:.9;
+    line-height:1.15;
+    text-shadow:0 0 6px rgba(120,190,255,.4);
+  }
+`}</style>
+
+---
+
+➡️ **You’ve completed 08 · AnnieMation — the final chapter of the Motion Trilogy.**  
+From here, you can layer transforms + transitions + animations into expressive, modern UI experiences.

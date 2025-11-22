@@ -1,0 +1,227 @@
+---
+title: '2D Transforms: Rotate, Scale, Translate, and Skew'
+description: 'Your first four reality-warping moves — clean, controlled, and perfect for everyday UI magic.'
+sidebar:
+  order: 1
+  label: '2D Basics'
+draft: false
+---
+
+<style is:global>{`
+.ps-stage {
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 1.25rem 0 0.75rem;
+  display: grid;
+  place-items: center;
+}
+
+.ps-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ps-ghost {
+  opacity: 0.18;
+  filter: grayscale(1);
+  transform: none;
+}
+
+.ps-subject {
+  opacity: 1;
+  transform-origin: center;
+  transition: transform 250ms ease;
+}
+
+/* Demo transforms (match the code blocks!) */
+.demo-translate .ps-subject {
+  transform: translate(70px, -30px);
+}
+
+.demo-rotate .ps-subject {
+  transform: rotate(45deg);
+}
+
+.demo-scale .ps-subject {
+  transform: scale(0.65);
+}
+
+.demo-skew .ps-subject {
+  transform: skew(-14deg, 6deg);
+}
+
+.demo-stack .ps-subject {
+  transform: translate(70px, -30px) rotate(45deg) scale(0.66);
+}
+
+.ps-caption {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  margin: 0.25rem 0 1rem;
+}
+`}</style>
+
+# Spin it, Stretch it, Slide it, Skew it
+
+These four transforms are the foundation of everything that comes next.
+We’ll keep each one clean and obvious, with a ghost object showing the original position.
+
+---
+
+## Translate (Slide it)
+
+translate() shifts an element on the X and/or Y axis **without affecting layout flow** of elements around it.
+
+<div
+  class="ps-stage demo-translate"
+  aria-label="Translate demo with ghost image"
+>
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt="Monkey moved right and slightly up to demonstrate translate."
+  />
+</div>
+<p class="ps-caption">Ghost = original position. Solid = translated.</p>
+
+```css
+.monkey {
+  transform: translate(70px, -30px);
+}
+```
+
+---
+
+## Rotate (Spin it)
+
+rotate() turns an element around an axis.
+
+The default axis is Z, the one pointing right at us.
+
+The value is in degrees, clockwise, expressed from (0deg) to (360deg) and beyond.
+
+We can also rotateX() and rotateY().
+
+<div class="ps-stage demo-rotate" aria-label="Rotate demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt="Monkey rotated clockwise to demonstrate rotate."
+  />
+</div>
+<p class="ps-caption">Rotation around a pivot (origin).</p>
+_(We'll dive into origin stories, very soon)_
+
+```css
+.monkey {
+  transform: rotate(45deg);
+}
+```
+
+---
+
+## Scale (grow it/shrink it)
+
+scale() changes visual size without changing layout size.
+
+It's the not-at-all-pushy way to grow.
+
+<div class="ps-stage demo-scale" aria-label="Scale demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt="Monkey increased in size to demonstrate scale."
+  />
+</div>
+<p class="ps-caption">Layout space stays the same — only the pixels grow.</p>
+
+```css
+.monkey {
+  transform: scale(0.65);
+}
+```
+
+---
+
+## Skew (tilt it)
+
+skew() slants an element along X and/or Y.
+
+We can provide both X and Y values with skew(x, y), or we can skewX() or skewY().
+
+There is no skewZ(). For that we'd need to enter the matrix3d(), and we're in flatland here.
+
+<div class="ps-stage demo-skew" aria-label="Skew demo with ghost image">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt="Monkey slanted to demonstrate skew."
+  />
+</div>
+<p class="ps-caption">
+  Skew is subtle in real UI — dramatic here so it’s obvious.
+</p>
+
+```css
+.monkey {
+  transform: skew(-14deg, 6deg);
+}
+```
+
+---
+
+## Stacking transforms
+
+We can transform: multiple things at a time.
+
+Individual transforms are separated by space and applied in sequence.
+
+<div class="ps-stage demo-stack">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-256w.webp"
+    alt="Monkey transformed with translate, rotate, and scale."
+  />
+</div>
+
+```css
+.monkey {
+  transform: translate(40px, -10px) rotate(12deg) scale(1.1);
+}
+```
+
+Order matters. We’ll we why when we talk assemblies.

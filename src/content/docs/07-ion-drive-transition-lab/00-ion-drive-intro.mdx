@@ -1,0 +1,90 @@
+---
+title: 'Ion Drive: The Transition Lab'
+description: 'Motion begins here — the smooth journey from A to B.'
+sidebar:
+  order: 0
+  label: 'CSS Transitions'
+draft: false
+---
+
+<style is:global>{`
+.ps-ion-stage {
+  position: relative;
+  width: min(100%, 36rem);
+  aspect-ratio: 21 / 9;
+  margin: 1.5rem 0 1rem;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.25);
+}
+.ps-ion-stage img {
+  position: absolute;
+  width: 22%;
+  transform-origin: center;
+  object-fit: contain;
+}
+
+/* Onion‑skin frames (no explanation in text) */
+.ps-step-0 { transform: translate(0%, 40%) rotate(40deg); opacity: 0; }
+.ps-step-1 { transform: translate(75%, 40%) rotate(40deg); opacity: 0.30; }
+.ps-step-2 { transform: translate( 150%, 40%) rotate(40deg); opacity: 0.55; }
+.ps-step-3 { transform: translate( 225%, 40%) rotate(40deg); opacity: 0.80; }
+.ps-step-4 { transform: translate( 300%, 40%) rotate(40deg); opacity: 1.00; }
+
+/* Hero goat */
+.ps-hero {
+  transform: translate(0%, 40%) rotate(40deg);
+  transition: transform 1.4s ease-in-out;
+}
+
+/* trigger on hover (or add/use a class toggle) */
+.ps-ion-stage:hover .ps-hero {
+  transform: translate(300%, 40%) rotate(40deg);
+}
+`}</style>
+
+# **Body Movin', Body Smoothin'**
+
+We’ve already learned how to **pose** elements anywhere in 2D and 3D space.
+
+Now we start making those poses **flow**.
+
+**Transitions are the bridge** between static transforms and full-blown animation.
+
+---
+
+## A First Glimpse of Motion
+
+Below: a smooth space goat charging across the frame.
+
+No explanation needed — the visual speaks for itself.
+
+<div class="ps-ion-stage" aria-label="Goat transitioning with ghosted frames behind the motion path">
+  <img class="ps-step-0" src="/assets/lessons/m5-space-goat-256w.webp" alt="" aria-hidden="true" />
+  <img class="ps-step-1" src="/assets/lessons/m5-space-goat-256w.webp" alt="" aria-hidden="true" />
+  <img class="ps-step-2" src="/assets/lessons/m5-space-goat-256w.webp" alt="" aria-hidden="true" />
+  <img class="ps-step-3" src="/assets/lessons/m5-space-goat-256w.webp" alt="" aria-hidden="true" />
+  <img class="ps-step-4" src="/assets/lessons/m5-space-goat-256w.webp" alt="" aria-hidden="true" />
+
+  <img class="ps-hero" src="/assets/lessons/m5-space-goat-256w.webp"
+       alt="Space goat smoothly charging across the scene." />
+</div>
+
+---
+
+## What Comes Next
+
+Ion Drive will take us deeper into:
+
+- transitions
+- timing functions
+- delays
+- sequencing
+- motion composition
+- expressive UI movement
+
+This is where motion becomes **intentional, readable, and a whole lot o' fun**.
+
+---
+
+➡️ Next page: **Ion Drive — Transition Basics**.

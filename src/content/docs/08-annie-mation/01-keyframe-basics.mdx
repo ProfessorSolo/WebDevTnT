@@ -1,0 +1,145 @@
+---
+title: 'Keyframe Basics'
+description: 'Your first steps into full choreography — declaring, naming, and sequencing custom motions with @keyframes.'
+sidebar:
+  order: 1
+  label: 'Keyframe Basics'
+draft: false
+---
+
+# **The Key to Animation**
+
+Alright — time to move beyond A → B motion.
+
+With **@keyframes**, we design **the entire journey**, not just the endpoints.
+
+Transitions react.  
+**Animations perform.**
+
+---
+
+## 🎬 Declaring a Keyframe
+
+A keyframe block defines _how_ something changes over time.
+
+```css
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+```
+
+This is a full motion arc — up, then down, smooth loop.
+
+---
+
+## 🎛 Attaching an Animation
+
+```css
+.orb {
+  animation: float 2s ease-in-out infinite;
+}
+```
+
+Order matters:
+
+`animation: name duration timing-function iteration-count;`
+
+That’s the core anatomy.
+
+---
+
+## 🧩 Using Keywords Instead of Percentages
+
+You can also use:
+
+```css
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+```
+
+Equivalent to `0%` → `100%`.  
+Perfect for simple fade or slide sequences.
+
+---
+
+## 🎚 Multi-Step Sequences
+
+Keyframes can have _as many steps as you want_:
+
+```css
+@keyframes spinPop {
+  0% {
+    transform: scale(0.8) rotate(0deg);
+  }
+  30% {
+    transform: scale(1) rotate(180deg);
+  }
+  70% {
+    transform: scale(1.15) rotate(270deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+```
+
+This is how we shape character and personality — dynamic, playful, dramatic.
+
+---
+
+<div class="kf-demo-card" aria-label="Hover to animate Annie">
+  <div
+    class="kf-demo-annie"
+    role="img"
+    aria-label="Annie the space dalmatian"
+  ></div>
+</div>
+
+<style is:global>{`
+  .kf-demo-card {
+    width: 440px;
+    height: 280px;
+    display: grid;
+    place-items: center;
+    border-radius: 16px;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(120,190,255,.18), rgba(10,20,40,.85));
+    border: 1px solid rgba(120,180,255,.35);
+    box-shadow: 0 0 0.8rem rgba(80,170,255,.25) inset;
+    margin: 1.5rem 0;
+  }
+
+  .kf-demo-annie {
+    width: 256px;
+    height: 256px;
+    background: url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+    transform-origin: 50% 85%;
+    will-change: transform, filter;
+  }
+
+  .kf-demo-card:hover .kf-demo-annie {
+    animation: kfAnnieFloat 1.6s ease-in-out infinite;
+  }
+
+  @keyframes kfAnnieFloat {
+    0%   { transform: translateY(0) scale(1);     filter: brightness(1); }
+    30%  { transform: translateY(-100px) scale(1.06); filter: brightness(2.08); }
+    60%  { transform: translateY(-40px) scale(0.98);  filter: brightness(0.68); }
+    100% { transform: translateY(0) scale(1);     filter: brightness(1); }
+  }
+`}</style>
+
+---
+
+➡️ Next page: **Animation Properties — duration, easing, delay, direction, fill-mode, play-state, and iteration control.**

@@ -1,0 +1,333 @@
+---
+title: 'Timing Functions'
+description: 'Same distance, same duration — totally different drama. Meet ease, linear, ease-in, ease-out, ease-in-out, and custom cubic-bezier curves.'
+sidebar:
+  order: 2
+  label: 'Timing Functions'
+draft: false
+---
+
+# **Take it Eeeeeasy - Time Bender**
+
+Same distance. Same duration.  
+RADICALLY different vibes.
+
+Welcome to the personality layer of motion.
+
+Timing functions are how we tell the browser _how_ to move through time — chill, snappy, floaty, mechanical, or unhinged.
+
+It's all about the curves, and wrinkles, of the timeline.
+
+---
+
+## 🎚 The Easing Lineup
+
+### **ease**
+
+Your default. Smooth start, smooth end.
+
+```css
+transition-timing-function: ease;
+```
+
+### **linear**
+
+No acceleration. No deceleration.  
+Just… math.
+
+```css
+transition-timing-function: linear;
+```
+
+### **ease-in**
+
+Slow at first, then rockets forward.
+
+```css
+transition-timing-function: ease-in;
+```
+
+### **ease-out**
+
+Fast start, gentle finish.  
+Perfect for hover exits or UI elements that “land softly.”
+
+```css
+transition-timing-function: ease-out;
+```
+
+### **ease-in-out**
+
+Slow → fast → slow.  
+The diplomat — great for general UI motion.
+
+```css
+transition-timing-function: ease-in-out;
+```
+
+---
+
+## 🧪 Custom Curves · `cubic-bezier()`
+
+Want personality? This is where we craft it.
+
+```css
+transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+```
+
+That one overshoots _hard_.  
+Try a few more:
+
+```css
+/* Smooth */
+cubic-bezier(0.25, 0.1, 0.25, 1);
+
+/* Snappy */
+cubic-bezier(0.4, 0, 0.2, 1);
+
+/* Dramatic overshoot */
+cubic-bezier(0.7, -0.5, 0.3, 1.4);
+```
+
+Every curve tells a story.
+
+---
+
+<style is:global>{`
+.ps-ease-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.ps-ease-card {
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: .75rem .75rem 1rem;
+}
+
+.ps-ease-title {
+  font-size: .95rem;
+  margin: 0 0 .5rem;
+  opacity: .9;
+}
+
+.ps-callout {
+  background: rgba(91,91,247,0.15);
+  border-left: 4px solid #5B5BF7;
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+
+.ps-curve {
+  width: 100%;
+  height: 110px;
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.ps-curve .bg { stroke: rgba(255,255,255,0.15); stroke-width: 2; fill: none; }
+.ps-curve .axis { stroke: rgba(255,255,255,0.25); stroke-width: 1; fill: none; }
+.ps-curve .curve { stroke: currentColor; stroke-width: 3; fill: none; }
+
+.ps-hop-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+}
+
+.ps-hop-bunny {
+  width: 42%;
+  transform: translateY(0);
+  transition-property: transform;
+  transition-duration: 1500ms;
+}
+
+.ps-hop-stage:hover .ps-hop-bunny {
+  transform: translateY(-400px);
+}
+
+/* timing variants */
+.ps-linear   { transition-timing-function: linear; }
+.ps-ease     { transition-timing-function: ease; }
+.ps-easein   { transition-timing-function: ease-in; }
+.ps-easeout  { transition-timing-function: ease-out; }
+.ps-easeinout { transition-timing-function: ease-in-out; }
+.ps-custom{ transition-timing-function: cubic-bezier(-0.7, -0.5, 1.5, 1); }
+`}</style>
+
+## Curve lineup + bunny hops
+
+Six curves, five vibes. Hover each card to feel the difference.
+
+<div class="ps-ease-grid">
+
+{' '}
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>linear</code>
+  </div>
+  <svg class="ps-curve" viewBox="0 0 100 100" aria-label="Linear timing curve">
+    <path class="axis" d="M10 90 H90 M10 90 V10" />
+    <path class="curve" d="M10 90 L90 10" />
+  </svg>
+  <div class="ps-hop-stage">
+    <img
+      class="ps-hop-bunny ps-linear"
+      src="/assets/lessons/m5-space-bunny-256w.webp"
+      alt="Bunny hopping with linear timing."
+    />
+  </div>
+</div>
+
+{' '}
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>ease</code>
+  </div>
+  <svg class="ps-curve" viewBox="0 0 100 100" aria-label="Ease timing curve">
+    <path class="axis" d="M10 90 H90 M10 90 V10" />
+    <path class="curve" d="M10 90 C25 80, 25 10, 90 10" />
+  </svg>
+  <div class="ps-hop-stage">
+    <img
+      class="ps-hop-bunny ps-ease"
+      src="/assets/lessons/m5-space-bunny-256w.webp"
+      alt="Bunny hopping with ease timing."
+    />
+  </div>
+</div>
+
+{' '}
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>ease-in</code>
+  </div>
+  <svg class="ps-curve" viewBox="0 0 100 100" aria-label="Ease-in timing curve">
+    <path class="axis" d="M10 90 H90 M10 90 V10" />
+    <path class="curve" d="M10 90 C40 90, 70 40, 90 10" />
+  </svg>
+  <div class="ps-hop-stage">
+    <img
+      class="ps-hop-bunny ps-easein"
+      src="/assets/lessons/m5-space-bunny-256w.webp"
+      alt="Bunny hopping with ease-in timing."
+    />
+  </div>
+</div>
+
+{' '}
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>ease-out</code>
+  </div>
+  <svg
+    class="ps-curve"
+    viewBox="0 0 100 100"
+    aria-label="Ease-out timing curve"
+  >
+    <path class="axis" d="M10 90 H90 M10 90 V10" />
+    <path class="curve" d="M10 90 C30 60, 60 10, 90 10" />
+  </svg>
+  <div class="ps-hop-stage">
+    <img
+      class="ps-hop-bunny ps-easeout"
+      src="/assets/lessons/m5-space-bunny-256w.webp"
+      alt="Bunny hopping with ease-out timing."
+    />
+  </div>
+</div>
+
+{' '}
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>ease-in-out</code>
+  </div>
+
+  <svg
+    class="ps-curve"
+    viewBox="0 0 100 100"
+    aria-label="Ease-in-out timing curve"
+  >
+    <path class="axis" d="M10 90 H90 M10 90 V10" />
+
+    <path
+      class="curve"
+      d="M10 90
+         C 43.6 90,
+           56.4 10,
+           90 10"
+    />
+
+  </svg>
+
+  <div class="ps-hop-stage">
+    <img
+      class="ps-hop-bunny ps-easeinout"
+      src="/assets/lessons/m5-space-bunny-256w.webp"
+      alt="Bunny hopping with ease-in-out timing."
+    />
+  </div>
+</div>
+
+<div class="ps-ease-card">
+  <div class="ps-ease-title">
+    <code>cubic-bezier</code>
+  </div>
+  <svg
+    class="ps-curve"
+    viewBox="0 0 100 100"
+    aria-label="Ease-in-out timing curve"
+  >
+      <path class="axis" d="M10 90 H90 M10 90 V10" />
+
+    <path class="curve" d="M10 90 C35 90, 35 10, 50 10 C65 10, 65 90, 90 10" />
+
+  </svg>
+<div class="ps-hop-stage">
+  <img class="ps-hop-bunny ps-custom"
+       src="/assets/lessons/m5-space-bunny-256w.webp"
+       alt="Bunny hopping with dramatic cubic-bezier timing." />
+</div>
+</div>
+
+</div>
+
+## 📘 How timing functions work
+
+<div class="ps-callout">
+
+### 🧠 **These curves don't show position — they show time**
+
+The graph isn’t the bunny’s path.  
+It’s the **pace** of the motion — how quickly or slowly the animation moves through time.
+
+That’s why:
+
+- A steep curve = fast moment
+- A flat curve = slow moment
+- Ease-in starts slow
+- Ease-out ends slow
+- Ease-in-out slows at both ends
+- Custom cubic-beziers can overshoot, bounce, or snap
+
+The **transform** defines _where_ the bunny goes.  
+The **timing function** defines _how it feels getting there_.
+
+</div>
+
+---
+
+➡️ Next page: **Steps Timing — step-start, step-end, steps(n), and time-slicing magic.**

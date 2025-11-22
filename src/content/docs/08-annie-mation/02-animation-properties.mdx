@@ -1,0 +1,282 @@
+---
+title: 'Animation Properties'
+description: 'Master the full animation control panel — duration, easing, delay, direction, fill-mode, iteration-count, play-state, and more.'
+sidebar:
+  order: 2
+  label: 'Animation Properties'
+draft: false
+---
+
+# **Anim Props Deconstruct**
+
+Here’s the full cockpit: every switch, lever, and dial we can use to shape animation behavior.
+
+Keyframes define _what_ happens.
+
+Animation properties define _how, when,_ and _for how long_ it happens.
+
+Let’s run the control panel.
+
+---
+
+## 🕒 **animation-duration**
+
+How long one full cycle takes.
+
+```css
+animation-duration: 600ms;
+```
+
+---
+
+## 🎚 **animation-timing-function**
+
+The easing curve for the entire animation (unless overridden inside keyframes).
+
+```css
+animation-timing-function: ease-out;
+```
+
+---
+
+## ⏱ **animation-delay**
+
+Starts the animation after a pause.
+
+```css
+animation-delay: 200ms;
+```
+
+Great for staging or staggering.
+
+---
+
+## 🔁 **animation-iteration-count**
+
+How many times the animation repeats.
+
+```css
+animation-iteration-count: infinite;
+animation-iteration-count: 3;
+```
+
+---
+
+## 🔄 **animation-direction**
+
+Controls how each iteration plays.
+
+```css
+animation-direction: normal;
+animation-direction: reverse;
+animation-direction: alternate;
+animation-direction: alternate-reverse;
+```
+
+Perfect for yo-yo, bounce, or ping-pong effects.
+
+---
+
+## 🎭 **animation-fill-mode**
+
+Determines how the element looks _before_ and _after_ the animation runs.
+
+```css
+animation-fill-mode: none; /* default */
+animation-fill-mode: forwards; /* keep final state */
+animation-fill-mode: backwards; /* apply initial state early */
+animation-fill-mode: both; /* combine forwards + backwards */
+```
+
+Crucial for staged entrances.
+
+---
+
+## ⏹ **animation-play-state**
+
+Play and pause animations without removing them.
+
+```css
+animation-play-state: paused;
+animation-play-state: running;
+```
+
+Useful for scroll-triggered or hover-triggered sequences.
+
+---
+
+## 🎛 **animation — shorthand**
+
+Put it all together:
+
+```css
+animation: float 2s ease-in-out 200ms infinite alternate both;
+```
+
+Order:
+
+1. name
+2. duration
+3. timing
+4. delay
+5. iteration
+6. direction
+7. fill-mode
+
+(Play-state is not part of the shorthand.)
+
+---
+
+### 🐾 Annie’s Playground
+
+Explore how different animation properties shape the _feel_ of movement — hover each pair to compare how Annie behaves when only one setting changes.
+
+<div class="ap-panel" aria-label="Animation properties demos">
+{/* Duration */}
+  <div class="ap-row">
+    <div class="ap-label">duration</div>
+    <div class="ap-pair ap-duration">
+      <div class="ap-card">
+        <div class="ap-annie fast" role="img" aria-label="Fast duration"></div>
+        <div class="ap-note">600ms</div>
+      </div>
+      <div class="ap-card">
+        <div class="ap-annie slow" role="img" aria-label="Slow duration"></div>
+        <div class="ap-note">2000ms</div>
+      </div>
+    </div>
+  </div>
+
+{/* Timing */}
+
+{' '}
+
+<div class="ap-row">
+  <div class="ap-label">timing-function</div>
+  <div class="ap-pair ap-timing">
+    <div class="ap-card">
+      <div class="ap-annie ease" role="img" aria-label="Ease timing"></div>
+      <div class="ap-note">ease-in-out</div>
+    </div>
+    <div class="ap-card">
+      <div class="ap-annie linear" role="img" aria-label="Linear timing"></div>
+      <div class="ap-note">linear</div>
+    </div>
+  </div>
+</div>
+
+{/* Direction and Fill */}
+
+  <div class="ap-row">
+    <div class="ap-label">direction + fill-mode</div>
+    <div class="ap-pair ap-dirfill">
+      <div class="ap-card">
+        <div class="ap-annie alt" role="img" aria-label="Alternate direction"></div>
+        <div class="ap-note">alternate</div>
+      </div>
+      <div class="ap-card">
+        <div class="ap-annie forwards" role="img" aria-label="Forwards fill"></div>
+        <div class="ap-note">forwards (1×)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>{`
+  .ap-panel{
+    display:grid;
+    gap:1rem;
+    margin:1.5rem 0;
+    padding:1rem;
+    border-radius:18px;
+    background: radial-gradient(140% 140% at 50% 0%, rgba(120,190,255,.12), rgba(8,16,32,.95));
+    border:1px solid rgba(120,180,255,.28);
+    box-shadow: 0 0 1rem rgba(80,170,255,.18) inset;
+    max-width: 620px;
+  }
+
+  .ap-row{
+    display:grid;
+    grid-template-columns: 160px 1fr;
+    gap:.75rem;
+    align-items:center;
+  }
+
+  .ap-label{
+    font-size:.95rem;
+    color:#cfe7ff;
+    opacity:.9;
+    text-transform: lowercase;
+  }
+
+  .ap-pair{
+    display:flex;
+    gap:.75rem;
+    flex-wrap:wrap;
+  }
+
+  .ap-card{
+    width:210px;
+    height:170px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background: radial-gradient(120% 120% at 50% 0%, rgba(120,190,255,.18), rgba(10,20,40,.85));
+    border:1px solid rgba(120,180,255,.35);
+    box-shadow:0 0 .8rem rgba(80,170,255,.25) inset;
+    position:relative;
+  }
+
+  .ap-note{
+    position:absolute;
+    bottom:.6rem;
+    font-size:.85rem;
+    color:#cfe7ff;
+    opacity:.85;
+  }
+
+  .ap-annie{
+    width:128px;
+    height:128px;
+    background: url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+    transform-origin:50% 85%;
+    transform: translateY(0);
+  }
+
+  /* One shared keyframe for all demos */
+  @keyframes apHop{
+    0%   { transform: translateY(0) rotate(0deg); }
+    45%  { transform: translateY(-70px) rotate(0deg); }
+    70%  { transform: translateY(-45px) rotate(180deg); }
+    100% { transform: translateY(0) rotate(360deg); }
+  }
+
+  /* Trigger: hover EACH pair */
+  .ap-pair:hover .ap-annie{ animation-name: apHop; animation-iteration-count: infinite; }
+
+  /* Duration contrast */
+  .ap-duration:hover .fast{ animation-duration: 600ms;  animation-timing-function: ease-in-out; }
+  .ap-duration:hover .slow{ animation-duration: 2000ms; animation-timing-function: ease-in-out; }
+
+  /* Timing contrast (same duration) */
+  .ap-timing:hover .ease{   animation-duration: 1600ms; animation-timing-function: ease-in-out; }
+  .ap-timing:hover .linear{ animation-duration: 1600ms; animation-timing-function: linear; }
+
+  /* Direction vs Fill */
+  .ap-dirfill:hover .alt{
+    animation-duration: 1400ms;
+    animation-timing-function: ease-in-out;
+    animation-direction: alternate;
+  }
+
+  .ap-dirfill:hover .forwards{
+    animation-duration: 1200ms;
+    animation-timing-function: ease-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+`}</style>
+
+---
+
+➡️ Next page: **Multi-Step Animations — choreographing complex sequences and motions.**

@@ -1,0 +1,90 @@
+---
+title: 'Transitions Incoming'
+description: 'A tiny preview of what happens when transforms start moving over time — just enough to fuel the next module.'
+sidebar:
+  order: 5
+  label: 'Transitions Incoming'
+draft: false
+---
+
+<style is:global>{`
+.ps-stage {
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 1.25rem 0 1rem;
+  display: grid;
+  place-items: center;
+}
+.ps-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ps-goat {
+  transition: transform 350ms ease;
+}
+.ps-stage:hover .ps-goat {
+  transform: translateY(-20px) rotate(8deg) scale(1.05);
+}
+`}</style>
+
+# **From A to B — Smooooothly**
+
+We’ve learned how to **pose** elements in impossible ways.
+
+Now it’s time to _hint_ at motion — the smallest taste of what’s coming in lesson **007 · Ion Drive: Transition Lab**.
+
+We keep it light here.  
+Just enough to feel the magic starting to spark, without stealing thunder from the full transition deep dive.
+
+---
+
+## Tiny Taste of Motion
+
+Hover the goat — your first micro‑transition.
+
+<div class="ps-stage">
+  <img
+    class="ps-goat"
+    src="/assets/lessons/m5-space-goat-256w.webp"
+    alt="Space goat gently lifting and tilting on hover."
+  />
+</div>
+
+```css
+.goat {
+  transition: transform 350ms ease;
+}
+.goat:hover {
+  transform: translateY(-20px) rotate(8deg) scale(1.05);
+}
+```
+
+This is the entire idea behind transitions:
+
+- a **start state**
+- an **end state**
+- and a **timeline** that connects the two
+
+Everything else is seasoning.
+
+---
+
+## What’s _not_ here yet
+
+We’re not touching:
+
+- timing functions beyond `ease`
+- complex keyframes
+- delays
+- staggering
+- transition composition
+
+Those live in **Ion Drive** — where the real fun begins.
+
+---
+
+➡️ Next up: **07 · Ion Drive: Transition Lab** — motion becomes deliberate, expressive, and neon-powered.

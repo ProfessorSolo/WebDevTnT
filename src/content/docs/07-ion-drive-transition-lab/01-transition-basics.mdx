@@ -1,0 +1,134 @@
+---
+title: 'Transition Basics'
+description: 'The anatomy of motion: properties, duration, timing functions, and delay. Your first real control panel for time.'
+sidebar:
+  order: 1
+  label: 'Transition Basics'
+draft: false
+---
+
+# **How we floe from here to there**
+
+Time to fire up the control panel, class.
+
+These four pieces — **property**, **duration**, **timing**, and **delay** — are the entire transition engine.
+
+Everything else builds from here.
+
+---
+
+## 🎛 The Four Parts of a Transition
+
+### 1. **Property**
+
+What is allowed to interpolate?
+
+```css
+transition-property: transform;
+```
+
+You can target one property, multiple, or `all` (but we’ll talk about why “all” is spicy later).
+
+---
+
+### 2. **Duration**
+
+How long the ride takes.
+
+```css
+transition-duration: 300ms;
+```
+
+Short durations feel snappy.  
+Long durations feel cinematic (or sluggish — use wisely).
+
+---
+
+### 3. **Timing Function**
+
+How the motion _feels_ — linear, snappy, bouncy, chill.
+
+```css
+transition-timing-function: ease-out;
+```
+
+We go deep on timing functions in the next chapters.
+
+---
+
+### 4. **Delay**
+
+How long must we wait before the action begins.
+
+```css
+transition-delay: 0.1s;
+```
+
+Used sparingly, delay can make interactions feel intentional.  
+Used poorly, it feels like laggy lag lag lag.  
+Use delay _VERY_ intentionally.
+
+---
+
+## 🧩 Shorthand (Most Common Form)
+
+```css
+transition: transform 300ms ease-out 0s;
+```
+
+Property → Duration → Timing → Delay.  
+Clean, compact, predictable.
+
+---
+
+## 🧲 Hover + Transition = Basic Motion
+
+```css
+.ps--space-wabbit {
+  width: 26%;
+  transform: translateY(100px) scale(1);
+  transition: transform 500ms ease-out;
+}
+
+.ps--space-wabbit:hover .ps-space-wabbit {
+  transform: translateY(-500px) scale(3);
+}
+```
+
+This is the “UI feels alive” effect, taken to an epic Professor Solo extreme — powerful, BIG fun.
+
+---
+
+<style is:global>{`
+.ps-bunny-stage {
+  position: relative;
+  width: min(100%, 28rem);
+  aspect-ratio: 16 / 9;
+  margin: 1.25rem 0 0.75rem;
+  display: grid;
+  place-items: center;
+}
+
+.ps-bunny {
+  width: 26%;
+  transform: translateY(100px) scale(1);
+  transition: transform 500ms ease-out;
+}
+
+.ps-bunny-stage:hover .ps-bunny {
+  transform: translateY(-500px) scale(3);
+}
+`}</style>
+
+## Bunny Hop (Hover)
+
+<div class="ps-bunny-stage" aria-label="Bunny hopping on hover">
+  <img
+    class="ps-bunny"
+    src="/assets/lessons/m5-space-bunny-256w.webp"
+    alt="Space bunny hopping upward on hover."
+  />
+</div>
+---
+
+➡️ Next page: **Timing Functions — ease, linear, ease-in, ease-out, ease-in-out, and cubic-bezier magic.**

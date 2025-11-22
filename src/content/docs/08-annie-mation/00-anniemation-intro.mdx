@@ -1,0 +1,125 @@
+---
+title: 'Annie-Mation Unleashed'
+description: 'From motion over time to full choreography — keyframes, sequencing, and crafted animation flow.'
+sidebar:
+  order: 0
+  label: 'AnnieMation Intro'
+draft: false
+---
+
+# **Keyframe Orchestration**
+
+Welcome to the show — this is where motion stops being a reaction and becomes a **performance**.
+
+Ion Drive taught us transitions: motion from state A → state B.
+
+Now we break free of states entirely and craft **custom motion paths**, timed sequences, loops, and full-blown choreography.
+
+**Keyframes** give us complete control over:
+
+- What moves
+- How it moves
+- When it moves
+- How long it moves
+- How often it repeats
+- What happens before, during, and after the motion
+
+This is animation as a design tool — expressive, intentional, and downright fun.
+
+---
+
+## 🎭 What We’ll Master
+
+- `@keyframes`: custom motion sculpted frame-by-frame
+- Multi-step sequences
+- Direction, fill modes, repetition
+- Pausing, reversing, ping-ponging
+- Combining transforms + opacity + color shifts
+- Triggering animations via classes, events, and intersection
+- Keeping motion performant
+- When animation enhances UX — and when it gets in the way
+
+If Ion Drive was about propulsion, AnnieMation is about **choreography**.
+
+---
+
+## 🧪 Demo Repo
+
+➡️ **WebDevTnT — Adventures With AnnieMation**  
+https://github.com/ProfessorSolo/WebDevTnT-Adventures-With-AnnieMation
+
+Open it beside the lesson — each page maps cleanly to its chapter.
+
+---
+
+## 🎥 Video Overview
+
+Feature reel coming soon.  
+Until then — keep the neon glow alive:
+
+➡️ **Professor Solo on YouTube**  
+https://www.youtube.com/@Professor_Solo
+
+Tap subscribe. Annie insists.
+
+---
+
+## 📸 Annie Begins Her Arc
+
+Hover the card to launch Annie.
+
+<div class="annie-card" aria-label="Hover to animate Annie">
+  <div
+    class="annie-sprite"
+    role="img"
+    aria-label="Annie the space dalmatian"
+  ></div>
+</div>
+
+<style is:global>{`
+.annie-card{
+  width: 500px;
+  height: 380px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(80,170,255,.18), rgba(10,20,40,.9));
+  border: 1px solid rgba(120,180,255,.35);
+  box-shadow: 0 0 0.8rem rgba(80,170,255,.25) inset;
+  margin-top: 1rem;
+}
+
+.annie-sprite{
+  width: 256px;
+  height: 256px;
+  background: url('/assets/lessons/m5-space-annie-mation-256w.webp') center/contain no-repeat;
+  transform-origin: 50% 80%;
+  will-change: transform;
+}
+
+.annie-card:hover .annie-sprite{
+  animation:
+    annieJump 800ms ease-out forwards,
+    annieFlip 700ms ease-in-out 800ms forwards,
+    annieLand 600ms ease-out 1500ms forwards;
+}
+
+@keyframes annieJump{
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-160px) scale(1.08); }
+}
+
+@keyframes annieFlip{
+  0%   { transform: translateY(-160px) rotate(0deg); }
+  100% { transform: translateY(-160px) rotate(360deg); }
+}
+
+@keyframes annieLand{
+  0%   { transform: translateY(-160px) scale(1.08); }
+  100% { transform: translateY(0) scale(1); }
+}
+`}</style>
+
+---
+
+➡️ Next page: **Keyframes Basics — declaring, naming, and sequencing your first animation.**

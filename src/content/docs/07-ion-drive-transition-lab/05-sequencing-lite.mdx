@@ -1,0 +1,305 @@
+---
+title: 'Transition Sequence Initiate'
+description: 'Staggered motion using delays and chained transitions — without touching keyframes. Pure CSS sequencing to prep for interaction patterns.'
+sidebar:
+  order: 5
+  label: 'Transition Sequence'
+draft: false
+---
+
+# **Go this way, then that.**
+
+## **Rinse. Repeat.**
+
+Alright — time to make some pachyderms dance _in order_, without ever reaching for keyframes.
+
+No JS. No keyframes. Just clean sequencing we can see and work with.
+
+What we'll cover:
+
+- sequencing with `transition-delay`
+- chaining multiple properties
+- triggering whole groups with one hover
+
+Lightweight. Powerful. Very “I meant to do that.”
+
+---
+
+## 🧠 The Sequencing Idea
+
+A normal transition is one element changing over time.
+
+Sequencing is **many ~~elements~~ elephants changing over time — intentionally offset**.
+
+Two ways to do it:
+
+1. **Staggered siblings** (same transition, different delays)
+2. **Chained properties** (one element, multiple timed properties)
+
+---
+
+## 🪜 One Transition, One Heffalump
+
+Baseline first. No delays yet.
+
+<div
+  class="ps-stage ps-race stage stage-1"
+  aria-label="Stage 1 single heffalump demo"
+>
+  <div class="lane">
+    <img
+      class="heffalump h1"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump"
+    />
+  </div>
+</div>
+
+```css
+.heffalump {
+  transform: translateX(0);
+  transition: transform 700ms ease-out;
+}
+
+.stage-1:hover .heffalump {
+  transform: translate(240px, -50%);
+}
+```
+
+---
+
+## 🪜 Staggered Stompers (Avec Delay)
+
+Same transition, different delays.  
+One hover, four launches.
+
+<div
+  class="ps-stage ps-race stage stage-2"
+  aria-label="Stage 2 staggered heffalump demo"
+>
+  <div class="lane">
+    <img
+      class="heffalump h1"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump 1"
+    />
+  </div>
+  <div class="lane">
+    <img
+      class="heffalump h2"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump 2"
+    />
+  </div>
+  <div class="lane">
+    <img
+      class="heffalump h3"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump 3"
+    />
+  </div>
+  <div class="lane">
+    <img
+      class="heffalump h4"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump 4"
+    />
+  </div>
+</div>
+
+```css
+.stage-2:hover .heffalump {
+  transform: translate(240px, -50%);
+}
+
+.h1 {
+  transition-delay: 0ms;
+}
+.h2 {
+  transition-delay: 120ms;
+}
+.h3 {
+  transition-delay: 240ms;
+}
+.h4 {
+  transition-delay: 360ms;
+}
+```
+
+---
+
+## 🎛 Multi-Property Sequencing
+
+Same astrodon. Two properties. Two beats. One Trunk.
+
+<div class="ps-stage ps-multi" aria-label="Multi-property sequencing demo">
+  <div class="multi-card">
+    <img
+      class="heffalump solo"
+      src="/assets/lessons/m5-space-pachyderm-256w.webp"
+      alt="Space heffalump"
+    />
+  </div>
+</div>
+
+```css
+.ps-multi .solo {
+  opacity: 0.2;
+  transform: translate(0, -50%) scale(0.8);
+  transition: transform 400ms ease, opacity 250ms ease 180ms; /* fades later */
+}
+
+.ps-multi:hover .solo {
+  opacity: 1;
+  transform: translate(220px, -50%) scale(1);
+}
+```
+
+---
+
+## 🚀 Micro-Cascade
+
+This is the “real UI” _look_ — still hover-only.
+
+<div class="ps-stage ps-list-demo" aria-label="CSS micro cascade list demo">
+  <ul class="list">
+    <li class="item i1">Pachyderm</li>
+    <li class="item i2">Heffalump</li>
+    <li class="item i3">Oliphaunt</li>
+    <li class="item i4">Astrodon</li>
+  </ul>
+</div>
+
+```css
+.ps-list-demo .item {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: transform 400ms ease, opacity 300ms ease;
+}
+
+.ps-list-demo:hover .item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ps-list-demo .i1 {
+  transition-delay: 0ms;
+}
+.ps-list-demo .i2 {
+  transition-delay: 80ms;
+}
+.ps-list-demo .i3 {
+  transition-delay: 160ms;
+}
+.ps-list-demo .i4 {
+  transition-delay: 240ms;
+}
+```
+
+<style is:global>{`
+/* shared demo chrome */
+.ps-stage {
+  margin-block: 0.75rem 1.25rem;
+}
+
+.ps-race,
+.ps-multi,
+.ps-list-demo {
+  display: grid;
+  gap: 0.75rem;
+  padding: 0.9rem;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* lanes + heffalumps */
+.lane {
+  position: relative;
+  height: 7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.heffalump {
+  position: absolute;
+  left: 0.9rem;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transition: transform 700ms ease-out;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,.35));
+}
+
+/* default staggers (Stage 2) */
+.h1 { transition-delay: 0ms; }
+.h2 { transition-delay: 120ms; }
+.h3 { transition-delay: 240ms; }
+.h4 { transition-delay: 360ms; }
+
+/* stage hover triggers */
+.stage-1:hover .heffalump,
+.stage-2:hover .heffalump {
+  transform: translate(240px, -50%);
+}
+
+/* multi-property demo */
+.multi-card {
+  position: relative;
+  height: 7rem;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.ps-multi .solo {
+  opacity: 0.2;
+  transform: translate(0, -50%) scale(0.8);
+  transition:
+    transform 400ms ease,
+    opacity 250ms ease 180ms;
+}
+.ps-multi:hover .solo {
+  opacity: 1;
+  transform: translate(220px, -50%) scale(1);
+}
+
+/* list demo */
+.ps-list-demo .list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.ps-list-demo .item {
+  padding: 0.6rem 0.75rem;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.06);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: transform 400ms ease, opacity 300ms ease;
+}
+.ps-list-demo:hover .item {
+  opacity: 1;
+  transform: translateY(0);
+}
+.ps-list-demo .i1 { transition-delay: 0ms; }
+.ps-list-demo .i2 { transition-delay: 80ms; }
+.ps-list-demo .i3 { transition-delay: 160ms; }
+.ps-list-demo .i4 { transition-delay: 240ms; }
+`}</style>
+
+---
+
+## ✅ The beat goes on...
+
+Transition Sequencing gives us:
+
+- a clean mental model for **order**
+- a simple tool for **staggering**
+- practice designing **motion beats**
+
+Next up → **Keyframe Annie Mation!!**.

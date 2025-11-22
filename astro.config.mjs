@@ -37,27 +37,37 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: 'CSS Transforms, Transitions, and Animation',
-    directory: '04-css-transforms-transitions-animation',
+    label: 'Transformative Styling',
+    directory: '06-transformative-styling',
     released: false,
   }, // UNRELEASED
   {
-    label: 'CSS Variables and Custom Properties',
+    label: 'Ion Drive Transition Lab',
+    directory: '07-ion-drive-transition-lab',
+    released: false,
+  }, // UNRELEASED
+  {
+    label: 'Annie Mation',
+    directory: '08-annie-mation',
+    released: false,
+  }, // UNRELEASED
+  {
+    label: '....CSS Variables ',
     directory: '05-css-variables-custom-properties',
     released: false,
   }, // UNRELEASED
   {
-    label: 'CSS Layouts with Flexbox and Grid',
+    label: 'Flexbox and Grid',
     directory: '06-css-layouts-flexbox-grid',
     released: false,
   }, // UNRELEASED
   {
-    label: 'CSS Preprocessing with SASS',
+    label: 'SASS',
     directory: '07-css-preprocessing-sass',
     released: false,
   }, // UNRELEASED
   {
-    label: 'Automated Task Runners with Gulp',
+    label: 'Gulp',
     directory: '08-automated-task-runners-gulp',
     released: false,
   }, // UNRELEASED
@@ -120,6 +130,7 @@ export default defineConfig({
     starlight({
       title: 'Web Dev TnT',
       sidebar: visibleSidebarModules,
+      favicon: '/favicon.ico',
     }),
   ],
   vite: { plugins: [assertNoDraftsInReleased()] },

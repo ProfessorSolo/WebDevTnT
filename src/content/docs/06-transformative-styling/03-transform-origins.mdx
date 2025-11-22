@@ -1,0 +1,151 @@
+---
+title: 'Transform Origins'
+description: 'Where your transforms pivot from — the secret to pro-level spins, flips, hinges, and dramatic reveals.'
+sidebar:
+  order: 3
+  label: 'Transform Origins'
+draft: false
+---
+
+<style is:global>{`
+.ps-stage {
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 1.25rem 0 1rem;
+  display: grid;
+  place-items: center;
+  perspective: 800px;
+}
+
+.ps-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ps-ghost {
+  opacity: 0.18;
+  filter: grayscale(1);
+}
+
+.ps-subject {
+  transform-origin: center;
+  transition: transform 250ms ease;
+}
+
+/* demos */
+.demo-origin-top .ps-subject { transform-origin: top center; transform: rotateX(45deg); }
+.demo-origin-left .ps-subject { transform-origin: center left; transform: rotateY(-45deg); }
+.demo-origin-bottomright .ps-subject { transform-origin: bottom right; transform: rotateZ(25deg); }
+
+.ps-caption {
+  font-size: .9rem;
+  opacity: .85;
+  margin: .35rem 0 1rem;
+}
+`}</style>
+
+# **The point from wence transformation occureth**
+
+Transforms don’t just _happen_ — they pivot from a specific point.
+
+Move that pivot, and the entire motion changes character.
+
+---
+
+## Top Origin — hinge forward
+
+<div class="ps-stage demo-origin-top">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey rotating forward from top origin."
+  />
+</div>
+<p class="ps-caption">Pivot at the top → classic dropdown hinge.</p>
+
+```css
+.monkey {
+  transform-origin: top center;
+  transform: rotateX(45deg);
+}
+```
+
+---
+
+## Left Origin — door swing
+
+<div class="ps-stage demo-origin-left">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey rotating like a door from the left edge."
+  />
+</div>
+<p class="ps-caption">Pivot on the left → perfect for card reveals.</p>
+
+```css
+.monkey {
+  transform-origin: center left;
+  transform: rotateY(-45deg);
+}
+```
+
+---
+
+## Bottom-Right Origin — dramatic spin
+
+<div class="ps-stage demo-origin-bottomright">
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey rotating around bottom-right corner."
+  />
+</div>
+<p class="ps-caption">
+  Pivot in the corner → dramatic motion with minimal rotation.
+</p>
+
+```css
+.monkey {
+  transform-origin: bottom right;
+  transform: rotateZ(25deg);
+}
+```
+
+---
+
+## Keyword Origins
+
+You can also use keywords:
+
+```css
+transform-origin: top left;
+transform-origin: bottom center;
+transform-origin: right;
+```
+
+---
+
+➡️ Next page: **Assemblies — combining transforms in an orderly fashion**.

@@ -1,0 +1,186 @@
+---
+title: 'Transform Assemblies'
+description: 'Stack multiple transforms, control order, and understand why order changes everything.'
+sidebar:
+  order: 4
+  label: 'Assemblies'
+draft: false
+---
+
+<style is:global>{`
+.ps-stage {
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 1 / 1;
+  margin: 1.25rem 0 1rem;
+  display: grid;
+  place-items: center;
+}
+
+.ps-stage img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ps-ghost {
+  opacity: 0.18;
+  filter: grayscale(1);
+}
+
+.ps-subject {
+  transition: transform 250ms ease;
+  transform-origin: center;
+}
+
+/* Order demos (MATCH code blocks) */
+.demo-scale-then-rotate .ps-subject {
+  transform: scaleY(0.5) rotate(45deg);
+}
+
+.demo-rotate-then-scale .ps-subject {
+  transform: rotate(45deg) scaleY(0.5);
+}
+
+.ps-caption {
+  font-size: .9rem;
+  opacity: .85;
+  margin: .35rem 0 1rem;
+}
+
+.ps-callout {
+  background: rgba(91,91,247,0.15);
+  border-left: 4px solid #5B5BF7;
+  padding: 1rem 1.2rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+`}</style>
+
+# **Order Up!**
+
+Single transforms? Cute.
+
+**Assemblies** are where motion becomes expressive — stacking transforms in sequence unlocks complex, cinematic motion (when done right).
+
+## The Golden Rule to Ordered Rule:
+
+> **Transform sequence matters, a lot.**  
+> CSS applies transforms **left → right**, each one rewriting the coordinate system for the next.
+
+Same transforms.  
+Different order.  
+Completely different geometry.
+
+---
+
+## Scale → Rotate
+
+We squash the monkey vertically **first**,  
+then rotate the newly-squished geometry.
+
+<div
+  class="ps-stage demo-scale-then-rotate"
+  aria-label="Scale then rotate demo with ghost image"
+>
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey scaled vertically then rotated to demonstrate transform order."
+  />
+</div>
+<p class="ps-caption">
+  scaleY happens first → rotation uses the already-squashed shape.
+</p>
+
+```css
+.monkey {
+  transform: scaleY(0.5) rotate(45deg);
+}
+```
+
+---
+
+## Rotate → Scale
+
+Now we rotate the original monkey **first**,  
+then squash along the monkey’s _new rotated_ Y axis.
+
+<div
+  class="ps-stage demo-rotate-then-scale"
+  aria-label="Rotate then scale demo with ghost image"
+>
+  <img
+    class="ps-ghost"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt=""
+    aria-hidden="true"
+  />
+  <img
+    class="ps-subject"
+    src="/assets/lessons/m5-space-monkey-in-space-256w.webp"
+    alt="Monkey rotated then scaled vertically to demonstrate inverse transform order."
+  />
+</div>
+<p class="ps-caption">
+  rotate happens first → scaleY squashes along the rotated axis.
+</p>
+
+```css
+.monkey {
+  transform: rotate(45deg) scaleY(0.5);
+}
+```
+
+---
+
+## 📘 Why order matters — in CSS space
+
+<div class="ps-callout">
+
+### 🧠 **Transforms rewrite space**
+
+Each transform produces a _new coordinate grid_.  
+Every transform after that uses the new, warped grid — not the original one.
+
+This is why:
+
+- `scaleY(0.5) rotate(45deg)`  
+  ≠
+- `rotate(45deg) scaleY(0.5)`
+
+Transforms are **matrices**, and matrix multiplication is NOT commutative.
+
+Think of transforms like:
+
+- moving and stretching **rubber sheets**
+- where each action warps the space the next action happens inside
+
+That's why your rectangle stops looking like a rectangle when you reorder scale + rotate.
+
+</div>
+
+---
+
+## 🎯 Take it away, space monkey!
+
+Transforms **don’t commute**.  
+You decide the narrative:
+
+1. What shape should it be _first_?
+2. What orientation _after_ that?
+3. What final motion completes the move?
+
+That’s motion design, and the law of the jungle.
+
+---
+
+➡️ Next page: **From A to B — Transition to Ion Drive**.

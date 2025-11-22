@@ -1,0 +1,194 @@
+---
+title: 'Motion Magic Potions'
+description: 'Four reusable transition+transform recipes that make UI feel alive: glide in, bounce on hover, mirror flip, and escape chaos.'
+sidebar:
+  order: 4
+  label: 'Motion Recipes'
+draft: false
+---
+
+<style is:global>{`
+.ps-recipes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.ps-recipe {
+  background: rgba(0,0,0,0.18);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow: hidden;
+}
+
+.ps-recipe-title {
+  font-size: 1.1rem;
+  margin: 0 0 .5rem;
+}
+
+.ps-note {
+  font-size: .9rem;
+  opacity: .9;
+  margin: .25rem 0 .75rem;
+}
+
+.ps-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(0,0,0,0.25);
+  margin-bottom: .75rem;
+}
+
+.ps-kitty {
+  width: 38%;
+  transform-origin: center;
+  transition-property: transform, opacity;
+  transition-duration: 650ms;
+}
+
+/* 1) Glide */
+.ps-glide .ps-kitty {
+  opacity: 0;
+  transform: translateX(-40%) scale(.95);
+  transition-timing-function: ease-out;
+}
+.ps-glide:hover .ps-kitty {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+/* 2) Bounce */
+.ps-bounce .ps-kitty {
+  transform: translateY(0) scale(1);
+  transition-duration: 520ms;
+  transition-timing-function: cubic-bezier(.2, .9, .2, 1.4);
+}
+.ps-bounce:hover .ps-kitty {
+  transform: translateY(-26px) scale(1.07);
+}
+
+/* 3) Mirror */
+.ps-mirror .ps-kitty {
+  transform: rotateY(0deg);
+  transition-duration: 700ms;
+  transition-timing-function: ease-in-out;
+  backface-visibility: hidden;
+}
+.ps-mirror:hover .ps-kitty {
+  transform: rotateY(180deg);
+}
+
+/* 4) Escape */
+.ps-escape .ps-kitty {
+  opacity: .9;
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  transition-duration: 800ms;
+  transition-timing-function: ease-in;
+}
+.ps-escape:hover .ps-kitty {
+  opacity: 1;
+  transform: translate(70%, -45%) rotate(14deg) scale(1.18);
+}
+`}</style>
+
+# **Glide, Bounce, Mirror, Escape**
+
+Here’s where transforms and transitions finally shake hands.
+
+Transforms give us **poses**.  
+Transitions give us **flow**.
+
+Each recipe below can be part of the show.
+
+---
+
+<div class="ps-recipes">
+
+  <section class="ps-recipe">
+    <h3 class="ps-recipe-title">1) Glide</h3>
+    <p class="ps-note">A soft entry from the side. Great for cards, modals, and reveals.</p>
+    <div class="ps-stage ps-glide">
+      <img class="ps-kitty" src="/assets/lessons/m5-space-kitty-in-space-256w.webp" alt="Space kitty gliding in smoothly." />
+    </div>
+
+```css
+.card {
+  opacity: 0;
+  transform: translateX(-40%) scale(0.95);
+  transition: transform 650ms ease-out, opacity 650ms ease-out;
+}
+.card:hover {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+```
+
+  </section>
+
+  <section class="ps-recipe">
+    <h3 class="ps-recipe-title">2) Bounce</h3>
+    <p class="ps-note">A playful hover hop. Perfect for buttons and icons.</p>
+    <div class="ps-stage ps-bounce">
+      <img class="ps-kitty" src="/assets/lessons/m5-space-kitty-in-space-256w.webp" alt="Space kitty bouncing upward on hover." />
+    </div>
+
+```css
+.icon {
+  transition: transform 520ms cubic-bezier(0.2, 0.9, 0.2, 1.4);
+}
+.icon:hover {
+  transform: translateY(-26px) scale(1.07);
+}
+```
+
+  </section>
+
+  <section class="ps-recipe">
+    <h3 class="ps-recipe-title">3) Mirror</h3>
+    <p class="ps-note">A clean Y-axis flip. Use for toggles, switches, and card backs.</p>
+    <div class="ps-stage ps-mirror">
+      <img class="ps-kitty" src="/assets/lessons/m5-space-kitty-in-space-256w.webp" alt="Space kitty flipping like a mirrored card." />
+    </div>
+
+```css
+.tile {
+  transition: transform 700ms ease-in-out;
+  backface-visibility: hidden;
+}
+.tile:hover {
+  transform: rotateY(180deg);
+}
+```
+
+  </section>
+
+  <section class="ps-recipe">
+    <h3 class="ps-recipe-title">4) Escape</h3>
+    <p class="ps-note">Controlled chaos. A fast launch out of frame.</p>
+    <div class="ps-stage ps-escape">
+      <img class="ps-kitty" src="/assets/lessons/m5-space-kitty-in-space-256w.webp" alt="Space kitty escaping diagonally with rotation and scale." />
+    </div>
+
+```css
+.thing {
+  transition: transform 800ms ease-in, opacity 800ms ease-in;
+}
+.thing:hover {
+  transform: translate(70%, -45%) rotate(14deg) scale(1.18);
+  opacity: 1;
+}
+```
+
+  </section>
+
+</div>
+
+---
+
+➡️ Next page: **Sequencing Lite — shaping motion with delays, staggering, and controlled cascades (without keyframes).**
