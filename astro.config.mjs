@@ -4,6 +4,12 @@ import starlight from '@astrojs/starlight';
 import fs from 'node:fs';
 import path from 'node:path';
 
+// Google Analytics
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
+
+const googleAnalyticsId = 'G-D2FGLZE0C8'; // your GA4 Measurement ID
+
 // Define all course modules here:
 const COURSE_MODULES = [
   {
@@ -131,6 +137,25 @@ export default defineConfig({
       title: 'Web Dev TnT',
       sidebar: visibleSidebarModules,
       favicon: '/favicon.ico',
+      head: [
+        // Google Analytics
+        {
+          tag: 'script',
+          attributes: {
+            async: true,
+            src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
+          },
+        },
+        {
+          tag: 'script',
+          content: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${googleAnalyticsId}');
+          `,
+        },
+      ],
     }),
   ],
   vite: { plugins: [assertNoDraftsInReleased()] },
