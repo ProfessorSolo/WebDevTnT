@@ -1,0 +1,79 @@
+
+---
+title: "JS Takes the Wand"
+description: "Dynamic themes with JavaScript + CSS variables."
+sidebar:
+  order: 3
+draft: false
+---
+
+# JS Takes the Wand
+
+Static CSS is magical.  
+Dynamic CSS is *sorcery.*
+
+With JS, you can rewrite variables on the fly — theming, sliders, real-time UIs, the works.
+
+---
+
+## 🔍 Reading Variables from CSS
+
+```js
+const styles = getComputedStyle(document.documentElement);
+const bg = styles.getPropertyValue("--bg-color");
+```
+
+---
+
+## ✍️ Writing Variables from JS
+
+```js
+document.documentElement.style
+  .setProperty("--bg-color", "#000");
+```
+
+---
+
+## 🧪 Mini-Demo: “Tap to Theme”
+
+```html
+<button id="darkBtn">Dark Mode</button>
+<button id="lightBtn">Light Mode</button>
+
+<style>
+:root {
+  --bg: white;
+  --text: black;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background .3s ease, color .3s ease;
+}
+</style>
+
+<script>
+darkBtn.onclick = () => {
+  document.documentElement.style.setProperty("--bg", "#000");
+  document.documentElement.style.setProperty("--text", "#fff");
+};
+
+lightBtn.onclick = () => {
+  document.documentElement.style.setProperty("--bg", "#fff");
+  document.documentElement.style.setProperty("--text", "#000");
+};
+</script>
+```
+
+Your first dynamic theme spell.
+
+---
+
+## 💡 Demo Tie-In  
+This powers **Demo 03 — JS Takes the Wand**.
+
+---
+
+## ➡️ Next  
+**Performance Patterns →**

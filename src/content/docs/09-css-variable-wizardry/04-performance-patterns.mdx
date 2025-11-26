@@ -1,0 +1,83 @@
+
+---
+title: "Performance Patterns"
+description: "Unitless values, calc(), patterns, and best practices."
+sidebar:
+  order: 4
+draft: false
+---
+
+# Performance Patterns
+
+Time to refine your spellbook — clean, fast, and extensible.
+
+---
+
+## ⚙️ Unitless Values
+
+Perfect for spacing systems:
+
+```css
+:root {
+  --space: 8;
+}
+
+.card {
+  padding: calc(var(--space) * 2px);
+}
+```
+
+Use one knob to scale an entire layout.
+
+---
+
+## ➗ calc() Everywhere
+
+```css
+--sidebar-width: calc(100vw - 320px);
+```
+
+Dynamic sizing for fluid layouts.
+
+---
+
+## 🧪 Mini-Demo: “Elastic Padding”
+
+```html
+<div class="pad-box">Elastic Padding Box</div>
+
+<style>
+:root {
+  --pad: 10; /* base */
+}
+
+.pad-box {
+  padding: calc(var(--pad) * 1px);
+  background: #f8f8f8;
+  border-radius: 6px;
+  font-family: system-ui;
+  width: fit-content;
+}
+
+/* Bigger screens = bigger padding */
+@media (min-width: 600px) {
+  :root {
+    --pad: 24;
+  }
+}
+</style>
+```
+
+Resize the screen — the padding grows automatically.
+
+---
+
+## 🚫 Limitations
+
+- Cannot use a variable as a property name  
+- Variables are resolved at computed-value time  
+- Avoid deep override chains (debugging nightmare)  
+
+---
+
+## 🎉 You’ve Completed Variable Wizardry!

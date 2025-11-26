@@ -1,0 +1,82 @@
+
+---
+title: "Scope the Magic"
+description: "Cascade, inheritance, and component-level overrides."
+sidebar:
+  order: 2
+draft: false
+---
+
+# Scope the Magic
+
+Custom properties inherit.  
+This makes them perfect for **component-level overrides**, theme sections, UI modes, and nested spellcasting.
+
+---
+
+## 🎯 Global vs Local
+
+```css
+:root {
+  --font-heading: "Cormorant Garamond";
+  --accent: #ff6ec7;
+}
+
+section.alt-theme {
+  --font-heading: "Permanent Marker";
+  --accent: #00b3ff;
+}
+```
+
+Every element inside `.alt-theme` will inherit the new values.
+
+---
+
+## 🧪 Mini-Demo: The “Two Realms” Layout
+
+```html
+<div class="realm default-realm">
+  <h2>Default Realm</h2>
+  <p>Uses global variables.</p>
+</div>
+
+<div class="realm alt-realm">
+  <h2>Alternate Realm</h2>
+  <p>Overrides the heading font and accent.</p>
+</div>
+
+<style>
+:root {
+  --heading-font: Georgia, serif;
+  --accent-color: #ff6ec7;
+}
+
+.realm {
+  border-left: 6px solid var(--accent-color);
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--body-font, system-ui);
+}
+
+.realm h2 {
+  font-family: var(--heading-font);
+}
+
+.alt-realm {
+  --heading-font: "Permanent Marker";
+  --accent-color: #00b3ff;
+}
+</style>
+```
+
+Each realm inherits its own rules — no duplication.
+
+---
+
+## 💡 Demo Tie-In  
+Live in **Demo 02 — Scope the Magic**.
+
+---
+
+## ➡️ Next  
+**JS Takes the Wand →**

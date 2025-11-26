@@ -1,0 +1,74 @@
+
+---
+title: "Meet the Variables"
+description: "Custom properties 101 — declare, use, fallback."
+sidebar:
+  order: 1
+draft: false
+---
+
+# Meet the Variables
+
+Before you can cast spells, you need ingredients.  
+Variable ingredients start with `--`, live anywhere, and cascade like any other CSS property.
+
+---
+
+## 🔮 Declaring a Custom Property
+
+```css
+:root {
+  --brand-color: #ff6ec7;
+}
+```
+
+A variable is just a named value stored on an element.  
+Putting them in `:root` makes them global.
+
+---
+
+## 🧪 Mini-Demo: Declare → Use → Ta‑da
+
+```html
+<button class="magic-btn">Cast Color</button>
+
+<style>
+:root {
+  --btn-bg: #ff6ec7;
+  --btn-text: #221;
+}
+
+.magic-btn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
+</style>
+```
+
+Change `--btn-bg` and watch the button instantly adopt its new destiny.
+
+---
+
+## 🎨 Fallback Values
+
+When a variable is missing or invalid:
+
+```css
+color: var(--headline-color, #333);
+```
+
+Use fallbacks for safety nets.
+
+---
+
+## 💡 Demo Tie-In  
+See this live in **Demo 01 — Meet the Variables**.
+
+---
+
+## ➡️ Next  
+**Scope the Magic →**

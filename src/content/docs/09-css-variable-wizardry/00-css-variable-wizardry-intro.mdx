@@ -1,0 +1,97 @@
+---
+title: 'CSS Variable Wizardry'
+description: 'Design tokens, magic knobs, theme engines — all powered by custom properties.'
+sidebar:
+  order: 1
+  label: 'CSS Variable Wizardry'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🎩 Branding Reality at the `:root`
+
+Welcome, traveler of the cascade.
+
+Today we stop hardcoding colors like it's 2009 and start **wielding design tokens** like the UI sorcerers we are.
+
+CSS custom properties turn your stylesheets into a living control panel — dynamic, reactive, and smarter than any preprocessor.
+
+## 🧪 Mini-Demo: Branding Reality at the `:root`
+
+<MiniMo
+  src="/demos/css-variable-wizardry/mini-01-branding-root.html"
+  title="Branding Reality with :root Tokens"
+/>
+
+---
+
+## 🧙‍♂️ Why Variables Matter
+
+Hard-coded values decay.  
+Variables evolve.
+
+A single `--brand-color` can theme an entire UI, respond to breakpoints, and switch from light to dark mode _without touching a single rule._
+
+---
+
+## 📦 Mini-Demo: “One Change to Theme Them All”
+
+```html
+<div class="card">
+  <h2>Variable Wizardry</h2>
+  <p>Watch how one variable drives the whole look.</p>
+</div>
+
+<style>
+  :root {
+    --brand-color: #ff6ec7;
+    --brand-bg: #ffe8f7;
+  }
+
+  .card {
+    border-left: 6px solid var(--brand-color);
+    background: var(--brand-bg);
+    padding: 1rem 1.5rem;
+    max-width: 320px;
+    font-family: system-ui;
+  }
+</style>
+```
+
+Try changing `--brand-color` and `--brand-bg` to anything.  
+The spell ripples instantly.
+
+---
+
+## 🧩 What You'll Learn
+
+- Declare & use custom properties
+- Build token palettes in `:root`
+- Override tokens at component scope
+- Drive responsive design by updating tokens in media queries
+- Control variables with JavaScript (Runtime spellcasting!)
+- Apply it all to **A04 — Advanced CSS Portfolio Homepage**
+
+---
+
+## 🎛 Demos in This Chapter
+
+- **Demo 1 — Meet the Variables**
+- **Demo 2 — Scope the Magic**
+- **Demo 3 — JS Takes the Wand**
+
+---
+
+## 🎥 Video
+
+_(Insert NotebookLM / YouTube embed here)_
+
+---
+
+## 📚 Chapters
+
+- 01 — Meet the Variables
+- 02 — Scope the Magic
+- 03 — JS Takes the Wand
+- 04 — Performance Patterns

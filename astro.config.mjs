@@ -58,8 +58,18 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: '....CSS Variables ',
-    directory: '05-css-variables-custom-properties',
+    label: 'CSS Variable Wizardry',
+    directory: '09-css-variable-wizardry',
+    released: false,
+  }, // UNRELEASED
+  {
+    label: 'CSS Selector Spells',
+    directory: '10-css-selector-spells',
+    released: false,
+  }, // UNRELEASED
+  {
+    label: 'CSS Function Forge',
+    directory: '11-css-function-forge',
     released: false,
   }, // UNRELEASED
   {
