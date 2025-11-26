@@ -1,13 +1,11 @@
-// @ts-check
+// astro.config.mjs
+
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import fs from 'node:fs';
 import path from 'node:path';
 
 // Google Analytics
-import { defineConfig } from 'astro/config';
-import starlight from '@astrojs/starlight';
-
 const googleAnalyticsId = 'G-D2FGLZE0C8'; // your GA4 Measurement ID
 
 // Define all course modules here:
@@ -94,13 +92,13 @@ const COURSE_MODULES = [
   },
 ];
 
-// SHOW_ALL_CONTENT is TRUE if running the local dev server.
+// SHOW_ALL_CONTENT is TRUE in non-production (local dev / preview).
 // It is FALSE (only show released content) during the final production build.
-const SHOW_ALL_CONTENT = import.meta.env.DEV;
+const SHOW_ALL_CONTENT = process.env.NODE_ENV !== 'production';
 
 // Filter based on the flag:
 const visibleSidebarModules = COURSE_MODULES
-  // Only show the module if it's released OR if we are in dev mode
+  // Only show the module if it's released OR if we are in dev/preview mode
   .filter((module) => module.released || SHOW_ALL_CONTENT)
   .map((module) => ({
     label: module.label,
@@ -113,17 +111,21 @@ function assertNoDraftsInReleased() {
     name: 'assert-no-drafts-in-released',
     hooks: {
       'astro:build:start': async () => {
-        if (import.meta.env.DEV) return;
+        if (process.env.NODE_ENV !== 'production') return;
+
         const releasedDirs = COURSE_MODULES.filter((m) => m.released).map(
           (m) => m.directory
         );
+
         for (const dir of releasedDirs) {
           const root = path.join(process.cwd(), 'src', 'content', 'docs', dir);
           if (!fs.existsSync(root)) continue;
+
           const files = fs.readdirSync(root, { withFileTypes: true });
           for (const f of files) {
             if (!f.isFile()) continue;
             if (!/\.(md|mdx)$/i.test(f.name)) continue;
+
             const src = fs.readFileSync(path.join(root, f.name), 'utf8');
             if (/^\s*---[\s\S]*?\bdraft:\s*true\b[\s\S]*?---/m.test(src)) {
               throw new Error(
@@ -151,7 +153,7 @@ export default defineConfig({
         // Google Analytics
         {
           tag: 'script',
-          attributes: {
+          attrs: {
             async: true,
             src: `https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`,
           },
@@ -168,5 +170,7 @@ export default defineConfig({
       ],
     }),
   ],
-  vite: { plugins: [assertNoDraftsInReleased()] },
+  vite: {
+    plugins: [assertNoDraftsInReleased()],
+  },
 });
