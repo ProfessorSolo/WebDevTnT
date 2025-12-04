@@ -1,0 +1,54 @@
+---
+title: "The Rune of Invocation — var()"
+description: "Summon stored power through custom properties, now framed as true arcane functions."
+sidebar:
+  order: 1
+  label: "var() — The Rune of Invocation"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🪄 Calling the Rune  
+*Where values answer when their names are spoken.*
+
+Step forward, apprentice.  
+The anvils are glowing. The runes hum beneath the floor.  
+Here in the **Function Forge**, we stop treating CSS like static decoration  
+and begin shaping it as **living arithmetic**.
+
+`var()` is a **summoning spell**, pulling a value into the world —  
+with fallbacks, chaining, and reactive strength.
+
+---
+
+## ✨ MiniMo — The Invocation Circle
+
+<MiniMo
+  src="/demos/css-function-forge/m11-invocation-circle.html"
+  title="Invocation Circle — var() in Motion"
+  height="560px"
+/>
+
+---
+
+## 🧩 What To Observe
+
+- Each sigil’s glow is **summoned** via `var(--rune-color)`  
+- One sigil triggers the **fallback**  
+- Hovering swaps invocation sources  
+- HTML stays untouched — values do the work
+
+---
+
+## 📜 The Core Pattern
+
+```css
+.rune {
+  --rune-color: var(--forge-default, hsl(240 80% 65%));
+  background: var(--rune-color);
+}
+```
+
+`var(--rune-color)` is not a variable.  
+It is a **function call** returning a value at runtime.

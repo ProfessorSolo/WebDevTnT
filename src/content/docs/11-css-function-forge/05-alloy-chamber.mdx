@@ -1,0 +1,129 @@
+---
+title: "The Alloy Chamber — Function Composition"
+description: "Forging var(), calc(), min(), max(), and clamp() into single reactive value spells."
+sidebar:
+  order: 5
+  label: "Alloy Chamber — Function Composition"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# ⚙️ The Alloy Chamber  
+*Where single values are built from many runes.*
+
+We’ve met each function in the forge:
+
+- `var()` — summon stored power  
+- `calc()` — shape with arithmetic  
+- `min()` / `max()` — set soft ceilings and floors  
+- `clamp()` — bind minimum, ideal, and maximum as one  
+
+In the **Alloy Chamber**, we stop thinking of these as separate tricks  
+and begin treating them as **layers in the same spell**.
+
+---
+
+## ✨ MiniMo — The Fused Core
+
+This minimo shows a single glowing core whose appearance comes from  
+a *stack* of functions:
+
+- size controlled by `clamp()`  
+- border thickness guided by `max()`  
+- offsets shaped by `calc()`  
+- color and spin rate pulled in via `var()`  
+
+Tweak the controls and watch how a few core runes  
+drive the entire design.
+
+<MiniMo
+  src="/demos/css-function-forge/m11-alloy-core.html"
+  title="Alloy Core — Function Composition"
+  height="620px"
+/>
+
+---
+
+## 🧩 Reading a Forged Value
+
+Here’s a simplified version of what powers the core:
+
+```css
+:root {
+  --core-size-min: 3rem;
+  --core-size-ideal: calc(2rem + 4vw);
+  --core-size-max: 5rem;
+  --core-color: hsl(200 80% 60%);
+  --core-spin: 1.2s;
+}
+
+.alloy-core {
+  --core-size: clamp(
+    var(--core-size-min),
+    var(--core-size-ideal),
+    var(--core-size-max)
+  );
+
+  inline-size: var(--core-size);
+  block-size: var(--core-size);
+
+  border-width: max(2px, 0.2vw);
+  border-style: solid;
+  border-color: var(--core-color);
+
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--core-color) 60%, black),
+    0 0 24px var(--core-color);
+
+  animation: spin var(--core-spin) linear infinite;
+}
+```
+
+Layers at work:
+
+- `var()` — gathers named values into one place  
+- `clamp()` — makes size fluid but bounded  
+- `max()` — keeps borders from becoming too thin  
+- `calc()` — builds the “ideal” middle ground  
+- `color-mix()` (optional extra rune) — softens the glow
+
+---
+
+## 🧮 Thinking in Alloys Instead of Numbers
+
+When forging function alloys, a nice mental model is:
+
+1. **Decide the role** of the value  
+   - Is it a *size*, *offset*, *duration*, *glow*, *gap*?
+
+2. **Name the ingots** as custom properties  
+   - `--core-size-min`, `--core-size-max`, `--core-spin`, etc.
+
+3. **Shape the ideal** with `calc()`  
+   - e.g. `calc(2rem + 4vw)` for a fluid middle
+
+4. **Bind the range** with `min()` / `max()` or `clamp()`  
+   - `clamp(min, ideal, max)`
+
+5. **Invoke everywhere** with `var()`  
+   - so changing the rune changes the whole system
+
+---
+
+## 🎯 Where These Alloys Shine in Real Projects
+
+- **Design tokens** that scale with viewport but keep safe ranges  
+- **Component libraries** where one tweak updates many pieces  
+- **Fluid cards and panels** that don’t need a forest of media queries  
+- **Animation systems** whose durations and distances feel coherent
+
+The big win isn’t just that CSS can “do math.”  
+It’s that we can express design rules as **values plus logic**  
+instead of scattered magic numbers.
+
+In other words:
+
+> *HTML carries the structure.  
+> Tokens carry the intent.  
+> Functions forge the behavior.*

@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MiniMo 02 — Scoped Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --page-bg: #020617;
+      --page-text: #e5e7eb;
+      --panel-bg: #020617;
+      --panel-accent: #ff6ec7;
+      --panel-radius: 1.25rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.5rem;
+      background:
+        radial-gradient(circle at top, #111827 0, #020617 36%, #000 100%);
+      color: var(--page-text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .scope-lab {
+      --panel-bg: #020617;
+      max-width: 900px;
+      width: 100%;
+      border-radius: 1.75rem;
+      padding: 2rem 2rem 2.3rem;
+      background: radial-gradient(circle at top, #020617, #020617 50%, #000 100%);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.7),
+        0 26px 80px rgba(15, 23, 42, 0.95);
+    }
+
+    .scope-lab__eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 0.4rem;
+    }
+
+    .scope-lab__title {
+      margin: 0 0 1.4rem;
+      font-size: 1.45rem;
+    }
+
+    .scope-lab__subtitle {
+      margin: 0 0 1.8rem;
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+
+    .scope-lab__row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .scope-lab__row--alt {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px dashed rgba(148, 163, 184, 0.35);
+      --panel-bg: #020617;
+      --panel-accent: #38bdf8; /* cyan accent only for this row */
+    }
+
+    .scope-panel {
+      background: radial-gradient(circle at top, var(--panel-bg), #020617 70%);
+      border-radius: var(--panel-radius);
+      padding: 1rem 1rem 1.1rem;
+      border: 1px solid color-mix(in srgb, var(--panel-accent) 22%, transparent);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.8),
+        0 18px 50px color-mix(in srgb, var(--panel-accent) 16%, #020617);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scope-panel--alert {
+      --panel-bg: #450a0a;
+      --panel-accent: #f97373;
+    }
+
+    .scope-panel__tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--panel-accent) 92%, white);
+      opacity: 0.9;
+    }
+
+    .scope-panel__title {
+      margin: 0.35rem 0 0.2rem;
+      font-size: 0.95rem;
+    }
+
+    .scope-panel__desc {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    .scope-panel__badge {
+      position: absolute;
+      inset: auto 0.9rem 0.7rem auto;
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: color-mix(in srgb, var(--panel-accent) 18%, #020617);
+      border: 1px solid color-mix(in srgb, var(--panel-accent) 60%, transparent);
+      color: color-mix(in srgb, var(--panel-accent) 96%, white);
+    }
+
+    @media (max-width: 720px) {
+      .scope-lab__row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="scope-lab">
+    <p class="scope-lab__eyebrow">MiniMo 02 · Scope Lab</p>
+    <h1 class="scope-lab__title">Scoped Studio</h1>
+    <p class="scope-lab__subtitle">
+      Same variable names, different scopes. Watch how a single token shifts mood across the layout.
+    </p>
+
+    <section class="scope-lab__row" aria-label="Global scope row">
+      <article class="scope-panel" aria-label="Global default panel">
+        <p class="scope-panel__tag">:root</p>
+        <h2 class="scope-panel__title">Global Theme</h2>
+        <p class="scope-panel__desc">
+          Inherits <code>--panel-bg</code> and <code>--panel-accent</code> from the page root.
+        </p>
+        <span class="scope-panel__badge">Global</span>
+      </article>
+
+      <article class="scope-panel" aria-label="Global default panel">
+        <p class="scope-panel__tag">:root</p>
+        <h2 class="scope-panel__title">Another Default</h2>
+        <p class="scope-panel__desc">
+          Same tokens, same mood. One place to change them.
+        </p>
+        <span class="scope-panel__badge">Global</span>
+      </article>
+
+      <article class="scope-panel scope-panel--alert" aria-label="Alert panel">
+        <p class="scope-panel__tag">Local Override</p>
+        <h2 class="scope-panel__title">Alert Variant</h2>
+        <p class="scope-panel__desc">
+          Local <code>--panel-bg</code> and <code>--panel-accent</code> override everything above.
+        </p>
+        <span class="scope-panel__badge">Local</span>
+      </article>
+    </section>
+
+    <section class="scope-lab__row scope-lab__row--alt" aria-label="Row level scope">
+      <article class="scope-panel" aria-label="Row scoped panel">
+        <p class="scope-panel__tag">Row Scope</p>
+        <h2 class="scope-panel__title">Lab Mode</h2>
+        <p class="scope-panel__desc">
+          This row updates <code>--panel-accent</code> for all panels inside.
+        </p>
+        <span class="scope-panel__badge">Row</span>
+      </article>
+
+      <article class="scope-panel" aria-label="Row scoped panel">
+        <p class="scope-panel__tag">Row Scope</p>
+        <h2 class="scope-panel__title">Shared Accent</h2>
+        <p class="scope-panel__desc">
+          Same token name, new color. No component CSS changed.
+        </p>
+        <span class="scope-panel__badge">Row</span>
+      </article>
+
+      <article class="scope-panel scope-panel--alert" aria-label="Row plus local override panel">
+        <p class="scope-panel__tag">Row + Local</p>
+        <h2 class="scope-panel__title">Row &amp; Local</h2>
+        <p class="scope-panel__desc">
+          Row sets the accent, this card swaps the background too.
+        </p>
+        <span class="scope-panel__badge">Row + Local</span>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

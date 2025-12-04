@@ -1,49 +1,40 @@
 ---
+/**
+ * MiniMo – embedded demo frame
+ *
+ * Props:
+ * - src   (string, required)  – iframe src (relative or absolute)
+ * - title (string, optional)  – accessible title, defaults to "MiniMo demo"
+ * - height (string, optional) – iframe height (e.g. "420px", "60vh"), defaults to "420px"
+ */
+
 interface Props {
   src: string;
   title?: string;
   height?: string;
 }
 
-const { src, title = "MiniMo Demo", height = "260px" } = Astro.props;
+const { src, title = 'MiniMo demo', height = '420px' } = Astro.props as Props;
 ---
 
-<figure class="minimo">
-  <div class="minimo__frame-wrap">
-    <iframe
-      src={src}
-      title={title}
-      loading="lazy"
-      class="minimo__frame"
-      style={{ height }}
-    ></iframe>
-  </div>
-  {title && <figcaption class="minimo__caption">{title}</figcaption>}
-</figure>
+<div class="minimo-frame">
+  <iframe
+    src={src}
+    title={title}
+    loading="lazy"
+    style={`width: 100%; height: ${height}; border: 0; border-radius: 1rem; overflow: hidden;`}
+  ></iframe>
+</div>
 
 <style>
-  .minimo {
-    margin: 1.5rem 0;
-  }
-
-  .minimo__frame-wrap {
-    border-radius: 0.75rem;
+  .minimo-frame {
+    margin-block: 1.5rem 2rem;
+    border-radius: 1rem;
     overflow: hidden;
-    border: 1px solid var(--sl-color-gray-5, #333);
-    background: #050608;
-  }
-
-  .minimo__frame {
-    display: block;
-    width: 100%;
-    border: none;
-  }
-
-  .minimo__caption {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.7;
+    border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+    background: radial-gradient(circle at top, rgba(15,23,42,0.95), rgba(2,6,23,0.98));
+    box-shadow:
+      0 0 0 1px rgba(15, 23, 42, 0.6),
+      0 22px 60px rgba(15, 23, 42, 0.9);
   }
 </style>

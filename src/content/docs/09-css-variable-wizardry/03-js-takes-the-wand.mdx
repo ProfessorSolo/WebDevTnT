@@ -1,79 +1,168 @@
-
 ---
-title: "JS Takes the Wand"
-description: "Dynamic themes with JavaScript + CSS variables."
+title: 'JS Takes the Wand'
+description: 'Use JavaScript to read and update CSS custom properties for instant, themeable UI changes.'
 sidebar:
   order: 3
 draft: false
 ---
 
-# JS Takes the Wand
+import MiniMo from '../../../components/MiniMo.astro';
 
-Static CSS is magical.  
-Dynamic CSS is *sorcery.*
+## When JavaScript Grabs the Wand
 
-With JS, you can rewrite variables on the fly — theming, sliders, real-time UIs, the works.
+So far, our variables have been **static spell ingredients**: declared in CSS, used in CSS.  
+Now we hand the wand to JavaScript and let it **rewrite the values at runtime**.
+
+This is where things get wild:
+
+- Sliders that change `--glow-strength`
+- Toggles that flip light/dark modes
+- “Lab mode” buttons that restyle a whole layout with one function call
+
+JavaScript doesn’t style the page directly — it just **updates the tokens**.
 
 ---
 
-## 🔍 Reading Variables from CSS
+## 🤝 Why JS + CSS Variables Is So Good
+
+Instead of sprinkling `element.style.whatever = ...` everywhere, you:
+
+1. Keep the **visual logic** in CSS (colors, spacing, radii, shadows).
+2. Use JavaScript only to **change variable values**.
+3. Let the cascade and `var()` do the rest.
+
+Change one custom property → every place that uses it reacts.
+
+---
+
+## 📥 Reading a Variable from JavaScript
+
+You read the **computed value** of a custom property like this:
 
 ```js
-const styles = getComputedStyle(document.documentElement);
-const bg = styles.getPropertyValue("--bg-color");
+const root = document.documentElement;
+const styles = getComputedStyle(root);
+const accent = styles.getPropertyValue('--accent').trim();
+
+console.log('Current accent is:', accent);
 ```
+
+A couple of notes:
+
+- `document.documentElement` is the `<html>` element (a great place for global tokens).
+- `getPropertyValue('--accent')` returns the final computed value after the cascade.
+- `.trim()` cleans up any extra whitespace.
+
+You can do the same on any element that declares/overrides the variable.
 
 ---
 
-## ✍️ Writing Variables from JS
+## ✍️ Writing a Variable from JavaScript
+
+To change a variable, update the `style` of an element and set the property name:
 
 ```js
-document.documentElement.style
-  .setProperty("--bg-color", "#000");
+const root = document.documentElement;
+
+root.style.setProperty('--accent', '#22c55e'); // lime
+root.style.setProperty('--panel-radius', '1.75rem');
 ```
+
+Important details:
+
+- The **name** includes the `--` prefix.
+- The **value** must be a string that results in valid CSS when used.
+- You usually write to:
+  - `document.documentElement` for **global theme switches**
+  - A specific wrapper (e.g. `.demo-shell`) for scoped experiments
+
+Everything using `var(--accent)` or `var(--panel-radius)` updates instantly.
 
 ---
 
-## 🧪 Mini-Demo: “Tap to Theme”
+## 🧪 MiniMo 03 — Theme Switcher Wand
 
-```html
-<button id="darkBtn">Dark Mode</button>
-<button id="lightBtn">Light Mode</button>
+Three theme buttons, one set of tokens.  
+JavaScript only changes the variables; CSS handles the look.
 
-<style>
+<MiniMo
+  src="/demos/css-variable-wizardry/minimo-02-js-takes-the-wand.html"
+  title="MiniMo 03 — Theme Switcher Wand"
+  height="640px"
+/>
+
+Here’s the core idea behind that MiniMo:
+
+```css
 :root {
-  --bg: white;
-  --text: black;
+  --page-bg: #020617;
+  --card-bg: #020617;
+  --accent: #ff6ec7;
+  --glow: rgba(255, 110, 199, 0.42);
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  transition: background .3s ease, color .3s ease;
+.theme-card {
+  background: radial-gradient(circle at top, var(--card-bg), #020617 80%);
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.85), 0 24px 60px var(--glow);
 }
-</style>
-
-<script>
-darkBtn.onclick = () => {
-  document.documentElement.style.setProperty("--bg", "#000");
-  document.documentElement.style.setProperty("--text", "#fff");
-};
-
-lightBtn.onclick = () => {
-  document.documentElement.style.setProperty("--bg", "#fff");
-  document.documentElement.style.setProperty("--text", "#000");
-};
-</script>
 ```
 
-Your first dynamic theme spell.
+```js
+const root = document.documentElement;
+
+const themes = {
+  default: {
+    '--page-bg': '#020617',
+    '--card-bg': '#020617',
+    '--accent': '#ff6ec7',
+    '--glow': 'rgba(255, 110, 199, 0.42)',
+  },
+  neon: {
+    '--page-bg': '#020617',
+    '--card-bg': '#020617',
+    '--accent': '#38bdf8',
+    '--glow': 'rgba(56, 189, 248, 0.5)',
+  },
+  sunset: {
+    '--page-bg': '#020617',
+    '--card-bg': '#1c1917',
+    '--accent': '#fb923c',
+    '--glow': 'rgba(251, 146, 60, 0.5)',
+  },
+};
+
+function applyTheme(name) {
+  const theme = themes[name];
+  for (const [key, value] of Object.entries(theme)) {
+    root.style.setProperty(key, value);
+  }
+}
+```
+
+The markup just adds buttons with `data-theme="neon"` / `data-theme="sunset"`  
+and calls `applyTheme()` when you click.
 
 ---
 
-## 💡 Demo Tie-In  
-This powers **Demo 03 — JS Takes the Wand**.
+## 🚧 Common Pitfalls
+
+A few “gotchas” to warn the class about:
+
+- **Forgetting the `--` prefix**  
+  `setProperty('accent', '#ff6ec7')` silently fails. The name must start with `--`.
+
+- **Writing to the wrong element**  
+  If your CSS reads from `:root` but JS sets variables on `.demo-shell`,  
+  the values won’t line up. Point both at the same scope on purpose.
+
+- **Mixing JS-applied styles with CSS rules**  
+  Still use CSS rules for layout/typography. Let JS tweak variables, not whole
+  declaration blocks.
 
 ---
 
-## ➡️ Next  
-**Performance Patterns →**
+## ➡️ Next Up
+
+Now that JS can grab the wand, we’ll build **interactive controls** that adjust
+variables live — sliders, toggles, and other UI for your **variable-powered labs**.

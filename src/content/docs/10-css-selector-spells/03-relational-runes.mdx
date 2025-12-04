@@ -1,0 +1,134 @@
+---
+title: 'Relational Runes'
+description: 'Counting children and types: first, last, and nth-based selectors.'
+sidebar:
+  order: 3
+  label: 'Relational Runes'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🔮 Relational Runes
+
+_The order and lineage of elements_
+
+Familial Sorcery told us **who is related to whom**.  
+**Relational Runes** go further and ask:
+
+> **“Where does this element sit among its siblings?”**
+
+Here we care about:
+
+- who is **first** or **last**,
+- who is **nth in line**,
+- and who is the third, fourth, or fifth of its **type**, even when other elements sit in between.
+
+We’ll soon meet:
+
+- `:first-child` / `:last-child`
+- `:nth-child()`
+- `:first-of-type` / `:last-of-type`
+- `:nth-of-type()`
+
+Before we break them down, we watch the runes at work.
+
+---
+
+## ✨ MiniMo — The Circle of Stories
+
+This minimo shows a small sequence of stories, plus an interlude that interrupts the flow.
+
+The visuals are wired to **where** each element falls in the sequence, and whether it is **a story** or something else.
+
+<MiniMo
+  src="/demos/css-selector-spells/m10-relational-circle-of-stories.html"
+  title="Relational Runes — Circle of Stories"
+  height="640px"
+/>
+
+As you read it, notice:
+
+- One story at the top glows with an electric **red halo**.
+- A soft **orange banding** runs through every other story row.
+- A specific story in the lower half wears a **hot pink “TYPE·III” marker**.
+- There’s an **ad interlude** in the middle that clearly participates in the child order, but not in the “story-of-type” counting.
+
+Those are all clues about `:first-child`, `:nth-child()`, and `:nth-of-type()`.
+
+---
+
+## 🧩 Quest Notes — Reading the Circle
+
+We’ll keep the CSS hidden for now.  
+Our job is to read the pattern and guess which relational runes might be in play.
+
+Color legend for this minimo:
+
+- 🟥 **First-born rune** — electric red (first child of the group)
+- 🟧 **Rhythm rune** — electric orange (odd/even banding)
+- 💗 **Kindred-type rune** — hot pink (counting only among stories, not ads)
+
+---
+
+### 🟥 Quest I — The First-Born
+
+The topmost story carries a strong red glow around its row and title.
+
+How might we write selectors that:
+
+- treat this first story as special,
+- without needing a special class on it,
+- and still keep the rest of the list generic?
+
+Think about `:first-child` and `:nth-child(1)`—  
+and why we might pick one over the other.
+
+---
+
+### 🟧 Quest II — The Rhythm of the List
+
+Every other story row carries an orange-tinted band behind it.
+
+Look carefully at **which** rows are banded:
+
+- Which stories get the orange treatment?
+- Does the ad interlude break the pattern, or is the rhythm still easy to follow?
+
+How might we express this rhythm with `:nth-child()` or `:nth-of-type()`?
+
+---
+
+### 💗 Quest III — Of Type, Not Just of Birth
+
+One story lower down carries a hot pink “TYPE·III” badge next to its kicker.
+
+Yet there’s an ad between the second and third stories.
+
+How might we write a selector that:
+
+- finds the **third story article**,
+- even though it is **not** the third child of the parent element,
+- and clearly ignores the interlude div when counting?
+
+This is where `:nth-of-type()` quietly shows off.
+
+---
+
+### 🟥🟧💗 Quest IV — The Closing Note
+
+The final story doesn’t have its own new color, but the copy hints at **“Last, But Not Forgotten.”**
+
+What kinds of selectors could we use to subtly soften the ending of a sequence?
+
+Think about:
+
+- `:last-child` vs `:last-of-type()`
+- and how they might behave differently if we added more non-story children after the last story.
+
+---
+
+When Tinkerbell rings her bell like this:  
+`* : * : * : *`
+
+…we turn to **04 — Relational Selectors** and lay out several different selector spells side by side, all targeting the same positions in the Circle.

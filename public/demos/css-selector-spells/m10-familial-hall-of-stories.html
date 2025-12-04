@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Hall of Stories — Familial Sorcery Minimo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --hall-bg: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      --hall-border: rgba(148, 163, 184, 0.4);
+      --hall-text-main: #e5e7eb;
+      --hall-text-muted: #9ca3af;
+
+      /* Quest colors */
+      --quest-structure: #38bdf8; /* blue */
+      --quest-heir: #22c55e;      /* green */
+      --quest-whisper: #facc15;   /* amber */
+      --quest-sibling: #a855f7;   /* purple */
+
+      --story-bg: rgba(15, 23, 42, 0.94);
+      --story-bg-hover: rgba(15, 23, 42, 1);
+      --story-shadow-soft: 0 18px 35px rgba(15, 23, 42, 0.9);
+      --story-radius: 0.9rem;
+
+      --hall-radius: 1.25rem;
+      --hall-padding-block: 1.5rem;
+      --hall-padding-inline: 1.75rem;
+      --hall-max-width: 40rem;
+
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+      font-family: var(--font-body);
+      color: var(--hall-text-main);
+    }
+
+    .hall-of-stories {
+      max-width: var(--hall-max-width);
+      width: 100%;
+      margin-inline: auto;
+      padding: var(--hall-padding-block) var(--hall-padding-inline);
+      border-radius: var(--hall-radius);
+      background: var(--hall-bg);
+      border: 1px solid var(--hall-border);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .hall-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--quest-structure);
+      margin-bottom: 0.25rem;
+    }
+
+    .hall-title {
+      margin: 0 0 0.4rem;
+      border-top: none;
+      padding-top: 0;
+      font-size: 1.05rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--hall-text-muted);
+    }
+
+    /* General siblings: everything after the title (siblings, not the title itself) */
+    .hall-title ~ * {
+      border-top: 1px solid var(--quest-sibling);
+      padding-top: 0.75rem;
+    }
+
+    .story {
+      padding: 0.85rem 1rem;
+      border-radius: var(--story-radius);
+      background: var(--story-bg);
+      box-shadow:
+        0 0 0 1px rgba(15, 23, 42, 0.9),
+        var(--story-shadow-soft);
+      margin-block: 0.75rem;
+      transition:
+        transform 160ms ease-out,
+        box-shadow 160ms ease-out,
+        background-color 160ms ease-out,
+        border-color 160ms ease-out;
+      border: 1px solid transparent;
+    }
+
+    .story-inner {
+      padding: 0.35rem 0 0;
+    }
+
+    .story-title {
+      margin: 0 0 0.2rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      transition: color 160ms ease-out;
+    }
+
+    /* Descendant: any story title inside a story (direct or nested) */
+    .story .story-title {
+      color: #f9fafb;
+    }
+
+    /* Direct child: only titles that are immediate children of .story (Heir quest: green) */
+    .story > .story-title {
+      color: var(--quest-heir);
+    }
+
+    .story-meta {
+      margin: 0 0 0.35rem;
+    }
+
+    /* Adjacent sibling: meta line right after the title (Whisper quest: amber) */
+    .story-title + .story-meta {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--quest-whisper);
+    }
+
+    .story p:last-of-type {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .hall-note {
+      margin: 0.5rem 0 0;
+      font-size: 0.85rem;
+      color: var(--quest-sibling);
+    }
+
+    /* Hover effects to make relationships feel alive */
+    .story:hover {
+      background: var(--story-bg-hover);
+      transform: translateY(-4px);
+      box-shadow:
+        0 0 0 1px var(--quest-structure),
+        0 24px 50px rgba(15, 23, 42, 0.95);
+      border-color: var(--quest-structure);
+    }
+
+    .story:hover .story-title {
+      color: var(--quest-heir);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+
+      .hall-of-stories {
+        padding-inline: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hall-of-stories">
+    <div class="hall-label">Structure Quest · Descendants</div>
+    <h2 class="hall-title">Hall of Stories</h2>
+
+    <article class="story">
+      <div class="story-inner">
+        <h3 class="story-title">On the Nature of Siblings</h3>
+        <p class="story-meta">Arcane CSS · 3 min read</p>
+        <p>Some elements follow quietly. Others insist on standing right next to you.</p>
+      </div>
+    </article>
+
+    <article class="story">
+      <h3 class="story-title">Children of the Root</h3>
+      <div class="story-inner">
+        <p class="story-meta">DOM Lore · 2 min read</p>
+        <p>Descendants whisper stories about the containers they live in.</p>
+      </div>
+    </article>
+
+    <p class="hall-note">Further tales are still being inscribed…</p>
+  </section>
+</body>
+</html>

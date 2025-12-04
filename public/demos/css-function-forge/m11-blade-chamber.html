@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Blade Chamber — min() & max() at Work</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      --panel-bg: rgba(15, 23, 42, 0.98);
+      --panel-border: rgba(148, 163, 184, 0.45);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+
+      --blade-restraint: #22d3ee; /* cyan — min() */
+      --blade-dominion: #f97316;  /* orange — max() */
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.75rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+    }
+
+    .chamber {
+      width: min(100%, 680px);
+      padding: 1.4rem 1.7rem 1.5rem;
+      border-radius: 1.25rem;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #38bdf8;
+      margin-bottom: 0.2rem;
+    }
+
+    .title {
+      margin: 0 0 0.3rem;
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .subtitle {
+      margin: 0 0 1.1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .forge-range-wrap {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .forge-range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #64748b;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #38bdf8;
+    }
+
+    .blades {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .blade-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .blade-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .blade-name {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+    }
+
+    .blade-formula {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.74rem;
+      color: #e5e7eb;
+    }
+
+    .blade-bar-wrap {
+      width: 100%;
+      border-radius: 999px;
+      padding: 0.4rem;
+      background: radial-gradient(circle at top, #020617 0, #020617 70%, #020617 100%);
+      border: 1px solid rgba(30, 64, 175, 0.8);
+    }
+
+    .blade-bar {
+      height: 0.85rem;
+      border-radius: 999px;
+      box-shadow: 0 0 14px rgba(15, 23, 42, 0.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .blade-bar--restraint {
+      background: linear-gradient(90deg, rgba(15,23,42,1), var(--blade-restraint));
+      box-shadow:
+        0 0 0 1px rgba(56, 189, 248, 0.8),
+        0 0 18px rgba(34, 211, 238, 0.9);
+    }
+
+    .blade-bar--dominion {
+      background: linear-gradient(90deg, rgba(15,23,42,1), var(--blade-dominion));
+      box-shadow:
+        0 0 0 1px rgba(248, 113, 22, 0.85),
+        0 0 18px rgba(249, 115, 22, 0.9);
+    }
+
+    .blade-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.74rem;
+      color: #cbd5f5;
+      opacity: 0.9;
+    }
+
+    .footer-note {
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1.25rem;
+      }
+
+      .chamber {
+        padding-inline: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="chamber">
+    <div class="label">Function Forge · min() & max()</div>
+    <h2 class="title">Blade Chamber</h2>
+    <p class="subtitle">
+      Drag the forge width. Each blade chooses its own destiny using <code>min()</code> or <code>max()</code> —
+      either staying under a ceiling or holding above a floor.
+    </p>
+
+    <div class="forge-range-wrap">
+      <div class="forge-range-labels">
+        <span>Forge width</span>
+        <span id="forgeWidthLabel">520px</span>
+      </div>
+      <input id="forgeRange" type="range" min="260" max="640" value="520" />
+    </div>
+
+    <div class="blades" id="bladeContainer" style="width:520px">
+      <div class="blade-row">
+        <div class="blade-label">
+          <span class="blade-name">Blade of Restraint · min()</span>
+          <span class="blade-value" id="restraintValue">min(60%, 320px)</span>
+        </div>
+        <div class="blade-bar-wrap">
+          <div class="blade-bar blade-bar--restraint" id="restraintBar"></div>
+        </div>
+      </div>
+
+      <div class="blade-row">
+        <div class="blade-label">
+          <span class="blade-name">Blade of Dominion · max()</span>
+          <span class="blade-value" id="dominionValue">max(40%, 180px)</span>
+        </div>
+        <div class="blade-bar-wrap">
+          <div class="blade-bar blade-bar--dominion" id="dominionBar"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="footer-note">
+      In real CSS, we’d write <code>width: min(60%, 320px)</code> and <code>width: max(40%, 180px)</code>.
+      Here we’re simulating the math so you can see which value wins as the forge narrows or widens.
+    </p>
+  </section>
+
+  <script>
+    const range = document.getElementById('forgeRange');
+    const forgeWidthLabel = document.getElementById('forgeWidthLabel');
+    const container = document.getElementById('bladeContainer');
+    const restraintBar = document.getElementById('restraintBar');
+    const dominionBar = document.getElementById('dominionBar');
+    const restraintValueLabel = document.getElementById('restraintValue');
+    const dominionValueLabel = document.getElementById('dominionValue');
+
+    function updateBlades() {
+      const forgeWidth = parseInt(range.value, 10);
+      container.style.width = forgeWidth + 'px';
+      forgeWidthLabel.textContent = forgeWidth + 'px';
+
+      // Simulate min(60%, 320px)
+      const restraintPercent = 0.6 * forgeWidth;
+      const restraintPx = 320;
+      const restraintUsed = Math.min(restraintPercent, restraintPx);
+      const restraintPercentDisplay = Math.round((restraintUsed / forgeWidth) * 100);
+
+      restraintBar.style.width = restraintPercentDisplay + '%';
+      restraintValueLabel.textContent =
+        `min(60%, 320px) → ${Math.round(restraintUsed)}px`;
+
+      // Simulate max(40%, 180px)
+      const dominionPercent = 0.4 * forgeWidth;
+      const dominionPx = 180;
+      const dominionUsed = Math.max(dominionPercent, dominionPx);
+      const dominionPercentDisplay = Math.round((dominionUsed / forgeWidth) * 100);
+
+      dominionBar.style.width = dominionPercentDisplay + '%';
+      dominionValueLabel.textContent =
+        `max(40%, 180px) → ${Math.round(dominionUsed)}px`;
+    }
+
+    range.addEventListener('input', updateBlades);
+    updateBlades();
+  </script>
+</body>
+</html>

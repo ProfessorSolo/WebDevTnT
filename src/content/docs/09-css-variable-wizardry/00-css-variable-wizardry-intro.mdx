@@ -17,10 +17,13 @@ Today we stop hardcoding colors like it's 2009 and start **wielding design token
 
 CSS custom properties turn your stylesheets into a living control panel — dynamic, reactive, and smarter than any preprocessor.
 
-## 🧪 Mini-Demo: Branding Reality at the `:root`
+## 🧪 MiniMo: Branding Reality at the `:root`
+
+Try changing `--brand-color` to anything.  
+The spell ripples instantly.
 
 <MiniMo
-  src="/demos/css-variable-wizardry/mini-01-branding-root.html"
+  src="/demos/css-variable-wizardry/minimo-00-branding-root.html"
   title="Branding Reality with :root Tokens"
 />
 
@@ -35,36 +38,7 @@ A single `--brand-color` can theme an entire UI, respond to breakpoints, and swi
 
 ---
 
-## 📦 Mini-Demo: “One Change to Theme Them All”
-
-```html
-<div class="card">
-  <h2>Variable Wizardry</h2>
-  <p>Watch how one variable drives the whole look.</p>
-</div>
-
-<style>
-  :root {
-    --brand-color: #ff6ec7;
-    --brand-bg: #ffe8f7;
-  }
-
-  .card {
-    border-left: 6px solid var(--brand-color);
-    background: var(--brand-bg);
-    padding: 1rem 1.5rem;
-    max-width: 320px;
-    font-family: system-ui;
-  }
-</style>
-```
-
-Try changing `--brand-color` and `--brand-bg` to anything.  
-The spell ripples instantly.
-
----
-
-## 🧩 What You'll Learn
+## 🧩 What We'll Learn
 
 - Declare & use custom properties
 - Build token palettes in `:root`
@@ -75,18 +49,32 @@ The spell ripples instantly.
 
 ---
 
-## 🎛 Demos in This Chapter
+## 🎛 Demo Repo for This Chapter
 
-- **Demo 1 — Meet the Variables**
-- **Demo 2 — Scope the Magic**
-- **Demo 3 — JS Takes the Wand**
+[View the repo on GitHub](https://github.com/ProfessorSolo/WebDevTnT-CSS-Variable-Wizardry)
+
+`git clone https://github.com/ProfessorSolo/WebDevTnT-CSS-Variable-Wizardry.git`
+
+- **Chapter 1 — IngredientMeet the Variables**
+- **Chapter 2 — Scope the Magic**
+- **Chapter 3 — JS Takes the Wand**
 
 ---
 
 ## 🎥 Video
 
-_(Insert NotebookLM / YouTube embed here)_
-
+<div class="video-wrap">
+  <iframe
+    width="100%"
+    height="400"
+    src="https://www.youtube.com/embed/YDwhv3xeWpE?si=UNksiVp_eH1pocnR"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen
+  ></iframe>
+</div>
 ---
 
 ## 📚 Chapters

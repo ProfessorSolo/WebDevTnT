@@ -1,0 +1,105 @@
+---
+title: "The Twin Blades — min() & max()"
+description: "Use min() and max() to set gentle lower and upper bounds on your CSS values."
+sidebar:
+  order: 3
+  label: "min() & max() — Twin Blades"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# ⚔️ The Twin Blades of Constraint  
+*Choosing the lesser or greater power on demand.*
+
+Sometimes a single value isn’t enough.  
+We want elements that:
+
+- grow with the viewport… but **not too huge**  
+- shrink on small screens… but **never too tiny**  
+- keep a **minimum touch target** while still being responsive
+
+Enter `min()` and `max()`:
+
+- `min(a, b, c)` => **smallest** of the values  
+- `max(a, b, c)` => **largest** of the values  
+
+They’re perfect for setting **soft ceilings and floors** on widths, paddings, fonts, and more.
+
+---
+
+## ✨ MiniMo — The Blade Chamber
+
+Two forged blades sit in the chamber:
+
+- the **Blade of Restraint** uses `min()` to cap its reach,  
+- the **Blade of Dominion** uses `max()` to hold a minimum presence.
+
+Resize the frame or hover the controls to see which value wins.
+
+<MiniMo
+  src="/demos/css-function-forge/m11-blade-chamber.html"
+  title="Blade Chamber — min() & max() at Work"
+  height="600px"
+/>
+
+---
+
+## 🧩 Core Patterns
+
+### 🗡 Blade of Restraint — `min()`
+
+```css
+/* Grow with the container, but never exceed 320px */
+.blade--restraint {
+  width: min(60%, 320px);
+}
+```
+
+- On wide screens: sticks near **320px**  
+- On narrow screens: tracks **60%** of the container
+
+---
+
+### 🗡 Blade of Dominion — `max()`
+
+```css
+/* Shrink with the container, but never below 180px */
+.blade--dominion {
+  width: max(40%, 180px);
+}
+```
+
+- On roomy layouts: sits near **40%**  
+- On cramped layouts: refuses to go below **180px**
+
+---
+
+## 🧮 Common Use Cases
+
+- Constraining **cards** or **content columns**  
+  ```css
+  .card {
+    width: min(100%, 420px);
+  }
+  ```
+
+- Keeping **controls tappable**  
+  ```css
+  .spell-button {
+    inline-size: max(10ch, 160px);
+  }
+  ```
+
+- Combining with `var()` for tunable design tokens  
+  ```css
+  .pane {
+    width: min(100%, var(--pane-max, 720px));
+  }
+  ```
+
+`min()` and `max()` don’t replace `clamp()` —  
+they’re the **simpler blades** you reach for when you only need  
+one side of the constraint.
+
+Next in the forge: combining both ends at once with **`clamp()`**.

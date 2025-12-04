@@ -1,0 +1,185 @@
+---
+title: "Familial Selectors"
+description: "Combinator spellbook: descendant, child, adjacent, and general sibling selectors in action."
+sidebar:
+  order: 2
+  label: "Familial Selectors"
+draft: false
+---
+
+# 🧾 Familial Selectors  
+*The combinator spellbook*
+
+In **Familial Sorcery**, we visited the *Hall of Stories* and watched selectors quietly shape the layout based on family relationships.
+
+Now we open the spellbook and name the four main combinators:
+
+- **Descendant** — `A B`  
+- **Direct child** — `A > B`  
+- **Adjacent sibling** — `A + B`  
+- **General sibling** — `A ~ B`  
+
+Our goal here is simple:
+
+> See how **different selector spells** can target the **same elements**,  
+> and talk about the trade-offs of each choice.
+
+We’ll keep using the same markup from the Hall of Stories:
+
+```html
+<section class="hall-of-stories">
+  <h2 class="hall-title">Hall of Stories</h2>
+
+  <article class="story">
+    <h3 class="story-title">On the Nature of Siblings</h3>
+    <p class="story-meta">Arcane CSS · 3 min read</p>
+    <p>Some elements follow quietly. Others insist on standing right next to you.</p>
+  </article>
+
+  <article class="story">
+    <h3 class="story-title">Children of the Root</h3>
+    <p class="story-meta">DOM Lore · 2 min read</p>
+    <p>Descendants whisper stories about the containers they live in.</p>
+  </article>
+
+  <p class="hall-note">Further tales are still being inscribed…</p>
+</section>
+```
+
+---
+
+## 1️⃣ Target: Every Story Card in the Hall
+
+We want to style all story cards inside the hall.
+
+```css
+/* Option A — class + descendant */
+.hall-of-stories .story {
+  /* styles */
+}
+
+/* Option B — more explicit structure */
+section.hall-of-stories article.story {
+  /* styles */
+}
+
+/* Option C — looser: any .story anywhere */
+.story {
+  /* styles */
+}
+```
+
+- **Option A** is usually the sweet spot: clear and scoped to this hall.  
+- **Option B** is more specific and tied to element types.  
+- **Option C** might be fine in a very small project, but in a larger spellbook it risks hitting stories in places we didn’t intend.
+
+---
+
+## 2️⃣ Target: Title as a Direct Child
+
+We want to style the `.story-title` that sits directly inside `.story`.
+
+```css
+/* Option A — descendant */
+.story .story-title {
+  /* styles */
+}
+
+/* Option B — direct child */
+.story > .story-title {
+  /* styles */
+}
+
+/* Option C — type + class + child */
+article.story > h3.story-title {
+  /* styles */
+}
+```
+
+**Reading the spells out loud:**
+
+- A: “Any `.story-title` inside a `.story`.”  
+- B: “Any `.story-title` that is a direct child of `.story`.”  
+- C: “Any `h3` with class `.story-title` that is a direct child of an `article.story`.”
+
+All are valid incantations. B and C are stronger about the **shape** of the markup.
+
+---
+
+## 3️⃣ Target: The Meta Line Right After the Title
+
+We want to style the `.story-meta` that comes immediately after `.story-title`.
+
+```css
+/* Option A — adjacent sibling, class-based */
+.story-title + .story-meta {
+  /* styles */
+}
+
+/* Option B — adjacent sibling, type-based */
+h3.story-title + p.story-meta {
+  /* styles */
+}
+
+/* Option C — descendant + adjacent combo */
+.story .story-title + .story-meta {
+  /* styles */
+}
+```
+
+Here the `+` combinator is doing the work:
+
+> “Any `.story-meta` that is the **next sibling** right after `.story-title`.”
+
+Option A is usually enough.  
+Options B and C add a bit more context and specificity.
+
+---
+
+## 4️⃣ Target: Everything After the Hall Title
+
+We want to give a subtle top border to everything that comes after the main heading.
+
+```css
+/* Option A — general siblings of the title */
+.hall-title ~ * {
+  /* styles */
+}
+
+/* Option B — scoped to the hall explicitly */
+.hall-of-stories .hall-title ~ * {
+  /* styles */
+}
+
+/* Option C — name specific families if we ever need more control */
+.hall-title ~ .story,
+.hall-title ~ .hall-note {
+  /* styles */
+}
+```
+
+The `~` combinator reads as:
+
+> “Any element that is a **sibling after** `.hall-title` (sharing the same parent).”
+
+Option A is compact and expressive.  
+Option C gains precision at the cost of some duplication.
+
+---
+
+## 🧠 What We Learn from Familial Spells
+
+- The same element can often be reached by **several different selectors**.  
+- Our job is to choose the incantation that best balances:
+  - readability  
+  - resilience to small HTML changes  
+  - and the level of scoping we actually need  
+
+When we read selectors like sentences, our spellbook becomes easier to maintain:
+
+- “Every story inside the hall.”  
+- “The title that is a direct child of story.”  
+- “The meta line immediately after the title.”  
+- “Everything that comes after the main heading.”
+
+Next school: **Relational Runes**, where we start counting the children instead of just naming who they’re related to.

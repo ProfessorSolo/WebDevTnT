@@ -1,0 +1,76 @@
+---
+title: "The Trinity Rune — clamp()"
+description: "The perfect fusion of minimum, ideal, and maximum values."
+sidebar:
+  order: 4
+  label: "clamp() — The Trinity Rune"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🔱 The Trinity Rune  
+*Where minimum, ideal, and maximum join as one.*
+
+`clamp(min, ideal, max)` is the **ultimate forge spell** —  
+it combines the Twin Blades into a single, fluid value.
+
+- When space is tight → it chooses **min**
+- When space is generous → it chooses **max**
+- Everywhere in between → it follows the **ideal** formula
+
+Think of it as a dynamic value **that adapts with grace**.
+
+---
+
+## ✨ MiniMo — The Trinity Sigil
+
+This sigil grows with the viewport:  
+never too small, never too large, always perfectly scaled.
+
+<MiniMo
+  src="/demos/css-function-forge/m11-trinity-sigil.html"
+  title="Trinity Sigil — clamp() in Motion"
+  height="580px"
+/>
+
+---
+
+## 🧩 Core Pattern
+
+```css
+font-size: clamp(1rem, 2vw + 0.5rem, 2rem);
+```
+
+- **Minimum:** 1rem  
+- **Ideal:** 2vw + 0.5rem (scales with viewport)  
+- **Maximum:** 2rem  
+
+The result feels *alive* — responsive typography without media queries.
+
+---
+
+## 🎯 Popular clamp() Spells
+
+**Fluid Typography**
+
+```css
+--step: clamp(1rem, 1rem + 1vw, 2rem);
+```
+
+**Dynamic Padding**
+
+```css
+padding-inline: clamp(1rem, 4vw, 3rem);
+```
+
+**Shrinking Controls Without Breaking Touch Targets**
+
+```css
+button {
+  inline-size: clamp(120px, 20vw, 240px);
+}
+```
+
+`clamp()` is the Forgemaster’s favorite rune —  
+one incantation, three roles, perfect harmony.

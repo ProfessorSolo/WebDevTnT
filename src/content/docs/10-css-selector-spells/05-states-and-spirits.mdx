@@ -1,0 +1,131 @@
+---
+title: 'States & Spirits'
+description: 'Hover, focus, checked, valid, and other UI spirits of the DOM.'
+sidebar:
+  order: 5
+  label: 'States & Spirits'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# ⚡ States & Spirits
+
+_How elements respond, react, and reveal state_
+
+So far our spells have been about **structure** and **position**.  
+In **States & Spirits**, we listen for the UI’s heartbeat:
+
+> **“What happens when someone hovers, clicks, tabs, or types?”**
+
+Here we care about pseudo-classes like:
+
+- `:hover`, `:active`
+- `:focus`, `:focus-visible`
+- `:checked`
+- `:valid`, `:invalid`
+
+Before we start naming them in isolation, we’ll watch them all dance together.
+
+---
+
+## ✨ MiniMo — Reader Preferences Panel
+
+This minimo shows a tiny “Reader Preferences” panel:  
+a layout mode toggle, a breaking-news checkbox, and an email field for alerts.
+
+Every glow, border, and pill is wired to **state selectors**.
+
+<MiniMo
+  src="/demos/css-selector-spells/m10-states-reader-preferences.html"
+  title="States & Spirits — Reader Preferences"
+  height="640px"
+/>
+
+As we interact with it, notice:
+
+- Buttons react to **hover**, **active**, and **focus-visible**.
+- The breaking-news row lights up only when the checkbox is **checked**.
+- The email field glows **lime** when it looks valid, and **rose** when it looks invalid.
+- A tiny “STATE” pill sits on the right of the email and flips its color with the field’s validity.
+
+Those colors are not arbitrary—they’re visual runes for different categories of state.
+
+---
+
+## 🧩 Quest Notes — Listening to the UI Spirits
+
+We keep the CSS hidden for now.  
+Our job is to observe, poke at the UI, and guess which pseudo-classes might be driving each effect.
+
+Color legend for this minimo:
+
+- 🟦 **Hover/Active spirit** — neon cyan / orange glows on buttons
+- 🟪 **Focus spirit** — violet rings around focused controls
+- 🟧 **Checked spirit** — orange aura around the breaking-news row
+- 🟩 **Valid spirit** — lime glow on a good email
+- 🟥 **Invalid spirit** — rose glow on a bad email
+
+---
+
+### 🟦 Quest I — The Fidgety Buttons
+
+Try moving the pointer over each layout mode button, then pressing them, then tabbing to them with the keyboard.
+
+- Which effects seem tied to **pointer hover** only?
+- Which effects show up only when the button is **keyboard focused**?
+- Which effects flash when the button is **actively pressed**?
+
+Which combination of `:hover`, `:active`, and `:focus-visible` would most likely produce this behavior?
+
+---
+
+### 🟧 Quest II — The Breaking-Only Aura
+
+Look closely at the “Breaking news only” pill.
+
+- How does it look when the checkbox is checked vs unchecked?
+- Does the **label** itself respond, or only the tiny checkbox square?
+
+Which selector could let the parent label react when its child input is `:checked`—  
+without adding an extra class from JavaScript?
+
+---
+
+### 🟩🟥 Quest III — The Email Mood Ring
+
+Play with the email input:
+
+1. Leave it empty.
+2. Type a clearly invalid value (`hello` or `@` or `test`).
+3. Type a clean address like `student@example.com`.
+
+Watch the border and glow colors:
+
+- When does it feel **neutral**?
+- When does the field clearly look **unhappy**?
+- When does it look **confident and valid**?
+
+Which combination of `:valid`, `:invalid`, and `:placeholder-shown` would let us:
+
+- avoid punishing an untouched empty field,
+- show rose only when there’s real text that doesn’t parse,
+- and show lime only when the browser thinks the email is valid?
+
+---
+
+### 🟪 Quest IV — Focus Without Harassment
+
+Use the **Tab** key to move through the controls.
+
+- Which elements show a strong **focus ring**?
+- Does that ring appear when we click with the mouse, or only via keyboard?
+
+Why might we reach for `:focus-visible` instead of plain `:focus` here?
+
+---
+
+When Tinkerbell hums the dial tone like this:  
+`* • * • * • *`
+
+…we turn to **06 — State Selectors** and unmask the exact runes behind each glow: the selectors that wire hover, focus, checked, and validity into this tiny panel.

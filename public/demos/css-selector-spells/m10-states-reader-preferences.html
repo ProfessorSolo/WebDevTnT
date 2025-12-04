@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>States & Spirits — Reader Preferences Minimo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      --border-main: rgba(148, 163, 184, 0.4);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+
+      /* State colors */
+      --state-hover: #22d3ee;   /* neon cyan */
+      --state-active: #f97316;  /* neon orange */
+      --state-focus: #a855f7;   /* violet */
+      --state-valid: #22c55e;   /* lime */
+      --state-invalid: #fb7185; /* rose */
+
+      --panel-bg: rgba(15, 23, 42, 0.96);
+      --panel-radius: 1.25rem;
+      --panel-padding-block: 1.5rem;
+      --panel-padding-inline: 1.75rem;
+      --panel-max-width: 40rem;
+
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+      font-family: var(--font-body);
+      color: var(--text-main);
+    }
+
+    .prefs-panel {
+      max-width: var(--panel-max-width);
+      width: 100%;
+      margin-inline: auto;
+      padding: var(--panel-padding-block) var(--panel-padding-inline);
+      border-radius: var(--panel-radius);
+      background: var(--bg-main);
+      border: 1px solid var(--border-main);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .panel-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--state-hover);
+      margin-bottom: 0.25rem;
+    }
+
+    .panel-title {
+      margin: 0 0 0.75rem;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .panel-sub {
+      margin: 0 0 1.1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .row {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .row:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .row-label {
+      flex: 1 1 auto;
+      font-size: 0.85rem;
+    }
+
+    .mode-toggle {
+      display: inline-flex;
+      padding: 0.15rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      position: relative;
+    }
+
+    .mode-btn {
+      position: relative;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition:
+        color 140ms ease-out,
+        transform 140ms ease-out;
+    }
+
+    .mode-btn:focus-visible {
+      outline: 2px solid var(--state-focus);
+      outline-offset: 3px;
+      z-index: 2;
+    }
+
+    .mode-btn:hover {
+      color: var(--state-hover);
+      transform: translateY(-1px);
+    }
+
+    .mode-btn:active {
+      color: var(--state-active);
+      transform: translateY(0);
+    }
+
+    /* Simulated "current" mode via data attribute */
+    .mode-toggle[data-mode="compact"] .mode-btn[data-mode="compact"],
+    .mode-toggle[data-mode="standard"] .mode-btn[data-mode="standard"] {
+      color: var(--state-hover);
+    }
+
+    .mode-toggle[data-mode="compact"]::before,
+    .mode-toggle[data-mode="standard"]::before {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top, rgba(34, 211, 238, 0.22), transparent 70%);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    .mode-toggle[data-mode="compact"] {
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.6);
+    }
+
+    .mode-toggle[data-mode="standard"] {
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+    }
+
+    .breaking-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.7rem 0.4rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(71, 85, 105, 0.95);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition:
+        border-color 150ms ease-out,
+        box-shadow 150ms ease-out,
+        background-color 150ms ease-out;
+    }
+
+    .breaking-row input[type="checkbox"] {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 0.2rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #020617;
+      appearance: none;
+      display: inline-block;
+      position: relative;
+    }
+
+    .breaking-row input[type="checkbox"]:focus-visible {
+      outline: 2px solid var(--state-focus);
+      outline-offset: 3px;
+    }
+
+    .breaking-row input[type="checkbox"]:checked::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 0.15rem;
+      background: radial-gradient(circle at center, var(--state-active), transparent 70%);
+    }
+
+    /* Parent reacts to checked state */
+    .breaking-row:has(input[type="checkbox"]:checked) {
+      border-color: var(--state-active);
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.5);
+      background: radial-gradient(circle at left, rgba(249, 115, 22, 0.18), rgba(15, 23, 42, 0.95));
+      color: var(--state-active);
+    }
+
+    .breaking-row span {
+      white-space: nowrap;
+    }
+
+    .alerts-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+    }
+
+    .alerts-label {
+      color: var(--text-muted);
+    }
+
+    .alerts-input-wrapper {
+      position: relative;
+    }
+
+    .alerts-input {
+      width: 100%;
+      padding: 0.5rem 2.4rem 0.5rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(71, 85, 105, 0.95);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      outline: none;
+      transition:
+        border-color 150ms ease-out,
+        box-shadow 150ms ease-out,
+        background-color 150ms ease-out;
+    }
+
+    .alerts-input::placeholder {
+      color: rgba(148, 163, 184, 0.7);
+    }
+
+    .alerts-input:focus-visible {
+      border-color: var(--state-focus);
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.5);
+    }
+
+    /* Valid vs invalid states */
+    .alerts-input:valid:not(:placeholder-shown) {
+      border-color: var(--state-valid);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+    }
+
+    .alerts-input:invalid:not(:placeholder-shown) {
+      border-color: var(--state-invalid);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.6);
+    }
+
+    .status-pill {
+      position: absolute;
+      right: 0.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .alerts-input:invalid:not(:placeholder-shown) ~ .status-pill {
+      background: rgba(248, 113, 113, 0.18);
+      color: var(--state-invalid);
+      border: 1px solid rgba(248, 113, 113, 0.7);
+    }
+
+    .alerts-input:valid:not(:placeholder-shown) ~ .status-pill {
+      background: rgba(34, 197, 94, 0.16);
+      color: var(--state-valid);
+      border: 1px solid rgba(34, 197, 94, 0.7);
+    }
+
+    .status-pill::before {
+      content: "STATE";
+    }
+
+    .legend {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-swatch {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 0.3rem;
+    }
+
+    .legend-swatch--hover {
+      background: var(--state-hover);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+    }
+
+    .legend-swatch--focus {
+      background: var(--state-focus);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.9);
+    }
+
+    .legend-swatch--valid {
+      background: var(--state-valid);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+    }
+
+    .legend-swatch--invalid {
+      background: var(--state-invalid);
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.9);
+    }
+
+    .legend-swatch--checked {
+      background: var(--state-active);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      .prefs-panel {
+        padding-inline: 1.25rem;
+      }
+
+      .row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .alerts-input-wrapper {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="prefs-panel">
+    <div class="panel-label">States &amp; Spirits · UI Runes</div>
+    <h2 class="panel-title">Reader Preferences</h2>
+    <p class="panel-sub">
+      Hover, focus, check, and validate your way through this tiny control panel.  
+      Every glow comes from a selector.
+    </p>
+
+    <div class="row">
+      <div class="row-label">Layout mode</div>
+      <div class="mode-toggle" data-mode="compact" aria-label="Layout mode: compact">
+        <button type="button" class="mode-btn" data-mode="standard">
+          Standard
+        </button>
+        <button type="button" class="mode-btn" data-mode="compact">
+          Compact
+        </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label class="breaking-row">
+        <input type="checkbox" name="breaking-only" checked>
+        <span>Breaking news only</span>
+      </label>
+      <div class="row-label">Lights up when the spell is <code>:checked</code>.</div>
+    </div>
+
+    <form class="alerts-form" novalidate>
+      <span class="alerts-label">Email for alerts</span>
+      <div class="alerts-input-wrapper">
+        <input
+          class="alerts-input"
+          type="email"
+          name="alert-email"
+          required
+          placeholder="you@example.com"
+        >
+        <div class="status-pill"></div>
+      </div>
+    </form>
+
+    <div class="legend" aria-hidden="true">
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--hover"></span>
+        <span>Hover / active glows</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--focus"></span>
+        <span>Focus-visible rings</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--checked"></span>
+        <span>Checked parent highlight</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--valid"></span>
+        <span>Valid email state</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--invalid"></span>
+        <span>Invalid email state</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

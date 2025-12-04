@@ -1,0 +1,117 @@
+---
+title: "The Hammer of Precision — calc()"
+description: "Strike exact values by combining units, offsets, and proportions with calc()."
+sidebar:
+  order: 2
+  label: "calc() — The Hammer of Precision"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# ⚒️ Shaping Values with Force  
+*When a single number isn’t enough.*
+
+Some layouts can live on simple values:
+
+- `width: 100%;`
+- `padding: 1.5rem;`
+- `gap: 1rem;`
+
+But sooner or later we hit questions like:
+
+- “Make this column **full width minus the sidebar**.”  
+- “Keep this bar **100% wide with padding taken out**.”  
+- “Set this height to **3rem + 24px** for balance.”  
+
+That’s where `calc()` enters the forge.
+
+> **`calc()` lets us do math in CSS.**  
+> It mixes units, subtracts padding, splits space, and nudges things into place  
+> without hard‑coding magic numbers.
+
+---
+
+## ✨ MiniMo — The Precision Anvil
+
+In this minimo, we’ve got a forged status bar:
+
+- the **track** spans the full container,  
+- the **inner glow** is `100%` wide minus padding,  
+- the **hammer block** sits at a position defined by `calc()` with mixed units.
+
+Hover to see how small math tweaks change the feel without touching the HTML.
+
+<MiniMo
+  src="/demos/css-function-forge/m11-precision-anvil.html"
+  title="Precision Anvil — calc() at Work"
+  height="560px"
+/>
+
+---
+
+## 🧩 What To Notice
+
+Inside the minimo, we use patterns like:
+
+```css
+.forge-track {
+  width: min(100%, 520px);
+  padding-inline: 1.5rem;
+}
+
+.forge-inner {
+  width: calc(100% - 3rem); /* 2 × 1.5rem padding */
+}
+
+.forge-hammer {
+  transform: translateX(calc(40% - 12px)); /* %
+                                              minus a fixed offset */
+}
+```
+
+Key ideas to carry forward:
+
+- `calc()` can mix units (`%`, `px`, `rem`, `vh`, etc.)  
+- It respects **operator precedence**: `*` and `/` before `+` and `-`  
+- It often saves you from “mystery” values that only kind‑of work  
+
+---
+
+## 🧮 calc() Rules the Forge Cares About
+
+1. **Keep spaces around operators**
+
+```css
+width: calc(100% - 2rem); /* ✅ */
+width: calc(100%-2rem);   /* ❌ some browsers reject this */
+```
+
+2. **Mix units responsibly**
+
+```css
+height: calc(3rem + 24px);          /* ✅ common pattern */
+margin-left: calc(50% - 160px);     /* ✅ centering tricks */
+border-radius: calc(0.5rem + 2px);  /* ✅ subtle tuning */
+```
+
+3. **Use it in the right places**
+
+You can use `calc()` anywhere a single `<length>`, `<percentage>`, or compatible value is allowed:
+
+- `width`, `height`, `padding`, `margin`  
+- `gap`, `translate`, `flex-basis`, `border-radius`  
+- parts of `grid-template-columns`, etc.
+
+---
+
+## 🎯 When to Reach for calc()
+
+- When you find yourself writing **“full width minus something”**  
+- When a component needs to stay aligned visually,  
+  but the pieces use **different units** (like `px` and `rem`)  
+- When the “magic number” in your CSS is actually hiding a simple formula
+
+If `var()` is how we **summon** values,  
+`calc()` is how we **shape** them —  
+one precise strike at a time.

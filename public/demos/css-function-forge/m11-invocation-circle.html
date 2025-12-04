@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Invocation Circle — var()</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --forge-default: hsl(260 70% 60%);
+  }
+
+  body {
+    margin: 0;
+    padding: 2rem;
+    background: radial-gradient(circle at top, #0b0f1c, #050814 60%, #000);
+    font-family: system-ui, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+  }
+
+  .circle {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .rune {
+    --rune-color: var(--rune-default, var(--forge-default));
+    width: 120px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--rune-color);
+    box-shadow:
+      0 0 18px var(--rune-color),
+      inset 0 0 12px rgba(255,255,255,0.15);
+    transition: 0.25s ease;
+  }
+
+  .rune:hover {
+    --rune-color: var(--rune-hover, var(--rune-color));
+    transform: scale(1.08);
+    box-shadow:
+      0 0 26px var(--rune-color),
+      inset 0 0 18px rgba(255,255,255,0.25);
+  }
+
+  .rune.one  { --rune-default: hsl(200 80% 60%); --rune-hover: hsl(200 90% 70%); }
+  .rune.two  { --rune-default: hsl(340 75% 62%); --rune-hover: hsl(340 85% 72%); }
+  .rune.three{ --rune-hover: hsl(260 80% 70%); }
+</style>
+</head>
+<body>
+
+<div class="circle">
+  <div class="rune one"></div>
+  <div class="rune two"></div>
+  <div class="rune three"></div>
+</div>
+
+</body>
+</html>

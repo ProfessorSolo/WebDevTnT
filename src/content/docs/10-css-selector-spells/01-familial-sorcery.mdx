@@ -1,0 +1,134 @@
+---
+title: 'Familial Sorcery'
+description: 'Reading the DOM family tree: parents, children, and siblings.'
+sidebar:
+  order: 1
+  label: 'Familial Sorcery'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🏛️ Familial Sorcery
+
+_Reading the branches of the DOM_
+
+Every spell in Selectromancy begins with a question:
+
+> **“Where does this element live in the family tree?”**
+
+**Familial Sorcery** is the school where we learn to read that tree.
+
+We care about:
+
+- who is _inside_ whom,
+- who is a _direct child_,
+- who comes _right after_ something,
+- and who simply shares the same parent further down the line.
+
+In CSS, that family knowledge is expressed through **combinators**:
+
+- Descendant: `A B`
+- Direct child: `A > B`
+- Adjacent sibling: `A + B`
+- General sibling: `A ~ B`
+
+Before we name each spell in detail, we watch them at work.
+
+---
+
+## ✨ MiniMo — The Hall of Stories
+
+Below is a small, self-contained minimo rendered with the shared MiniMo component.  
+Everything you see here is driven by **family relationships** between elements—plus a bit of hover magic.
+
+<MiniMo
+  src="/demos/css-selector-spells/m10-familial-hall-of-stories.html"
+  title="Familial Sorcery — Hall of Stories"
+  height="560px"
+/>
+
+As you hover and read, notice:
+
+- The **green title** marks the true heir: a `.story-title` that is a **direct child** of `.story`.
+- The other title is white: still a descendant, but nested one level deeper inside `.story-inner`.
+- Amber meta lines sit immediately after titles, and shift together with them.
+- A purple divider and closing line mark everything that is a **sibling after** the hall heading, never the heading itself.
+
+Those colors match our quest types below and hint at which combinators are doing the work.
+
+---
+
+## 🧩 Quest Notes — Decoding the Hall
+
+Let’s treat this like a page torn from a spellbook.  
+No CSS is shown yet; we only have the behavior and the DOM structure to guide our guesses.
+
+Color legend:
+
+- 🟦 **Structure quests** (descendants / containers) — blue
+- 🟩 **Heir quests** (direct children) — green
+- 🟨 **Whisper quests** (immediate followers) — amber
+- 🟪 **Sibling quests** (beside/after, not self) — purple
+
+---
+
+### 🟦 Quest I — The Hall’s Embrace
+
+How might we write one or more selectors that:
+
+- style **every story card** inside the hall,
+- but avoid accidentally styling stories that might live elsewhere on the page?
+
+Think in terms of “hall” as the container and “story” as the descendants.
+
+---
+
+### 🟩 Quest II — The True Heir
+
+Look closely at the two stories:
+
+- In the first, the title appears **inside** a nested `.story-inner`.
+- In the second, the title sits **directly inside** `.story` and glows green.
+
+How might we:
+
+- write a selector that catches **both** titles as descendants of `.story`, and
+- write a different selector that only treats titles that are **direct children** of `.story` as special?
+
+---
+
+### 🟨 Quest III — The Whisper That Follows
+
+Each title has an amber meta line (“Arcane CSS · 3 min read”, “DOM Lore · 2 min read”) that follows it.
+
+How might we write a selector that:
+
+- styles that meta line,
+- **only when it appears immediately after** a story title,
+- without naming any extra classes?
+
+Hint: this is about who stands directly beside whom in the family tree.
+
+---
+
+### 🟪 Quest IV — Siblings, Not Self
+
+Everything that comes after the “Hall of Stories” heading has a purple-tinted divider and closing note.
+
+The heading itself does **not** have that line.
+
+How might we write a selector that:
+
+- treats “everything that is a sibling after the hall title” as a group,
+- but never styles the title itself?
+
+This is our first big clue that **sibling selectors never include self**—  
+they always talk about the brothers and sisters _beside_ and _after_ the target, not the target itself.
+
+---
+
+When Tinkerbell rings her bell like this:  
+`* ~ * ~ * ~ *`
+
+…we turn to **02 — Familial Selectors** and reveal the runes behind the effect, comparing different ways to reach the same elements.

@@ -1,0 +1,243 @@
+---
+title: "Unconditional Selectors"
+description: "How :is, :not, :has, and :where bind logic into CSS spells."
+sidebar:
+  order: 10
+  label: "Unconditional Selectors"
+draft: false
+---
+
+# 📜 Unconditional Selectors  
+*The spellbook of logical incantations*
+
+In the Chamber of Unconditionals, four runes governed all behavior:
+
+- **The Rune of Many Faces** — `:is()`  
+- **The Rune of Exclusion** — `:not()`  
+- **The Rune of Awareness** — `:has()`  
+- **The Soft Rune** — `:where()`
+
+Let’s crack open each scroll.
+
+Here’s the core structure from the minimo (simplified):
+
+```html
+<section class="chamber">
+  <div class="tablet-grid">
+    <article
+      class="tablet"
+      data-rank="adept"
+      data-state="steady"
+    >
+      <header class="tablet-header">
+        <div>
+          <p class="tablet-kicker">Adept · Inner Circle</p>
+          <h3 class="tablet-title">Tablet of Twin Paths</h3>
+        </div>
+        <div class="sigil-row">
+          <span class="sigil sigil--inner">Inner Mark</span>
+        </div>
+      </header>
+      <p class="tablet-meta">Glows as one with its master siblings...</p>
+      <div class="tool-row">
+        <button class="primary">
+          <span class="dot" aria-hidden="true"></span>
+          Invoke
+        </button>
+        <button>
+          <span class="dot" aria-hidden="true"></span>
+          Copy Glyph
+        </button>
+      </div>
+    </article>
+
+    <article
+      class="tablet"
+      data-rank="master"
+      data-state="attuned"
+    >
+      <div class="sigil-row">
+        <span class="sigil sigil--inner">Inner Mark</span>
+        <span class="sigil sigil--beta">Beta Sigil</span>
+      </div>
+      <!-- ... -->
+    </article>
+
+    <article
+      class="tablet"
+      data-rank="master"
+      data-state="sealed"
+    >
+      <div class="sigil-row">
+        <span class="sigil sigil--inner">Inner Mark</span>
+        <span class="sigil sigil--beta">Beta Sigil</span>
+      </div>
+      <!-- ... -->
+    </article>
+  </div>
+</section>
+```
+
+---
+
+## 🟦 `:is()` — The Rune of Many Faces
+
+Use it when many different shapes should receive the same spell.
+
+```css
+/* Whether Adept or Master, glow with the same aura */
+.tablet:is([data-rank="adept"], [data-rank="master"]) .tablet-title {
+  color: var(--rune-group);
+  text-shadow: 0 0 14px rgba(34, 211, 238, 0.85);
+}
+
+.tablet:is([data-rank="adept"], [data-rank="master"]) {
+  box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.45);
+}
+```
+
+Why it’s powerful:
+
+- It combines multiple branches into a **single** rule.
+- It keeps the **shared tail** of the selector (`.tablet-title`, `.tablet`) in one place.
+- Its specificity equals the **most specific** thing inside it.
+
+Use `:is()` when your mental model is:
+
+> “These different selectors should all end in the same styling.”
+
+---
+
+## 🟧 `:not()` — The Rune of Exclusion
+
+Use it to define the rule for everything *except* a special case.
+
+Markup:
+
+```html
+<div class="tool-row">
+  <button class="primary">Invoke</button>
+  <button>Copy Glyph</button>
+</div>
+```
+
+Spell:
+
+```css
+.tool-row button.primary {
+  border-color: var(--rune-exclude);
+  color: var(--rune-exclude);
+}
+
+/* Everything else becomes a ghost button */
+.tool-row button:not(.primary) {
+  opacity: 0.7;
+}
+
+.tool-row button:not(.primary) span.dot {
+  background: rgba(148, 163, 184, 0.5);
+}
+```
+
+We only tag the important one (`.primary`),  
+and `:not(.primary)` takes care of the rest.
+
+Use `:not()` when your mental model is:
+
+> “One or two things are special; everything else is the default.”
+
+---
+
+## 🟪 `:has()` — The Rune of Awareness
+
+Use it when a parent must react to what lives inside it.
+
+Markup:
+
+```html
+<article class="tablet" data-rank="master" data-state="attuned">
+  <div class="sigil-row">
+    <span class="sigil sigil--inner">Inner Mark</span>
+    <span class="sigil sigil--beta">Beta Sigil</span>
+  </div>
+  <!-- ... -->
+</article>
+
+<article class="tablet" data-rank="master" data-state="sealed">
+  <div class="sigil-row">
+    <span class="sigil sigil--inner">Inner Mark</span>
+    <span class="sigil sigil--beta">Beta Sigil</span>
+  </div>
+  <!-- ... -->
+</article>
+```
+
+Spell:
+
+```css
+/* Tablets that contain a beta sigil and are not sealed */
+.tablet:has(.sigil--beta):not([data-state="sealed"]) {
+  border-color: var(--rune-parent);
+  box-shadow:
+    0 0 0 1px rgba(168, 85, 247, 0.75),
+    0 16px 34px rgba(15, 23, 42, 0.95);
+}
+
+.tablet:has(.sigil--beta):not([data-state="sealed"]) .sigil--beta {
+  border-color: var(--rune-parent);
+  color: var(--rune-parent);
+}
+
+/* Sealed relics always appear faded */
+.tablet[data-state="sealed"] {
+  opacity: 0.55;
+}
+```
+
+This reads as:
+
+> “If a tablet **has** a beta sigil, and is **not** sealed,  
+> give it the live-experiment framing.”
+
+Use `:has()` when your mental model is:
+
+> “The outer thing should change if this inner thing is present.”
+
+---
+
+## 🌫 `:where()` — The Soft Rune
+
+Use it when you want defaults that are easy to override.
+
+```css
+/* Calm baseline spacing for inner elements */
+.tablet :where(h3, p, .tool-row) {
+  margin-block: 0;
+}
+```
+
+Why `:where()` is special:
+
+- It always has **zero specificity**, no matter what’s inside.  
+- That means any “normal” selector like `.tablet h3` will win easily.  
+- Perfect for layout scaffolding and resets.
+
+Use `:where()` when your mental model is:
+
+> “This is the baseline.  
+> Any stronger spell should beat it without a fight.”
+
+---
+
+## 🧠 Choosing the Right Unconditional
+
+You don’t need these runes in every selector.  
+But when things get tangled, they can turn knotted rules into clear incantations:
+
+- Reach for **`:is()`** when multiple branches share the same ending.  
+- Reach for **`:not()`** when you’re describing the world by its **exceptions**.  
+- Reach for **`:has()`** when parents must react to **child content**.  
+- Reach for **`:where()`** when you want **low-stakes, low-specificity** defaults.
+
+Together, they turn CSS selectors from simple labels into **tiny logical engines** —  
+the true heart of the **Unconditional Arts**.

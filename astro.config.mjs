@@ -58,8 +58,8 @@ const COURSE_MODULES = [
   {
     label: 'CSS Variable Wizardry',
     directory: '09-css-variable-wizardry',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'CSS Selector Spells',
     directory: '10-css-selector-spells',
@@ -168,6 +168,7 @@ export default defineConfig({
           `,
         },
       ],
+      customCss: ['./src/styles/global.css'],
     }),
   ],
   vite: {

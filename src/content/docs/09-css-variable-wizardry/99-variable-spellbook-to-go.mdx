@@ -1,0 +1,184 @@
+---
+title: 'Variable Spellbook To Go'
+description: 'Your arcane recap, demo-lab guide, and practice quests for mastering CSS Variable Wizardry.'
+sidebar:
+  order: 99
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+
+## The Arcane Ledger
+
+You’ve now learned how to wield **CSS custom properties** like a spellcaster:
+
+- Declare named runes (variables) with `--token-name`
+- Summon their power using `var()`
+- Scope them globally, by circle (section), or inside a single glyph (component)
+- Hand the wand to JavaScript to rewrite runes at runtime
+- Use variables as **intensity dials** for motion, glow, lift, duration, and theme
+
+You’re officially ready to build interfaces that feel **enchanted**, not hard-coded.
+
+---
+
+## 🔮 Your Wizard’s Laboratory — Demo Repo
+
+Instead of the inline MiniMos, head to the **full CSS Variable Wizardry Demo Lab**, completely reimagined this year as a **magical workshop** of spell ingredients, glyph cards, theme rituals, and performance sigils.
+
+> **Demo Repo:**  
+> _(link to new repo in the Demos project — e.g.)_  
+> https://github.com/ProfessorSolo/WebDevTnT-CSS-Variable-Wizardry
+
+This demo includes four enchanted chambers:
+
+1. **The Ingredient Chamber** — global tokens & variable basics
+2. **The Circle of Scopes** — how runes change meaning depending on where they’re cast
+3. **The Wand Room** — JS rewriting tokens in real time
+4. **The Sigil of Motion** — performance-safe hover magic driven by variables
+
+Bookmark the repo — this is your spell practice dojo for the entire module.
+
+---
+
+## 🧪 Guided Experiments in the Wizard Lab
+
+When exploring the Wizardry Demo, try these quests:
+
+### **1. Ingredient Chamber — Rune Basics**
+
+- Modify global runes like:
+  - `--arcane-accent`
+  - `--page-bg`
+  - `--glyph-border`
+- Add your own rune (e.g. `--label-bg`) and use it behind glyph titles.
+- Inspect how many UI elements pull from a single rune change.
+
+### **2. Circle of Scopes — Power Boundaries**
+
+- Identify runes declared in:
+  - The **root grimoire** (`:root`)
+  - A **circle glyph** wrapper
+  - A single **spell-card**
+- Override a rune at each level and observe who inherits the new meaning.
+- Practice tracing scope using DevTools → Computed → “Show all CSS variables”.
+
+### **3. Wand Room — JavaScript Tokenbinding**
+
+- Add a new ritual button (`data-theme="astral"` or `data-theme="emberforge"`).
+- Declare one new rune (e.g. `--card-ring-color`) and update it per ritual.
+- Log each rune change using:
+  ```js
+  getComputedStyle(document.documentElement).getPropertyValue('--rune');
+  ```
+
+### **4. Sigil of Motion — Performance Glyphs**
+
+- Confirm hover interactions use only:
+  - `transform`
+  - `opacity`
+  - `box-shadow`
+- Experiment with:
+  - `--lift-distance`
+  - `--shadow-strength`
+  - `--transition-ms`
+- Crank values too high, then refine — learn the finesse of subtle magic.
+
+---
+
+## 🎯 Practice Quests for the Aspiring Archmage
+
+### **Level 1 — Rune Cleanup**
+
+- Find repeated literal values in the demo (colors, radii, spacing).
+- Promote them to runes in `:root`.
+- Replace their usages with `var(--your-rune)`.
+
+### **Level 2 — Alternate Circle**
+
+- Create a new themed circle (e.g. “Moonlit Sanctum” or “Infernal Atrium”).
+- Override at least three runes inside that wrapper.
+- Confirm components inherit without any HTML changes.
+
+### **Level 3 — Ritual Enhancement**
+
+- Extend the Wand Room with:
+  - A live rune readout panel
+  - A slider or input that updates a numeric rune (`--glow-intensity`, `--blur-strength`)
+  - A toggle that flips between two rune sets using one wrapper class
+
+---
+
+## 🧾 NotebookLM Arcana
+
+For this module, you’ll have two powerful artifacts:
+
+- **Arcane Infographic** — a one-page visual guide to variables, scoping, and JS access
+
+<LinkButton
+  href="/downloads/css-variable-wizardry/css-variable-wizardry-infographic.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  Infographic (PNG)
+</LinkButton>
+
+- **Spellbook Slide Deck** — the NotebookLM study guide
+
+<LinkButton
+  href="/downloads/css-variable-wizardry/css-variable-wizardry-study-guide.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  Slide Deck (PDF)
+</LinkButton>
+
+These scrolls help you revisit concepts quickly and clearly.
+
+---
+
+## 🤖 AI Training Grounds (Copy / Paste This Spell)
+
+```prompt
+Act as my CSS Variable Wizardry trainer.
+
+Using the concepts from the module:
+- Declaring & using CSS custom properties
+- Scoping variables globally, by section, and per-component
+- Updating variables at runtime with JavaScript
+- Driving motion, shadows, and timing from variable intensity dials
+
+Create an interactive “Wizard’s Lab” playground with:
+
+1. Global runes declared in :root for color, radius, glow, shadow, and timing.
+2. A section wrapper (“circle”) that overrides at least two runes.
+3. A spell-card component that:
+   - Has component-level default runes
+   - Inherits overrides from its circle or the root
+4. A JavaScript Wand Panel with buttons or a select menu that:
+   - Changes runes in real time using setProperty()
+   - Displays a live readout of at least 3 rune values
+5. All hover magic must use transform + opacity (no layout animation).
+
+Output:
+- A single HTML file with inline CSS + JS
+- Clear comments
+- No external libraries
+```
+
+---
+
+## ➡️ New Paths
+
+With variables thoroughly in your spellbook:
+
+- **Selector Spells** will sharpen your aim
+- **Function Forge** will help you combine runes with `calc()`, gradients, and color functions
+- **Arcane Animations** later will flow naturally once your values live in tokens
+
+For now, keep asking:
+
+> **“Should this be a rune?”**  
+> If you use it more than once, the answer is: _yes, apprentice._

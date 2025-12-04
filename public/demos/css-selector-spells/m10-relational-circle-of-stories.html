@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Circle of Stories — Relational Runes Minimo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      --border-main: rgba(148, 163, 184, 0.4);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+
+      /* Relational colors */
+      --rel-first: #fb7185;  /* electric red/rose */
+      --rel-rhythm: #f97316; /* electric orange */
+      --rel-type: #ec4899;   /* hot pink */
+
+      --card-bg: rgba(15, 23, 42, 0.96);
+      --card-shadow: 0 18px 35px rgba(15, 23, 42, 0.9);
+      --card-radius: 0.9rem;
+
+      --panel-radius: 1.25rem;
+      --panel-padding-block: 1.5rem;
+      --panel-padding-inline: 1.75rem;
+      --panel-max-width: 44rem;
+
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+      font-family: var(--font-body);
+      color: var(--text-main);
+    }
+
+    .circle-panel {
+      max-width: var(--panel-max-width);
+      width: 100%;
+      margin-inline: auto;
+      padding: var(--panel-padding-block) var(--panel-padding-inline);
+      border-radius: var(--panel-radius);
+      background: var(--bg-main);
+      border: 1px solid var(--border-main);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .panel-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--rel-rhythm);
+      margin-bottom: 0.25rem;
+    }
+
+    .panel-title {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .story-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-radius: 0.75rem;
+      background: rgba(15, 23, 42, 0.7);
+      overflow: hidden;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+    }
+
+    .story-row,
+    .interlude-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 2fr);
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.95);
+    }
+
+    .story-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .story-kicker {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .story-title {
+      margin: 0 0 0.1rem;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .story-meta {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .story-summary {
+      margin: 0.35rem 0 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .interlude-row {
+      grid-template-columns: 1fr;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      background: radial-gradient(circle at center, rgba(248, 113, 113, 0.15), transparent 60%);
+    }
+
+    .interlude-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(248, 113, 113, 0.7);
+      color: rgba(248, 113, 113, 0.95);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    /* First-child highlight: the first story row glows red/rose */
+    .story-row:first-child .story-title {
+      color: var(--rel-first);
+    }
+
+    .story-row:first-child {
+      box-shadow:
+        0 0 0 1px rgba(248, 113, 113, 0.8),
+        0 14px 28px rgba(248, 113, 113, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Rhythm: band every odd story-row (1st, 3rd, 5th story) with orange tint */
+    .story-row:nth-of-type(odd) {
+      background: linear-gradient(
+        90deg,
+        rgba(249, 115, 22, 0.09),
+        transparent 35%
+      );
+    }
+
+    /* Type-based selection: third story article (ignores the interlude div) gets pink marker */
+    .story-row:nth-of-type(3) .story-kicker::before {
+      content: "TYPE·III";
+      display: inline-block;
+      margin-right: 0.4rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 999px;
+      background: rgba(236, 72, 153, 0.16);
+      color: var(--rel-type);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+    }
+
+    .legend {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-swatch {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 0.3rem;
+    }
+
+    .legend-swatch--first {
+      background: var(--rel-first);
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.9);
+    }
+
+    .legend-swatch--rhythm {
+      background: var(--rel-rhythm);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
+    }
+
+    .legend-swatch--type {
+      background: var(--rel-type);
+      box-shadow: 0 0 12px rgba(236, 72, 153, 0.9);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      .circle-panel {
+        padding-inline: 1.25rem;
+      }
+
+      .story-row,
+      .interlude-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="circle-panel">
+    <div class="panel-label">Relational Runes · Order &amp; Type</div>
+    <h2 class="panel-title">Circle of Stories</h2>
+
+    <div class="story-list">
+      <div class="story-row">
+        <div>
+          <p class="story-kicker">Feature · First in the circle</p>
+          <h3 class="story-title">The First-Born Selector</h3>
+        </div>
+        <div>
+          <p class="story-meta">We meet <code>:first-child</code> and see how it crowns the first element in a group.</p>
+          <p class="story-summary">Only one item can ever be first. Sometimes that’s all the magic we need.</p>
+        </div>
+      </div>
+
+      <div class="story-row">
+        <div>
+          <p class="story-kicker">Dispatch · Second in line</p>
+          <h3 class="story-title">Even the Middle Children Matter</h3>
+        </div>
+        <div>
+          <p class="story-meta">Banding and stripes appear when we start counting with <code>:nth-child()</code>.</p>
+          <p class="story-summary">By alternating odd and even rows, we make long lists friendlier to read.</p>
+        </div>
+      </div>
+
+      <div class="interlude-row">
+        <div class="interlude-pill">
+          <span>AD INTERLUDE</span>
+          <span>— not a story, still a child</span>
+        </div>
+      </div>
+
+      <div class="story-row">
+        <div>
+          <p class="story-kicker">Column · Third of its kind</p>
+          <h3 class="story-title">Of Type, Not Just of Birth</h3>
+        </div>
+        <div>
+          <p class="story-meta"><code>:nth-of-type()</code> ignores the ad and finds the third story anyway.</p>
+          <p class="story-summary">Sometimes we count only among our own kind, and the divs in the middle don’t matter.</p>
+        </div>
+      </div>
+
+      <div class="story-row">
+        <div>
+          <p class="story-kicker">Closing Note</p>
+          <h3 class="story-title">Last, But Not Forgotten</h3>
+        </div>
+        <div>
+          <p class="story-meta">With <code>:last-child</code>, we can soften the landing at the end of any sequence.</p>
+          <p class="story-summary">Margins, borders, and flourishes don’t always have to repeat forever.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--first"></span>
+        <span>First-born highlight</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--rhythm"></span>
+        <span>Rhythm banding (odd rows)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--type"></span>
+        <span>Type-based mark (third story)</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

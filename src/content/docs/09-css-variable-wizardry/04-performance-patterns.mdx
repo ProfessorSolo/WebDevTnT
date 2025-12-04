@@ -1,83 +1,291 @@
-
 ---
 title: "Performance Patterns"
-description: "Unitless values, calc(), patterns, and best practices."
+description: "Keep your motion smooth and cheap by driving transforms, opacity, and intensity from CSS variables."
 sidebar:
   order: 4
 draft: false
 ---
 
-# Performance Patterns
+import MiniMo from '../../../components/MiniMo.astro';
 
-Time to refine your spellbook — clean, fast, and extensible.
+## Intensity Dials for Free Speed
+
+This chapter isn’t about inventing new animation tricks.  
+It’s about wiring the tricks you already know to **CSS variables** so you can:
+
+- Tune how far things move
+- Adjust how strong shadows and glows feel
+- Nudge timings faster or slower
+
+All without touching layout, and without digging through 20 selectors every time
+you want “just a little less.”
+
+Variables become **performance-friendly dials**.
 
 ---
 
-## ⚙️ Unitless Values
+## 🔢 Unitless Intensity Knobs
 
-Perfect for spacing systems:
+Instead of hard-coding every shadow:
+
+```css
+.card {
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.45);
+}
+```
+
+Use variables as **intensity knobs**:
 
 ```css
 :root {
-  --space: 8;
+  --shadow-strength: 0.45; /* unitless */
 }
 
 .card {
-  padding: calc(var(--space) * 2px);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, var(--shadow-strength));
+}
+
+.card--subtle {
+  --shadow-strength: 0.22;
+}
+
+.card--hero {
+  --shadow-strength: 0.7;
 }
 ```
 
-Use one knob to scale an entire layout.
+Same pattern works for:
+
+- Blur strength: `filter: blur(calc(1px * var(--blur-strength)));`
+- Glow opacity
+- Scale factors: `transform: scale(var(--hover-scale));`
+- Timing tweaks: `transition-duration: calc(160ms * var(--duration-multiplier));`
+
+Variables control **how intense** the effect feels; the underlying CSS stays the
+same.
 
 ---
 
-## ➗ calc() Everywhere
+## ⏱ Variable-Driven Timing
+
+You can also hide your **durations** and **delays** behind variables:
 
 ```css
---sidebar-width: calc(100vw - 320px);
+:root {
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
+}
+
+.button {
+  transition:
+    transform var(--duration-fast) ease-out,
+    box-shadow var(--duration-fast) ease-out;
+}
+
+.modal {
+  transition:
+    opacity var(--duration-base) ease-out,
+    transform var(--duration-base) ease-out;
+}
 ```
 
-Dynamic sizing for fluid layouts.
+When the team decides “everything should feel snappier,” you bump `--duration-*`
+in one place instead of hunting through every component.
+
+You can even combine knobs:
+
+```css
+:root {
+  --duration-base: 180ms;
+  --duration-multiplier: 1;
+}
+
+.card {
+  transition:
+    transform calc(var(--duration-base) * var(--duration-multiplier)) ease-out,
+    box-shadow calc(var(--duration-base) * var(--duration-multiplier)) ease-out;
+}
+```
+
+Set `--duration-multiplier` to `0.8` for “speed run” mode, or `1.2` for a calmer
+feel.
 
 ---
 
-## 🧪 Mini-Demo: “Elastic Padding”
+## 🧪 MiniMo 04 — Performance Console
 
-```html
-<div class="pad-box">Elastic Padding Box</div>
+This MiniMo gives you a **live performance control panel**:
 
-<style>
+- Buttons to switch hover **intensity** (Subtle / Default / Extra)
+- CSS variables drive:
+  - Lift distance
+  - Shadow strength
+  - Transition duration
+
+JavaScript only updates the **knobs** — CSS handles the effect.
+
+<MiniMo
+  src="/demos/css-variable-wizardry/minimo-04-performance-patterns.html"
+  title="MiniMo 04 — Performance Console"
+  height="480px"
+/>
+
+Core idea behind the MiniMo:
+
+```css
 :root {
-  --pad: 10; /* base */
+  --lift-distance: 10px;
+  --shadow-strength: 0.35;
+  --transition-ms: 160ms;
 }
 
-.pad-box {
-  padding: calc(var(--pad) * 1px);
-  background: #f8f8f8;
-  border-radius: 6px;
-  font-family: system-ui;
-  width: fit-content;
+.card {
+  transform: translateY(0);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.85),
+    0 20px 40px rgba(15, 23, 42, var(--shadow-strength));
+  transition:
+    transform var(--transition-ms) ease-out,
+    box-shadow var(--transition-ms) ease-out;
 }
 
-/* Bigger screens = bigger padding */
-@media (min-width: 600px) {
-  :root {
-    --pad: 24;
+.card:hover {
+  transform: translateY(calc(-1 * var(--lift-distance)));
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.9),
+    0 26px 70px rgba(15, 23, 42, calc(var(--shadow-strength) + 0.18));
+}
+```
+
+```js
+const root = document.documentElement;
+
+const presets = {
+  subtle: {
+    '--lift-distance': '6px',
+    '--shadow-strength': '0.22',
+    '--transition-ms': '130ms',
+  },
+  default: {
+    '--lift-distance': '10px',
+    '--shadow-strength': '0.35',
+    '--transition-ms': '160ms',
+  },
+  extra: {
+    '--lift-distance': '16px',
+    '--shadow-strength': '0.55',
+    '--transition-ms': '190ms',
+  },
+};
+
+function applyPreset(name) {
+  const preset = presets[name];
+  for (const [key, value] of Object.entries(preset)) {
+    root.style.setProperty(key, value);
   }
 }
-</style>
 ```
 
-Resize the screen — the padding grows automatically.
+Nothing in the selector logic changes — the card just **responds** to new
+variable values.
 
 ---
 
-## 🚫 Limitations
+## 🚦 Smooth Moves, Cheap Costs
 
-- Cannot use a variable as a property name  
-- Variables are resolved at computed-value time  
-- Avoid deep override chains (debugging nightmare)  
+Now that you’ve got the dials, here are the rails they should stay on.
+
+Rule you can quote in class:
+
+> “If it makes the browser re-measure or re-flow the page, don’t animate it.”
+
+Avoid animating things like:
+
+- `top`, `left`, `right`, `bottom`
+- `width`, `height`
+- `margin`, `padding`
+- `border-width`
+
+Those trigger layout and paint work every frame.
+
+Prefer:
+
+- `transform: translate / scale / rotate`
+- `opacity`
+- Occasional `box-shadow` or `filter` (used lightly)
+
+Then plug your variables into those properties:
+
+```css
+:root {
+  --lift-distance: 14px;
+  --hover-scale: 1.02;
+}
+
+.card {
+  transform: translateY(0) scale(1);
+  transition:
+    transform var(--transition-ms) ease-out,
+    box-shadow var(--transition-ms) ease-out;
+}
+
+.card:hover {
+  transform: translateY(calc(-1 * var(--lift-distance)))
+             scale(var(--hover-scale));
+}
+```
+
+Your variables control the feel; **transforms + opacity** keep things smooth.
 
 ---
 
-## 🎉 You’ve Completed Variable Wizardry!
+## 🧊 will-change (Use Sparingly)
+
+For elements that you know will animate **often** on hover, you can hint:
+
+```css
+.card {
+  will-change: transform, box-shadow;
+}
+```
+
+This tells the browser “keep this ready to animate.”  
+Use it carefully — on too many elements it can **hurt** performance.
+
+Good candidates:
+
+- Main call-to-action buttons
+- Reusable interactive cards
+- Always-on nav elements with subtle motion
+
+Bad candidates:
+
+- Dozens of list items
+- Rarely-hovered one-off elements
+
+---
+
+## 🧩 How to Teach This in Class
+
+You can frame these patterns as:
+
+- **Design dials** — variables for intensity, speed, and lift
+- **Performance rails** — transforms + opacity as the main animation track
+- **JS as the operator** — controls the dials, doesn’t redraw the scene
+
+Students don’t need to memorize every restriction.  
+They just need the mantra:
+
+> “Animate transforms and opacity. Put intensity behind variables.  
+> Let JS move the knobs, not the layout.”
+
+---
+
+## ➡️ Wrap-Up
+
+With these patterns, CSS variables stop being “just theme colors” and become a
+**performance-aware control system** for your UI.
+
+Next stop in the series: plugging these ideas into bigger layouts — nav bars,
+cards, and whole page sections that feel smooth no matter how extra the glow gets.

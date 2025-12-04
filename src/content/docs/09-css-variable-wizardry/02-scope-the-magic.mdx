@@ -1,82 +1,198 @@
-
 ---
-title: "Scope the Magic"
-description: "Cascade, inheritance, and component-level overrides."
+title: 'Scope the Magic'
+description: 'Where and how your CSS variables live, override, and cascade through your layout.'
 sidebar:
   order: 2
 draft: false
 ---
 
-# Scope the Magic
+import MiniMo from '../../../components/MiniMo.astro';
 
-Custom properties inherit.  
-This makes them perfect for **component-level overrides**, theme sections, UI modes, and nested spellcasting.
+## Who Gets Which Spell?
+
+Declaring CSS variables is cute.  
+**Scoping** them is where they become a real superpower.
+
+The question is always:
+
+> “_On which element do I store this value so the **right** things inherit it?_”
+
+We’ll use three main levels:
+
+- **Global** — `:root` for site‑wide tokens
+- **Section / context** — wrappers like `.lesson`, `.sidebar`, `.dialog`
+- **Component** — local defaults on `.card`, `.button`, etc.
 
 ---
 
-## 🎯 Global vs Local
+## 🌍 Global vs Local Scope
+
+Global, in `:root`, is great for **design tokens** you want everywhere:
 
 ```css
 :root {
-  --font-heading: "Cormorant Garamond";
+  --page-bg: #020617;
+  --page-text: #e5e7eb;
   --accent: #ff6ec7;
 }
+```
 
-section.alt-theme {
-  --font-heading: "Permanent Marker";
-  --accent: #00b3ff;
+Then components can drink from that global well:
+
+```css
+.card {
+  background: #020617;
+  color: var(--page-text);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
 }
 ```
 
-Every element inside `.alt-theme` will inherit the new values.
+But sometimes you need a different vibe in one area — a lab mode, a warning zone,
+a “boss level” section.
+
+That’s where **local scope** comes in:
+
+```css
+.lab-section {
+  --accent: #38bdf8; /* cyan accent just for this section */
+}
+```
+
+Inside `.lab-section`, anything using `var(--accent)` picks up the new value.
+Outside, the global `--accent` still wins.
 
 ---
 
-## 🧪 Mini-Demo: The “Two Realms” Layout
+## 🧬 Nested Overrides: The Cascade Still Rules
 
-```html
-<div class="realm default-realm">
-  <h2>Default Realm</h2>
-  <p>Uses global variables.</p>
-</div>
+Variables don’t dodge the cascade — they **use** it.
 
-<div class="realm alt-realm">
-  <h2>Alternate Realm</h2>
-  <p>Overrides the heading font and accent.</p>
-</div>
-
-<style>
+```css
 :root {
-  --heading-font: Georgia, serif;
-  --accent-color: #ff6ec7;
+  --panel-bg: #020617;
 }
 
-.realm {
-  border-left: 6px solid var(--accent-color);
-  padding: 1rem 1.5rem;
-  margin-bottom: 1rem;
-  font-family: var(--body-font, system-ui);
+.lab-section {
+  --panel-bg: #020617;
 }
 
-.realm h2 {
-  font-family: var(--heading-font);
+.lab-section .panel--warning {
+  --panel-bg: #450a0a; /* deepest wins here */
 }
-
-.alt-realm {
-  --heading-font: "Permanent Marker";
-  --accent-color: #00b3ff;
-}
-</style>
 ```
 
-Each realm inherits its own rules — no duplication.
+For `.panel--warning`:
+
+1. It looks for `--panel-bg` on itself → finds `#450a0a`
+2. If it didn’t exist, it would climb to `.lab-section`
+3. If still missing, it would fall back to `:root`
+
+Same cascade rules you already know, just with fancier loot.
 
 ---
 
-## 💡 Demo Tie-In  
-Live in **Demo 02 — Scope the Magic**.
+## 🧱 Component Defaults + External Overrides
+
+A nice pattern: give components **safe defaults** on the component itself,  
+then allow parents to override with variables.
+
+```css
+.card {
+  --card-bg: #020617; /* component default */
+  --card-radius: 1.25rem;
+
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+}
+
+.card--highlight {
+  --card-bg: #0f172a;
+}
+
+.feature-strip {
+  --card-bg: #1e293b; /* overrides all cards inside */
+  --card-radius: 999px;
+}
+```
+
+Priority order here:
+
+1. Custom property declared **closest to the card**
+2. Then parent wrappers (`.feature-strip`)
+3. Then `:root`
+
+Outside of all those, the component still looks fine because it brought its
+own default values.
 
 ---
 
-## ➡️ Next  
-**JS Takes the Wand →**
+## 🧪 MiniMo 02 — Scoped Studio
+
+Let’s see scope in action: three panels, **one** variable name.
+
+<MiniMo
+  src="/demos/css-variable-wizardry/minimo-02-scope-the-magic.html"
+  title="MiniMo 03 — Scoped Studio"
+  height="1024px"
+/>
+
+Here’s the core CSS behind that MiniMo:
+
+```css
+:root {
+  --panel-bg: #020617;
+  --panel-accent: #ff6ec7;
+}
+
+.scope-lab {
+  --panel-bg: #020617;
+}
+
+.scope-lab__row--alt {
+  --panel-bg: #020617;
+  --panel-accent: #38bdf8; /* cyan, local to this row */
+}
+
+.scope-panel--alert {
+  --panel-bg: #450a0a;
+  --panel-accent: #f97373;
+}
+
+.scope-panel {
+  background: radial-gradient(circle at top, var(--panel-bg), #020617 70%);
+  border: 1px solid color-mix(in srgb, var(--panel-accent) 22%, transparent);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8), 0 18px 50px color-mix(in srgb, var(
+            --panel-accent
+          ) 16%, #020617);
+}
+```
+
+Same variable names, different scopes, different moods.
+
+Try:
+
+- Changing `--panel-accent` on `:root`
+- Overriding it on just one row
+- Giving a single “alert” card its own local override
+
+You’ll feel exactly how far the magic reaches.
+
+---
+
+## 💡 When to Pick Which Scope
+
+Use this as a quick cheat sheet:
+
+- `:root` → brand tokens, layout scales, reusable design system values
+- Section wrapper → per‑page themes, mode toggles, “lab” sections, dark/light walls
+- Component → sane defaults so your UI never looks broken, even out of context
+
+Variables don’t replace the cascade.  
+They give you **named hooks** to ride the cascade on purpose.
+
+---
+
+## ➡️ Next Up
+
+We’ve decided **who** sees which value.  
+Next: **Theme Shifting Tricks** — flipping whole looks with a single class.

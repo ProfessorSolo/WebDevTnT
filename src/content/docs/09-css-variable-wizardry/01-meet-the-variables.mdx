@@ -1,16 +1,26 @@
-
 ---
-title: "Meet the Variables"
-description: "Custom properties 101 — declare, use, fallback."
+title: 'Meet the Variables'
+description: 'Custom properties 101 — declare, use, fallback, and remember they store values, not whole properties.'
 sidebar:
   order: 1
 draft: false
 ---
 
-# Meet the Variables
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Values with Dynamic Superpowers
 
 Before you can cast spells, you need ingredients.  
-Variable ingredients start with `--`, live anywhere, and cascade like any other CSS property.
+CSS custom properties (a.k.a. **CSS variables**) are your named ingredients.
+
+They:
+
+- Start with `--`
+- Are declared on elements like any other CSS property
+- Cascade and inherit through the DOM
+- Get read with the `var()` function
+
+Think: **labels for values**, not mini CSS files.
 
 ---
 
@@ -19,56 +29,177 @@ Variable ingredients start with `--`, live anywhere, and cascade like any other 
 ```css
 :root {
   --brand-color: #ff6ec7;
+  --card-radius: 1rem;
 }
 ```
 
-A variable is just a named value stored on an element.  
-Putting them in `:root` makes them global.
+A custom property is just a **named value stored on an element**.
 
----
+Putting them in `:root` makes them effectively “global” for the whole page
+(because everything lives inside `html`, and `:root` is the `html` element).
 
-## 🧪 Mini-Demo: Declare → Use → Ta‑da
-
-```html
-<button class="magic-btn">Cast Color</button>
-
-<style>
-:root {
-  --btn-bg: #ff6ec7;
-  --btn-text: #221;
-}
-
-.magic-btn {
-  background: var(--btn-bg);
-  color: var(--btn-text);
-  border: none;
-  padding: 1rem 1.5rem;
-  font-size: 1.2rem;
-  border-radius: 8px;
-}
-</style>
-```
-
-Change `--btn-bg` and watch the button instantly adopt its new destiny.
-
----
-
-## 🎨 Fallback Values
-
-When a variable is missing or invalid:
+You can also scope them lower:
 
 ```css
-color: var(--headline-color, #333);
+.lesson-card {
+  --card-radius: 1.25rem;
+}
 ```
 
-Use fallbacks for safety nets.
+Inside `.lesson-card`, `--card-radius` overrides the `:root` value.
+Outside it, the global value still wins.
 
 ---
 
-## 💡 Demo Tie-In  
-See this live in **Demo 01 — Meet the Variables**.
+## 🧷 Using a Custom Property with `var()`
+
+Declaring **does nothing** until you _use_ it:
+
+```css
+.card {
+  background: var(--brand-color);
+  border-radius: var(--card-radius);
+}
+```
+
+`var(--brand-color)` literally means:
+
+> grab the computed value of `--brand-color` on this element (or from its cascade).
+
+You can mix variables with normal values:
+
+```css
+.hero {
+  padding: 3rem var(--page-gutter);
+}
+```
 
 ---
 
-## ➡️ Next  
-**Scope the Magic →**
+## 🛟 Fallback Values (Safety Nets)
+
+Sometimes a variable isn’t set (or gets set to something invalid).  
+That’s where the second argument to `var()` comes in:
+
+```css
+.hero-title {
+  color: var(--headline-color, #e5e7eb);
+}
+```
+
+- If `--headline-color` exists and is valid → use it.
+- Otherwise → use `#e5e7eb`.
+
+You can even **chain** fallbacks:
+
+```css
+color: var(--headline-color, var(--brand-color, #333));
+```
+
+Read as:
+
+> use `--headline-color`, or if that’s missing, `--brand-color`,  
+> and if _that_ fails, go with `#333`.
+
+---
+
+## ⚠️ Important: Variables Store **Values**, Not Properties
+
+Custom properties are **not** “macro expanders” for whole declarations.  
+They store **just the value part**.
+
+Bad idea (won’t work):
+
+```css
+:root {
+  --fancy-border: border: 3px solid hotpink;
+}
+
+.card {
+  var(--fancy-border); /* ❌ invalid — not a full declaration */
+}
+```
+
+Correct pattern:
+
+```css
+:root {
+  --fancy-border-width: 3px;
+  --fancy-border-color: hotpink;
+}
+
+.card {
+  border: var(--fancy-border-width) solid var(--fancy-border-color);
+}
+```
+
+Think: `var()` can plug values into any place a value is legal —  
+**inside** `border`, `box-shadow`, `transform`, `font-size`, etc.
+
+---
+
+## 🔢 Unitless Values (And Friends)
+
+Custom properties don’t care about units; they store raw text.
+
+```css
+:root {
+  --shadow-strength: 0.35; /* unitless number */
+  --lift-distance: 18px; /* with unit */
+}
+
+.card {
+  box-shadow: 0 20px 40px rgba(15, 23, 42, var(--shadow-strength));
+  transform: translateY(calc(-1 * var(--lift-distance)));
+}
+```
+
+The browser just drops the text of the variable into the value.  
+As long as the **final result** is valid CSS, you’re good.
+
+We’ll lean on this more in the **Performance Patterns** section, where we
+coordinate multiple animations from a single “strength” variable.
+
+---
+
+## 🧪 MiniMo 02 — Color Cauldron
+
+Tiny variables lab: one button, three knobs.  
+Tweak the values and watch the whole look shift.
+
+<MiniMo
+  src="/demos/css-variable-wizardry/minimo-01-color-cauldron.html"
+  title="Brew a Button"
+/>
+
+### 🧪 How to play
+
+1. Open the page in your browser.
+2. Pop open DevTools → **Elements** → `<style>` block.
+3. Tweak these variables:
+
+   - `--btn-bg` — change the brand color
+   - `--btn-radius` — try `0.75rem`, `2rem`, `12px`
+   - `--btn-shadow-strength` — try `0.15` vs `0.6`
+
+One change to the variable → multiple visual changes snap into place.
+
+---
+
+## 💡 Demo Tie-In
+
+In the **Meet the Variables** demo, we’ll:
+
+- Move shared values (colors, spacing, radii) into `:root`
+- Use local overrides on specific cards/sections
+- Add fallbacks for safer theme experiments
+
+You’ll see how variables turn “copy-paste styling” into
+**tweak-once, reuse-everywhere**.
+
+---
+
+## ➡️ Next Up
+
+Ready to **aim** those variables?  
+Next: **Scope the Magic →** where we control _who_ sees which value _where_.

@@ -1,0 +1,209 @@
+---
+title: 'Selectagonal-Ally'
+description: 'The final chamber where all your selector schools interlock into practical spellwork.'
+sidebar:
+  order: 99
+  label: 'Selectagonal-Ally'
+draft: false
+---
+
+# 🧷 Selectagonal-Ally
+
+_The chamber of many edges_
+
+We’ve walked the whole Academy of CSS Selectors:
+
+- traced **family trees** of elements,
+- counted their place among **siblings**,
+- listened to the **spirits of state**,
+- read the **runes in attributes**,
+- and finally, bent the rules with the **Unconditional Arts**.
+
+This last chamber pulls those edges together into a single, many-sided form:  
+a **selectagonal** way of thinking — where every selector is just another facet  
+on the same crystal.
+
+---
+
+## 🌌 Your Module at a Glance
+
+By the end of **CSS Selector Spells**, we should be able to:
+
+- Describe how the browser walks the DOM using **combinators** and **hierarchy**
+- Choose between **class, type, ID, attribute, and pseudo-class** selectors
+- Use **structural selectors** to target “nth of its kind” without extra markup
+- React to **state changes** (`:hover`, `:focus`, `:checked`, `:valid`, etc.)
+- Let **attributes and data-attributes** drive style instead of more classes
+- Compose logic with `:is()`, `:not()`, `:has()`, and `:where()`
+- Read a complex selector and rewrite it in plainer English (or the reverse)
+
+In plain terms: we’re no longer guessing which selector “might work.”  
+We’re choosing intentionally from a spellbook.
+
+---
+
+## 🏛 The Five Schools, Side by Side
+
+### 1️⃣ Familial Sorcery — **Structure & Ancestry**
+
+- Type, class, and ID selectors
+- Descendant vs direct child (`A B` vs `A > B`)
+- Sibling relationships (`A + B` and `A ~ B`)
+
+We use these when **who is inside whom** (and in what order) is the main story.
+
+---
+
+### 2️⃣ Relational Runes — **Position Among Siblings**
+
+- `:first-child`, `:last-child`, `:nth-child()`
+- `:first-of-type`, `:nth-of-type()`
+- Patterns like `2n`, `2n+1`, `4n+1`, etc.
+
+We use these when we care about **which** sibling,  
+not just that it exists.
+
+---
+
+### 3️⃣ States & Spirits — **Moods & Moments**
+
+- `:hover`, `:focus`, `:active`
+- `:checked`, `:disabled`, `:required`
+- `:valid`, `:invalid`, `:in-range`, etc.
+
+We use these when styling depends on **current interaction**  
+or **validation state** rather than static structure.
+
+---
+
+### 4️⃣ Arcane Attributes — **The Inscriptions**
+
+- Exact match: `[attr="value"]`
+- Token list: `[attr~=token]`
+- Prefix: `[attr^="prefix"]`
+- Suffix: `[attr$="suffix"]`
+- Contains: `[attr*="fragment"]`
+
+We use these when the **data model** already contains the answer,  
+and we’d rather not bolt on yet another utility class.
+
+---
+
+### 5️⃣ Unconditional Arts — **Logic & Awareness**
+
+- `:is()` — group multiple patterns into one tail
+- `:not()` — clearly define exceptions
+- `:has()` — let parents react to children
+- `:where()` — soft, low-specificity defaults
+
+We use these when ordinary selectors start to feel like  
+they’re missing one last piece of logic.
+
+---
+
+## 🧪 What You’ve Practised
+
+Across the MiniMos in this module, we’ve:
+
+- Highlighted **direct vs descendant** elements in nested story lists
+- Used **nth-child / nth-of-type** to build repeatable, patterned layouts
+- Reacted to **hover, focus, valid, and checked** to change styling without JS
+- Let **`data-*` attributes** control color, badges, and iconography
+- Used `:is()`, `:not()`, and `:has()` to change styling based on rank, state, and inner sigils
+- Kept resets and spacing sane with **`:where()`** instead of stacking specificity
+
+Individually each MiniMo is tiny.  
+Together they form a **selector vocabulary** you can reuse in any project.
+
+---
+
+## 🧮 Selector Sigil Cheat Sheet
+
+A small circle of spells to keep in view:
+
+```css
+/* Families & siblings */
+.card-grid > .card                 /* direct children only */
+.article + .article                /* the very next sibling */
+.article ~ .article                /* all following siblings */
+
+/* Structural runes */
+.list-item:first-of-type           /* first of its kind */
+.list-item:nth-of-type(2n + 1)     /* every odd item of its type */
+
+/* Spirits of state */
+input:focus-visible                /* keyboard-focused only */
+input:valid                        /* passes validation */
+input:checked + label              /* style label of a checked control */
+
+/* Attribute runes */
+button[data-variant="primary"]     /* exact match */
+[data-tags~="featured"]            /* token in space-separated list */
+[href^="https://"]                 /* starts with */
+[src$=".svg"]                      /* ends with */
+[data-role*="admin"]               /* contains substring */
+
+/* Unconditional arts */
+.card:is(.featured, .pinned)       /* shared styling for either */
+button:not(.primary)               /* everything that isn’t primary */
+.card:has(.badge--alert)           /* card reacts to child badge */
+.form :where(h2, p, ul)            /* soft defaults, easy to override */
+```
+
+You don’t need all of these in every layout.  
+But knowing they exist keeps your options open.
+
+---
+
+## 🎯 How to Keep Practising
+
+A few quick drills to stay sharp:
+
+- **Selector translation**
+
+  - Take any complex selector from a codebase or article.
+  - Write one sentence in plain English describing _exactly_ what it matches.
+  - Then do the reverse: write the English first, then try to express it in CSS.
+
+- **One layout, many spells**
+
+  - Pick a small component (card grid, form, nav, gallery).
+  - Try to style the same target using **three different selector strategies**:
+    - classes only,
+    - attributes + structural selectors,
+    - with and without `:is()` / `:not()`.
+
+- **DOM-first thinking**
+  - Sketch a tiny HTML structure.
+  - Before writing any CSS, list **which selectors** you’d reach for and why.
+
+---
+
+## 🤖 Optional: AI-Assisted Practice Prompt
+
+When you want extra sparring practice, you can paste something like this into T.A. Watts or another assistant:
+
+> “I’m practising CSS selectors.  
+> Give me 5 small HTML snippets and, for each one,  
+> 2–3 challenges like: ‘write a selector that targets X but not Y’.  
+> Vary the difficulty and include answers after I guess.”
+
+Let the assistant be the mischievous examiner;  
+we stay the patient spellcaster.
+
+---
+
+## 🔥 Forge Ahead
+
+We’ve bent structure, commanded siblings, whispered to states,  
+read the ancient runes of attributes, and woven pure logic into the DOM.  
+The Selectagon hums at our fingertips — every edge awakened.
+
+Now we step beyond selector spellcraft  
+and into the **Function Forge**,  
+where values melt, units collide,  
+and `calc()`, `clamp()`, and `var()`  
+strike sparks against the anvil of layout itself.
+
+Sharpen your quill, apprentice.  
+The real alchemy begins.

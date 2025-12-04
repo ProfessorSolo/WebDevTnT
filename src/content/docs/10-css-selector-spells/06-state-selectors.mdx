@@ -1,0 +1,221 @@
+---
+title: "State Selectors"
+description: "Using pseudo-classes to express interaction and validation state."
+sidebar:
+  order: 6
+  label: "State Selectors"
+draft: false
+---
+
+# 🧷 State Selectors  
+*Pseudo-classes for interaction and validation*
+
+In **States & Spirits**, we interacted with a small Reader Preferences panel and watched it respond to:
+
+- hover and active presses,  
+- keyboard focus,  
+- a checked checkbox,  
+- and valid vs invalid email input.
+
+Now we open the spellbook and name the selectors behind those glows.
+
+Here is the core markup we’re targeting:
+
+```html
+<section class="prefs-panel">
+  <div class="panel-label">States &amp; Spirits · UI Runes</div>
+  <h2 class="panel-title">Reader Preferences</h2>
+
+  <div class="row">
+    <div class="row-label">Layout mode</div>
+    <div class="mode-toggle" data-mode="compact" aria-label="Layout mode: compact">
+      <button type="button" class="mode-btn" data-mode="standard">
+        Standard
+      </button>
+      <button type="button" class="mode-btn" data-mode="compact">
+        Compact
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="breaking-row">
+      <input type="checkbox" name="breaking-only" checked>
+      <span>Breaking news only</span>
+    </label>
+    <div class="row-label">Lights up when the spell is <code>:checked</code>.</div>
+  </div>
+
+  <form class="alerts-form" novalidate>
+    <span class="alerts-label">Email for alerts</span>
+    <div class="alerts-input-wrapper">
+      <input
+        class="alerts-input"
+        type="email"
+        name="alert-email"
+        required
+        placeholder="you@example.com"
+      >
+      <div class="status-pill"></div>
+    </div>
+  </form>
+</section>
+```
+
+---
+
+## 🟦 Hover & Active — `:hover` and `:active` on Buttons
+
+The layout mode buttons react to hover and press in a way that feels tactile.
+
+```css
+.mode-btn {
+  /* base styles */
+}
+
+/* Hover: soften + lift slightly */
+.mode-btn:hover {
+  color: var(--state-hover);
+  transform: translateY(-1px);
+}
+
+/* Active: pressed state on click */
+.mode-btn:active {
+  color: var(--state-active);
+  transform: translateY(0);
+}
+```
+
+- `:hover` is pointer-based, great for subtle hints.  
+- `:active` is the moment of pressing—useful for “click” feedback.
+
+We still need a separate selector for keyboard focus.
+
+---
+
+## 🟪 Focus Rings — `:focus-visible` Instead of `:focus`
+
+We want clear focus for keyboard users, without flashing rings on every mouse click.
+
+```css
+.mode-btn:focus-visible {
+  outline: 2px solid var(--state-focus);
+  outline-offset: 3px;
+  z-index: 2;
+}
+```
+
+Compared to `:focus`:
+
+- `:focus-visible` only appears when the browser thinks the user needs that cue—  
+  typically on keyboard navigation, not mouse clicks.
+
+We can apply the same pattern to inputs:
+
+```css
+.alerts-input:focus-visible {
+  border-color: var(--state-focus);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.5);
+}
+```
+
+---
+
+## 🟧 Checked Parent — `:has(input:checked)`
+
+The “Breaking news only” pill highlights the entire label when its checkbox is checked.
+
+```css
+.breaking-row {
+  /* neutral pill styles */
+}
+
+/* Parent reacts when the child checkbox is :checked */
+.breaking-row:has(input[type="checkbox"]:checked) {
+  border-color: var(--state-active);
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.5);
+  background: radial-gradient(circle at left, rgba(249, 115, 22, 0.18), rgba(15, 23, 42, 0.95));
+  color: var(--state-active);
+}
+```
+
+Without `:has()`, we’d typically need to:
+
+- add a “checked” class on the parent via JavaScript, and  
+- wire that class to styling instead.
+
+Here, `:has()` lets pure CSS say:
+
+> “Style this `.breaking-row` when it **has** a checked input inside.”
+
+---
+
+## 🟩 / 🟥 Valid vs Invalid — `:valid`, `:invalid`, `:placeholder-shown`
+
+The email input changes mood based on whether its current value parses as a valid email.
+
+```css
+.alerts-input {
+  /* neutral styles */
+  border: 1px solid rgba(71, 85, 105, 0.95);
+}
+
+/* Valid and not just the placeholder */
+.alerts-input:valid:not(:placeholder-shown) {
+  border-color: var(--state-valid);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4);
+}
+
+/* Invalid and not just empty */
+.alerts-input:invalid:not(:placeholder-shown) {
+  border-color: var(--state-invalid);
+  box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.6);
+}
+```
+
+The important ideas:
+
+- We combine `:valid` / `:invalid` with `:not(:placeholder-shown)` so that:
+  - the empty state is neutral,  
+  - we only show error after the user starts typing.
+
+The status pill to the right is updated purely with sibling selectors:
+
+```css
+.status-pill {
+  /* neutral pill */
+}
+
+/* Invalid state */
+.alerts-input:invalid:not(:placeholder-shown) ~ .status-pill {
+  background: rgba(248, 113, 113, 0.18);
+  color: var(--state-invalid);
+  border: 1px solid rgba(248, 113, 113, 0.7);
+}
+
+/* Valid state */
+.alerts-input:valid:not(:placeholder-shown) ~ .status-pill {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--state-valid);
+  border: 1px solid rgba(34, 197, 94, 0.7);
+}
+```
+
+No JavaScript needed—just careful use of `~` (general sibling) and pseudo-classes.
+
+---
+
+## 🧠 Patterns to Steal
+
+From this one small panel we get several reusable patterns:
+
+- Use `:hover` and `:active` for pointer-based feedback.  
+- Use `:focus-visible` so keyboard users have clear focus without “outline spam.”  
+- Use `:has()` for parent styling when a child is `:checked` or `:focus` (with performance awareness).  
+- Combine `:valid` / `:invalid` with `:placeholder-shown` to avoid punishing untouched fields.  
+- Use sibling selectors (`+` / `~`) to update adjacent UI elements based on an input’s state.
+
+These are the core **State & Spirit** runes you’ll reach for again and again  
+as you design responsive, accessible, and expressive UI.
+
+Next up: **Arcane Attributes**, where we stop looking at state and start reading the metadata etched into the HTML itself.

@@ -1,0 +1,193 @@
+---
+title: "Relational Selectors"
+description: "Using :first-child, :last-child, and nth-based selectors to express order."
+sidebar:
+  order: 4
+  label: "Relational Selectors"
+draft: false
+---
+
+# 📜 Relational Selectors  
+*When position becomes part of the spell*
+
+In **Relational Runes**, we studied the *Circle of Stories* and tried to guess which runes controlled the:
+
+- red **first-born** highlight,  
+- orange **rhythm** banding,  
+- and pink **type-based** marker.
+
+Now we open the spellbook and name those selectors explicitly.
+
+Here is the core markup from the minimo:
+
+```html
+<section class="circle-panel">
+  <div class="panel-label">Relational Runes · Order &amp; Type</div>
+  <h2 class="panel-title">Circle of Stories</h2>
+
+  <div class="story-list">
+    <div class="story-row">
+      <div>
+        <p class="story-kicker">Feature · First in the circle</p>
+        <h3 class="story-title">The First-Born Selector</h3>
+      </div>
+      <div>
+        <p class="story-meta">We meet <code>:first-child</code> and see how it crowns the first element in a group.</p>
+        <p class="story-summary">Only one item can ever be first. Sometimes that’s all the magic we need.</p>
+      </div>
+    </div>
+
+    <div class="story-row">
+      <div>
+        <p class="story-kicker">Dispatch · Second in line</p>
+        <h3 class="story-title">Even the Middle Children Matter</h3>
+      </div>
+      <div>
+        <p class="story-meta">Banding and stripes appear when we start counting with <code>:nth-child()</code>.</p>
+        <p class="story-summary">By alternating odd and even rows, we make long lists friendlier to read.</p>
+      </div>
+    </div>
+
+    <div class="interlude-row">
+      <div class="interlude-pill">
+        <span>AD INTERLUDE</span>
+        <span>— not a story, still a child</span>
+      </div>
+    </div>
+
+    <div class="story-row">
+      <div>
+        <p class="story-kicker">Column · Third of its kind</p>
+        <h3 class="story-title">Of Type, Not Just of Birth</h3>
+      </div>
+      <div>
+        <p class="story-meta"><code>:nth-of-type()</code> ignores the ad and finds the third story anyway.</p>
+        <p class="story-summary">Sometimes we count only among our own kind, and the divs in the middle don’t matter.</p>
+      </div>
+    </div>
+
+    <div class="story-row">
+      <div>
+        <p class="story-kicker">Closing Note</p>
+        <h3 class="story-title">Last, But Not Forgotten</h3>
+      </div>
+      <div>
+        <p class="story-meta">With <code>:last-child</code>, we can soften the landing at the end of any sequence.</p>
+        <p class="story-summary">Margins, borders, and flourishes don’t always have to repeat forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+```
+
+---
+
+## 🟥 First-Born Highlight — `:first-child` and Friends
+
+We wanted the **first story row** to feel special.
+
+```css
+/* Option A — first child of the story list */
+.story-list > .story-row:first-child {
+  /* red border & glow */
+}
+
+/* Option B — equivalent with :nth-child() */
+.story-list > .story-row:nth-child(1) {
+  /* red border & glow */
+}
+```
+
+Both read as “the first child of `.story-list` that is a `.story-row`.”
+
+- `:first-child` is a little easier to scan.  
+- `:nth-child(1)` becomes handy when we later refactor to `2n + 1` patterns and want the consistency.
+
+---
+
+## 🟧 Rhythm Banding — `:nth-child()` vs `:nth-of-type()`
+
+We also wanted a repeating orange band on every other **story row**.
+
+Because the `div.interlude-row` lives between rows 2 and 3, we have a choice:
+
+```css
+/* Option A — band every odd child, counting the interlude */
+.story-list > *:nth-child(odd) {
+  /* background band */
+}
+
+/* Option B — band every odd story-row only, ignoring the interlude */
+.story-list > .story-row:nth-of-type(odd) {
+  /* background band */
+}
+```
+
+- Option A says, “Every odd child, whatever it is.”  
+- Option B says, “Every odd `.story-row`, ignoring other types in the list.”
+
+In the minimo, we used **type-based banding** so that the ad doesn’t break the visual rhythm across stories.
+
+---
+
+## 💗 Type-Based Marker — `:nth-of-type()` in Action
+
+We wanted a pink badge on the **third story**, even though it’s not the third child (the ad interrupts).
+
+```css
+/* Third story-row of its type */
+.story-list > .story-row:nth-of-type(3) .story-kicker::before {
+  content: "TYPE·III";
+  /* pink badge styles */
+}
+```
+
+If we had used `:nth-child(3)`, the selector would have grabbed the `interlude-row` instead, because it is the actual third child.
+
+`nth-of-type()` lets us say:
+
+> “Third `div.story-row` among its siblings, ignoring other tags.”
+
+---
+
+## 🧵 Soft Landing — `:last-child` vs `:last-of-type()`
+
+Finally, we may want to soften the last story row—removing extra borders or adding spacing.
+
+```css
+/* Option A — last child of the list, whatever it is */
+.story-list > .story-row:last-child {
+  /* soften bottom border, margin, etc. */
+}
+
+/* Option B — last story-row, even if something comes after it */
+.story-list > .story-row:last-of-type {
+  /* soften bottom border, margin, etc. */
+}
+```
+
+Right now, both options behave the same because the last child happens to be a `.story-row`.
+
+If we later added a footer or another `div` beneath the stories:
+
+- `:last-child` would stop matching the final story.  
+- `:last-of-type` would continue to treat the final story-row as “last.”
+
+---
+
+## 🧠 Takeaways
+
+Relational selectors let us:
+
+- encode **position** directly into the selector,  
+- choose whether to count **all children** or only those of a certain **type**,  
+- avoid adding extra “first/last/featured” classes in simple cases.
+
+When deciding between them, we can ask:
+
+- “If I insert an extra element in the middle, will this selector still mean what I think it means?”  
+- “Am I really counting children, or am I counting *stories*, *rows*, or some other conceptual group?”
+
+When the answer is clear, the rune almost picks itself.
+
+Next up: **States & Spirits**, where these elements start to respond to hovers, focus, and form validation.

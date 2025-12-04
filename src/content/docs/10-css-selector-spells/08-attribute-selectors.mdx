@@ -1,0 +1,263 @@
+---
+title: "Attribute Selectors"
+description: "Exact matches, tokens, prefixes, suffixes, and substrings with arcane data-*."
+sidebar:
+  order: 8
+  label: "Attribute Selectors"
+draft: false
+---
+
+# 📇 Attribute Selectors  
+*Letting attributes drive the spellwork*
+
+In **Arcane Attributes**, we explored a Relic Registry powered entirely by attributes:
+
+- `data-type`, `data-school`, `data-region`, `data-aspects`, and `href`.
+
+Now we open the spellbook and map each glow to a specific attribute selector.
+
+Here’s the core markup from the minimo (simplified for focus):
+
+```html
+<section class="registry-panel">
+  <h2 class="panel-title">Catalog of Bound Artifacts</h2>
+
+  <div class="relic-grid">
+    <article
+      class="relic"
+      data-type="relic"
+      data-school="primal-ember"
+      data-region="lowlands-north"
+      data-aspects="ember steady attuned"
+    >
+      <div class="relic-pill">Relic · Primal Ember</div>
+      <div class="relic-name">Coalheart Focus Stone</div>
+      <p class="relic-meta">A steady ember relic used to ground volatile fire rites.</p>
+      <div class="relic-tags">
+        <span class="relic-tag">ember</span>
+        <span class="relic-tag">steady</span>
+        <span class="relic-tag">attuned</span>
+      </div>
+      <a class="relic-link" href="/archives/ember/coalheart">
+        <span class="relic-link-glyph" aria-hidden="true"></span>
+        <span>View ember records</span>
+      </a>
+    </article>
+
+    <article
+      class="relic"
+      data-type="tome"
+      data-school="primal-storm"
+      data-region="skylines-east"
+      data-aspects="storm unstable whisper"
+    >
+      <!-- storm codex -->
+      <a class="relic-link" href="https://astral-archives.example.com/storm-codex">
+        <span class="relic-link-glyph" aria-hidden="true"></span>
+        <span>Open astral archive</span>
+      </a>
+    </article>
+
+    <article
+      class="relic"
+      data-type="relic"
+      data-school="wayfinding-starlight"
+      data-region="midveil"
+      data-aspects="starlight guidance calm"
+    >
+      <!-- starlight compass -->
+    </article>
+
+    <article
+      class="relic"
+      data-type="tome"
+      data-school="primal-earth"
+      data-region="deepvault-north"
+      data-aspects="wards stable forgotten"
+    >
+      <!-- deepvault ledger -->
+    </article>
+  </div>
+</section>
+```
+
+---
+
+## 🟩 Exact Match — `[attr="value"]`
+
+We used **exact matches** to differentiate relics vs tomes.
+
+```css
+/* Relics vs tomes, using exact attribute match */
+.relic[data-type="relic"] {
+  border-color: var(--attr-exact);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+}
+
+.relic[data-type="tome"] {
+  border-color: var(--attr-token);
+  box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
+}
+```
+
+Key idea:
+
+- `[data-type="relic"]` reads as “any element whose `data-type` attribute is *exactly* `relic`.”
+
+We didn’t invent `.is-relic` or `.is-tome` classes;  
+we let the attributes speak.
+
+---
+
+## 🟧 Token Match — `[attr~=token]`
+
+We used `[attr~=token]` to detect whether the **space-separated** `data-aspects` list included `unstable`.
+
+```css
+/* data-aspects contains the token "unstable" */
+.relic[data-aspects~="unstable"] .relic-tag {
+  border-color: var(--attr-token);
+  color: var(--attr-token);
+}
+```
+
+Important details:
+
+- `data-aspects="storm unstable whisper"` is interpreted as the tokens:
+  - `"storm"`, `"unstable"`, `"whisper"`.
+- `[data-aspects~="unstable"]` matches because **one whole token** equals `"unstable"`.
+- It would **not** match `data-aspects="not-unstable"` or `data-aspects="unstableish"`.
+
+`[attr~=token]` is ideal for:
+
+- tags, aspects, roles stored as a **space-separated list**.
+
+---
+
+## 🟦 Prefix Match — `[attr^="prefix"]`
+
+We used a **prefix match** to highlight any school whose `data-school` started with `"primal"`:
+
+```css
+/* data-school starts with "primal" (primal-ember, primal-storm, primal-earth) */
+.relic[data-school^="primal"] .relic-pill {
+  color: var(--attr-prefix);
+}
+```
+
+This matched:
+
+- `data-school="primal-ember"`  
+- `data-school="primal-storm"`  
+- `data-school="primal-earth"`
+
+…and would also match `primal`, `primal-void`, etc.
+
+Pattern:
+
+- `[attr^="primal"]` reads as: attribute **starts with** `primal`.
+
+---
+
+## 🟥 Substring Match — `[attr*="middle"]`
+
+We used a **contains** match to treat any school that mentioned `"storm"` specially:
+
+```css
+/* data-school contains "storm" anywhere in the value */
+.relic[data-school*="storm"] .relic-name {
+  text-shadow: 0 0 12px rgba(251, 113, 133, 0.9);
+  color: var(--attr-contains);
+}
+```
+
+This matched:
+
+- `data-school="primal-storm"`
+
+…and would also match `stormbinding`, `twin-storm-runes`, etc.
+
+Pattern:
+
+- `[attr*="storm"]` reads as: attribute **contains** `"storm"` anywhere.
+
+Useful when:
+
+- you’re not in full control of the value, or  
+- you want a flexible “contains this fragment” rule.
+
+---
+
+## 🟪 Suffix Match — `[attr$="suffix"]`
+
+We used a **suffix match** to highlight regions that ended with `-north`:
+
+```css
+/* data-region ends with "-north" (lowlands-north, deepvault-north) */
+.relic[data-region$="-north"]::after {
+  content: "NORTH";
+  /* badge styles */
+}
+```
+
+This matched:
+
+- `data-region="lowlands-north"`  
+- `data-region="deepvault-north"`
+
+…and would not match `midveil` or `skylines-east`.
+
+Pattern:
+
+- `[attr$="-north"]` reads as: attribute **ends with** `-north`.
+
+Great for:
+
+- region codes,  
+- file extensions,  
+- suffix-based categories.
+
+---
+
+## 🌐 Link-Based Matching — `[href^="http"]`
+
+Finally, we distinguished **astral archive links** from local entries by looking at their `href`:
+
+```css
+/* Astral archives — href starts with http */
+.relic a[href^="http"] .relic-link-glyph {
+  border-color: var(--attr-prefix);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+}
+```
+
+This matched:
+
+- `href="https://astral-archives.example.com/storm-codex"`  
+- `href="https://astral-archives.example.com/ledger-wards"`
+
+…but not relative paths like `/archives/ember/coalheart`.
+
+Same `[attr^="prefix"]` pattern, different story.
+
+---
+
+## 🧠 When to Reach for Attribute Selectors
+
+Attribute selectors shine when:
+
+- the information you need is **already encoded** in the markup,  
+- you want styling to follow the **data model**,  
+- you’d rather not stack on a dozen “is-x / has-y” classes.
+
+They’re especially powerful with:
+
+- `data-*` attributes used as lightweight metadata,  
+- token lists (`[attr~=token]`),  
+- and path-like values where prefixes / suffixes naturally matter.
+
+They are **not** the right tool for every detail, but used sparingly,  
+they turn your HTML into a spellbook your CSS can actually read.
+
+Next school: **Unconditional Arts** — where `:is()`, `:not()`, `:has()`, and `:where()`  
+start weaving true logic into your selector spells.

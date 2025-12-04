@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Arcane Attributes — Relic Registry Minimo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg-main: radial-gradient(circle at top, #020617 0, #020617 40%, #000 100%);
+      --border-main: rgba(148, 163, 184, 0.4);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+
+      /* Attribute rune colors */
+      --attr-exact: #22c55e;   /* lime — exact match */
+      --attr-token: #f97316;   /* orange — token ~= */
+      --attr-prefix: #22d3ee;  /* cyan — ^= starts with */
+      --attr-suffix: #a855f7;  /* violet — $= ends with */
+      --attr-contains: #fb7185;/* rose — *= contains */
+
+      --panel-bg: rgba(15, 23, 42, 0.96);
+      --panel-radius: 1.25rem;
+      --panel-padding-block: 1.5rem;
+      --panel-padding-inline: 1.75rem;
+      --panel-max-width: 46rem;
+
+      --slab-radius: 0.9rem;
+
+      --font-body: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #020617 0, #020617 35%, #000 100%);
+      font-family: var(--font-body);
+      color: var(--text-main);
+    }
+
+    .registry-panel {
+      max-width: var(--panel-max-width);
+      width: 100%;
+      margin-inline: auto;
+      padding: var(--panel-padding-block) var(--panel-padding-inline);
+      border-radius: var(--panel-radius);
+      background: var(--panel-bg);
+      border: 1px solid var(--border-main);
+      box-shadow: 0 22px 45px rgba(15, 23, 42, 0.9);
+    }
+
+    .panel-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--attr-prefix);
+      margin-bottom: 0.25rem;
+    }
+
+    .panel-title {
+      margin: 0 0 0.4rem;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .panel-sub {
+      margin: 0 0 1.1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .relic-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr);
+      gap: 0.9rem;
+    }
+
+    .relic {
+      border-radius: var(--slab-radius);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
+      padding: 0.8rem 0.9rem;
+      font-size: 0.86rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .relic-pill {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .relic-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .relic-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .relic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      font-size: 0.72rem;
+    }
+
+    .relic-tag {
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(71, 85, 105, 0.9);
+      color: rgba(148, 163, 184, 0.95);
+      background: rgba(15, 23, 42, 0.95);
+      white-space: nowrap;
+    }
+
+    .relic-link {
+      margin-top: 0.45rem;
+      font-size: 0.76rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      color: rgba(148, 163, 184, 0.9);
+      text-decoration: none;
+    }
+
+    .relic-link-glyph {
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    /* Exact source match: relic vs tome */
+    .relic[data-type="relic"] {
+      border-color: var(--attr-exact);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.5);
+    }
+
+    .relic[data-type="tome"] {
+      border-color: var(--attr-token);
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
+    }
+
+    /* Token includes "unstable" */
+    .relic[data-aspects~="unstable"] .relic-tag {
+      border-color: var(--attr-token);
+      color: var(--attr-token);
+    }
+
+    /* Prefix: schools starting with "primal" */
+    .relic[data-school^="primal"] .relic-pill {
+      color: var(--attr-prefix);
+    }
+
+    /* Contains "storm" anywhere in school */
+    .relic[data-school*="storm"] .relic-name {
+      text-shadow: 0 0 12px rgba(251, 113, 133, 0.9);
+      color: var(--attr-contains);
+    }
+
+    /* Suffix: regions ending in "-north" */
+    .relic[data-region$="-north"]::after {
+      content: "NORTH";
+      position: absolute;
+      top: 0.4rem;
+      right: 0.55rem;
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: var(--attr-suffix);
+      background: rgba(15, 23, 42, 0.9);
+      letter-spacing: 0.16em;
+    }
+
+    /* Astral archive: href starts with http */
+    .relic a[href^="http"] .relic-link-glyph {
+      border-color: var(--attr-prefix);
+      box-shadow: 0 0 10px rgba(34, 211, 238, 0.9);
+    }
+
+    .legend {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .legend-swatch {
+      width: 0.9rem;
+      height: 0.9rem;
+      border-radius: 0.3rem;
+    }
+
+    .legend-swatch--exact {
+      background: var(--attr-exact);
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+    }
+
+    .legend-swatch--token {
+      background: var(--attr-token);
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.9);
+    }
+
+    .legend-swatch--prefix {
+      background: var(--attr-prefix);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+    }
+
+    .legend-swatch--suffix {
+      background: var(--attr-suffix);
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.9);
+    }
+
+    .legend-swatch--contains {
+      background: var(--attr-contains);
+      box-shadow: 0 0 12px rgba(248, 113, 113, 0.9);
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 1rem;
+      }
+
+      .registry-panel {
+        padding-inline: 1.25rem;
+      }
+
+      .relic-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="registry-panel">
+    <div class="panel-label">Arcane Attributes · Relic Registry</div>
+    <h2 class="panel-title">Catalog of Bound Artifacts</h2>
+    <p class="panel-sub">
+      Each glow comes from a clue inscribed in the attributes: type of artifact, aspects, school of magic, region, and even the archive link itself.
+    </p>
+
+    <div class="relic-grid">
+      <article
+        class="relic"
+        data-type="relic"
+        data-school="primal-ember"
+        data-region="lowlands-north"
+        data-aspects="ember steady attuned"
+      >
+        <div class="relic-pill">Relic · Primal Ember</div>
+        <div class="relic-name">Coalheart Focus Stone</div>
+        <p class="relic-meta">A steady ember relic used to ground volatile fire rites.</p>
+        <div class="relic-tags">
+          <span class="relic-tag">ember</span>
+          <span class="relic-tag">steady</span>
+          <span class="relic-tag">attuned</span>
+        </div>
+        <a class="relic-link" href="/archives/ember/coalheart">
+          <span class="relic-link-glyph" aria-hidden="true"></span>
+          <span>View ember records</span>
+        </a>
+      </article>
+
+      <article
+        class="relic"
+        data-type="tome"
+        data-school="primal-storm"
+        data-region="skylines-east"
+        data-aspects="storm unstable whisper"
+      >
+        <div class="relic-pill">Tome · Primal Storm</div>
+        <div class="relic-name">Codex of Wandering Thunder</div>
+        <p class="relic-meta">Pages shift when read aloud; margins refuse to stay still.</p>
+        <div class="relic-tags">
+          <span class="relic-tag">storm</span>
+          <span class="relic-tag">unstable</span>
+          <span class="relic-tag">whisper</span>
+        </div>
+        <a class="relic-link" href="https://astral-archives.example.com/storm-codex">
+          <span class="relic-link-glyph" aria-hidden="true"></span>
+          <span>Open astral archive</span>
+        </a>
+      </article>
+
+      <article
+        class="relic"
+        data-type="relic"
+        data-school="wayfinding-starlight"
+        data-region="midveil"
+        data-aspects="starlight guidance calm"
+      >
+        <div class="relic-pill">Relic · Wayfinding</div>
+        <div class="relic-name">Compass of Quiet Orbits</div>
+        <p class="relic-meta">Aligns to the nearest safe path, ignoring temporal distortions.</p>
+        <div class="relic-tags">
+          <span class="relic-tag">starlight</span>
+          <span class="relic-tag">guidance</span>
+          <span class="relic-tag">calm</span>
+        </div>
+        <a class="relic-link" href="/archives/wayfinding/quiet-orbits">
+          <span class="relic-link-glyph" aria-hidden="true"></span>
+          <span>Consult wayfinding notes</span>
+        </a>
+      </article>
+
+      <article
+        class="relic"
+        data-type="tome"
+        data-school="primal-earth"
+        data-region="deepvault-north"
+        data-aspects="wards stable forgotten"
+      >
+        <div class="relic-pill">Tome · Deepvault</div>
+        <div class="relic-name">Ledger of Buried Wards</div>
+        <p class="relic-meta">A catalog of spells carved into stone, many no longer spoken aloud.</p>
+        <div class="relic-tags">
+          <span class="relic-tag">wards</span>
+          <span class="relic-tag">stable</span>
+          <span class="relic-tag">forgotten</span>
+        </div>
+        <a class="relic-link" href="https://astral-archives.example.com/ledger-wards">
+          <span class="relic-link-glyph" aria-hidden="true"></span>
+          <span>Reveal deepvault entry</span>
+        </a>
+      </article>
+    </div>
+
+    <div class="legend" aria-hidden="true">
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--exact"></span>
+        <span>data-type="relic" vs "tome"</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--token"></span>
+        <span>data-aspects includes "unstable"</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--prefix"></span>
+        <span>data-school starts with "primal"</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--contains"></span>
+        <span>data-school contains "storm"</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch legend-swatch--suffix"></span>
+        <span>data-region ends with "-north"</span>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

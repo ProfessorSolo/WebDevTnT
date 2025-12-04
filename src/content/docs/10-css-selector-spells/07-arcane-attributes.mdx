@@ -1,0 +1,142 @@
+---
+title: "Arcane Attributes"
+description: "Reading meaning from attributes: exact, tokens, prefixes, suffixes, and substrings."
+sidebar:
+  order: 7
+  label: "Arcane Attributes"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+# 🧿 Arcane Attributes  
+*Selectors that read the runes etched into HTML*
+
+Earlier schools taught us to read:
+
+- the **family tree** (combinators),  
+- the **order of siblings** (relational runes),  
+- the **moods of interaction** (states & spirits).  
+
+**Arcane Attributes** focus on a different question:
+
+> **What secrets are already carved into the attributes?**
+
+Attribute selectors let our CSS respond to:
+
+- the **type** of an element,  
+- custom `data-*` metadata,  
+- whether a token appears in a space-separated list,  
+- whether a value starts with, ends with, or contains a string fragment.
+
+In this school we meet:
+
+- `[attr="value"]`  
+- `[attr~=token]`  
+- `[attr^="prefix"]`  
+- `[attr$="suffix"]`  
+- `[attr*="middle"]`  
+
+---
+
+## ✨ MiniMo — Relic Registry
+
+This minimo shows a **Relic Registry** from the Academy:
+
+- some entries are **relics**, others are **tomes**,  
+- some are marked as **unstable**,  
+- some belong to **primal** schools,  
+- one hides the word **storm** in its school name,  
+- some regions sit in the **north**,  
+- some records link into distant **astral archives**.
+
+Every neon accent is driven by an attribute selector.
+
+<MiniMo
+  src="/demos/css-selector-spells/m10-arcane-attribute-registry.html"
+  title="Arcane Attributes — Relic Registry"
+  height="640px"
+/>
+
+As we read it, notice:
+
+- Relics vs tomes get different border glows.  
+- Any relic whose aspects include **unstable** has orange-tag accents.  
+- Primal schools tint their label with cyan.  
+- The storm codex title thrums with a rose glow.  
+- Some entries wear a **NORTH** badge floating in the corner.  
+- Astral archive links light up their tiny round glyph.
+
+No new classes were needed — just the attributes we were already likely to have.
+
+---
+
+## 🧩 Quest Notes — Decoding the Registry
+
+Color legend for this minimo:
+
+- 🟩 **Exact rune** — lime border for `data-type="relic"`  
+- 🟧 **Token rune** — orange tags when `data-aspects` includes `unstable`  
+- 🟦 **Prefix rune** — cyan label when `data-school` starts with `primal`  
+- 🟥 **Contains rune** — rose title glow when `data-school` mentions `storm`  
+- 🟪 **Suffix rune** — violet badge when `data-region` ends with `-north`  
+
+---
+
+### 🟩 Quest I — Relics vs Tomes
+
+Compare the borders and halos of relic entries vs tome entries.
+
+- What differences do we see in color and glow?  
+- How could we express **“relic only”** and **“tome only”** using exact attribute matches on `data-type`?
+
+Think in terms of:
+
+- `[data-type="relic"]` vs `[data-type="tome"]`.
+
+---
+
+### 🟧 Quest II — The Unstable Token
+
+Only one artifact clearly leans into **unstable** energy.
+
+Look at its `data-aspects` list in the markup and at the tags themselves.
+
+- Why would we store aspects as a **space-separated list** instead of a single string?  
+- How might we target entries whose `data-aspects` list includes the token `unstable`?
+
+Hint: there’s a selector designed for **token membership**.
+
+---
+
+### 🟦🟥 Quest III — Primal vs Stormbound
+
+Look at the **school** labels and names:
+
+- Some schools start with `primal-` (primal-ember, primal-storm).  
+- One school hides the word `storm` in the middle.
+
+How could we:
+
+- style any entry where `data-school` **starts with** `primal`, and  
+- separately, style any entry where `data-school` **contains** `storm` anywhere in the value?
+
+Think about `^=` for prefixes and `*=` for substrings.
+
+---
+
+### 🟪 Quest IV — Regions Ending in -north
+
+Two entries carry a little **NORTH** badge near the top-right corner.
+
+Check their `data-region` values in the markup.
+
+- What do those have in common?  
+- How might we express “ends with `-north`” in a selector?
+
+This is our first gentle glimpse at `$=` suffix matching.
+
+---
+
+In **08 — Attribute Selectors**, we’ll open the spellbook and show each rune in full,  
+mapping them one by one to the exact effects you’ve just spotted.
