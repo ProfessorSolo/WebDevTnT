@@ -63,13 +63,13 @@ const COURSE_MODULES = [
   {
     label: 'CSS Selector Spells',
     directory: '10-css-selector-spells',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'CSS Function Forge',
     directory: '11-css-function-forge',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'Flexbox and Grid',
     directory: '06-css-layouts-flexbox-grid',
