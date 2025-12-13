@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniMo — Mind the Gap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      /* Layout surfaces */
+      --surface-app: #020617;
+      --surface-panel: #0b1120;
+      --surface-interactive: #111827;
+      --surface-interactive-hover: #1f2937;
+
+      /* Foreground */
+      --text-primary: #e5e7eb;
+
+      /* Accent system */
+      --accent-primary: #38bdf8;
+      --accent-primary-border: #38bdf8;
+      --accent-primary-glow: rgba(56, 189, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(
+        circle at top,
+        #0f172a 0,
+        var(--surface-app) 70%,
+        #000 100%
+      );
+      color: var(--text-primary);
+      padding: 1.25rem;
+    }
+
+    .shell {
+      width: 100%;
+      background: var(--surface-panel);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 0 32px var(--accent-primary-glow);
+      max-width: 720px;
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-section-label {
+      width: 100%;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    button {
+      background: var(--surface-interactive);
+      color: var(--text-primary);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 150ms ease-out;
+      font-size: 0.8rem;
+    }
+
+    button:hover {
+      background: var(--surface-interactive-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    button.is-active {
+      border-color: var(--accent-primary-border);
+      box-shadow: 0 0 16px var(--accent-primary-glow);
+      background: #020617;
+    }
+
+    .zone {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: #0a0f1e;
+      position: relative;
+      margin-top: 0.5rem;
+    }
+
+    .zone-title {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      color: rgba(209, 213, 219, 0.9);
+    }
+
+    .zone-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .zone-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .row-label,
+    .col-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(156, 163, 175, 0.9);
+      margin-bottom: 0.35rem;
+    }
+
+    .track-row,
+    .track-col {
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      padding: 0.5rem;
+      transition: 200ms ease-out;
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 260px; /* constrain so wrapping + spacing are obvious */
+    }
+
+    .track-col {
+      flex-direction: column;
+      max-height: 260px;
+    }
+
+    .chip {
+      background: var(--surface-interactive);
+      padding: 0.45rem 0.9rem;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 0.8rem;
+      white-space: nowrap;
+      text-align: center;
+      min-width: 6.8rem;
+    }
+
+    .chip small {
+      display: block;
+      font-size: 0.7rem;
+      opacity: 0.8;
+      margin-top: 0.1rem;
+    }
+
+    .note {
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="label">Mind the Gap</div>
+
+    <div class="controls" id="controls">
+      <div class="controls-section-label">Spacing system</div>
+      <button data-type="mode" data-value="gap">gap</button>
+      <button data-type="mode" data-value="margin">margin</button>
+
+      <div class="controls-section-label">Gap size</div>
+      <button data-type="gap" data-value="0">none</button>
+      <button data-type="gap" data-value="0.5rem">cozy</button>
+      <button data-type="gap" data-value="1rem">comfy</button>
+      <button data-type="gap" data-value="1.5rem">spacious</button>
+    </div>
+
+    <div class="zone">
+      <div class="zone-title" id="zoneTitle">gap · comfy (1rem)</div>
+
+      <div class="zone-columns">
+        <div>
+          <div class="row-label">Row (flex-direction: row; flex-wrap: wrap;)</div>
+          <div class="track-row" id="trackRow">
+            <div class="chip">One</div>
+            <div class="chip">Two</div>
+            <div class="chip">Three</div>
+            <div class="chip">Four</div>
+            <div class="chip">Five</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-label">Column (flex-direction: column; flex-wrap: wrap;)</div>
+          <div class="track-col" id="trackCol">
+            <div class="chip">One</div>
+            <div class="chip">Two</div>
+            <div class="chip">Three</div>
+            <div class="chip">Four</div>
+            <div class="chip">Five</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" id="modeNote">
+        With <code>gap</code>, space appears only between items. Container edges stay clean; no extra padding tricks required.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll('#controls button'));
+    const trackRow = document.getElementById('trackRow');
+    const trackCol = document.getElementById('trackCol');
+    const rowChips = Array.from(trackRow.children);
+    const colChips = Array.from(trackCol.children);
+    const zoneTitle = document.getElementById('zoneTitle');
+    const modeNote = document.getElementById('modeNote');
+
+    const state = {
+      mode: 'gap',
+      gap: '1rem',
+    };
+
+    const notes = {
+      gap: 'With gap, spacing lives between items only. Container edges stay tight and predictable.',
+      margin:
+        'With margin, spacing also pushes against container edges. First and last items often need special handling.',
+    };
+
+    function labelForGap(value) {
+      switch (value) {
+        case '0.5rem':
+          return 'cozy';
+        case '1rem':
+          return 'comfy';
+        case '1.5rem':
+          return 'spacious';
+        default:
+          return 'none';
+      }
+    }
+
+    function applyState() {
+      const isGap = state.mode === 'gap';
+
+      // Reset gap / margin
+      trackRow.style.gap = isGap ? state.gap : '0';
+      trackCol.style.gap = isGap ? state.gap : '0';
+
+      [...rowChips, ...colChips].forEach((chip) => {
+        chip.style.margin = '0';
+      });
+
+      if (!isGap) {
+        const marginValue = state.gap === '0' ? '0' : `calc(${state.gap} / 2)`;
+        [...rowChips, ...colChips].forEach((chip) => {
+          chip.style.margin = marginValue;
+        });
+      }
+
+      zoneTitle.textContent =
+        state.mode +
+        ' · ' +
+        (state.gap === '0' ? 'none (0)' : `${labelForGap(state.gap)} (${state.gap})`);
+
+      modeNote.textContent = notes[state.mode];
+
+      buttons.forEach((btn) => {
+        const type = btn.dataset.type;
+        const value = btn.dataset.value;
+        const isActive = state[type] === value;
+        btn.classList.toggle('is-active', isActive);
+      });
+    }
+
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        const value = btn.dataset.value;
+        state[type] = value;
+        applyState();
+      })
+    );
+
+    applyState();
+  </script>
+</body>
+</html>

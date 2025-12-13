@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMo — Justify & Align</title>
+
+  <style>
+    :root {
+      /* Layout surfaces */
+      --surface-app: #020617;
+      /* global background */
+      --surface-panel: #0b1120;
+      /* raised containers */
+      --surface-interactive: #111827;
+      /* buttons, chips, controls */
+      --surface-interactive-hover: #1f2937;
+      /* hover state for interactive */
+
+      /* Foreground */
+      --text-primary: #e5e7eb;
+
+      /* Accent system (default theme for this module) */
+      --accent-primary: #38bdf8;
+      --accent-primary-border: #38bdf8;
+      --accent-primary-glow: rgba(56, 189, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, var(--surface-app) 70%, #000 100%);
+      color: var(--text-primary);
+      padding: 1.25rem;
+    }
+
+    .shell {
+      width: 100%;
+      background: var(--surface-panel);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 0 32px var(--accent-primary-glow);
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      --accent-primary: #ff2dfc;
+      --accent-primary-glow: rgba(255, 45, 252, 0.4);
+      --accent-primary-border: #ff2dfc;
+
+
+    }
+
+    .controls-section-label {
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    button {
+      background: var(--surface-interactive);
+      color: var(--text-primary);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 150ms ease-out;
+      font-size: 0.8rem;
+    }
+
+    button:hover {
+      background: var(--surface-interactive-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    button.is-active {
+      border-color: var(--accent-primary-border);
+      box-shadow: 0 0 16px var(--accent-primary-glow);
+      background: #020617;
+    }
+
+    .zone {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: #0a0f1e;
+      height: 220px;
+      /* fixed height so column justify has space to work with */
+      position: relative;
+    }
+
+    .items {
+      display: flex;
+      gap: 0.75rem;
+      width: 100%;
+      height: 100%;
+      padding: 0.5rem;
+      transition: 200ms ease-out;
+    }
+
+    .chip {
+      background: var(--surface-interactive);
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      cursor: default;
+      transition: 150ms ease-out;
+      white-space: nowrap;
+    }
+
+    .chip:hover {
+      background: var(--surface-interactive-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="shell">
+    <div class="label">Justify & Align Controls</div>
+
+    <div class="controls" id="controls">
+      <div class="controls-section-label">Direction</div>
+      <button data-type="direction" data-value="row">row</button>
+      <button data-type="direction" data-value="column">column</button>
+
+      <div class="controls-section-label">Justify (main axis)</div>
+      <button data-type="justify" data-value="flex-start">start</button>
+      <button data-type="justify" data-value="center">center</button>
+      <button data-type="justify" data-value="flex-end">end</button>
+      <button data-type="justify" data-value="space-between">between</button>
+      <button data-type="justify" data-value="space-around">around</button>
+      <button data-type="justify" data-value="space-evenly">evenly</button>
+
+      <div class="controls-section-label">Align (cross axis)</div>
+      <button data-type="align" data-value="stretch">stretch</button>
+      <button data-type="align" data-value="flex-start">start</button>
+      <button data-type="align" data-value="center">center</button>
+      <button data-type="align" data-value="flex-end">end</button>
+    </div>
+
+    <div class="zone">
+      <div class="items" id="items">
+        <div class="chip">One</div>
+        <div class="chip">Two</div>
+        <div class="chip">Three</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const items = document.getElementById("items");
+    const buttons = Array.from(document.querySelectorAll("button"));
+
+    const state = {
+      direction: "row",
+      justify: "flex-start",
+      align: "stretch"
+    };
+
+    function applyState() {
+      items.style.flexDirection = state.direction;
+      items.style.justifyContent = state.justify;
+      items.style.alignItems = state.align;
+    }
+
+    function updateActiveButtons() {
+      ["direction", "justify", "align"].forEach(type => {
+        buttons
+          .filter(btn => btn.dataset.type === type)
+          .forEach(btn => {
+            if (btn.dataset.value === state[type]) {
+              btn.classList.add("is-active");
+            } else {
+              btn.classList.remove("is-active");
+            }
+          });
+      });
+    }
+
+    buttons.forEach(btn =>
+      btn.addEventListener("click", () => {
+        const type = btn.dataset.type;
+        const value = btn.dataset.value;
+        state[type] = value;
+        applyState();
+        updateActiveButtons();
+      })
+    );
+
+    // initialize
+    applyState();
+    updateActiveButtons();
+  </script>
+
+</body>
+
+</html>

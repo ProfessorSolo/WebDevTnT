@@ -1,0 +1,97 @@
+---
+title: 'Direction & Axes'
+description: 'Flexbox flows along a main axis, pivots around a cross axis, and everything begins with flex-direction.'
+sidebar:
+  order: 3
+  label: 'Direction & Axes'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## **Know thine axes**
+
+Flexbox doesn’t think in **horizontal** and **vertical** — it thinks in **main axis** and **cross axis**.  
+And the single property that defines both is **`flex-direction`**.
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/03-direction-and-axes-minimo.html"
+  title="Direction & Axes"
+  height="420px"
+/>
+
+---
+
+## `flex-direction` Sets the Axes
+
+```css
+flex-direction: row;
+flex-direction: row-reverse;
+flex-direction: column;
+flex-direction: column-reverse;
+```
+
+Direction determines:
+
+- how flex items **flow**
+- where the **main axis** runs
+- where the **cross axis** runs
+- how alignment, spacing, and wrapping will behave
+
+Direction is the steering wheel.  
+Axes are the roads.
+
+---
+
+## The Main Axis
+
+The **main axis** is always the direction items move.
+
+- `row` → left → right
+- `row-reverse` → right → left
+- `column` → top → bottom
+- `column-reverse` → bottom → top
+
+Anything that distributes items _along the line_ (like `justify-content`) works on the **main axis**.
+
+---
+
+## The Cross Axis
+
+The **cross axis** is always **perpendicular** to the main axis.
+
+- Row modes → cross axis is **vertical**
+- Column modes → cross axis is **horizontal**
+
+Anything that aligns items _across the line_ (like `align-items`) works on the **cross axis**.
+
+---
+
+## The Four Modes
+
+```css
+/* Inline direction */
+flex-direction: row; /* main: left→right    */
+flex-direction: row-reverse; /* main: right→left    */
+
+/* Block direction */
+flex-direction: column; /* main: top→bottom    */
+flex-direction: column-reverse; /* main: bottom→top */
+```
+
+The MiniMo above lets us flip through each mode and watch the axes rotate in real time.
+
+---
+
+## Why This Matters
+
+Every flexbox power move depends on knowing the axes:
+
+- **justify** = main axis
+- **align** = cross axis
+- **grow/shrink/basis** size items along the main axis
+- wrapping flows along the main axis
+
+Now that our map is clear, we can place items with precision.
+
+Up next: **Justify & Align** — the choreography of each axis.

@@ -1,0 +1,165 @@
+---
+title: 'The Second Dimension of Layout'
+description: 'Why CSS Grid exists, what problem it solves, and how two-dimensional layout finally became first-class in CSS.'
+sidebar:
+  order: 0
+  label: 'The Second Dimension'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+
+## I got in.
+
+Flexbox fixed alignment.  
+Grid fixes **layout**.
+
+One dimension only gets us so far.
+Pages are two-dimensional.
+
+Enter the Grid.
+
+---
+
+## Life Before Grid
+
+Before Grid, full page layouts were… improvised.
+
+We built them by:
+
+- Nesting flex rows inside flex columns
+- Clearing floats
+- Faking columns with percentages
+- Wrestling footers into place
+- Explaining to students why the code _looked nothing like the design_
+
+It worked.  
+But it was fragile, verbose, and exhausting to reason about.
+
+---
+
+## Flexbox Was Necessary — But Not Sufficient
+
+Flexbox gave us powerful control along **one axis at a time**.
+
+That made it incredible for:
+
+- Navigation bars
+- Toolbars
+- Cards
+- Components
+
+But pages don’t live on one axis.
+
+They live on **rows and columns simultaneously**.
+
+---
+
+## Enter the Second Dimension
+
+CSS Grid is a **two-dimensional layout system**.
+
+You define:
+
+- Columns
+- Rows
+- Gaps
+- Structure
+
+Then you place content _into_ that structure.
+
+Not the other way around.
+
+---
+
+## The Mental Shift
+
+Grid changes how you think.
+
+You stop thinking in terms of:
+
+- left / right
+- top / bottom
+
+And start thinking in terms of:
+
+- **grid lines**
+- **tracks**
+- **areas**
+
+You design the layout first.  
+Then you assign content to it.
+
+That’s the second dimension.
+
+---
+
+## What Grid Makes Possible
+
+With Grid, you can:
+
+- Build full-page layouts cleanly
+- Span elements across rows _and_ columns
+- Rearrange layouts visually without touching HTML
+- Redefine structure at breakpoints
+- Layer and overlap elements intentionally
+
+No floats.  
+No hacks.  
+No duct tape.
+
+---
+
+## Grid and Flexbox Are Teammates
+
+This isn’t Flexbox _vs_ Grid.
+
+It’s:
+
+- **Grid for layout**
+- **Flexbox for components**
+
+When you use both intentionally, layout becomes predictable, expressive, and sane.
+
+And that’s where the real fun starts.
+
+---
+
+### 🧱 Grid: The Second Dimension Demo Lab — _Coming Soon_
+
+Every demonstration used in this module — explicit tracks, implicit flow, line placement, template areas, responsive rewrites, and layering — will live inside the **Grid: The Second Dimension Demo Lab**.
+
+<LinkButton
+  href="https://github.com/ProfessorSolo/WebDevTnT-CSS-Grid-the-Second-Dimension"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  Open Grid: The Second Dimension Demo Repo
+</LinkButton>
+
+---
+
+### Clone locally to explore the architect’s workshop _(soon)_
+
+```bash
+git clone https://github.com/ProfessorSolo/WebDevTnT-CSS-Grid-Second-Dimension.git
+```
+
+Experiment freely — redraw tracks, reassign areas, collapse layouts, and watch the structure adapt.  
+Grid rewards _planning_.
+
+---
+
+### 🎥 Watch the Grid Lesson — _Coming Soon_
+
+<LinkButton
+  href="https://www.youtube.com/"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  Enter the Grid on YouTube
+</LinkButton>
+
+Seeing structure reshape at breakpoints — without touching HTML — is where Grid clicks.

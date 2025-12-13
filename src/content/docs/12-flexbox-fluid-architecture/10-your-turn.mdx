@@ -1,0 +1,225 @@
+---
+title: 'Your Turn: Flexbox Trials'
+description: 'Put flexbox theory into practice with focused challenges that exercise direction, alignment, wrapping, and reordering.'
+sidebar:
+  order: 10
+  label: 'Your Turn'
+draft: false
+---
+
+## Trial by Flex
+
+We have met the properties.  
+We have watched the MiniMos dance.
+
+Now it is time to **push pixels on purpose**.
+
+This page is a small arena of **focused flexbox challenges**.  
+Each one leans on the concepts from this module and points at the relevant sections of the **Flexbox Codex** for backup.
+
+Use whatever tools help:
+
+- The lessons in this chapter
+- The Flexbox MiniMos
+- The **99–Flexbox Codex** (once it is live)
+- MDN as a safety net
+
+The goal is not to memorize syntax.  
+The goal is to build layouts that _feel_ flexbox fluent.
+
+---
+
+## Challenge 1 — Navigation Row
+
+**Goal:** Build a simple navigation bar that stays tidy across screen sizes.
+
+**HTML starter:**
+
+```html
+<nav class="site-nav">
+  <a href="#">Home</a>
+  <a href="#">Projects</a>
+  <a href="#">About</a>
+  <a href="#">Contact</a>
+</nav>
+```
+
+**Requirements:**
+
+- Turn the `nav` into a **flex container**.
+- Keep items on one line when there is room.
+- Use **`gap`** for spacing between links.
+- Center the links on small screens.
+- Push them to the right on wider screens.
+
+**Flexbox moves in play:**
+
+- `display: flex`
+- `justify-content`
+- `gap`
+- (Optional) `padding` on the container so the row can breathe.
+
+---
+
+## Challenge 2 — Direction & Axes Flip
+
+**Goal:** Use **`flex-direction`** and media queries to reflow the same content.
+
+**HTML starter:**
+
+```html
+<section class="feature">
+  <div class="feature__media">[image]</div>
+  <div class="feature__content">
+    <h2>Feature Title</h2>
+    <p>Short description lives here.</p>
+  </div>
+</section>
+```
+
+**Requirements:**
+
+- Treat `.feature` as a flex container.
+- On **mobile**:
+  - Stack media **above** content.
+- On **desktop**:
+  - Place media on the **left**, content on the right.
+- Keep spacing consistent with `gap`.
+
+**Flexbox moves in play:**
+
+- `display: flex`
+- `flex-direction: column` → `row`
+- main vs cross axis from **Direction & Axes**
+- `gap`
+
+---
+
+## Challenge 3 — Alignment Arena
+
+**Goal:** Practice **group alignment** vs **single-item alignment**.
+
+**HTML starter:**
+
+```html
+<section class="cta-row">
+  <p class="cta-row__label">Ready to begin?</p>
+  <button class="cta-row__primary">Start now</button>
+  <button class="cta-row__ghost">Maybe later</button>
+</section>
+```
+
+**Requirements:**
+
+- Use flexbox on `.cta-row`.
+- On larger screens:
+  - Keep all three items on one line.
+  - Use `justify-content: space-between` so label hugs the left and buttons hug the right.
+- Vertically center everything along the cross axis.
+- Make the **“Maybe later”** button drop slightly lower or higher using **`align-self`** so it looks intentionally offset.
+
+**Flexbox moves in play:**
+
+- `justify-content`
+- `align-items`
+- `align-self`
+- `gap` for spacing between the two buttons
+
+---
+
+## Challenge 4 — Wrap & Gap Gallery
+
+**Goal:** Build a responsive card gallery that wraps cleanly and uses `gap` instead of margin hacks.
+
+**HTML starter:**
+
+```html
+<section class="card-gallery">
+  <article class="card">One</article>
+  <article class="card">Two</article>
+  <article class="card">Three</article>
+  <article class="card">Four</article>
+  <article class="card">Five</article>
+  <article class="card">Six</article>
+</section>
+```
+
+**Requirements:**
+
+- Turn `.card-gallery` into a flex container with **wrapping enabled**.
+- Use **`gap`** to create space between cards on both axes.
+- On small screens:
+  - Cards can fill most of the width (one per row or two per row).
+- On medium screens:
+  - Aim for two or three cards per row.
+- On large screens:
+  - Let the gallery breathe, but keep the cards readable (no microscopic heights).
+
+**Flexbox moves in play:**
+
+- `flex-wrap`
+- `gap`, `row-gap`, `column-gap`
+- `flex-basis` or `flex` to control card width
+- Concepts from **Wrap & Flow** and **Mind the Gap**
+
+---
+
+## Challenge 5 — Hero with Cautionary Reorder
+
+**Goal:** Use `order` once, deliberately, and call out its trade-offs.
+
+**HTML starter:**
+
+```html
+<section class="layout">
+  <aside class="layout__side">Sidebar</aside>
+  <article class="layout__main">Main content</article>
+  <aside class="layout__extra">Extra links</aside>
+</section>
+```
+
+**Requirements:**
+
+- On mobile:
+  - Keep the **DOM order** as the visual order:
+    - Sidebar → Main content → Extra links.
+- On desktop:
+  - Use flexbox so that:
+    - Main content appears in the **center**.
+    - Sidebar appears on the **left**.
+    - Extra links appear on the **right**.
+- Use **`order`** to adjust placement _only_ on the desktop layout.
+
+**Flexbox moves in play:**
+
+- `display: flex`
+- `flex-direction`
+- `order`
+- All the warnings from **Reordering Reality** still apply.
+
+At the bottom of your CSS, leave a short comment explaining:
+
+```css
+/* Why this reordering is acceptable in this layout
+   and how we kept the reading order predictable. */
+```
+
+---
+
+## How to Use These Trials
+
+Pick one:
+
+- As a **solo lab** between concept pages
+- As a **pair exercise** where each partner handles different breakpoints
+- As a **live-coding walkthrough** with pauses for students to fill in the missing rules
+
+When the Flexbox Codex page is live, each challenge will point to:
+
+- A **recipe name** in the Codex
+- A short code snippet with final CSS
+
+For now, the guiding thought:
+
+> We are no longer guessing.  
+> We are designing lines, gaps, and flows with intent.

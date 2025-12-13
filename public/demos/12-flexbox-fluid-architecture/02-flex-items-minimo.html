@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniMo — Flex Items</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --card-bg: #0b1120;
+      --card-inner: #111827;
+      --text: #e5e7eb;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.4);
+      --accent-warn: #f97316;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 70%, #000 100%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 1.25rem;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 100%;
+      background: var(--panel);
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 1.5rem 1.5rem 1.25rem;
+      box-shadow:
+        0 0 28px rgba(15, 23, 42, 0.9),
+        0 0 40px rgba(56, 189, 248, 0.22);
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .crew-meta {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-bottom: 0.5rem;
+    }
+
+    .strip {
+      background: #020617;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 0.9rem 0.9rem 0.85rem;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 0.75rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.76rem;
+      color: #9ca3af;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-soft);
+    }
+
+    .dot--nested {
+      background: var(--accent-warn);
+      box-shadow: 0 0 8px rgba(248, 113, 113, 0.7);
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .card {
+      position: relative;
+      padding: 0.7rem 1.1rem;
+      background: var(--card-bg);
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 0.86rem;
+      min-width: 0;
+      transition:
+        transform 140ms ease-out,
+        box-shadow 140ms ease-out,
+        border-color 140ms ease-out,
+        background-color 140ms ease-out;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .card-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: #93c5fd;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: #9ca3af;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 16px var(--accent-soft);
+      transform: translateY(-1px);
+      background: #020617;
+    }
+
+    .nested-pill {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: var(--card-inner);
+      border: 1px solid rgba(248, 113, 113, 0.8);
+      font-size: 0.7rem;
+      color: #fecaca;
+    }
+
+    .note {
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: #9ca3af;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 0.82em;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="label">Who Counts as a Flex Item?</div>
+    <p class="crew-meta"><code>.crew</code> is the flex container. Each direct child is a flex item. The nested label is not.</p>
+
+    <div class="strip">
+      <div class="legend">
+        <span><span class="dot"></span> Direct child · flex item</span>
+        <span><span class="dot dot--nested"></span> Nested inside · not a flex item</span>
+      </div>
+
+      <div class="row" aria-label="Flex items row">
+        <div class="card">
+          <div class="card-label">Alpha</div>
+          <div class="card-meta">flex item</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Bravo</div>
+          <div class="card-meta">flex item</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Wrapper</div>
+          <div class="card-meta">flex item</div>
+          <span class="nested-pill">nested · not a flex item</span>
+        </div>
+        <div class="card">
+          <div class="card-label">Delta</div>
+          <div class="card-meta">flex item</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">
+      One container with <code>display: flex</code>, four direct children as flex items, and a nested element that stays
+      outside the flex item club. Every future flexbox rule will talk to this group.
+    </p>
+  </div>
+</body>
+</html>

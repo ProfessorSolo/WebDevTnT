@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Decision Console — Grid vs Flexbox</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.25rem;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color: #e5e7eb;
+    }
+
+    .shell {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .badge {
+      font-size: .75rem;
+      padding: .18rem .55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .4);
+      opacity: .9;
+      white-space: nowrap;
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      width: 100%;
+      align-items: start;
+    }
+
+    @media (min-width:60rem) {
+      .panel {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      border: 1px solid rgba(148, 163, 184, .25);
+      border-radius: 16px;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(15, 23, 42, .75), rgba(2, 6, 23, .65));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      min-width: 0;
+    }
+
+    .list {
+      display: grid;
+      gap: .6rem;
+    }
+
+    .scenario {
+      display: flex;
+      gap: .7rem;
+      align-items: flex-start;
+      width: 100%;
+      text-align: left;
+      border-radius: 14px;
+      padding: .7rem .75rem;
+      border: 1px solid rgba(148, 163, 184, .25);
+      background: rgba(2, 6, 23, .35);
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      color: white;
+    }
+
+    .scenario:hover {
+      transform: translateY(-1px);
+      border-color: rgba(226, 232, 240, .5);
+      background: rgba(2, 6, 23, .5);
+    }
+
+    .scenario[aria-pressed="true"] {
+      border-color: rgba(56, 189, 248, .75);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, .15);
+    }
+
+    .pill {
+      flex: 0 0 auto;
+      font-size: .72rem;
+      padding: .15rem .5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .35);
+      opacity: .95;
+      margin-top: .1rem;
+      white-space: nowrap;
+    }
+
+    .pill.flex {
+      border-color: rgba(236, 72, 153, .75);
+      box-shadow: 0 0 0 2px rgba(236, 72, 153, .12) inset;
+    }
+
+    .pill.grid {
+      border-color: rgba(74, 222, 128, .75);
+      box-shadow: 0 0 0 2px rgba(74, 222, 128, .12) inset;
+    }
+
+    .pill.both {
+      border-color: rgba(250, 204, 21, .85);
+      box-shadow: 0 0 0 2px rgba(250, 204, 21, .12) inset;
+    }
+
+    .scenario h2 {
+      margin: 0;
+      font-size: .95rem;
+      font-weight: 800;
+
+    }
+
+    .scenario p {
+      margin: .2rem 0 0;
+      font-size: .82rem;
+      opacity: .85;
+      line-height: 1.35;
+    }
+
+    .kvs {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .82rem;
+      opacity: .92;
+      line-height: 1.35;
+      background: rgba(2, 6, 23, .45);
+      border: 1px solid rgba(148, 163, 184, .25);
+      border-radius: 12px;
+      padding: .65rem .75rem;
+      overflow-x: auto;
+      min-width: 0;
+      white-space: pre-wrap;
+    }
+
+    .stage {
+      border-radius: 16px;
+      border: 2px solid rgba(56, 189, 248, .55);
+      background: rgba(2, 6, 23, .35);
+      padding: .75rem;
+      max-width: 41rem;
+      overflow-x: auto;
+      /* Professor Solo rule */
+      min-width: 0;
+    }
+
+    /* visuals */
+    .viz {
+      display: grid;
+      gap: .75rem;
+      min-width: 32rem;
+    }
+
+    .rowFlex {
+      display: flex;
+      gap: .6rem;
+      align-items: center;
+      padding: .6rem;
+      border-radius: 14px;
+      border: 1px solid rgba(236, 72, 153, .55);
+      background: linear-gradient(180deg, rgba(236, 72, 153, .16), rgba(236, 72, 153, .07));
+    }
+
+    .rowFlex .box {
+      flex: 0 0 auto;
+      width: 4.3rem;
+      height: 2.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(236, 72, 153, .7);
+      background: rgba(2, 6, 23, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .85rem;
+    }
+
+    .rowFlex .spacer {
+      flex: 1 1 auto;
+      border: 1px dashed rgba(148, 163, 184, .25);
+      border-radius: 12px;
+      height: 2.2rem;
+    }
+
+    .grid2d {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 2.2rem 2.2rem;
+      gap: .6rem;
+      padding: .6rem;
+      border-radius: 14px;
+      border: 1px solid rgba(74, 222, 128, .55);
+      background: linear-gradient(180deg, rgba(74, 222, 128, .16), rgba(74, 222, 128, .07));
+    }
+
+    .grid2d .cell {
+      border-radius: 12px;
+      border: 1px solid rgba(74, 222, 128, .7);
+      background: rgba(2, 6, 23, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: .85rem;
+    }
+
+    .areaMap {
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      grid-template-rows: 2.2rem 5.1rem;
+      grid-template-areas:
+        "h h"
+        "s c";
+      gap: .6rem;
+      padding: .6rem;
+      border-radius: 14px;
+      border: 1px solid rgba(250, 204, 21, .55);
+      background: linear-gradient(180deg, rgba(250, 204, 21, .14), rgba(250, 204, 21, .06));
+    }
+
+    .areaMap .h {
+      grid-area: h;
+    }
+
+    .areaMap .s {
+      grid-area: s;
+    }
+
+    .areaMap .c {
+      grid-area: c;
+    }
+
+    .areaMap .area {
+      border-radius: 12px;
+      border: 1px solid rgba(250, 204, 21, .7);
+      background: rgba(2, 6, 23, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: .82rem;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+      opacity: .95;
+    }
+
+    .note {
+      margin: .75rem 0 0;
+      font-size: .85rem;
+      opacity: .85;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Grid vs Flexbox</h1>
+      <span class="badge" id="badge">call: Flexbox</span>
+    </div>
+
+    <div class="panel">
+      <section class="card">
+        <div class="list" id="list"></div>
+      </section>
+
+      <section class="card">
+        <h2 style="margin:0 0 .6rem 0; font-size:1rem; font-weight:800;">Call & Why</h2>
+
+        <div class="kvs" id="kvs"></div>
+
+        <p class="note">
+          Tip: Use Grid for structure. Use Flexbox inside components. That’s the real-world combo.
+        </p>
+
+        <div class="stage" style="margin-top:.8rem;">
+          <div class="viz" id="viz"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const list = document.getElementById('list');
+    const kvs = document.getElementById('kvs');
+    const badge = document.getElementById('badge');
+    const viz = document.getElementById('viz');
+
+    const SCENARIOS = [{
+        id: 'navbar',
+        title: 'Navbar / Button Row',
+        desc: 'One row of controls. Spacing, alignment, maybe wrapping.',
+        call: 'Flexbox',
+        why: [
+          'One axis (row).',
+          'Content-driven sizing (buttons grow to their text).',
+          'Easy alignment + spacing.'
+        ],
+        sample: 'flex'
+      },
+      {
+        id: 'gallery',
+        title: 'Photo Gallery / Tile Grid',
+        desc: 'Cards arranged in rows and columns with consistent gaps.',
+        call: 'Grid',
+        why: [
+          'Two axes (rows + columns).',
+          'Track control (repeat(), fr, minmax()).',
+          'Consistent 2D spacing.'
+        ],
+        sample: 'grid'
+      },
+      {
+        id: 'page',
+        title: 'Page Layout: Header / Sidebar / Content',
+        desc: 'Explicit regions with a readable blueprint.',
+        call: 'Grid',
+        why: [
+          'Explicit structure with areas.',
+          'Responsive “rewire” via grid-template-areas.',
+          'Less DOM shuffling.'
+        ],
+        sample: 'areas'
+      },
+      {
+        id: 'component',
+        title: 'Card Header: Icon + Title + Actions',
+        desc: 'Small UI component with alignment and a “push to end”.',
+        call: 'Flexbox',
+        why: [
+          'One axis arrangement.',
+          'Perfect for “left content + right actions”.',
+          'gap + align-items makes it clean.'
+        ],
+        sample: 'flex'
+      },
+      {
+        id: 'combo',
+        title: 'Dashboard: Page grid + widgets inside',
+        desc: 'Big layout plus component-level alignment inside each widget.',
+        call: 'Both',
+        why: [
+          'Grid for the page-level skeleton.',
+          'Flexbox inside widgets (headers, toolbars, chip rows).',
+          'Separation of concerns.'
+        ],
+        sample: 'both'
+      }
+    ];
+
+    function pillClass(call) {
+      if (call === 'Flexbox') return 'flex';
+      if (call === 'Grid') return 'grid';
+      return 'both';
+    }
+
+    function renderViz(sample) {
+      viz.innerHTML = '';
+
+      if (sample === 'flex') {
+        const el = document.createElement('div');
+        el.className = 'rowFlex';
+        el.innerHTML = `
+          <div class="box">A</div>
+          <div class="box">B</div>
+          <div class="spacer" title="flex: 1"></div>
+          <div class="box">C</div>
+        `;
+        viz.appendChild(el);
+      }
+
+      if (sample === 'grid') {
+        const el = document.createElement('div');
+        el.className = 'grid2d';
+        el.innerHTML = `
+          <div class="cell">1</div><div class="cell">2</div><div class="cell">3</div>
+          <div class="cell">4</div><div class="cell">5</div><div class="cell">6</div>
+        `;
+        viz.appendChild(el);
+      }
+
+      if (sample === 'areas') {
+        const el = document.createElement('div');
+        el.className = 'areaMap';
+        el.innerHTML = `
+          <div class="area h">HEADER</div>
+          <div class="area s">SIDEBAR</div>
+          <div class="area c">CONTENT</div>
+        `;
+        viz.appendChild(el);
+      }
+
+      if (sample === 'both') {
+        const a = document.createElement('div');
+        a.className = 'areaMap';
+        a.innerHTML = `
+          <div class="area h">GRID</div>
+          <div class="area s">GRID</div>
+          <div class="area c">GRID</div>
+        `;
+        viz.appendChild(a);
+
+        const b = document.createElement('div');
+        b.className = 'rowFlex';
+        b.style.marginTop = '.75rem';
+        b.innerHTML = `
+          <div class="box">icon</div>
+          <div class="box" style="width:6.2rem;">title</div>
+          <div class="spacer"></div>
+          <div class="box" style="width:5.2rem;">actions</div>
+        `;
+        viz.appendChild(b);
+      }
+    }
+
+    let activeId = SCENARIOS[0].id;
+
+    function apply() {
+      const s = SCENARIOS.find(x => x.id === activeId);
+
+      badge.textContent = 'call: ' + s.call;
+
+      kvs.textContent =
+        `Scenario: ${s.title}
+Call: ${s.call}
+
+Why:
+- ${s.why.join('\n- ')}
+
+Default move:
+${s.call === 'Both' ? 'Grid for layout, Flexbox for components.' : s.call}`;
+
+      renderViz(s.sample);
+
+      [...list.children].forEach(btn => {
+        btn.setAttribute('aria-pressed', String(btn.dataset.id === activeId));
+      });
+    }
+
+    function buildList() {
+      list.innerHTML = '';
+      SCENARIOS.forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = 'scenario';
+        btn.type = 'button';
+        btn.dataset.id = s.id;
+        btn.setAttribute('aria-pressed', String(s.id === activeId));
+        btn.innerHTML = `
+          <span>
+            <h2>${s.title}</h2>
+            <p>${s.desc}</p>
+          </span>
+        `;
+        // <span class="pill ${pillClass(s.call)}">${s.call}</span>
+
+        btn.addEventListener('click', () => {
+          activeId = s.id;
+          apply();
+        });
+        list.appendChild(btn);
+      });
+    }
+
+    buildList();
+    apply();
+  </script>
+</body>
+
+</html>

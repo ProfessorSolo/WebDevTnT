@@ -1,0 +1,134 @@
+---
+title: "Your Turn"
+description: "Practice missions to lock in Grid. Build layouts, rewire blueprints, and prove you can drive."
+sidebar:
+  order: 98
+  label: "Your Turn"
+draft: false
+---
+
+## Your Turn, Architect
+
+You’ve seen the spells.
+
+Now you cast them.
+
+This page is a set of **practice missions**.  
+No hand-holding. No perfect answers. Just real layout reps.
+
+---
+
+## Mission Rules
+
+- Work in a sandbox (CodePen / local file / your Grid demo repo)
+- Use **Grid first** — then optionally “enhance” with Flexbox inside components
+- Keep your HTML semantic (header, nav, main, aside, footer, section, article)
+- Prefer `gap` over margins for grid spacing
+
+---
+
+## Quest 1 — The Blueprint (Areas)
+
+Build a page layout using **named areas**:
+
+- header
+- sidebar
+- content
+- footer
+
+Requirements:
+- Use `grid-template-areas`
+- Assign areas with `grid-area`
+- Use `gap`
+
+Stretch goal:
+- Add a hero overlay using **overlap** (same grid cells, different layers)
+
+---
+
+## Quest 2 — The Rewire (Responsive Areas)
+
+Without changing HTML:
+
+- Desktop: sidebar beside content
+- Mobile: sidebar moves below content
+
+Requirements:
+- Use a media query
+- Only change `grid-template-areas` (and tracks if needed)
+
+Stretch goal:
+- Add a “tablet” blueprint that differs from both desktop and mobile
+
+---
+
+## Quest 3 — The Tile Field (Explicit + Implicit)
+
+Create a tile section of **at least 12 cards**.
+
+Requirements:
+- Use `repeat()` and `fr`
+- Demonstrate the **implicit grid** (enough tiles to force auto-created rows)
+- Use `gap`
+
+Stretch goal:
+- Use `grid-auto-flow: row dense` and observe what changes (and what doesn’t)
+
+---
+
+## Quest 4 — Manual Placement (Lines, Span, Negatives)
+
+Place at least **three** items manually.
+
+Requirements:
+- One item placed with start/end lines
+- One item placed with start/span
+- One item anchored with **negative lines** (e.g. `-3 / -1`)
+
+Stretch goal:
+- Rebuild the same layout *two different ways* (lines vs areas)
+
+---
+
+## Quest 5 — Nested Grid (Composition)
+
+Inside your content area, create a nested grid:
+
+- outer grid = page layout
+- inner grid = card layout
+
+Requirements:
+- The inner grid changes columns at a breakpoint
+- The outer grid stays stable
+
+Stretch goal:
+- Give one card its own mini grid (icon + text + actions)
+
+---
+
+## Self‑Check (No Excuses)
+
+Before you call it “done”, confirm:
+
+- [ ] You can explain **tracks** vs **cells** vs **lines**
+- [ ] You can use **areas** without guessing
+- [ ] You can rewire layout at breakpoints **without touching HTML**
+- [ ] You can place items with **lines/span** (and anchor with negatives)
+- [ ] You can nest grids without turning your CSS into spaghetti
+
+---
+
+## What to Submit
+
+If your course workflow requires a submission, include:
+
+- a screenshot of desktop layout
+- a screenshot of mobile layout
+- your HTML + CSS (and any notes about what you learned)
+
+---
+
+## Up Next
+
+The **99 Grid Matrix**:  
+a blueprint-level cheatsheet you’ll actually use.

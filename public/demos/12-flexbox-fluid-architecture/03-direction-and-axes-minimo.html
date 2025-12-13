@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MiniMo — Direction & Axes</title>
+
+<style>
+  :root {
+    --bg: #020617;
+    --panel: #0b1120;
+    --text: #e5e7eb;
+    --accent: #38bdf8;
+    --accent-soft: rgba(56, 189, 248, 0.4);
+    --chip-bg: #111827;
+    --chip-hover: #1f2937;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    font-family: system-ui, sans-serif;
+    background: radial-gradient(circle at top, #0f172a 0, #020617 70%, #000 100%);
+    color: var(--text);
+    padding: 1.25rem;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 100%;
+    background: var(--panel);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(148,163,184,0.35);
+    box-shadow: 0 0 32px rgba(56,189,248,0.25);
+  }
+
+  .label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  button {
+    background: var(--chip-bg);
+    color: var(--text);
+    border: 1px solid rgba(148,163,184,0.4);
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 150ms ease-out;
+  }
+  button:hover {
+    background: var(--chip-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-soft);
+  }
+
+  .zone {
+    border: 1px solid rgba(148,163,184,0.25);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    position: relative;
+    background: #0a0f1e;
+    min-height: 160px;
+  }
+
+  .items {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    height: 100%;
+    transition: 200ms ease-out;
+    padding: 0.5rem;
+  }
+
+  .chip {
+    background: var(--chip-bg);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(148,163,184,0.4);
+    cursor: default;
+    transition: 150ms ease-out;
+    white-space: nowrap;
+  }
+  .chip:hover {
+    background: var(--chip-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 12px var(--accent-soft);
+  }
+
+  .axis-label {
+    position: absolute;
+    font-size: 0.7rem;
+    opacity: 0.8;
+    pointer-events: none;
+    color: var(--accent);
+    transition: 200ms ease-out;
+  }
+
+  /* Positions that will be dynamically updated */
+  .main-axis { top: 0.5rem; left: 50%; transform: translateX(-50%); }
+  .cross-axis { right: 0.5rem; top: 50%; transform: translateY(-50%); }
+</style>
+
+</head>
+<body>
+
+<div class="shell">
+  <div class="label">Direction → Axes</div>
+
+  <div class="controls">
+    <button data-dir="row">row</button>
+    <button data-dir="row-reverse">row-reverse</button>
+    <button data-dir="column">column</button>
+    <button data-dir="column-reverse">column-reverse</button>
+  </div>
+
+  <div class="zone">
+    <div class="axis-label main-axis" id="mainAxis">Main axis →</div>
+    <div class="axis-label cross-axis" id="crossAxis">↑ Cross axis</div>
+
+    <div class="items" id="items">
+      <div class="chip">One</div>
+      <div class="chip">Two</div>
+      <div class="chip">Three</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const items = document.getElementById("items");
+  const main = document.getElementById("mainAxis");
+  const cross = document.getElementById("crossAxis");
+
+  function update(dir) {
+    items.style.flexDirection = dir;
+
+    if (dir.includes("row")) {
+      main.textContent = dir === "row" ? "Main axis →" : "← Main axis";
+      cross.textContent = "↑ Cross axis";
+      main.style.top = "0.5rem";
+      main.style.left = "50%";
+      main.style.transform = "translateX(-50%)";
+      cross.style.right = "0.5rem";
+      cross.style.top = "50%";
+      cross.style.transform = "translateY(-50%)";
+    } else {
+      main.textContent = dir === "column" ? "Main axis ↓" : "Main axis ↑";
+      cross.textContent = "← Cross axis →";
+      main.style.top = "50%";
+      main.style.left = "50%";
+      main.style.transform = dir === "column" ?
+        "translate(-50%, -0%)" :
+        "translate(-50%, -100%)";
+      cross.style.top = "0.5rem";
+      cross.style.left = "50%";
+      cross.style.transform = "translateX(-50%)";
+    }
+  }
+
+  document.querySelectorAll("button").forEach(btn =>
+    btn.addEventListener("click", () => update(btn.dataset.dir))
+  );
+
+  update("row");
+</script>
+
+</body>
+</html>

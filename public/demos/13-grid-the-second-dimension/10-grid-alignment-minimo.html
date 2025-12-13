@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Alignment Lab — Gaps & Alignment</title>
+  <style>
+    html, body { width:100%; max-width:100%; overflow-x:hidden; }
+    *, *::before, *::after { box-sizing:border-box; }
+
+    body{
+      margin:0;
+      padding:1.25rem;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color:#e5e7eb;
+    }
+
+    .shell{ display:grid; gap:1rem; }
+
+    .panel{
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      gap:1rem;
+    }
+    @media (min-width:60rem){
+      .panel{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    }
+
+    .card{
+      border:1px solid rgba(148,163,184,.25);
+      border-radius:16px;
+      padding:1rem;
+      background: linear-gradient(180deg, rgba(15,23,42,.75), rgba(2,6,23,.65));
+      min-width:0;
+    }
+
+    .controls{
+      display:grid;
+      gap:.75rem;
+    }
+
+    .controls label{
+      font-size:.82rem;
+      opacity:.85;
+    }
+
+    select, input[type="range"]{
+      width:100%;
+      background: rgba(2,6,23,.45);
+      color:#e5e7eb;
+      border:1px solid rgba(148,163,184,.35);
+      border-radius:10px;
+      padding:.35rem;
+    }
+
+    .stage{
+      border-radius:16px;
+      border:2px solid rgba(56,189,248,.55);
+      background: rgba(2,6,23,.35);
+      padding:.75rem;
+      max-width:41rem;
+      overflow-x:auto;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns: repeat(3, 6rem);
+      grid-template-rows: repeat(2, 6rem);
+      gap:1rem;
+      height:18rem;
+      background: rgba(2,6,23,.35);
+    }
+
+    .item{
+      border-radius:12px;
+      border:1px solid rgba(236,72,153,.55);
+      background: linear-gradient(180deg, rgba(236,72,153,.18), rgba(236,72,153,.08));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="panel">
+      <section class="card">
+        <div class="controls">
+          <div>
+            <label>gap: <span id="gapVal">1rem</span></label>
+            <input id="gap" type="range" min="0" max="4" step=".25" value="1" />
+          </div>
+
+          <div>
+            <label>justify-items</label>
+            <select id="justifyItems">
+              <option>stretch</option>
+              <option>start</option>
+              <option>center</option>
+              <option>end</option>
+            </select>
+          </div>
+
+          <div>
+            <label>align-items</label>
+            <select id="alignItems">
+              <option>stretch</option>
+              <option>start</option>
+              <option>center</option>
+              <option>end</option>
+            </select>
+          </div>
+
+          <div>
+            <label>justify-content</label>
+            <select id="justifyContent">
+              <option>start</option>
+              <option>center</option>
+              <option>end</option>
+              <option>space-between</option>
+              <option>space-around</option>
+              <option>space-evenly</option>
+            </select>
+          </div>
+
+          <div>
+            <label>align-content</label>
+            <select id="alignContent">
+              <option>start</option>
+              <option>center</option>
+              <option>end</option>
+              <option>space-between</option>
+              <option>space-around</option>
+              <option>space-evenly</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="stage">
+          <main class="layout" id="layout">
+            <div class="item">A</div>
+            <div class="item">B</div>
+            <div class="item">C</div>
+            <div class="item">D</div>
+            <div class="item">E</div>
+            <div class="item">F</div>
+          </main>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const layout = document.getElementById('layout');
+    const gap = document.getElementById('gap');
+    const gapVal = document.getElementById('gapVal');
+
+    const justifyItems = document.getElementById('justifyItems');
+    const alignItems = document.getElementById('alignItems');
+    const justifyContent = document.getElementById('justifyContent');
+    const alignContent = document.getElementById('alignContent');
+
+    function apply(){
+      layout.style.gap = gap.value + 'rem';
+      gapVal.textContent = gap.value + 'rem';
+
+      layout.style.justifyItems = justifyItems.value;
+      layout.style.alignItems = alignItems.value;
+      layout.style.justifyContent = justifyContent.value;
+      layout.style.alignContent = alignContent.value;
+    }
+
+    [gap, justifyItems, alignItems, justifyContent, alignContent]
+      .forEach(el => el.addEventListener('input', apply));
+
+    apply();
+  </script>
+</body>
+</html>

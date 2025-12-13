@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MiniMo — Grow, Shrink, Basis</title>
+
+<style>
+  :root {
+    /* Layout surfaces */
+    --surface-app: #020617;
+    --surface-panel: #0b1120;
+    --surface-interactive: #111827;
+    --surface-interactive-hover: #1f2937;
+
+    /* Foreground */
+    --text-primary: #e5e7eb;
+
+    /* Accent system */
+    --accent-primary: #38bdf8;
+    --accent-primary-border: #38bdf8;
+    --accent-primary-glow: rgba(56, 189, 248, 0.4);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    font-family: system-ui, sans-serif;
+    background: radial-gradient(circle at top, #0f172a 0, var(--surface-app) 70%, #000 100%);
+    color: var(--text-primary);
+    padding: 1.25rem;
+  }
+
+  .shell {
+    width: 100%;
+    background: var(--surface-panel);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(148,163,184,0.35);
+    box-shadow: 0 0 32px var(--accent-primary-glow);
+  }
+
+  .label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+  }
+
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .controls-section-label {
+    width: 100%;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(148,163,184,0.9);
+  }
+
+  button {
+    background: var(--surface-interactive);
+    color: var(--text-primary);
+    border: 1px solid rgba(148,163,184,0.4);
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: 150ms ease-out;
+    font-size: 0.8rem;
+  }
+
+  button:hover {
+    background: var(--surface-interactive-hover);
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 12px var(--accent-primary-glow);
+  }
+
+  button.is-active {
+    border-color: var(--accent-primary-border);
+    box-shadow: 0 0 16px var(--accent-primary-glow);
+    background: #020617;
+  }
+
+  .zone {
+    border: 1px solid rgba(148,163,184,0.25);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    background: #0a0f1e;
+    position: relative;
+    max-width: 640px;
+  }
+
+  .zone-title {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+    color: rgba(209,213,219,0.9);
+  }
+
+  .items {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    transition: 200ms ease-out;
+  }
+
+  .chip {
+    background: var(--surface-interactive);
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(148,163,184,0.4);
+    cursor: default;
+    transition: 150ms ease-out;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .chip small {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.8;
+    margin-top: 0.15rem;
+  }
+
+  .chip--hero {
+    border-color: var(--accent-primary-border);
+    box-shadow: 0 0 14px var(--accent-primary-glow);
+  }
+
+  .note {
+    margin-top: 0.9rem;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  /* Flex presets driven by a data-mode attribute */
+  .items[data-mode="equal"] .chip {
+    flex: 1 1 0;
+  }
+
+  .items[data-mode="grow"] .chip {
+    flex: 1 1 0;
+  }
+
+  .items[data-mode="grow"] .chip:nth-child(2) {
+    flex-grow: 3;
+  }
+
+  .items[data-mode="shrink"] .chip {
+    flex: 1 1 0;
+  }
+
+  .items[data-mode="shrink"] .chip:nth-child(3) {
+    flex: 0 0 9rem; /* stubborn tail: no grow, no shrink, fixed basis */
+  }
+
+  .items[data-mode="basis"] .chip {
+    flex: 1 1 0;
+  }
+
+  .items[data-mode="basis"] .chip:nth-child(1) {
+    flex: 0 1 12rem; /* starts wider but can still shrink */
+  }
+</style>
+
+</head>
+<body>
+
+<div class="shell">
+  <div class="label">Grow, Shrink, Basis</div>
+
+  <div class="controls">
+    <div class="controls-section-label">Scenario</div>
+    <button data-mode="equal">Equal partners</button>
+    <button data-mode="grow">Greedy middle</button>
+    <button data-mode="basis">Big starter</button>
+    <button data-mode="shrink">Stubborn tail</button>
+  </div>
+
+  <div class="zone">
+    <div class="zone-title" id="modeLabel">Equal partners · flex: 1 1 0 on all items</div>
+    <div class="items" id="items" data-mode="equal">
+      <div class="chip">
+        One
+        <small>flex: ?</small>
+      </div>
+      <div class="chip chip--hero">
+        Two
+        <small>flex: ?</small>
+      </div>
+      <div class="chip">
+        Three
+        <small>flex: ?</small>
+      </div>
+    </div>
+    <p class="note" id="modeNote">
+      All three items share space evenly. If the container grows, they grow together. If it shrinks, they all give a little.
+    </p>
+  </div>
+</div>
+
+<script>
+  const items = document.getElementById("items");
+  const modeLabel = document.getElementById("modeLabel");
+  const modeNote = document.getElementById("modeNote");
+  const chips = Array.from(items.querySelectorAll(".chip small"));
+  const buttons = Array.from(document.querySelectorAll("button[data-mode]"));
+
+  const modes = {
+    equal: {
+      label: "Equal partners · flex: 1 1 0 on all items",
+      note: "Every item has the same deal: equal grow, equal shrink, same starting point.",
+      flexLabels: ["flex: 1 1 0", "flex: 1 1 0", "flex: 1 1 0"]
+    },
+    grow: {
+      label: "Greedy middle · flex-grow: 3 on item two",
+      note: "The middle item gets three shares of any extra space. Neighbors keep one share each.",
+      flexLabels: ["flex: 1 1 0", "flex: 3 1 0", "flex: 1 1 0"]
+    },
+    basis: {
+      label: "Big starter · larger flex-basis on item one",
+      note: "Item one starts wider than the others, but can still shrink if space gets tight.",
+      flexLabels: ["flex: 0 1 12rem", "flex: 1 1 0", "flex: 1 1 0"]
+    },
+    shrink: {
+      label: "Stubborn tail · no shrink, fixed basis",
+      note: "The last item refuses to shrink. Its neighbors absorb more of the squeeze when space runs out.",
+      flexLabels: ["flex: 1 1 0", "flex: 1 1 0", "flex: 0 0 9rem"]
+    }
+  };
+
+  function setMode(mode) {
+    items.setAttribute("data-mode", mode);
+    modeLabel.textContent = modes[mode].label;
+    modeNote.textContent = modes[mode].note;
+    modes[mode].flexLabels.forEach((label, index) => {
+      chips[index].textContent = label;
+    });
+
+    buttons.forEach(btn => {
+      btn.classList.toggle("is-active", btn.dataset.mode === mode);
+    });
+  }
+
+  buttons.forEach(btn =>
+    btn.addEventListener("click", () => setMode(btn.dataset.mode))
+  );
+
+  setMode("equal");
+</script>
+
+</body>
+</html>

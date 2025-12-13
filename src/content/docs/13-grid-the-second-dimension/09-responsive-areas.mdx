@@ -1,0 +1,83 @@
+---
+title: "Responsive Areas"
+description: "Rewrite page layout at breakpoints using grid-template-areas. Same HTML. New blueprint."
+sidebar:
+  order: 9
+  label: "Responsive Areas"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Same HTML. New Blueprint.
+
+Named areas are already readable.
+
+Responsive areas are where Grid becomes unfair.
+
+You can **rebuild the entire page layout** at different breakpoints without touching your HTML.
+
+---
+
+## The Pattern
+
+1. Define the desktop blueprint
+2. Override the blueprint in a media query
+
+```css
+.layout{
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+}
+
+@media (max-width: 48rem){
+  .layout{
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "content"
+      "sidebar"
+      "footer";
+  }
+}
+```
+
+This is the secret sauce:
+- same elements
+- same `grid-area` names
+- different map
+
+---
+
+## Why This Beats “Reordering the DOM”
+
+- Your HTML stays semantic
+- Accessibility stays sane
+- Layout becomes a CSS-only concern
+
+---
+
+## 🧪 MiniMo — Responsive Blueprint Switcher
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/09-responsive-areas-minimo.html"
+  title="Responsive Blueprint Switcher"
+  height="1040px"
+/>
+
+Toggle between desktop, tablet, and mobile blueprints.  
+Notice: no HTML changes.
+
+---
+
+## The Takeaway
+
+Grid areas aren’t just readable.
+
+They’re refactorable.
+
+That’s the difference between “layout” and “layout system.”

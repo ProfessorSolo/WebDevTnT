@@ -1,0 +1,84 @@
+---
+title: "Grid vs Flexbox"
+description: "The Architect’s battle: when to deploy Grid, when to deploy Flexbox, and when to combine them."
+sidebar:
+  order: 13
+  label: "Grid vs Flexbox"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Architect’s Battle
+
+Flexbox and Grid are not rivals.  
+They’re specialists.
+
+- **Flexbox**: one-dimensional flow (row *or* column)
+- **Grid**: two-dimensional layout (rows *and* columns)
+
+If you pick the right tool, your CSS gets smaller.  
+If you pick the wrong one, you start wrestling the browser… and losing.
+
+---
+
+## The Quick Rule
+
+### Use **Flexbox** when…
+- you’re laying out items along **one axis**
+- you want **content-driven sizing**
+- you’re aligning/spacing a row of UI controls
+
+Examples:
+- nav bars
+- button rows
+- card headers (icon + text + actions)
+- “center this thing” (yes, still)
+
+---
+
+### Use **Grid** when…
+- you need **both axes**
+- you want **explicit structure**
+- you want layout that can **rewire at breakpoints**
+
+Examples:
+- page layouts (header / sidebar / content / footer)
+- galleries, dashboards, tiles
+- responsive “areas” layouts
+- overlap / layering
+
+---
+
+## Use Both (The Real Move)
+
+Common pro pattern:
+
+- Grid for the **page-level skeleton**
+- Flexbox for **components** inside each region
+
+Grid builds the building.  
+Flexbox arranges the furniture.
+
+---
+
+## 🧪 MiniMo — Decision Console
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/13-grid-vs-flexbox-minimo.html"
+  title="Decision Console — Grid vs Flexbox"
+  height="1080px"
+/>
+
+Pick a layout scenario.  
+Get the call.  
+See the why.
+
+---
+
+## The Takeaway
+
+You don’t “graduate” from Flexbox to Grid.
+
+You collect tools.  
+Then you build better systems.

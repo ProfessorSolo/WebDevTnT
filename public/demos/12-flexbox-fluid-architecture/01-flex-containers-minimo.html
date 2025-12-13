@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniMo – Flex Containers: From Stack to Flex Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --shell-bg: #020617;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.18);
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --radius-lg: 1.25rem;
+      --radius-md: 0.9rem;
+      --radius-pill: 999px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.9);
+      --border-soft: rgba(148, 163, 184, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #020617 0, #000 55%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+    }
+
+    .minimo-shell {
+      width: 100%;
+      max-width: 720px;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.25), transparent 60%),
+        radial-gradient(circle at bottom right, rgba(248, 113, 113, 0.18), transparent 55%),
+        var(--shell-bg);
+      border-radius: 1.5rem;
+      padding: 1.3rem 1.5rem 1.6rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-soft);
+    }
+
+    .minimo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .minimo-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .minimo-title span {
+      color: var(--accent);
+    }
+
+    .minimo-controls {
+      display: inline-flex;
+      padding: 0.16rem;
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+    }
+
+    .toggle-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+      padding: 0.36rem 0.9rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      transition: background 160ms ease-out, color 160ms ease-out,
+        transform 120ms ease-out;
+    }
+
+    .toggle-btn span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.6);
+    }
+
+    .toggle-btn.is-active {
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.5), rgba(15, 23, 42, 0.9));
+      color: var(--text);
+    }
+
+    .toggle-btn.is-active span.dot {
+      background: var(--accent);
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9);
+    }
+
+    .minimo-description {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      max-width: 34rem;
+      line-height: 1.5;
+      margin-bottom: 1.1rem;
+    }
+
+    .minimo-stage {
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem 1.25rem;
+      background:
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.26), transparent 55%),
+        radial-gradient(circle at bottom, #020617 0, #020617 55%);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+    }
+
+    .container-label {
+      font-size: 0.74rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .pill {
+      padding: 0.08rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+    }
+
+    .pill-flex {
+      border-color: rgba(56, 189, 248, 0.9);
+      color: #e0f2fe;
+    }
+
+    .pill code,
+    .container-label code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.7rem;
+    }
+
+    .panel-group {
+      display: block;
+      margin: 0;
+      padding: 0.9rem;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 1));
+      border: 1px solid rgba(30, 64, 175, 0.4);
+      transition: border-color 160ms ease-out, box-shadow 160ms ease-out;
+    }
+
+    .panel-group.is-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      border-color: rgba(56, 189, 248, 0.9);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    .panel {
+      list-style: none;
+      margin: 0;
+      padding: 0.85rem 0.95rem;
+      border-radius: var(--radius-md);
+      background: radial-gradient(circle at top left, var(--accent-soft), #020617);
+      border: 1px solid rgba(148, 163, 184, 0.32);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.9);
+      font-size: 0.86rem;
+    }
+
+    /* Normal flow: stacked full width */
+    .panel + .panel {
+      margin-top: 0.75rem;
+    }
+
+    /* Flex mode: 2-up on first row, 1 centered underneath for narrow iframes */
+    .panel-group.is-flex .panel {
+      flex: 1 1 calc(50% - 0.75rem);
+      margin-top: 0; /* gap handles spacing */
+    }
+
+    /* Keep third item from stretching too wide on large iframes */
+    .panel-group.is-flex .panel:nth-child(3) {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+
+    .panel-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.9);
+      margin-bottom: 0.3rem;
+    }
+
+    .panel-heading {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #e0f2fe;
+    }
+
+    .panel-copy {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .code-note {
+      margin-top: 0.9rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .code-note code {
+      background: rgba(15, 23, 42, 0.96);
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.3rem;
+      border: 1px solid rgba(51, 65, 85, 0.95);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 0.78rem;
+      color: #e0f2fe;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 0.75rem;
+      }
+
+      .minimo-shell {
+        padding: 1.1rem 1.1rem 1.3rem;
+      }
+
+      .panel-group.is-flex .panel {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="minimo-shell" role="group" aria-label="Flex container MiniMo – from normal flow to flex layout">
+    <header class="minimo-header">
+      <p class="minimo-title">
+        <span>MiniMo</span> · Flex Containers
+      </p>
+      <div class="minimo-controls" aria-label="Toggle layout mode">
+        <button class="toggle-btn is-active" data-mode="normal" type="button">
+          <span class="dot" aria-hidden="true"></span>
+          Normal flow
+        </button>
+        <button class="toggle-btn" data-mode="flex" type="button">
+          <span class="dot" aria-hidden="true"></span>
+          Flex container
+        </button>
+      </div>
+    </header>
+
+    <p class="minimo-description">
+      Same HTML, same panels. The only difference is whether the parent
+      <code>.panel-group</code> behaves like a normal block element or a
+      <code>display: flex</code> container.
+    </p>
+
+    <section class="minimo-stage">
+      <p class="container-label">
+        Container:
+        <span class="pill" id="modeLabel">BLOCK ELEMENT</span>
+        <span class="pill"><code>.panel-group</code></span>
+      </p>
+
+      <div class="panel-group" id="panelGroup">
+        <article class="panel">
+          <p class="panel-label">Panel A</p>
+          <p class="panel-heading">Upcoming Deployments</p>
+          <p class="panel-copy">
+            Track which releases are staging, live, or rolling back across your environments.
+          </p>
+        </article>
+        <article class="panel">
+          <p class="panel-label">Panel B</p>
+          <p class="panel-heading">Team Activity</p>
+          <p class="panel-copy">
+            See which squad pushed the last change and what branch they shipped from.
+          </p>
+        </article>
+        <article class="panel">
+          <p class="panel-label">Panel C</p>
+          <p class="panel-heading">Runtime Signals</p>
+          <p class="panel-copy">
+            Surface errors, slowdowns, and spikes in real time so you can react before users notice.
+          </p>
+        </article>
+      </div>
+
+      <p class="code-note">
+        Flex mode applies <code>display: flex;</code> and <code>flex-wrap: wrap;</code> to the
+        <code>.panel-group</code> container, turning its three children into flex items that can share each row.
+      </p>
+    </section>
+  </div>
+
+  <script>
+    const panelGroup = document.getElementById('panelGroup');
+    const modeLabel = document.getElementById('modeLabel');
+    const buttons = document.querySelectorAll('.toggle-btn');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+
+        buttons.forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        if (mode === 'flex') {
+          panelGroup.classList.add('is-flex');
+          modeLabel.textContent = 'FLEX CONTAINER';
+          modeLabel.classList.add('pill-flex');
+        } else {
+          panelGroup.classList.remove('is-flex');
+          modeLabel.textContent = 'BLOCK ELEMENT';
+          modeLabel.classList.remove('pill-flex');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

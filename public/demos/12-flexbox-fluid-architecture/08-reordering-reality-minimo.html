@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniMo — Reordering Reality</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      /* Layout surfaces */
+      --surface-app: #020617;
+      --surface-panel: #0b1120;
+      --surface-interactive: #111827;
+      --surface-interactive-hover: #1f2937;
+
+      /* Foreground */
+      --text-primary: #e5e7eb;
+
+      /* Accent system */
+      --accent-primary: #38bdf8;
+      --accent-primary-border: #38bdf8;
+      --accent-primary-glow: rgba(56, 189, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(
+        circle at top,
+        #0f172a 0,
+        var(--surface-app) 70%,
+        #000 100%
+      );
+      color: var(--text-primary);
+      padding: 1.25rem;
+    }
+
+    .shell {
+      width: 100%;
+      background: var(--surface-panel);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 0 32px var(--accent-primary-glow);
+      max-width: 720px;
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-section-label {
+      width: 100%;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    button {
+      background: var(--surface-interactive);
+      color: var(--text-primary);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 150ms ease-out;
+      font-size: 0.8rem;
+    }
+
+    button:hover {
+      background: var(--surface-interactive-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    button.is-active {
+      border-color: var(--accent-primary-border);
+      box-shadow: 0 0 16px var(--accent-primary-glow);
+      background: #020617;
+    }
+
+    .zone {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: #0a0f1e;
+      position: relative;
+      margin-top: 0.5rem;
+    }
+
+    .zone-title {
+      font-size: 0.8rem;
+      margin-bottom: 0.75rem;
+      color: rgba(209, 213, 219, 0.9);
+    }
+
+    .rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .row-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(156, 163, 175, 0.9);
+      margin-bottom: 0.35rem;
+    }
+
+    .track {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+    }
+
+    .chip {
+      background: var(--surface-interactive);
+      padding: 0.45rem 0.9rem;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 0.8rem;
+      min-width: 5.5rem;
+      text-align: center;
+    }
+
+    .chip--hero {
+      border-color: var(--accent-primary-border);
+      box-shadow: 0 0 14px var(--accent-primary-glow);
+    }
+
+    .note {
+      margin-top: 0.8rem;
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    .source-order {
+      font-size: 0.75rem;
+      opacity: 0.85;
+      margin-top: 0.35rem;
+    }
+
+    .source-order code {
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="label">Reordering Reality</div>
+
+    <div class="controls" id="controls">
+      <div class="controls-section-label">Layout mode</div>
+      <button data-mode="natural">Natural order</button>
+      <button data-mode="hero-first">Hero first</button>
+      <button data-mode="support-last">Support last</button>
+      <button data-mode="reverse-row">Reverse row</button>
+    </div>
+
+    <div class="zone">
+      <div class="zone-title" id="zoneTitle">Natural order · all items order: 0</div>
+
+      <div class="rows">
+        <div>
+          <div class="row-label">Source order (HTML)</div>
+          <div class="track">
+            <div class="chip">Intro</div>
+            <div class="chip chip--hero">Hero</div>
+            <div class="chip">Details</div>
+            <div class="chip">Support</div>
+          </div>
+          <p class="source-order">
+            DOM sequence:
+            <code>&lt;Intro /&gt; &lt;Hero /&gt; &lt;Details /&gt; &lt;Support /&gt;</code>
+          </p>
+        </div>
+
+        <div>
+          <div class="row-label">Visual order (flex with order)</div>
+          <div class="track" id="visualTrack">
+            <div class="chip" data-key="intro">Intro</div>
+            <div class="chip chip--hero" data-key="hero">Hero</div>
+            <div class="chip" data-key="details">Details</div>
+            <div class="chip" data-key="support">Support</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" id="modeNote">
+        In natural order, visual layout matches the DOM. Screen readers, keyboard focus, and what we see are all in sync.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const buttons = Array.from(document.querySelectorAll('#controls button'));
+    const visualTrack = document.getElementById('visualTrack');
+    const zoneTitle = document.getElementById('zoneTitle');
+    const modeNote = document.getElementById('modeNote');
+    const chips = {
+      intro: visualTrack.querySelector('[data-key="intro"]'),
+      hero: visualTrack.querySelector('[data-key="hero"]'),
+      details: visualTrack.querySelector('[data-key="details"]'),
+      support: visualTrack.querySelector('[data-key="support"]'),
+    };
+
+    const modes = {
+      natural: {
+        title: 'Natural order · all items order: 0',
+        note: 'In natural order, visual layout matches the DOM. Screen readers, keyboard focus, and what we see are all in sync.',
+        orders: {
+          intro: 0,
+          hero: 0,
+          details: 0,
+          support: 0,
+        },
+      },
+      'hero-first': {
+        title: 'Hero first · hero gets order: -1',
+        note: 'Hero is pulled visually to the front, but the DOM order stays Intro → Hero → Details → Support. Assistive tech still reads it that way.',
+        orders: {
+          intro: 0,
+          hero: -1,
+          details: 0,
+          support: 0,
+        },
+      },
+      'support-last': {
+        title: 'Support last · support gets order: 10',
+        note: 'Support content is visually pushed to the end. This can help deprioritize less important pieces while keeping DOM order intact.',
+        orders: {
+          intro: 0,
+          hero: 0,
+          details: 0,
+          support: 10,
+        },
+      },
+      'reverse-row': {
+        title: 'Reverse row · visual order does not match DOM',
+        note: 'Every item gets an explicit order so the row reads Support → Details → Hero → Intro visually, while the DOM stays Intro → Hero → Details → Support. Powerful, but risky for accessibility.',
+        orders: {
+          intro: 3,
+          hero: 2,
+          details: 1,
+          support: 0,
+        },
+      },
+    };
+
+    function applyMode(mode) {
+      const config = modes[mode];
+
+      Object.entries(config.orders).forEach(([key, value]) => {
+        chips[key].style.order = value;
+      });
+
+      zoneTitle.textContent = config.title;
+      modeNote.textContent = config.note;
+
+      buttons.forEach((btn) => {
+        btn.classList.toggle('is-active', btn.dataset.mode === mode);
+      });
+    }
+
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        applyMode(btn.dataset.mode);
+      })
+    );
+
+    applyMode('natural');
+  </script>
+</body>
+</html>

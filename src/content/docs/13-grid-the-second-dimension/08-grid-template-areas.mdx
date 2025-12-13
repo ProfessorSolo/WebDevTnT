@@ -1,0 +1,93 @@
+---
+title: "Named Areas"
+description: "Lay out pages like a blueprint. Use grid-template-areas to make structure readable and resilient."
+sidebar:
+  order: 8
+  label: "Areas"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Blueprints, Not Coordinates
+
+Line numbers are precise.
+
+But they can also get… gross.
+
+Named areas let you design a layout like a map:
+
+- header
+- sidebar
+- content
+- footer
+
+That’s what `grid-template-areas` is for: readable layout intent.
+
+---
+
+## Define Areas on the Container
+
+```css
+.layout{
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-rows: auto 1fr auto;
+
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+}
+```
+
+The strings describe the grid.
+
+---
+
+## Assign Items to Areas
+
+```css
+header  { grid-area: header; }
+aside   { grid-area: sidebar; }
+main    { grid-area: content; }
+footer  { grid-area: footer; }
+```
+
+Now your HTML can stay semantic, and the grid does the layout work.
+
+---
+
+## Dots Mean “Empty”
+
+You can leave cells unused with `.`
+
+```css
+grid-template-areas:
+  "header header"
+  ".      content"
+  "footer footer";
+```
+
+---
+
+## 🧪 MiniMo — Area Architect
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/08-grid-areas-minimo.html"
+  title="Area Architect — grid-template-areas"
+  height="980px"
+/>
+
+Swap blueprints.  
+Watch the layout rewire itself.
+
+---
+
+## The Takeaway
+
+Areas are the readable option:
+
+- great for page layout
+- easy to refactor
+- less fragile than line-number spaghetti

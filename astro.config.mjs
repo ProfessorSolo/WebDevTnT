@@ -71,6 +71,16 @@ const COURSE_MODULES = [
     released: true,
   },
   {
+    label: 'Flexbox Fluid Architecture',
+    directory: '12-flexbox-fluid-architecture',
+    released: false,
+  }, // UNRELEASED
+  {
+    label: 'The Grid',
+    directory: '13-grid-the-second-dimension',
+    released: false,
+  }, // UNRELEASED
+  {
     label: 'Flexbox and Grid',
     directory: '06-css-layouts-flexbox-grid',
     released: false,

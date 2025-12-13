@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tracks Online — Grid Template Columns & Rows</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 1.25rem;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color: #e5e7eb;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 100%;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .badge {
+      font-size: .75rem;
+      padding: .18rem .55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .4);
+      opacity: .9;
+      white-space: nowrap;
+    }
+
+    /* Single-column first: fits the ~41rem reality */
+    .panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1rem;
+      width: 100%;
+      align-items: start;
+    }
+
+    /* Only go 2-column when you truly have space */
+    @media (min-width: 60rem) {
+      .panel {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      }
+    }
+
+    .card {
+      border: 1px solid rgba(148, 163, 184, .25);
+      border-radius: 16px;
+      padding: 1rem;
+      background: linear-gradient(180deg, rgba(15, 23, 42, .75), rgba(2, 6, 23, .65));
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      min-width: 0;
+    }
+
+    .card h2 {
+      margin: 0 0 .6rem 0;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .card p {
+      margin: .45rem 0;
+      opacity: .9;
+      line-height: 1.35;
+    }
+
+    .muted {
+      opacity: .78;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-top: .65rem;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(148, 163, 184, .35);
+      background: rgba(2, 6, 23, .45);
+      color: #e5e7eb;
+      border-radius: 999px;
+      padding: .4rem .65rem;
+      font-size: .82rem;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      user-select: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(226, 232, 240, .55);
+      background: rgba(2, 6, 23, .6);
+    }
+
+    .btn[aria-pressed="true"] {
+      border-color: rgba(56, 189, 248, .75);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, .15);
+    }
+
+    .stageWrap {
+      display: grid;
+      gap: .75rem;
+    }
+
+    .stageTitle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .kvs {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: .82rem;
+      opacity: .92;
+      line-height: 1.35;
+      background: rgba(2, 6, 23, .45);
+      border: 1px solid rgba(148, 163, 184, .25);
+      border-radius: 12px;
+      padding: .65rem .75rem;
+      min-width: 0;
+    }
+
+    .layout {
+      border-radius: 16px;
+      border: 2px solid rgba(56, 189, 248, .55);
+      background: rgba(2, 6, 23, .35);
+      padding: .75rem;
+      min-width: 0;
+      display: grid;
+      gap: .6rem;
+      overflow: auto;
+      font-size: 0.9rem;
+    }
+
+    .item {
+      border-radius: 14px;
+      border: 1px solid rgba(236, 72, 153, .55);
+      background: linear-gradient(180deg, rgba(236, 72, 153, .18), rgba(236, 72, 153, .08));
+      padding: .6rem .7rem;
+      min-width: 0;
+    }
+
+    .item strong {
+      display: block;
+      font-size: .9rem;
+      margin-bottom: .15rem;
+    }
+
+    .note {
+      font-size: .85rem;
+      opacity: .85;
+      line-height: 1.35;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Tracks Online</h1>
+      <span class="badge">explicit tracks</span>
+    </div>
+
+    <div class="panel">
+      <section class="card">
+        <h2>Choose a template</h2>
+        <p class="muted">Same items. Different tracks. Watch the layout snap into place.</p>
+
+        <div class="controls" role="group" aria-label="Column templates">
+          <button class="btn" data-cols="fixed" aria-pressed="true">4 × 220px</button>
+          <button class="btn" data-cols="fr" aria-pressed="false">4 × 1fr</button>
+          <button class="btn" data-cols="mixed" aria-pressed="false">15rem 1fr 2fr 1fr</button>
+        </div>
+
+        <div class="controls" role="group" aria-label="Row templates">
+          <button class="btn" data-rows="auto" aria-pressed="true">rows: auto (implicit)</button>
+          <button class="btn" data-rows="two" aria-pressed="false">rows: 12rem 12rem</button>
+        </div>
+
+        <p class="note">
+          Columns and rows you define here are the <strong>explicit grid</strong>.
+          Extra rows created for overflow are part of the <strong>implicit grid</strong> (next page).
+        </p>
+      </section>
+
+      <section class="card stageWrap">
+        <div class="stageTitle">
+          <h2 style="margin:0;">Stage</h2>
+          <span class="badge" id="tracksBadge">grid-template-columns: 220px 220px 220px 220px</span>
+        </div>
+
+        <div class="kvs" id="kvs">
+          grid-template-columns: 220px 220px 220px 220px<br />
+          grid-template-rows: (not set)
+        </div>
+
+        <main class="layout" id="layout">
+          <article class="item"><strong>Item A</strong>Fills the next available cell.</article>
+          <article class="item"><strong>Item B</strong>Same HTML. New structure.</article>
+          <article class="item"><strong>Item C</strong>Tracks create the grid.</article>
+          <article class="item"><strong>Item D</strong>Lines define placement.</article>
+          <article class="item"><strong>Item E</strong>Extra items force new rows.</article>
+          <article class="item"><strong>Item F</strong>Implicit rows appear.</article>
+          <article class="item"><strong>Item G</strong>Auto-placement continues.</article>
+          <article class="item"><strong>Item H</strong>Until you take control.</article>
+        </main>
+
+        <p class="note">
+          The “grid look” isn’t magic — it’s the tracks you define.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const layout = document.getElementById('layout');
+    const tracksBadge = document.getElementById('tracksBadge');
+    const kvs = document.getElementById('kvs');
+
+    const colButtons = [...document.querySelectorAll('button[data-cols]')];
+    const rowButtons = [...document.querySelectorAll('button[data-rows]')];
+
+    const COLS = {
+      fixed: '220px 220px 220px 220px',
+      fr: '1fr 1fr 1fr 1fr',
+      mixed: '15rem 1fr 2fr 1fr'
+    };
+
+    const ROWS = {
+      auto: '',
+      two: '12rem 12rem'
+    };
+
+    let colsKey = 'fixed';
+    let rowsKey = 'auto';
+
+    function setPressed(btns, activeKey, attr) {
+      btns.forEach(b => b.setAttribute('aria-pressed', String(b.getAttribute(attr) === activeKey)));
+    }
+
+    function apply() {
+      const cols = COLS[colsKey];
+      const rows = ROWS[rowsKey];
+
+      layout.style.gridTemplateColumns = cols;
+      layout.style.gridTemplateRows = rows;
+
+      tracksBadge.textContent = 'grid-template-columns: ' + cols;
+      kvs.innerHTML =
+        'grid-template-columns: ' + cols + '<br/>' +
+        'grid-template-rows: ' + (rows ? rows : '(not set)');
+
+      setPressed(colButtons, colsKey, 'data-cols');
+      setPressed(rowButtons, rowsKey, 'data-rows');
+    }
+
+    colButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        colsKey = btn.getAttribute('data-cols');
+        apply();
+      });
+    });
+
+    rowButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        rowsKey = btn.getAttribute('data-rows');
+        apply();
+      });
+    });
+
+    apply();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+---
+title: 'Grid Template Columns & Rows'
+description: 'Define the explicit grid: columns, rows, and the tracks that make Grid visible.'
+sidebar:
+  order: 2
+  label: 'Template Tracks'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Moment Grid Becomes Visible
+
+On the last page, `display: grid;` was pure intent.
+
+This is where Grid finally **shows up**.
+
+When you define **tracks** (columns and/or rows), you create the **explicit grid** — and the browser has a structure to apply.
+
+---
+
+## Define Columns with `grid-template-columns`
+
+You can specify as many columns as you want, using any valid length units:
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 240px 240px 240px;
+}
+```
+
+Once columns exist, grid items begin flowing into the cells automatically — left to right, top to bottom.
+
+---
+
+## Define Rows with `grid-template-rows`
+
+Rows work the same way:
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 10rem 10rem;
+}
+```
+
+If you define fewer rows than you have items for, Grid will create more rows as needed (that’s the **implicit grid**, coming soon).
+
+---
+
+## Tracks, Lines, Cells (Quick Vocabulary)
+
+- **Tracks**: the columns and rows you define
+- **Lines**: the boundaries between tracks (they start at **1**, not 0)
+- **Cells**: the rectangles formed by intersecting tracks
+
+Grid is basically: _lines first, placement second._
+
+---
+
+## 🧪 MiniMo — Make the Grid Appear
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/02-grid-template-cols-and-rows-minimo.html"
+  title="Tracks Online — Grid Template Columns & Rows"
+  height="820px"
+/>
+
+Same HTML. New rules.  
+Define tracks — and the grid snaps into existence.
+
+---
+
+## The Takeaway
+
+If you want Grid to _do_ something:
+
+1. Set the container: `display: grid;`
+2. Define tracks: `grid-template-columns` and/or `grid-template-rows`
+
+No tracks, no grid.

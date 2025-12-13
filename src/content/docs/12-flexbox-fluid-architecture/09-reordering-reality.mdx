@@ -1,0 +1,115 @@
+---
+title: 'Reordering Reality'
+description: 'Use the order property to change visual order in a flex container — and know when that power becomes dangerous.'
+sidebar:
+  order: 9
+  label: 'Reordering Reality'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## When Visual Order Lies
+
+Flexbox lets us bend what appears **where** without touching the HTML.  
+That power runs through a single property: **`order`**.
+
+Used with intention, `order` can:
+
+- Pull a feature card to the front on larger screens
+- Tuck secondary content toward the end of a row or column
+
+Used carelessly, it breaks expectations, accessibility, and reading flow.
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/08-reordering-reality-minimo.html"
+  title="Reordering Reality"
+  height="600px"
+/>
+
+---
+
+## The Basics: `order` on Flex Items
+
+Every flex item has an implicit `order: 0`.  
+Items are rendered in **source order**, then sorted by `order`:
+
+```css
+.line > .card--hero {
+  order: -1; /* appears before items with order: 0 */
+}
+
+.line > .card--footer {
+  order: 10; /* appears after default items */
+}
+```
+
+Sorting rules:
+
+- Items with **lower order** appear first.
+- Items with the **same order** keep their original source order.
+- Negative values are allowed; we often use `-1` for “pull forward.”
+
+The DOM stays the same; only the **visual sequence** along the main axis changes.
+
+---
+
+## Common Patterns (Used Sparingly)
+
+A few scenarios where `order` can help:
+
+- **Promoting a hero card** in a row of content on larger screens
+- **Shifting supporting pieces** (like ads or secondary panels) toward the end
+- **Altering layout between breakpoints** without duplicating markup
+
+Example:
+
+```css
+/* Mobile: natural reading order */
+.cards > article {
+  order: 0;
+}
+
+/* Desktop: hero first, supporting cards after */
+@media (min-width: 768px) {
+  .cards > .card--hero {
+    order: -1;
+  }
+}
+```
+
+The MiniMo demonstrates exactly this:  
+same HTML, different visual order depending on the chosen mode.
+
+---
+
+## Serious Warnings: Source Order Still Rules
+
+Even when flexbox redraws the stage, **source order remains reality** for:
+
+- Screen readers
+- Keyboard navigation
+- Copy/paste and text scraping
+- SEO and document structure
+
+If the visual order and source order drift too far apart:
+
+- Focus jumps feel “random” when tabbing.
+- Screen readers announce content in a different order than we see.
+- Students (and future maintainers) get confused by layouts that contradict the DOM.
+
+**Rule of thumb:**
+
+> Reorder small, decorative pieces if we must.  
+> Keep primary reading order aligned between **DOM** and **visual layout**.
+
+---
+
+## Mental Model to Keep
+
+- The DOM defines the **true order**.
+- `order` only adjusts the **presentation along the main axis**.
+- We prefer to design layouts that **do not rely heavily** on reordering.
+
+In the Flexbox Codex, we will still document a few careful recipes —  
+but we will treat `order` as a **precision tool**, not a default layout strategy.

@@ -1,0 +1,95 @@
+---
+title: "Layering & Overlap"
+description: "Grid isn’t flat. Overlap items intentionally and control stacking with z-index."
+sidebar:
+  order: 12
+  label: "Layering"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Grid Has a Z‑Axis
+
+Most people think Grid is rows and columns.
+
+It’s also **layers**.
+
+Multiple grid items can occupy the same cells — and that’s not a mistake.  
+That’s how you build:
+- hero overlays
+- badges
+- callouts
+- stacked UI panels
+
+---
+
+## The Core Idea
+
+Two or more items can share the same grid area.
+
+```css
+.hero{
+  display: grid;
+}
+
+.hero img{
+  grid-area: 1 / 1;
+}
+
+.hero .overlay{
+  grid-area: 1 / 1;
+}
+```
+
+Same cells. Different layers.
+
+---
+
+## Controlling the Stack
+
+Grid doesn’t invent stacking rules — it uses normal CSS stacking.
+
+```css
+.overlay{
+  z-index: 2;
+}
+```
+
+Positioning is optional.  
+Grid items stack naturally when they overlap.
+
+---
+
+## Common Pitfall
+
+Students reach for `position: absolute`.
+
+That works — but you lose:
+- intrinsic sizing
+- grid alignment
+- responsive flow
+
+Grid overlap keeps everything *in the layout system*.
+
+---
+
+## 🧪 MiniMo — Overlap Playground
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/12-layering-overlap-minimo.html"
+  title="Layering & Overlap Playground"
+  height="1080px"
+/>
+
+Toggle overlap.  
+Raise layers.  
+See how grid stays intact.
+
+---
+
+## The Takeaway
+
+Grid isn’t just structure.
+
+It’s controlled chaos — with rules.

@@ -1,0 +1,319 @@
+---
+title: 'Grid Matrix'
+description: 'A fast, neon-lit reference of the most common CSS Grid patterns, distilled into reusable blueprints.'
+sidebar:
+  order: 99
+  label: 'Grid Matrix'
+draft: false
+---
+
+## Snippets To Go
+
+Your pocket arsenal of **repeatable, reliable, boss‑level grid blueprints**.
+
+This page is not a tutorial.  
+It is a **move list** — the CSS you reach for when you already understand the concepts and just need the pattern.
+
+Each recipe is:
+
+- minimal
+- predictable
+- breakpoint‑friendly
+- aligned with everything from *Grid: The Second Dimension*
+
+---
+
+## 01 — “Nothing Happens” (The Track Reminder)
+
+```css
+.grid {
+  display: grid;
+  /* No tracks = no visible change */
+}
+```
+
+---
+
+## 02 — The Starter Grid (Columns + Rows)
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 12rem 1fr 12rem;
+  grid-template-rows: auto 1fr auto;
+  gap: 1rem;
+}
+```
+
+---
+
+## 03 — Fractional Power (fr)
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 1rem;
+}
+```
+
+---
+
+## 04 — Repeat Like You Mean It
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+```
+
+---
+
+## 05 — Implicit Rows (The Quiet Default)
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 8rem; /* implicit tracks */
+  gap: 1rem;
+}
+```
+
+---
+
+## 06 — Auto‑Flow: Row vs Column
+
+```css
+/* Default: fill across rows */
+.grid { grid-auto-flow: row; }
+
+/* Fill down columns first */
+.grid { grid-auto-flow: column; }
+```
+
+---
+
+## 07 — Dense Packing (Use Carefully)
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-flow: row dense;
+  gap: 1rem;
+}
+```
+
+Dense can backfill holes… and also reorder visually.  
+Keep your DOM semantics honest.
+
+---
+
+## 08 — Manual Placement (Start / End)
+
+```css
+.item-a { grid-column: 1 / 3; grid-row: 1 / 2; }
+.item-b { grid-column: 3 / 5; grid-row: 1 / 3; }
+```
+
+---
+
+## 09 — Manual Placement (Start / Span)
+
+```css
+.item {
+  grid-column: 2 / span 2;
+  grid-row: 1 / span 2;
+}
+```
+
+---
+
+## 10 — Negative Lines (Anchor to the Edge)
+
+```css
+/* Right-edge anchor without knowing column count */
+.item {
+  grid-column: -3 / -1;
+}
+```
+
+---
+
+## 11 — Named Areas (Readable Layout)
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+  gap: 1rem;
+}
+
+header { grid-area: header; }
+aside  { grid-area: sidebar; }
+main   { grid-area: content; }
+footer { grid-area: footer; }
+```
+
+---
+
+## 12 — Responsive Areas (Same HTML, New Blueprint)
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-areas:
+    "header  header"
+    "sidebar content"
+    "footer  footer";
+}
+
+@media (max-width: 48rem) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "content"
+      "sidebar"
+      "footer";
+  }
+}
+```
+
+---
+
+## 13 — Gap Is the Spacing Move
+
+```css
+.grid {
+  display: grid;
+  gap: 1rem;         /* both directions */
+  row-gap: 1.5rem;   /* optional */
+  column-gap: .75rem;
+}
+```
+
+---
+
+## 14 — Item Alignment (Inside Cells)
+
+```css
+.grid {
+  display: grid;
+  justify-items: center; /* inline axis */
+  align-items: start;    /* block axis */
+}
+```
+
+---
+
+## 15 — Content Alignment (Packing the Grid)
+
+Only matters when there is extra space.
+
+```css
+.grid {
+  display: grid;
+  justify-content: center;
+  align-content: start;
+}
+```
+
+---
+
+## 16 — A Real Tile Field (Implicit + Repeat)
+
+```css
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 10rem;
+  gap: 1rem;
+}
+```
+
+---
+
+## 17 — The Modern Responsive Grid (auto-fit + minmax)
+
+```css
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+```
+
+---
+
+## 18 — Nested Grid (Grid Inside a Region)
+
+```css
+.page {
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-areas: "sidebar content";
+}
+
+.content {
+  grid-area: content;
+  display: grid; /* nested */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+```
+
+---
+
+## 19 — Layering / Overlap (Grid Has a Z‑Axis)
+
+```css
+.hero {
+  display: grid;
+}
+
+.hero > * {
+  grid-area: 1 / 1; /* same cells */
+}
+
+.hero .overlay {
+  z-index: 2;
+}
+```
+
+---
+
+## 20 — Grid + Flexbox (The Real‑World Combo)
+
+```css
+/* Grid for page skeleton */
+.page { display: grid; grid-template-columns: 14rem 1fr; }
+
+/* Flexbox for component internals */
+.card-header { display: flex; align-items: center; gap: .75rem; }
+.card-header .actions { margin-left: auto; }
+```
+
+---
+
+# Final Thoughts
+
+If you remember nothing else:
+
+- Grid is **tracks** (columns/rows) + **placement**
+- Named areas are **blueprints**
+- Responsive areas are **rewires**
+- Nested grids are **composition**
+- Overlap is **intentional layering**
+
+And the golden rule:
+
+**Grid builds the structure. Flexbox arranges the furniture.**

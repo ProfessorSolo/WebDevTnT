@@ -1,0 +1,192 @@
+---
+title: 'Flex Containers'
+description: 'Turn ordinary boxes into the Architect’s workbench — a stage where direction, alignment, and flow are all under your control.'
+sidebar:
+  order: 1
+  label: 'Flex Containers'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Architect’s Stage
+
+Before the Architect can guide the line,  
+they need a **stage**.
+
+That stage is the **flex container** —  
+any element you bless with:
+
+```css
+display: flex;
+/* or */
+display: inline-flex;
+```
+
+From that moment on:
+
+- the element becomes a **flex container**
+- its **direct children** become **flex items**
+- and the normal block/inline rules quietly step aside
+
+No grid yet. No magic ratios.  
+Just one decision:
+
+> “This box now controls the flow of its children.”
+
+---
+
+## 🧱 What Is a Flex Container, Really?
+
+A flex container is a **layout context**.
+
+Inside that context, the Architect gets to choose:
+
+- **direction** of the line (row vs column)
+- **wrapping** behavior
+- **alignment** along the main and cross axes
+- **how items share extra or missing space**
+
+Outside the container, nothing changes.  
+Inside, everything obeys Flexbox.
+
+```html
+<main class="dashboard">
+  <section class="card">One</section>
+  <section class="card">Two</section>
+  <section class="card">Three</section>
+</main>
+```
+
+```css
+.dashboard {
+  display: flex; /* flex container */
+  gap: 1.5rem; /* spacing between items */
+}
+
+.card {
+  padding: 1.5rem;
+  background: var(--surface-elevated);
+  border-radius: 0.75rem;
+}
+```
+
+`<main>` is now the Architect’s workbench.  
+Each `.card` is a flex item on that stage.
+
+---
+
+## 🎭 Only Direct Children Join the Cast
+
+Flexbox doesn’t reach down the whole tree.  
+It only acts on **direct children** of the container.
+
+```html
+<ul class="nav">
+  <li><a href="/">Home</a></li>
+  <li><a href="/schedule">Schedule</a></li>
+  <li><a href="/contact">Contact</a></li>
+</ul>
+```
+
+```css
+.nav {
+  display: flex; /* li elements become flex items */
+}
+
+.nav li {
+  list-style: none;
+}
+
+.nav a {
+  display: block; /* normal block-level inside each item */
+  padding: 0.75rem 1.25rem;
+}
+```
+
+- `ul.nav` → flex container
+- `li` elements → flex items
+- the `<a>` tags inside? **Not** flex items.  
+  They’re just regular content inside each actor.
+
+If you need _those_ inner elements to flex,  
+you give them their **own** `display: flex;` stage.
+
+---
+
+## 🧭 Container-Only Controls (Preview)
+
+The container owns the big levers:
+
+- `flex-direction` – which way the line runs
+- `flex-wrap` – whether items stay on one line or wrap
+- `justify-content` – alignment along the **main** axis
+- `align-items` – alignment along the **cross** axis
+- `align-content` – how multiple lines pack together
+- `gap` / `row-gap` / `column-gap` – built-in gutters
+
+We’ll forge each of these in separate chambers.  
+For now, your job is simply:
+
+> Pick the element that should control the flow,  
+> and **declare it** a flex container.
+
+---
+
+## 🧪 MiniMo — From Static Stack to Flex Stage
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/01-flex-containers-minimo.html"
+  title="From Stack to Flex Stage — Flex Containers"
+  height="900px"
+/>
+
+Same HTML structure, same children.  
+One new rule — `display: flex;` —  
+and the entire **behavior** of the layout changes.
+
+That’s the Architect’s power:  
+redefine the stage without rewriting the script.
+
+---
+
+## 🏛 Flex Container Diagram (Coming from the Demo Lab)
+
+In the Flexbox Fluidity demo, you’ll see a scene just like this illustration:
+
+- a glowing **container frame**
+- direct children lit up as **flex items**
+- arrows marking the main axis and cross axis
+
+Use that diagram as your mental anchor:
+
+> “This parent controls the line.  
+> Everything else is just content inside the actors.”
+
+---
+
+## 🔗 Explore Flex Containers in the Demo Lab
+
+<LinkButton
+  href="https://github.com/ProfessorSolo/WebDevTnT-CSS-Flexbox-Fluidity/tree/main/01-flex-containers"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  Open 01 — Flex Containers Demo
+</LinkButton>
+
+Clone it, tweak the container, break it, fix it.  
+Change which element gets `display: flex;` and watch how the cast reacts.
+
+---
+
+## ⏭ Next Chamber — Flex Items
+
+We’ve built the workbench.  
+Next, the Architect starts tuning the **actors**.
+
+<LinkButton href="/lessons/12-flexbox-fluidity-the-architects-line/02-flex-items">
+  Continue to 02 — Flex Items: The Line-Crafter’s Actors
+</LinkButton>

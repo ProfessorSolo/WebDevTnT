@@ -1,0 +1,216 @@
+---
+title: 'Multi-Line Flex Behavior'
+description: 'How flex containers pack multiple rows or columns of items once wrapping enters the chat.'
+sidebar:
+  order: 7
+  label: 'Align-Content & Multi-Line'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## **Multi-Line Alignment**
+
+Once your flex items start wrapping onto multiple lines, a new question shows up:
+
+> “Why did my alignment suddenly stop doing what I expect?”
+
+This chapter is about that moment: **multi-line flexbox** and how `align-content` controls the way **lines** of items are packed in the container.
+
+---
+
+## Single-Line vs Multi-Line Flex
+
+By default, a flex container is **single-line**:
+
+```css
+.gallery {
+  display: flex;
+  flex-wrap: nowrap; /* default */
+}
+```
+
+All items are kept on one line along the **main axis**. If they do not fit, they either:
+
+- shrink (`flex-shrink`), or
+- overflow the container.
+
+As soon as you enable wrapping:
+
+```css
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+```
+
+you allow items to flow onto **multiple lines**:
+
+- Each line lays out items along the **main axis**.
+- The lines themselves stack along the **cross axis**.
+
+That second part is where `align-content` comes in.
+
+---
+
+## The Three Container Alignment Controls
+
+On a flex container, you have three alignment knobs:
+
+- `justify-content` → positions **items along the main axis** (within each line)
+- `align-items` → positions **items along the cross axis** (within a line)
+- `align-content` → positions **the lines themselves along the cross axis** (multi-line only)
+
+A useful summary:
+
+- `justify-*` → main axis
+- `align-*` → cross axis
+- `*-items` → individual items
+- `*-content` → the group of lines
+
+---
+
+## When `align-content` Has an Effect
+
+`align-content` is not always active. It only does visible work when:
+
+1. The element is a flex container (`display: flex` or `inline-flex`).
+2. Wrapping is enabled (`flex-wrap: wrap` or `wrap-reverse`).
+3. There is **more than one line** of items.
+4. There is **extra space on the cross axis** for those lines to move in.
+
+If any of these are missing, you can set `align-content` to whatever you like and nothing will appear to change.
+
+---
+
+## `align-content` Values (Multi-Line Packing Styles)
+
+The values for `align-content` control how the set of lines is positioned on the cross axis:
+
+- `flex-start` → pack all lines at the **start** of the cross axis
+- `flex-end` → pack all lines at the **end** of the cross axis
+- `center` → group all lines in the **center**
+- `space-between` → first line at start, last at end, others spread out between
+- `space-around` → equal space around each line (half-space at container edges)
+- `space-evenly` → equal space between every line and the edges
+- `stretch` (default) → lines stretch to fill the cross axis (when they can)
+
+In the `.tag-wall` example with `flex-direction: row`:
+
+- Cross axis = vertical
+- `align-content: flex-start` → lines hug the top
+- `align-content: flex-end` → lines hug the bottom
+- `align-content: center` → lines sit as a group in the middle
+- `align-content: space-evenly` → lines spread evenly from top to bottom
+
+---
+
+## `justify-content` vs `align-content` in Multi-Line Layouts
+
+With wrapping enabled, layout is a two-layer story:
+
+1. **Within a line**  
+   `justify-content` controls how items are distributed along the main axis.
+
+2. **Between lines**  
+   `align-content` controls how the lines themselves are distributed along the cross axis.
+
+Example:
+
+```css
+.mission-board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* items within each row */
+  align-content: space-between; /* spacing between the rows */
+  gap: 1rem;
+  height: 24rem;
+  padding: 1.5rem;
+}
+```
+
+Here:
+
+- Each row of items spreads out horizontally due to `justify-content`.
+- The rows themselves are spread vertically due to `align-content`.
+
+Changing one does not change the other.
+
+---
+
+## `align-items` vs `align-content`
+
+Both properties use the word “align”, but they control different things:
+
+- `align-items` → how **items inside each line** sit on the cross axis  
+  (for example: top, center, bottom, stretch, baseline)
+
+- `align-content` → how the **set of lines** is positioned on the cross axis  
+  (for example: grouped at the top, spaced evenly, stretched)
+
+Example:
+
+```css
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center; /* vertical alignment of items inside a line */
+  align-content: center; /* vertical position of the group of lines */
+}
+```
+
+If you only have one line, or there is no extra cross-axis space, `align-content` will appear to do nothing. In that case, only `align-items` is visible.
+
+---
+
+## Common Problems to Watch For
+
+When alignment “does not work” with a wrapped flex container, check:
+
+1. Is `display: flex` set on the container?
+2. Is `flex-wrap` enabled (`wrap` or `wrap-reverse`)?
+3. Do you actually have more than one line of items?
+4. Is there any extra space on the axis that property controls?
+5. Are `gap` values making it harder to notice the changes?
+
+Try temporarily giving the container a visible outline and fixed height, for example:
+
+```css
+outline: 2px dashed hotpink;
+height: 18rem;
+```
+
+This makes it easier to see where the lines are and how they move when you change alignment values.
+
+---
+
+## Try It: Multi-Line Alignment Playground
+
+Use the mini-mo below to experiment:
+
+- Toggle wrapping on and off.
+- Change `justify-content` to see how items move within each line.
+- Change `align-content` to see how the rows as a group move on the cross axis.
+- Adjust the container height to exaggerate the effect of `align-content`.
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/07-align-content-multi-line.html"
+  title="Align-Content & Multi-Line Packing Playground"
+  height="720px"
+/>
+
+---
+
+## Summary
+
+- Wrapping turns a single flex line into a **stack of lines**.
+- `justify-content` always controls how items are placed on the **main axis**.
+- `align-items` controls how items sit on the **cross axis** inside each line.
+- `align-content` controls how the **lines** are packed on the **cross axis** when there is:
+  - wrapping,
+  - more than one line, and
+  - extra cross-axis space.
+
+A simple way to remember it:
+
+> **justify the items in a line, align the stack of lines.**

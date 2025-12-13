@@ -1,0 +1,89 @@
+---
+title: "Nested Grids"
+description: "Grids within grids. A grid item can also be a grid container — and that’s how real layouts are built."
+sidebar:
+  order: 11
+  label: "Nested Grids"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Grid All the Way Down
+
+Real layouts aren’t one grid.
+
+They’re **layers of grids**:
+
+- page-level grid (header / sidebar / content)
+- section-level grid (cards, tiles, galleries)
+- component grid (icon + text + actions)
+
+The rule is simple:
+
+A **grid item** can also be a **grid container**.
+
+---
+
+## The Pattern
+
+Outer grid defines the big structure.
+
+Inner grid defines the structure *inside a region*.
+
+```css
+.page{
+  display: grid;
+  grid-template-columns: 14rem 1fr;
+  grid-template-areas:
+    "header  header"
+    "sidebar content";
+}
+
+.content{
+  grid-area: content;
+  display: grid;              /* nested grid */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+```
+
+No magic.
+
+Just composition.
+
+---
+
+## Common Student Mistake
+
+They try to make one grid do everything.
+
+That’s how you get:
+- unreadable templates
+- brittle placement rules
+- layouts that explode on resize
+
+Nested grids keep each layer clean.
+
+---
+
+## 🧪 MiniMo — Nested Grid Switchboard
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/11-nested-grids-minimo.html"
+  title="Nested Grids — Switchboard"
+  height="1080px"
+/>
+
+Turn the nested grid on/off.  
+Change inner columns.  
+Watch the outer layout stay stable.
+
+---
+
+## The Takeaway
+
+Grid is a system, not a single layout.
+
+Build big structure first.  
+Then grid the inside.

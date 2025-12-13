@@ -1,0 +1,82 @@
+---
+title: "The repeat() Function"
+description: "Write scalable grid templates without repeating yourself. Patterns, symmetry, and clean track definitions."
+sidebar:
+  order: 4
+  label: "repeat()"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Repeat Yourself — But In CSS
+
+Writing this is fine… once:
+
+```css
+grid-template-columns: 1fr 1fr 1fr 1fr;
+```
+
+Writing it all semester is not.
+
+`repeat()` lets you define track patterns cleanly — and scale them without rewriting your template every time.
+
+---
+
+## The Syntax
+
+```css
+grid-template-columns: repeat(4, 1fr);
+```
+
+That means:
+
+- Make **4** columns
+- Each column is **1fr**
+
+Same result. Less noise.
+
+---
+
+## Change the Count, Keep the Pattern
+
+```css
+grid-template-columns: repeat(6, 1fr);
+```
+
+You didn’t rewrite the track list — you changed the count.
+
+That’s the whole point.
+
+---
+
+## Repeat Works for Rows Too
+
+```css
+grid-template-rows: repeat(3, 10rem);
+```
+
+Any track size works: `fr`, `rem`, `%`, `minmax()`, etc.
+
+---
+
+## 🧪 MiniMo — Pattern Forge
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/04-grid-repeat-minimo.html"
+  title="Pattern Forge — repeat() in Action"
+  height="920px"
+/>
+
+Long templates are a smell.  
+Patterns are power.
+
+---
+
+## The Takeaway
+
+Use `repeat()` when:
+
+- Your grid has repeated structure
+- You want to scale column/row counts quickly
+- You want templates that stay readable under pressure

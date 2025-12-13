@@ -1,0 +1,111 @@
+---
+title: 'Mind the Gap'
+description: 'Use gap, row-gap, and column-gap to space flex items cleanly, without margin hacks or layout regrets.'
+sidebar:
+  order: 8
+  label: 'Mind the Gap'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Space without hacks.
+
+Flexbox spent years paired with awkward margin tricks:  
+negative offsets, doubled edges, mysterious extra space.
+
+Modern layout gives us a cleaner option:
+
+- **`gap`** – shared spacing between items on both axes
+- **`row-gap`** – spacing between rows
+- **`column-gap`** – spacing between columns
+
+No extra wrappers. No weird first/last-child rules. Just honest, structural space.
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/07-mind-the-gap-minimo.html"
+  title="Mind the Gap"
+  height="820px"
+/>
+
+---
+
+## gap: Built-In Spacing Between Items
+
+On a flex or grid container, `gap` defines the space **between** items:
+
+```css
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+```
+
+Key details:
+
+- Gap **does not** add space at the outer edges of the container.
+- Gap only appears **between siblings**.
+- Gap respects wrapping automatically.
+
+This alone replaces a surprising number of margin-based spacing systems.
+
+---
+
+## row-gap & column-gap
+
+For finer control, `row-gap` and `column-gap` target each axis separately:
+
+```css
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1.5rem; /* between rows (cross axis for a row layout) */
+  column-gap: 0.75rem; /* between columns (main axis for a row layout) */
+}
+```
+
+Remember the axes:
+
+- In a **row** container:
+
+  - `column-gap` → along the main axis (left/right)
+  - `row-gap` → along the cross axis (top/bottom)
+
+- In a **column** container:
+  - `column-gap` → along the cross axis (left/right)
+  - `row-gap` → along the main axis (top/bottom)
+
+The names stay the same, even when the axes rotate.
+
+---
+
+## Gap vs Margin in a Nutshell
+
+**Margin-based spacing**:
+
+- pushes against neighbors _and_ the container edge
+- often needs special rules for the first/last item
+- can stack in unexpected ways
+
+**Gap-based spacing**:
+
+- only exists **between** items
+- keeps container edges clean
+- follows the flex or grid algorithm instead of fighting it
+
+Margins still have a job for components and page edges.  
+Gap shines as the spacing system **inside** a flex or grid layout.
+
+---
+
+## Where This Leads
+
+With `gap` in the toolkit:
+
+- Flex rows and wrapped sets become easier to read and maintain.
+- Grid layouts share the same mental model for internal spacing.
+- The Flexbox Codex can offer “drop-in spacing recipes” that rely on gap instead of hacks.
+
+Next, we explore how reordering can change what appears where —  
+even when the source order in the HTML stays the same.

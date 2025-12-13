@@ -1,0 +1,108 @@
+---
+title: 'Justify & Align'
+description: 'Place items with intention — along the main axis, across the cross axis, or both when the choreography demands it.'
+sidebar:
+  order: 4
+  label: 'Justify & Align'
+draft: false
+---
+
+## Places, please.
+
+Flexbox gave us **direction**, then **axes** — now we set the stage for motion.  
+**`justify-content`** moves items along the **main axis**.  
+**`align-items`** places them along the **cross axis**.  
+Simple. Precise. Performative.
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/04-justify-and-align-minimo.html"
+  title="Justify & Align"
+  height="640px"
+/>
+
+---
+
+## Justify: Move Along the Line
+
+`justify-content` distributes space **along the main axis**.
+
+```css
+justify-content: flex-start; /* default */
+justify-content: center;
+justify-content: flex-end;
+justify-content: space-between;
+justify-content: space-around;
+justify-content: space-evenly;
+```
+
+When the main axis changes, `justify-content` follows the flow:  
+left/right for rows, top/bottom for columns.
+
+---
+
+## Align: Set the Vertical (or Horizontal) Tone
+
+`align-items` positions items along the **cross axis** — always perpendicular.
+
+```css
+align-items: stretch; /* default */
+align-items: flex-start;
+align-items: center;
+align-items: flex-end;
+```
+
+Stretch is the quiet default: items fill the cross axis unless told otherwise.
+
+---
+
+## Why This Finally Makes Sense
+
+Because the rule holds:
+
+- **justify** = main axis
+- **align** = cross axis
+
+Swap directions, swap axes, keep your sanity.
+
+---
+
+## Centralizing Combo Power Move
+
+```css
+place-items: center;
+```
+
+On its own, this sets align-items and justify-items to center in one stroke
+(albeit only in the cross axis for flexbox, since justify-items doesn’t apply to flex containers).
+
+Even so, the idea endures:
+a one-line mental model for “put it smack in the middle.”
+
+---
+
+## When One Item Stands Apart (align-self)
+
+Group alignment is harmonious... until one item wants special treatment.
+
+```css
+.child {
+  align-self: center;
+}
+```
+
+align-self overrides align-items for that item alone,
+letting a single element rise, sink, or center across the cross axis
+without disturbing its neighbors.
+
+This is the first hint that items get their own say,
+and it sets the stage for the spatial negotiations coming next.
+
+---
+
+## Next Step: Space Negotiation
+
+With alignment under our belt,
+we move into grow, shrink, and basis... How items bargain for space along the main axis,
+and who expands, contracts, or holds their ground.

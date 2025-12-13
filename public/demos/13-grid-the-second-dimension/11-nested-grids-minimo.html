@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nested Grids — Switchboard</title>
+  <style>
+    html, body { width:100%; max-width:100%; overflow-x:hidden; }
+    *, *::before, *::after { box-sizing:border-box; }
+
+    body{
+      margin:0;
+      padding:1.25rem;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color:#e5e7eb;
+    }
+
+    .shell{ display:grid; gap:1rem; }
+
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:1rem;
+    }
+    h1{ margin:0; font-size:1.05rem; font-weight:800; letter-spacing:.02em; }
+    .badge{
+      font-size:.75rem;
+      padding:.18rem .55rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.4);
+      opacity:.9;
+      white-space:nowrap;
+    }
+
+    .panel{
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      gap:1rem;
+      width:100%;
+      align-items:start;
+    }
+    @media (min-width:60rem){
+      .panel{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    }
+
+    .card{
+      border:1px solid rgba(148,163,184,.25);
+      border-radius:16px;
+      padding:1rem;
+      background: linear-gradient(180deg, rgba(15,23,42,.75), rgba(2,6,23,.65));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      min-width:0;
+    }
+
+    .controls{ display:flex; flex-wrap:wrap; gap:.45rem; }
+    .btn{
+      appearance:none;
+      border:1px solid rgba(148,163,184,.35);
+      background: rgba(2,6,23,.45);
+      color:#e5e7eb;
+      border-radius:999px;
+      padding:.4rem .65rem;
+      font-size:.82rem;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(226,232,240,.55); background: rgba(2,6,23,.6); }
+    .btn[aria-pressed="true"]{
+      border-color: rgba(56,189,248,.75);
+      box-shadow:0 0 0 3px rgba(56,189,248,.15);
+    }
+
+    .kvs{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:.82rem;
+      opacity:.92;
+      line-height:1.35;
+      background: rgba(2,6,23,.45);
+      border:1px solid rgba(148,163,184,.25);
+      border-radius:12px;
+      padding:.65rem .75rem;
+      overflow-x:auto;
+      min-width:0;
+      margin-top:.75rem;
+      white-space:pre;
+    }
+
+    .stage{
+      border-radius:16px;
+      border:2px solid rgba(56,189,248,.55);
+      background: rgba(2,6,23,.35);
+      padding:.75rem;
+      max-width:41rem;
+      overflow-x:auto; /* Professor Solo rule */
+      min-width:0;
+    }
+
+    /* OUTER GRID */
+    .page{
+      display:grid;
+      gap:.6rem;
+      min-width: 34rem;
+      grid-template-columns: 12rem 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        "header header"
+        "sidebar content";
+    }
+
+    .block{
+      border-radius:14px;
+      border:1px solid rgba(236,72,153,.55);
+      background: linear-gradient(180deg, rgba(236,72,153,.16), rgba(236,72,153,.07));
+      padding:.7rem .8rem;
+      min-width:0;
+    }
+    .block strong{ display:block; font-size:.9rem; margin-bottom:.15rem; }
+    .block small{ opacity:.85; }
+
+    .headerBlock{
+      grid-area: header;
+      border-color: rgba(56,189,248,.65);
+      background: linear-gradient(180deg, rgba(56,189,248,.18), rgba(56,189,248,.08));
+    }
+    .sidebarBlock{
+      grid-area: sidebar;
+      border-color: rgba(167,139,250,.65);
+      background: linear-gradient(180deg, rgba(167,139,250,.18), rgba(167,139,250,.08));
+    }
+    .contentBlock{
+      grid-area: content;
+      border-color: rgba(250,204,21,.65);
+      background: linear-gradient(180deg, rgba(250,204,21,.14), rgba(250,204,21,.06));
+      padding:.6rem;
+    }
+
+    /* INNER GRID (inside content) */
+    .contentInner{
+      border-radius:12px;
+      border:1px dashed rgba(148,163,184,.35);
+      padding:.6rem;
+      min-width:0;
+    }
+
+    .tiles{
+      display:grid; /* toggled by JS */
+      gap:.6rem;
+    }
+
+    .tile{
+      border-radius:12px;
+      border:1px solid rgba(74,222,128,.55);
+      background: linear-gradient(180deg, rgba(74,222,128,.16), rgba(74,222,128,.06));
+      padding:.55rem .65rem;
+      min-width:0;
+    }
+
+    .note{
+      margin:.75rem 0 0;
+      font-size:.85rem;
+      opacity:.85;
+      line-height:1.35;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="header">
+      <h1>Nested Grids</h1>
+      <span class="badge" id="badge">nested: on · cols: 3</span>
+    </div>
+
+    <div class="panel">
+      <section class="card">
+        <div class="controls" role="group" aria-label="Nested grid controls">
+          <button class="btn" id="toggleNested" aria-pressed="true">nested grid: on</button>
+          <button class="btn" data-cols="2" aria-pressed="false">2 cols</button>
+          <button class="btn" data-cols="3" aria-pressed="true">3 cols</button>
+          <button class="btn" data-cols="4" aria-pressed="false">4 cols</button>
+        </div>
+
+        <div class="kvs" id="kvs"></div>
+
+        <p class="note">
+          Outer grid defines the page. Inner grid arranges tiles inside content. Turning the inner grid off does not affect the outer layout.
+        </p>
+      </section>
+
+      <section class="card">
+        <h2 style="margin:0 0 .6rem 0; font-size:1rem; font-weight:800;">Stage</h2>
+
+        <div class="stage">
+          <main class="page">
+            <header class="block headerBlock"><strong>header</strong><small>outer grid area</small></header>
+            <aside class="block sidebarBlock"><strong>sidebar</strong><small>outer grid area</small></aside>
+
+            <section class="block contentBlock">
+              <strong>content</strong><small>outer grid area</small>
+              <div class="contentInner" style="margin-top:.5rem;">
+                <small style="opacity:.8;">inner region</small>
+                <div class="tiles" id="tiles" style="margin-top:.5rem;">
+                  <div class="tile">tile A</div>
+                  <div class="tile">tile B</div>
+                  <div class="tile">tile C</div>
+                  <div class="tile">tile D</div>
+                  <div class="tile">tile E</div>
+                  <div class="tile">tile F</div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+
+        <p class="note">
+          You’re composing grids like LEGO: big grid first, smaller grids inside.
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const badge = document.getElementById('badge');
+    const kvs = document.getElementById('kvs');
+
+    const toggleBtn = document.getElementById('toggleNested');
+    const colBtns = [...document.querySelectorAll('button[data-cols]')];
+    const tiles = document.getElementById('tiles');
+
+    let nestedOn = true;
+    let cols = 3;
+
+    function apply(){
+      // nested toggle
+      if (nestedOn){
+        tiles.style.display = 'grid';
+        tiles.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      } else {
+        tiles.style.display = 'block';
+        tiles.style.gridTemplateColumns = '';
+      }
+
+      toggleBtn.textContent = nestedOn ? 'nested grid: on' : 'nested grid: off';
+      toggleBtn.setAttribute('aria-pressed', String(nestedOn));
+
+      colBtns.forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.cols) === cols)));
+
+      badge.textContent = `nested: ${nestedOn ? 'on' : 'off'} · cols: ${cols}`;
+
+      kvs.textContent =
+`/* OUTER GRID (page layout) */
+grid-template-areas:
+  "header header"
+  "sidebar content"
+
+/* INNER GRID (inside content) */
+display: ${nestedOn ? 'grid' : 'block'}
+${nestedOn ? `grid-template-columns: repeat(${cols}, 1fr)` : '(no tracks — tiles stack)'}
+gap: .6rem`;
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      nestedOn = !nestedOn;
+      apply();
+    });
+
+    colBtns.forEach(b => b.addEventListener('click', () => {
+      cols = Number(b.dataset.cols);
+      apply();
+    }));
+
+    apply();
+  </script>
+</body>
+</html>

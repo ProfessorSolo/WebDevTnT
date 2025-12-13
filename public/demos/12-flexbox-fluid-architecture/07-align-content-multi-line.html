@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Align-Content & Multi-Line Packing Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --panel: #020617;
+      --panel-border: #1e293b;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.15);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --tag-bg: rgba(15, 23, 42, 0.9);
+      --tag-border: rgba(148, 163, 184, 0.7);
+      --danger: #f97373;
+      --radius-lg: 1.25rem;
+      --radius-pill: 999px;
+      --shadow-soft: 0 20px 45px rgba(15, 23, 42, 0.85);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        sans-serif;
+      background:
+        radial-gradient(circle at top, #0b1120 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+    }
+
+    .flex-lab {
+      max-width: 1120px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.4fr);
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+
+    @media (max-width: 960px) {
+      .flex-lab {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .panel {
+      background: linear-gradient(135deg, #020617, #020617 45%, #030712);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow-soft);
+      padding: 1.25rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(244, 114, 182, 0.12), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .panel-title span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.4rem;
+      height: 1.4rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.7rem;
+      color: var(--text-main);
+    }
+
+    .panel-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    /* Controls */
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 0.75rem;
+    }
+
+    @media (max-width: 480px) {
+      .controls-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+    }
+
+    .control-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.3rem;
+      color: var(--text-muted);
+    }
+
+    .control-label strong {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    select,
+    input[type="range"] {
+      width: 100%;
+    }
+
+    select {
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.92);
+      color: var(--text-main);
+      padding: 0.35rem 0.6rem;
+      font-size: 0.78rem;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+
+    input[type="range"] {
+      appearance: none;
+      height: 0.4rem;
+      border-radius: 999px;
+      background: rgba(30, 64, 175, 0.6);
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.35);
+      cursor: pointer;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.35);
+      cursor: pointer;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .toggle {
+      position: relative;
+      width: 2.4rem;
+      height: 1.3rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle-knob {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 999px;
+      background: #e5e7eb;
+      box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.5);
+      transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+    }
+
+    .toggle[data-on="true"] {
+      border-color: rgba(56, 189, 248, 0.8);
+      background: radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.5), rgba(15, 23, 42, 0.9));
+    }
+
+    .toggle[data-on="true"] .toggle-knob {
+      transform: translateX(1rem);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.6);
+    }
+
+    .height-readout {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .note {
+      margin-top: 0.6rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .note strong {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    /* Stage */
+
+    .stage-shell {
+      border-radius: calc(var(--radius-lg) - 2px);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 0.9rem;
+      background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98)),
+        radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 55%);
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.12rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 0.7rem;
+      gap: 0.3rem;
+    }
+
+    .pill-dot {
+      width: 0.4rem;
+      height: 0.4rem;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+    }
+
+    .axes-readout {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .axes-readout span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      margin-left: 0.4rem;
+    }
+
+    .axes-readout code {
+      font-size: 0.74rem;
+      padding: 0.08rem 0.35rem;
+      border-radius: 0.35rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+      color: var(--text-main);
+    }
+
+    .stage-wrap {
+      border-radius: 0.9rem;
+      background: radial-gradient(circle at top, #020617 0, #020617 50%, #000 100%);
+      padding: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stage-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
+        radial-gradient(circle at 88% 100%, rgba(244, 114, 182, 0.18), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .flex-container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: stretch;
+      justify-content: flex-start;
+      gap: 0.5rem;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      background:
+        radial-gradient(circle at top left, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.98)),
+        radial-gradient(circle at bottom right, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.98));
+      border: 1px dashed rgba(148, 163, 184, 0.6);
+      transition:
+        height 150ms ease-out,
+        border-color 140ms ease-out,
+        box-shadow 140ms ease-out,
+        background 200ms ease-out;
+    }
+
+    .flex-container.is-nowrap {
+      border-style: solid;
+      border-color: rgba(148, 163, 184, 0.9);
+    }
+
+    .flex-tag {
+      padding: 0.4rem 0.85rem;
+      border-radius: var(--radius-pill);
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--text-main);
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      white-space: nowrap;
+      box-shadow: 0 0 15px rgba(15, 23, 42, 0.95);
+    }
+
+    .flex-tag span {
+      display: inline-flex;
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, #e5e7eb, #38bdf8);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+    }
+
+    .flex-tag[data-kind="semantic"] {
+      border-color: rgba(52, 211, 153, 0.8);
+    }
+
+    .flex-tag[data-kind="layout"] {
+      border-color: rgba(96, 165, 250, 0.9);
+    }
+
+    .flex-tag[data-kind="interaction"] {
+      border-color: rgba(244, 114, 182, 0.9);
+    }
+
+    .hint {
+      margin-top: 0.6rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .hint strong {
+      color: var(--accent);
+    }
+
+    .hint span {
+      color: var(--danger);
+    }
+  </style>
+</head>
+<body>
+  <main class="flex-lab" aria-label="Flexbox multi-line alignment lab">
+    <section class="panel">
+      <div class="panel-inner">
+        <div class="panel-title-row">
+          <div class="panel-title">
+            <span>07</span>
+            FLEXBOX · MULTI-LINE
+          </div>
+          <div class="panel-subtitle">
+            Tune the knobs, watch the rows move.
+          </div>
+        </div>
+
+        <div class="stage-shell">
+          <div class="stage-header">
+            <div class="pill">
+              <div class="pill-dot" aria-hidden="true"></div>
+              <span>Align-Content & Justify-Content</span>
+            </div>
+            <div class="axes-readout">
+              Axes:
+              <span>
+                main
+                <code id="main-axis-readout">row → x</code>
+              </span>
+              <span>
+                cross
+                <code id="cross-axis-readout">column → y</code>
+              </span>
+            </div>
+          </div>
+
+          <div class="stage-wrap">
+            <div
+              id="flex-container"
+              class="flex-container"
+              aria-label="Wrapped flex container of tags"
+            >
+              <button class="flex-tag" data-kind="semantic">
+                <span aria-hidden="true"></span> HTML
+              </button>
+              <button class="flex-tag" data-kind="semantic">
+                <span aria-hidden="true"></span> CSS
+              </button>
+              <button class="flex-tag" data-kind="layout">
+                <span aria-hidden="true"></span> Flexbox
+              </button>
+              <button class="flex-tag" data-kind="layout">
+                <span aria-hidden="true"></span> Grid
+              </button>
+              <button class="flex-tag" data-kind="interaction">
+                <span aria-hidden="true"></span> Animation
+              </button>
+              <button class="flex-tag" data-kind="semantic">
+                <span aria-hidden="true"></span> Forms
+              </button>
+              <button class="flex-tag" data-kind="layout">
+                <span aria-hidden="true"></span> Responsive
+              </button>
+              <button class="flex-tag" data-kind="interaction">
+                <span aria-hidden="true"></span> Hover
+              </button>
+              <button class="flex-tag" data-kind="interaction">
+                <span aria-hidden="true"></span> Focus
+              </button>
+              <button class="flex-tag" data-kind="semantic">
+                <span aria-hidden="true"></span> ARIA
+              </button>
+              <button class="flex-tag" data-kind="layout">
+                <span aria-hidden="true"></span> Gap
+              </button>
+              <button class="flex-tag" data-kind="layout">
+                <span aria-hidden="true"></span> Wrap
+              </button>
+            </div>
+          </div>
+
+          <p class="hint">
+            Tip: <strong>justify-content</strong> always works on items along the
+            <em>main</em> axis. <strong>align-content</strong> works on the
+            <em>stack of lines</em> on the cross axis — and only when you have
+            wrapping, multiple lines, and extra space.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-inner">
+        <div class="panel-title-row">
+          <div class="panel-title">
+            <span>LAB</span>
+            CONTROLS
+          </div>
+        </div>
+
+        <div class="controls-grid" aria-label="Flexbox alignment controls">
+          <div class="control-group">
+            <label class="control-label" for="direction-select">
+              <strong>flex-direction</strong>
+              <span>main vs cross axes</span>
+            </label>
+            <select id="direction-select">
+              <option value="row">row (x, left → right)</option>
+              <option value="row-reverse">row-reverse (x, right → left)</option>
+              <option value="column">column (y, top → bottom)</option>
+              <option value="column-reverse">column-reverse (y, bottom → top)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="justify-select">
+              <strong>justify-content</strong>
+              <span>within each line</span>
+            </label>
+            <select id="justify-select">
+              <option value="flex-start">flex-start</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="space-between">space-between</option>
+              <option value="space-around">space-around</option>
+              <option value="space-evenly">space-evenly</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="align-content-select">
+              <strong>align-content</strong>
+              <span>stack of lines</span>
+            </label>
+            <select id="align-content-select">
+              <option value="stretch">stretch (default)</option>
+              <option value="flex-start">flex-start</option>
+              <option value="center">center</option>
+              <option value="flex-end">flex-end</option>
+              <option value="space-between">space-between</option>
+              <option value="space-around">space-around</option>
+              <option value="space-evenly">space-evenly</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label" for="height-range">
+              <strong>container height</strong>
+              <span class="height-readout">
+                <span id="height-value">260</span> px
+              </span>
+            </label>
+            <input
+              type="range"
+              id="height-range"
+              min="180"
+              max="360"
+              step="10"
+              value="260"
+              aria-label="Adjust container height"
+            />
+          </div>
+        </div>
+
+        <div class="toggle-row" aria-label="Wrap and debug options">
+          <div
+            class="toggle"
+            id="wrap-toggle"
+            data-on="true"
+            role="switch"
+            aria-checked="true"
+            tabindex="0"
+          >
+            <div class="toggle-knob"></div>
+          </div>
+          <div>
+            <div>flex-wrap: <strong id="wrap-label">wrap</strong></div>
+            <div class="note">
+              Turn wrapping off to see <strong>single-line</strong> behavior.
+            </div>
+          </div>
+        </div>
+
+        <p class="note">
+          Watch for the classic gotcha:
+          <strong>justify-content</strong> still works on items in each line.
+          <strong>align-content</strong> only kicks in when you have wrapping,
+          multiple lines, and cross-axis space to distribute.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const container = document.getElementById("flex-container");
+      const direction = document.getElementById("direction-select");
+      const justify = document.getElementById("justify-select");
+      const alignContent = document.getElementById("align-content-select");
+      const heightRange = document.getElementById("height-range");
+      const heightValue = document.getElementById("height-value");
+      const wrapToggle = document.getElementById("wrap-toggle");
+      const wrapLabel = document.getElementById("wrap-label");
+      const mainAxisReadout = document.getElementById("main-axis-readout");
+      const crossAxisReadout = document.getElementById("cross-axis-readout");
+
+      function updateAxesReadout(dir) {
+        switch (dir) {
+          case "row":
+            mainAxisReadout.textContent = "row → x";
+            crossAxisReadout.textContent = "column → y";
+            break;
+          case "row-reverse":
+            mainAxisReadout.textContent = "row-reverse → -x";
+            crossAxisReadout.textContent = "column → y";
+            break;
+          case "column":
+            mainAxisReadout.textContent = "column → y";
+            crossAxisReadout.textContent = "row → x";
+            break;
+          case "column-reverse":
+            mainAxisReadout.textContent = "column-reverse → -y";
+            crossAxisReadout.textContent = "row → x";
+            break;
+        }
+      }
+
+      function applyStyles() {
+        container.style.flexDirection = direction.value;
+        container.style.justifyContent = justify.value;
+        container.style.alignContent = alignContent.value;
+        container.style.height = heightRange.value + "px";
+        heightValue.textContent = heightRange.value;
+        updateAxesReadout(direction.value);
+      }
+
+      direction.addEventListener("change", applyStyles);
+      justify.addEventListener("change", applyStyles);
+      alignContent.addEventListener("change", applyStyles);
+      heightRange.addEventListener("input", applyStyles);
+
+      function toggleWrap() {
+        const isOn = wrapToggle.getAttribute("data-on") === "true";
+        const next = !isOn;
+        wrapToggle.setAttribute("data-on", String(next));
+        const wrapValue = next ? "wrap" : "nowrap";
+        container.style.flexWrap = wrapValue;
+        wrapLabel.textContent = wrapValue;
+        container.classList.toggle("is-nowrap", !next);
+      }
+
+      wrapToggle.addEventListener("click", toggleWrap);
+      wrapToggle.addEventListener("keydown", function (event) {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          toggleWrap();
+        }
+      });
+
+      // initial state
+      container.style.flexWrap = "wrap";
+      applyStyles();
+    })();
+  </script>
+</body>
+</html>

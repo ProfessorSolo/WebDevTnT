@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Placement Console — Lines, Span & Negative Lines</title>
+<style>
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  padding:1.25rem;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  background:radial-gradient(circle at top,#0f172a 0,#020617 55%,#000 100%);
+  color:#e5e7eb
+}
+.kvs{font-family:monospace;font-size:.8rem;margin-bottom:.5rem}
+.controls{display:flex;gap:.5rem;margin-bottom:.75rem}
+button{
+  background:#020617;
+  color:#e5e7eb;
+  border:1px solid #64748b;
+  border-radius:999px;
+  padding:.35rem .6rem;
+  cursor:pointer
+}
+button[aria-pressed="true"]{border-color:#38bdf8}
+.stage{
+  border:2px solid #38bdf8;
+  border-radius:12px;
+  padding:.75rem;
+  max-width:41rem;
+  overflow-x:auto
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  grid-auto-rows:6rem;
+  gap:.6rem;
+  min-width:32rem
+}
+.item{
+  border:1px solid #ec4899;
+  border-radius:12px;
+  padding:.5rem
+}
+.item.active{
+  border-color:#facc15
+}
+</style>
+</head>
+<body>
+<div class="kvs" id="kvs">grid-column: 2 / span 2</div>
+
+<div class="controls">
+  <button data-mode="span" aria-pressed="true">span</button>
+  <button data-mode="lines">lines</button>
+  <button data-mode="negative">negative</button>
+</div>
+
+<div class="stage">
+  <div class="grid">
+    <div class="item active" id="item">A</div>
+    <div class="item">B</div>
+    <div class="item">C</div>
+    <div class="item">D</div>
+    <div class="item">E</div>
+    <div class="item">F</div>
+    <div class="item">G</div>
+    <div class="item">H</div>
+  </div>
+</div>
+
+<script>
+const item=document.getElementById('item');
+const kvs=document.getElementById('kvs');
+
+document.querySelectorAll('button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    const m=b.dataset.mode;
+    if(m==='span'){item.style.gridColumn='2 / span 2';kvs.textContent='grid-column: 2 / span 2'}
+    if(m==='lines'){item.style.gridColumn='2 / 4';kvs.textContent='grid-column: 2 / 4'}
+    if(m==='negative'){item.style.gridColumn='-3 / -1';kvs.textContent='grid-column: -3 / -1'}
+  }
+});
+</script>
+</body>
+</html>

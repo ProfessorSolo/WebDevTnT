@@ -1,0 +1,77 @@
+---
+title: "Placement: Lines, Span & Negative Lines"
+description: "Manual control of grid items using line numbers, span, and negative line anchoring."
+sidebar:
+  order: 7
+  label: "Placement"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Manual Placement Begins
+
+Auto-placement is polite.
+
+This is where you stop being polite.
+
+Grid placement is **line-based**:
+- Lines start at **1**
+- You choose **start / end** or **start / span**
+- Anything not placed stays in auto-flow
+
+---
+
+## Two Placement Styles
+
+### Start / End (Line-Based)
+
+```css
+grid-column: 1 / 3;
+grid-row: 2 / 4;
+```
+
+### Start / Span (Distance-Based)
+
+```css
+grid-column: 2 / span 2;
+grid-row: 1 / span 3;
+```
+
+Same power. Different mental model.
+
+---
+
+## Negative Lines: Anchoring from the Edge
+
+Grid lines also count **backward**.
+
+- `-1` → last line
+- `-2` → second-to-last
+
+```css
+grid-column: -3 / -1;
+```
+
+You don’t need to know how many columns exist.  
+You just aim for the edge.
+
+---
+
+## 🧪 MiniMo — Placement Console
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/07-grid-placement-minimo.html"
+  title="Placement Console — Lines, Span & Negative Lines"
+  height="1080px"
+/>
+
+---
+
+## The Takeaway
+
+Auto-placement is convenience.
+
+Placement is intent.
+
+Negative lines make that intent **resilient**.

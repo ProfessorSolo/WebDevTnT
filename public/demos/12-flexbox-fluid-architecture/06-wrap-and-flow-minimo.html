@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MiniMo — Wrap & Flow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      /* Layout surfaces */
+      --surface-app: #020617;
+      --surface-panel: #0b1120;
+      --surface-interactive: #111827;
+      --surface-interactive-hover: #1f2937;
+
+      /* Foreground */
+      --text-primary: #e5e7eb;
+
+      /* Accent system */
+      --accent-primary: #38bdf8;
+      --accent-primary-border: #38bdf8;
+      --accent-primary-glow: rgba(56, 189, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+      font-family: system-ui, sans-serif;
+      background: radial-gradient(
+        circle at top,
+        #0f172a 0,
+        var(--surface-app) 70%,
+        #000 100%
+      );
+      color: var(--text-primary);
+      padding: 1.25rem;
+    }
+
+    .shell {
+      width: 100%;
+      background: var(--surface-panel);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: 0 0 32px var(--accent-primary-glow);
+      max-width: 720px;
+    }
+
+    .label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.75rem;
+      color: var(--accent-primary);
+      margin-bottom: 1rem;
+    }
+
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .controls-section-label {
+      width: 100%;
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    button {
+      background: var(--surface-interactive);
+      color: var(--text-primary);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: 150ms ease-out;
+      font-size: 0.8rem;
+    }
+
+    button:hover {
+      background: var(--surface-interactive-hover);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 12px var(--accent-primary-glow);
+    }
+
+    button.is-active {
+      border-color: var(--accent-primary-border);
+      box-shadow: 0 0 16px var(--accent-primary-glow);
+      background: #020617;
+    }
+
+    .zone {
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      background: #0a0f1e;
+      position: relative;
+      margin-top: 0.5rem;
+    }
+
+    .zone-title {
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+      color: rgba(209, 213, 219, 0.9);
+    }
+
+    .viewport-note {
+      font-size: 0.75rem;
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .track-frame {
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(148, 163, 184, 0.4);
+      padding: 0.5rem;
+      overflow: hidden;
+    }
+
+    .track {
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.35rem;
+      transition: 200ms ease-out;
+      width: 100%;
+    }
+
+    .chip {
+      background: var(--surface-interactive);
+      padding: 0.45rem 0.9rem;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      font-size: 0.8rem;
+      white-space: nowrap;
+      text-align: center;
+      flex: 0 0 6.75rem; /* fixed basis so wrapping is very visible */
+    }
+
+    .chip strong {
+      display: block;
+      font-size: 0.78rem;
+    }
+
+    .chip small {
+      display: block;
+      font-size: 0.7rem;
+      opacity: 0.8;
+      margin-top: 0.1rem;
+    }
+
+    .note {
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    /* Width presets via data-width */
+    .track-frame[data-width='narrow'] {
+      max-width: 260px;
+    }
+
+    .track-frame[data-width='medium'] {
+      max-width: 360px;
+    }
+
+    .track-frame[data-width='wide'] {
+      max-width: 520px;
+    }
+
+    /* Direction via data-dir */
+    .track[data-dir='row'] {
+      flex-direction: row;
+    }
+
+    .track[data-dir='column'] {
+      flex-direction: column;
+      min-height: 220px;
+    }
+
+    /* Wrap modes via data-wrap */
+    .track[data-wrap='nowrap'] {
+      flex-wrap: nowrap;
+    }
+
+    .track[data-wrap='wrap'] {
+      flex-wrap: wrap;
+    }
+
+    .track[data-wrap='wrap-reverse'] {
+      flex-wrap: wrap-reverse;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <div class="label">Wrap & Flow</div>
+
+    <div class="controls" id="controls">
+      <div class="controls-section-label">Direction</div>
+      <button data-type="dir" data-value="row">row</button>
+      <button data-type="dir" data-value="column">column</button>
+
+      <div class="controls-section-label">Wrap mode</div>
+      <button data-type="wrap" data-value="nowrap">nowrap</button>
+      <button data-type="wrap" data-value="wrap">wrap</button>
+      <button data-type="wrap" data-value="wrap-reverse">wrap-reverse</button>
+
+      <div class="controls-section-label">Track width</div>
+      <button data-type="width" data-value="narrow">narrow</button>
+      <button data-type="width" data-value="medium">medium</button>
+      <button data-type="width" data-value="wide">wide</button>
+    </div>
+
+    <div class="zone">
+      <div class="zone-title" id="zoneTitle">Row · nowrap · medium width</div>
+      <p class="viewport-note">
+        Change width and wrap mode to see items either squeeze onto one line or spill onto new lines.
+      </p>
+      <div class="track-frame" id="frame" data-width="medium">
+        <div class="track" id="track" data-dir="row" data-wrap="nowrap">
+          <div class="chip">
+            <strong>One</strong>
+            <small>flex: 0 0 6.75rem</small>
+          </div>
+          <div class="chip">
+            <strong>Two</strong>
+            <small>flex: 0 0 6.75rem</small>
+          </div>
+          <div class="chip">
+            <strong>Three</strong>
+            <small>flex: 0 0 6.75rem</small>
+          </div>
+          <div class="chip">
+            <strong>Four</strong>
+            <small>flex: 0 0 6.75rem</small>
+          </div>
+          <div class="chip">
+            <strong>Five</strong>
+            <small>flex: 0 0 6.75rem</small>
+          </div>
+        </div>
+      </div>
+
+      <p class="note" id="modeNote">
+        With <code>flex-wrap: nowrap;</code>, all items stay on one line. Extra items squeeze, and space is handled by shrink or overflow.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const track = document.getElementById('track');
+    const frame = document.getElementById('frame');
+    const zoneTitle = document.getElementById('zoneTitle');
+    const modeNote = document.getElementById('modeNote');
+    const buttons = Array.from(document.querySelectorAll('#controls button'));
+
+    const state = {
+      dir: 'row',
+      wrap: 'nowrap',
+      width: 'medium',
+    };
+
+    const notes = {
+      row: {
+        nowrap:
+          'With row + nowrap, items stay on one horizontal line and squeeze as needed.',
+        wrap:
+          'With row + wrap, items form new rows below when there is not enough horizontal space.',
+        'wrap-reverse':
+          'With row + wrap-reverse, new rows appear above the first line along the cross axis.',
+      },
+      column: {
+        nowrap:
+          'With column + nowrap, items stack in a single vertical column and squeeze along the main axis.',
+        wrap:
+          'With column + wrap, items create new columns beside the original when vertical space runs out.',
+        'wrap-reverse':
+          'With column + wrap-reverse, new columns appear on the opposite side along the cross axis.',
+      },
+    };
+
+    function applyState() {
+      track.dataset.dir = state.dir;
+      track.dataset.wrap = state.wrap;
+      frame.dataset.width = state.width;
+
+      zoneTitle.textContent =
+        (state.dir === 'row' ? 'Row' : 'Column') +
+        ' · ' +
+        state.wrap +
+        ' · ' +
+        state.width +
+        ' width';
+
+      modeNote.textContent = notes[state.dir][state.wrap];
+
+      buttons.forEach((btn) => {
+        const type = btn.dataset.type;
+        const value = btn.dataset.value;
+        const isActive = state[type] === value;
+        btn.classList.toggle('is-active', isActive);
+      });
+    }
+
+    buttons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const type = btn.dataset.type;
+        const value = btn.dataset.value;
+        state[type] = value;
+        applyState();
+      })
+    );
+
+    applyState();
+  </script>
+</body>
+</html>

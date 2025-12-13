@@ -1,0 +1,83 @@
+---
+title: 'Flex Items'
+description: 'Meet the elements that come alive once a flex container enters the room.'
+sidebar:
+  order: 2
+  label: 'Flex Items'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Children of the Container
+
+When a container goes flex, its **direct children** get an instant promotion:  
+they become **flex items**. No ceremony. No opt-in.  
+Just an entire row of elements suddenly playing by new rules.
+
+<MiniMo
+  src="/demos/12-flexbox-fluid-architecture/02-flex-items-minimo.html"
+  title="Flex Items: The Cast of Characters"
+  height="400px"
+/>
+
+---
+
+## What We Establish Here
+
+A flex _container_ sets the rules.  
+Its _items_ follow them.
+
+When we write:
+
+```html
+<div class="crew">
+  <div class="member">Alpha</div>
+  <div class="member">Bravo</div>
+  <div class="member">
+    Wrapper
+    <span class="nested">Nested</span>
+  </div>
+  <div class="member">Delta</div>
+</div>
+```
+
+…and activate it:
+
+```css
+.crew {
+  display: flex;
+}
+```
+
+We now have:
+
+- A **flex container** (`.crew`)
+- Four **flex items** (each direct `.member` child)
+- One **nested element** (`.nested`) that is _not_ a flex item
+
+Direct children are in the club. Grandchildren are not.
+
+---
+
+## How Flex Items Behave Right Now
+
+With no extra flex properties, items:
+
+- Line up in a **row** (the default main axis)
+- Sit side-by-side in source order
+- Keep their natural size as much as space allows
+- Treat nested content as regular inline content inside the item
+
+This is base-level flex behavior.  
+No growth rules. No special alignment. No reordering.
+
+---
+
+## Why This Matters
+
+Every upcoming flexbox feature — axes, wrapping, growth, alignment, reordering —  
+targets **the items**, not random descendants.
+
+As long as we remember that _only direct children of the container are flex items_,  
+the rest of the flexbox story stays far easier to follow.

@@ -1,0 +1,89 @@
+---
+title: "Auto-Flow & Placement Direction"
+description: "How Grid decides where items go. Row vs column flow, dense packing, and why order suddenly matters."
+sidebar:
+  order: 6
+  label: "Auto-Flow"
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## How Grid Decides What Goes Where
+
+When you don’t explicitly place items, Grid makes choices.
+
+Those choices are governed by **auto-placement** — specifically `grid-auto-flow`.
+
+This is the rulebook Grid uses to fill the grid.
+
+---
+
+## The Default: Row Flow
+
+```css
+grid-auto-flow: row;
+```
+
+This is the default behavior:
+
+- Fill rows left to right
+- Then create new rows as needed
+
+It feels familiar — but it’s still Grid, not Flexbox.
+
+---
+
+## Column Flow Changes Everything
+
+```css
+grid-auto-flow: column;
+```
+
+Now Grid:
+
+- Fills top to bottom
+- Then creates new columns
+
+Same items.  
+Same grid.  
+Very different outcome.
+
+---
+
+## Dense Packing (Use Carefully)
+
+```css
+grid-auto-flow: row dense;
+```
+
+`dense` tells Grid to backfill gaps when possible.
+
+This can:
+- Reduce empty space
+- Reorder items visually
+
+Powerful — but potentially confusing if overused.
+
+---
+
+## 🧪 MiniMo — Auto-Flow Control Room
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/06-grid-auto-flow-minimo.html"
+  title="Auto-Flow Control Room"
+  height="980px"
+/>
+
+Change the flow direction.  
+Add gaps.  
+Watch Grid rethink placement.
+
+---
+
+## The Takeaway
+
+Auto-placement is predictable — once you know the rules.
+
+Control the flow,  
+or Grid will happily choose for you.

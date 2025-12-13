@@ -1,0 +1,89 @@
+---
+title: 'Alignment & Gaps'
+description: 'Control spacing and alignment inside the grid. Gaps, item alignment, and content alignment.'
+sidebar:
+  order: 10
+  label: 'Alignment & Gaps'
+draft: false
+---
+
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Space Is a First-Class Citizen
+
+Grid doesn’t just place items — it manages **space**.
+
+There are two different alignment stories:
+
+- how items align **inside their cells**
+- how the grid aligns **inside its container**
+
+And one universal spacer: `gap`.
+
+---
+
+## Gaps Are Not Margins
+
+```css
+grid-template-columns: repeat(4, 1fr);
+gap: 1rem;
+```
+
+`gap`:
+
+- works in both directions
+- doesn’t collapse
+- doesn’t leak outside the grid
+
+Use it. Love it.
+
+---
+
+## Aligning Items (Inside Cells)
+
+These affect how items sit **within their grid areas**:
+
+- `align-items` (block axis)
+- `justify-items` (inline axis)
+
+```css
+align-items: center;
+justify-items: stretch;
+```
+
+---
+
+## Aligning the Grid Itself
+
+These affect how the **entire grid** is packed inside the container:
+
+- `align-content`
+- `justify-content`
+
+They only matter when there’s extra space.
+
+---
+
+## 🧪 MiniMo — Alignment Lab
+
+<MiniMo
+  src="/demos/13-grid-the-second-dimension/10-grid-alignment-minimo.html"
+  title="Alignment Lab — Gaps & Alignment"
+  height="980px"
+/>
+
+Change gaps.  
+Shift items.  
+Watch space move.
+
+---
+
+## The Takeaway
+
+Grid gives you control over:
+
+- placement
+- spacing
+- alignment
+
+Once you see the difference, the properties stop feeling redundant.
