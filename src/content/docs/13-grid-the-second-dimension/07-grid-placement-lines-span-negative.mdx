@@ -1,12 +1,13 @@
 ---
-title: "Placement: Lines, Span & Negative Lines"
-description: "Manual control of grid items using line numbers, span, and negative line anchoring."
+title: 'Placement: Lines, Span & Negative Lines'
+description: 'Manual control of grid items using line numbers, span, and negative line anchoring.'
 sidebar:
   order: 7
-  label: "Placement"
+  label: 'Item Placement by Line'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Manual Placement Begins
@@ -16,6 +17,7 @@ Auto-placement is polite.
 This is where you stop being polite.
 
 Grid placement is **line-based**:
+
 - Lines start at **1**
 - You choose **start / end** or **start / span**
 - Anything not placed stays in auto-flow
@@ -63,7 +65,7 @@ You just aim for the edge.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/07-grid-placement-minimo.html"
   title="Placement Console — Lines, Span & Negative Lines"
-  height="1080px"
+  height="500px"
 />
 
 ---
@@ -75,3 +77,36 @@ Auto-placement is convenience.
 Placement is intent.
 
 Negative lines make that intent **resilient**.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/07-grid-lines-spans-negative-lines.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Lines & Spans Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/07-grid-lines-spans-negative-lines.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Lines & Spans Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/07-grid-lines-spans-negative-lines.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Next Room: **Grid Template Areas**
+
+Named spaces are easier to work with than edge lines.

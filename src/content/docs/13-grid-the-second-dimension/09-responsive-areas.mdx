@@ -1,12 +1,13 @@
 ---
-title: "Responsive Areas"
-description: "Rewrite page layout at breakpoints using grid-template-areas. Same HTML. New blueprint."
+title: 'Responsive Areas'
+description: 'Rewrite page layout at breakpoints using grid-template-areas. Same HTML. New blueprint.'
 sidebar:
   order: 9
-  label: "Responsive Areas"
+  label: 'Responsive Areas'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Same HTML. New Blueprint.
@@ -25,28 +26,29 @@ You can **rebuild the entire page layout** at different breakpoints without touc
 2. Override the blueprint in a media query
 
 ```css
-.layout{
+.layout {
   display: grid;
   grid-template-columns: 14rem 1fr;
   grid-template-areas:
-    "header  header"
-    "sidebar content"
-    "footer  footer";
+    'header  header'
+    'sidebar content'
+    'footer  footer';
 }
 
-@media (max-width: 48rem){
-  .layout{
+@media (max-width: 48rem) {
+  .layout {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "header"
-      "content"
-      "sidebar"
-      "footer";
+      'header'
+      'content'
+      'sidebar'
+      'footer';
   }
 }
 ```
 
 This is the secret sauce:
+
 - same elements
 - same `grid-area` names
 - different map
@@ -66,7 +68,7 @@ This is the secret sauce:
 <MiniMo
   src="/demos/13-grid-the-second-dimension/09-responsive-areas-minimo.html"
   title="Responsive Blueprint Switcher"
-  height="1040px"
+  height="700px"
 />
 
 Toggle between desktop, tablet, and mobile blueprints.  
@@ -81,3 +83,36 @@ Grid areas aren’t just readable.
 They’re refactorable.
 
 That’s the difference between “layout” and “layout system.”
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/09-responsive-grid-areas.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Responsive Grid Areas Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/09-responsive-grid-areas.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Responsive Grid Areas Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/09-responsive-grid-areas.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Up Ahead: **Alignment and Spacing**
+
+How are items aligned within an area and how are the spaces between defined.

@@ -1,12 +1,13 @@
 ---
-title: "Fractional Units (fr)"
-description: "The grid-native unit for dividing remaining space into flexible tracks."
+title: 'Fractional Units (fr)'
+description: 'The grid-native unit for dividing remaining space into flexible tracks.'
 sidebar:
   order: 3
-  label: "fr Units"
+  label: 'fr Units'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## The Unit That Makes Grid Feel Alive
@@ -42,8 +43,41 @@ Then the remainder becomes fraction territory.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/03-grid-fr-units-minimo.html"
   title="Fraction Wars — Understanding fr"
-  height="840px"
+  height="640px"
 />
 
 Pixels define.  
 Fractions adapt.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/03-grid-fractional-units.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Fractional Units - fr - Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/03-grid-fractional-units.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Fractional Units - fr - Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/03-grid-fractional-units.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Skip the Repetition: **repeat()**
+
+Prevent your track definitions from becoming unmanageable.

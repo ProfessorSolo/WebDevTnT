@@ -1,12 +1,13 @@
 ---
-title: "Auto-Flow & Placement Direction"
-description: "How Grid decides where items go. Row vs column flow, dense packing, and why order suddenly matters."
+title: 'Auto-Flow & Placement Direction'
+description: 'How Grid decides where items go. Row vs column flow, dense packing, and why order suddenly matters.'
 sidebar:
   order: 6
-  label: "Auto-Flow"
+  label: 'Auto-Flow'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## How Grid Decides What Goes Where
@@ -60,6 +61,7 @@ grid-auto-flow: row dense;
 `dense` tells Grid to backfill gaps when possible.
 
 This can:
+
 - Reduce empty space
 - Reorder items visually
 
@@ -72,7 +74,7 @@ Powerful — but potentially confusing if overused.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/06-grid-auto-flow-minimo.html"
   title="Auto-Flow Control Room"
-  height="980px"
+  height="720px"
 />
 
 Change the flow direction.  
@@ -87,3 +89,36 @@ Auto-placement is predictable — once you know the rules.
 
 Control the flow,  
 or Grid will happily choose for you.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/06-grid-auto-flow.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Auto Flow Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/06-grid-auto-flow.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Auto Flow Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/06-grid-auto-flow.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Next Column: **Grid Lines & Spans**
+
+Counting lines, forwards and backwards, and spanning them too.

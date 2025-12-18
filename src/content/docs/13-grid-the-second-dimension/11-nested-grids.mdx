@@ -1,12 +1,13 @@
 ---
-title: "Nested Grids"
-description: "Grids within grids. A grid item can also be a grid container — and that’s how real layouts are built."
+title: 'Nested Grids'
+description: 'Grids within grids. A grid item can also be a grid container — and that’s how real layouts are built.'
 sidebar:
   order: 11
-  label: "Nested Grids"
+  label: 'Nested Grids'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Grid All the Way Down
@@ -29,20 +30,20 @@ A **grid item** can also be a **grid container**.
 
 Outer grid defines the big structure.
 
-Inner grid defines the structure *inside a region*.
+Inner grid defines the structure _inside a region_.
 
 ```css
-.page{
+.page {
   display: grid;
   grid-template-columns: 14rem 1fr;
   grid-template-areas:
-    "header  header"
-    "sidebar content";
+    'header  header'
+    'sidebar content';
 }
 
-.content{
+.content {
   grid-area: content;
-  display: grid;              /* nested grid */
+  display: grid; /* nested grid */
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
@@ -59,6 +60,7 @@ Just composition.
 They try to make one grid do everything.
 
 That’s how you get:
+
 - unreadable templates
 - brittle placement rules
 - layouts that explode on resize
@@ -72,7 +74,7 @@ Nested grids keep each layer clean.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/11-nested-grids-minimo.html"
   title="Nested Grids — Switchboard"
-  height="1080px"
+  height="800px"
 />
 
 Turn the nested grid on/off.  
@@ -87,3 +89,36 @@ Grid is a system, not a single layout.
 
 Build big structure first.  
 Then grid the inside.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/11-nested-grids.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Nested Grid Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/11-nested-grids.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Nested Grid Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/11-nested-grids.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Stack Time: **Layering & Overlap**
+
+Welcoming the Z-Index to the Grid.

@@ -1,12 +1,13 @@
 ---
-title: "Named Areas"
-description: "Lay out pages like a blueprint. Use grid-template-areas to make structure readable and resilient."
+title: 'Named Areas'
+description: 'Lay out pages like a blueprint. Use grid-template-areas to make structure readable and resilient.'
 sidebar:
   order: 8
-  label: "Areas"
+  label: 'Named Template Areas'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Blueprints, Not Coordinates
@@ -29,15 +30,15 @@ That’s what `grid-template-areas` is for: readable layout intent.
 ## Define Areas on the Container
 
 ```css
-.layout{
+.layout {
   display: grid;
   grid-template-columns: 14rem 1fr;
   grid-template-rows: auto 1fr auto;
 
   grid-template-areas:
-    "header  header"
-    "sidebar content"
-    "footer  footer";
+    'header  header'
+    'sidebar content'
+    'footer  footer';
 }
 ```
 
@@ -48,10 +49,18 @@ The strings describe the grid.
 ## Assign Items to Areas
 
 ```css
-header  { grid-area: header; }
-aside   { grid-area: sidebar; }
-main    { grid-area: content; }
-footer  { grid-area: footer; }
+header {
+  grid-area: header;
+}
+aside {
+  grid-area: sidebar;
+}
+main {
+  grid-area: content;
+}
+footer {
+  grid-area: footer;
+}
 ```
 
 Now your HTML can stay semantic, and the grid does the layout work.
@@ -64,9 +73,9 @@ You can leave cells unused with `.`
 
 ```css
 grid-template-areas:
-  "header header"
-  ".      content"
-  "footer footer";
+  'header header'
+  '.      content'
+  'footer footer';
 ```
 
 ---
@@ -76,7 +85,7 @@ grid-template-areas:
 <MiniMo
   src="/demos/13-grid-the-second-dimension/08-grid-areas-minimo.html"
   title="Area Architect — grid-template-areas"
-  height="980px"
+  height="740px"
 />
 
 Swap blueprints.  
@@ -91,3 +100,36 @@ Areas are the readable option:
 - great for page layout
 - easy to refactor
 - less fragile than line-number spaghetti
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/08-grid-template-areas.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Template Areas Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/08-grid-template-areas.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid Template Areas Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/08-grid-template-areas.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Shuffle Along: **Responsive Template Areas**
+
+Restructure pages responsively (and responsibility).

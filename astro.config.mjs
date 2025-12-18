@@ -78,8 +78,8 @@ const COURSE_MODULES = [
   {
     label: 'The Grid',
     directory: '13-grid-the-second-dimension',
-    released: false,
-  }, // UNRELEASED
+    released: true,
+  },
   {
     label: 'Flexbox and Grid',
     directory: '06-css-layouts-flexbox-grid',

@@ -1,12 +1,13 @@
 ---
-title: "Layering & Overlap"
-description: "Grid isn’t flat. Overlap items intentionally and control stacking with z-index."
+title: 'Layering & Overlap'
+description: 'Grid isn’t flat. Overlap items intentionally and control stacking with z-index.'
 sidebar:
   order: 12
-  label: "Layering"
+  label: 'Layering Items in Z'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Grid Has a Z‑Axis
@@ -17,6 +18,7 @@ It’s also **layers**.
 
 Multiple grid items can occupy the same cells — and that’s not a mistake.  
 That’s how you build:
+
 - hero overlays
 - badges
 - callouts
@@ -29,15 +31,15 @@ That’s how you build:
 Two or more items can share the same grid area.
 
 ```css
-.hero{
+.hero {
   display: grid;
 }
 
-.hero img{
+.hero img {
   grid-area: 1 / 1;
 }
 
-.hero .overlay{
+.hero .overlay {
   grid-area: 1 / 1;
 }
 ```
@@ -51,7 +53,7 @@ Same cells. Different layers.
 Grid doesn’t invent stacking rules — it uses normal CSS stacking.
 
 ```css
-.overlay{
+.overlay {
   z-index: 2;
 }
 ```
@@ -66,11 +68,12 @@ Grid items stack naturally when they overlap.
 Students reach for `position: absolute`.
 
 That works — but you lose:
+
 - intrinsic sizing
 - grid alignment
 - responsive flow
 
-Grid overlap keeps everything *in the layout system*.
+Grid overlap keeps everything _in the layout system_.
 
 ---
 
@@ -79,7 +82,7 @@ Grid overlap keeps everything *in the layout system*.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/12-layering-overlap-minimo.html"
   title="Layering & Overlap Playground"
-  height="1080px"
+  height="680px"
 />
 
 Toggle overlap.  
@@ -93,3 +96,36 @@ See how grid stays intact.
 Grid isn’t just structure.
 
 It’s controlled chaos — with rules.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/12-layering-and-overlap.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Layering Items Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/12-layering-and-overlap.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Layering Items Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/12-layering-and-overlap.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Together at Last: **Grid & Flexbox Unite**
+
+It's not a competition. Grid and Flex work together.

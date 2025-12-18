@@ -7,6 +7,7 @@ sidebar:
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Space Is a First-Class Citizen
@@ -69,7 +70,7 @@ They only matter when there’s extra space.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/10-grid-alignment-minimo.html"
   title="Alignment Lab — Gaps & Alignment"
-  height="980px"
+  height="780px"
 />
 
 Change gaps.  
@@ -87,3 +88,36 @@ Grid gives you control over:
 - alignment
 
 Once you see the difference, the properties stop feeling redundant.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/10-grid-alignment-and-gaps.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Alignment and Gaps Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/10-grid-alignment-and-gaps.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Alignment and Gaps Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/10-grid-alignment-and-gaps.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Move Inside: **Nested Grids**
+
+Pages, sections, components. Grids inside grids inside grids.

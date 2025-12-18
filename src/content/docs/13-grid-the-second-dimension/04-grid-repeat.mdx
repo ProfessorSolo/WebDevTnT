@@ -1,12 +1,13 @@
 ---
-title: "The repeat() Function"
-description: "Write scalable grid templates without repeating yourself. Patterns, symmetry, and clean track definitions."
+title: 'The repeat() Function'
+description: 'Write scalable grid templates without repeating yourself. Patterns, symmetry, and clean track definitions.'
 sidebar:
   order: 4
-  label: "repeat()"
+  label: 'repeat()'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Repeat Yourself — But In CSS
@@ -65,7 +66,7 @@ Any track size works: `fr`, `rem`, `%`, `minmax()`, etc.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/04-grid-repeat-minimo.html"
   title="Pattern Forge — repeat() in Action"
-  height="920px"
+  height="720px"
 />
 
 Long templates are a smell.  
@@ -80,3 +81,37 @@ Use `repeat()` when:
 - Your grid has repeated structure
 - You want to scale column/row counts quickly
 - You want templates that stay readable under pressure
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/04-grid-repeat.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid repeat() function Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/04-grid-repeat.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid repeat() function Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/04-grid-repeat.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Growth is implied: **The Implicit Grid**
+
+There will always be more items than expected in a container.
+Where will they go?

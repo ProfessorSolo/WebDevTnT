@@ -1,21 +1,22 @@
 ---
-title: "Grid vs Flexbox"
-description: "The Architect’s battle: when to deploy Grid, when to deploy Flexbox, and when to combine them."
+title: 'Grid vs Flexbox'
+description: 'The Architect’s battle: when to deploy Grid, when to deploy Flexbox, and when to combine them.'
 sidebar:
   order: 13
-  label: "Grid vs Flexbox"
+  label: 'Grid vs Flexbox'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
-## The Architect’s Battle
+## The Architect’s Jam
 
 Flexbox and Grid are not rivals.  
 They’re specialists.
 
-- **Flexbox**: one-dimensional flow (row *or* column)
-- **Grid**: two-dimensional layout (rows *and* columns)
+- **Flexbox**: one-dimensional flow (row _or_ column)
+- **Grid**: two-dimensional layout (rows _and_ columns)
 
 If you pick the right tool, your CSS gets smaller.  
 If you pick the wrong one, you start wrestling the browser… and losing.
@@ -25,11 +26,13 @@ If you pick the wrong one, you start wrestling the browser… and losing.
 ## The Quick Rule
 
 ### Use **Flexbox** when…
+
 - you’re laying out items along **one axis**
 - you want **content-driven sizing**
 - you’re aligning/spacing a row of UI controls
 
 Examples:
+
 - nav bars
 - button rows
 - card headers (icon + text + actions)
@@ -38,11 +41,13 @@ Examples:
 ---
 
 ### Use **Grid** when…
+
 - you need **both axes**
 - you want **explicit structure**
 - you want layout that can **rewire at breakpoints**
 
 Examples:
+
 - page layouts (header / sidebar / content / footer)
 - galleries, dashboards, tiles
 - responsive “areas” layouts
@@ -67,7 +72,7 @@ Flexbox arranges the furniture.
 <MiniMo
   src="/demos/13-grid-the-second-dimension/13-grid-vs-flexbox-minimo.html"
   title="Decision Console — Grid vs Flexbox"
-  height="1080px"
+  height="880px"
 />
 
 Pick a layout scenario.  
@@ -82,3 +87,38 @@ You don’t “graduate” from Flexbox to Grid.
 
 You collect tools.  
 Then you build better systems.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/13-grid-v-flexbox.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid and Flex Co-op Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/13-grid-v-flexbox.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Grid and Flex Co-op Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/13-grid-v-flexbox.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Building Time, Check the Matrix
+
+Exercise your grid skills with some layout challenges.
+
+Find what you're looking for in the Matrix.

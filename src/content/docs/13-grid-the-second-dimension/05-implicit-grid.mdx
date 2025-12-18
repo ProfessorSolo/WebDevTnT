@@ -1,12 +1,13 @@
 ---
-title: "The Implicit Grid"
-description: "What happens when you have more items than tracks. Auto-placement, implicit rows/columns, and grid-auto-rows."
+title: 'The Implicit Grid'
+description: 'What happens when you have more items than tracks. Auto-placement, implicit rows/columns, and grid-auto-rows.'
 sidebar:
   order: 5
-  label: "Implicit Grid"
+  label: 'Implicit Grid'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## The Grid You Didn’t Ask For
@@ -15,7 +16,7 @@ You define an explicit grid.
 
 Then you add more items than it can hold.
 
-Grid doesn’t panic — it quietly creates *more grid*.
+Grid doesn’t panic — it quietly creates _more grid_.
 
 That extra structure is the **implicit grid**.
 
@@ -77,7 +78,7 @@ We’ll keep that one holstered for later, but it’s the same idea:
 <MiniMo
   src="/demos/13-grid-the-second-dimension/05-implicit-grid-minimo.html"
   title="Overflow Summons the Implicit Grid"
-  height="980px"
+  height="780px"
 />
 
 Define a small explicit grid.  
@@ -94,3 +95,36 @@ Grid always has two layers:
 - The structure it creates
 
 Learn both, and auto-placement stops being “mysterious”.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/grid/05-implicit-grid.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Implicit Grid Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/grid/05-implicit-grid.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Implicit Grid Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/grid/05-implicit-grid.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Flow Forward: **Auto Flow & Density**
+
+Which direction will the grid overflow, and how?
