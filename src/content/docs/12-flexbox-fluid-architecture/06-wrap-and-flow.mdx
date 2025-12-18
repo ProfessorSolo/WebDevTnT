@@ -1,12 +1,13 @@
 ---
-title: "Wrap & Flow"
-description: "Let flex items spill gracefully onto new lines when one row (or column) is not enough."
+title: 'Wrap & Flow'
+description: 'Let flex items spill gracefully onto new lines when one row (or column) is not enough.'
 sidebar:
   order: 6
-  label: "Wrap & Flow"
+  label: 'Wrap & Flow'
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## Lines That Bend, Not Break
@@ -20,7 +21,7 @@ Wrapping lets items flow onto new lines instead of forcing scrollbars, overlap, 
 <MiniMo
   src="/demos/12-flexbox-fluid-architecture/06-wrap-and-flow-minimo.html"
   title="Wrap & Flow"
-  height="840px"
+  height="640px"
 />
 
 ---
@@ -32,19 +33,19 @@ By default, flex containers try to keep everything on **one line**:
 ```css
 .gallery {
   display: flex;
-  flex-wrap: nowrap;  /* default */
+  flex-wrap: nowrap; /* default */
 }
 ```
 
 The options:
 
 ```css
-flex-wrap: nowrap;       /* stay on one line; items squeeze */
-flex-wrap: wrap;         /* allow new lines in the cross-axis direction */
+flex-wrap: nowrap; /* stay on one line; items squeeze */
+flex-wrap: wrap; /* allow new lines in the cross-axis direction */
 flex-wrap: wrap-reverse; /* new lines stack from the opposite side */
 ```
 
-- In a **row**, wrapping creates new rows **below** (or above with `wrap-reverse`).  
+- In a **row**, wrapping creates new rows **below** (or above with `wrap-reverse`).
 - In a **column**, wrapping creates new columns **beside** the original line.
 
 Wrap is the difference between “crammed” and “comfortable.”
@@ -74,7 +75,7 @@ We already know **`flex-direction`** picks the main axis.
 
 This is the combo move we reach for in real projects:
 
-- `row wrap` for responsive rows of cards.  
+- `row wrap` for responsive rows of cards.
 - `column wrap` for multi-column vertical stacks.
 
 ---
@@ -83,8 +84,8 @@ This is the combo move we reach for in real projects:
 
 Wrapping does not replace **grow/shrink/basis** — it works with them.
 
-- `flex-grow` still decides who takes **extra** space on each line.  
-- `flex-shrink` still decides who yields when a line gets tight.  
+- `flex-grow` still decides who takes **extra** space on each line.
+- `flex-shrink` still decides who yields when a line gets tight.
 - `flex-basis` still sets the starting size along the main axis.
 
 Wrap simply decides:
@@ -95,8 +96,39 @@ Wrap simply decides:
 
 ## Mental Model to Keep
 
-- Direction sets the **main axis**.  
-- Wrap decides whether there is **only one line** or **many**.  
+- Direction sets the **main axis**.
+- Wrap decides whether there is **only one line** or **many**.
 - Grow/shrink/basis negotiate space **within each line**.
 
-Next, we turn our attention to **gaps** — spacing that finally behaves like it always should have.
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/flexbox/06-wrap-and-flow.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Wrap and Flow - Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/flexbox/06-wrap-and-flow.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Wrap and Flow - Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/flexbox/06-wrap-and-flow.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Overflowing: Multi-Line Alignment
+
+When flex items wrap, a whole new set of alignment rules quietly takes over.

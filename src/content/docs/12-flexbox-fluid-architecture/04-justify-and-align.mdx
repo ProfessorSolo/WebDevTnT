@@ -7,14 +7,15 @@ sidebar:
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
 ## Places, please.
 
 Flexbox gave us **direction**, then **axes** — now we set the stage for motion.  
 **`justify-content`** moves items along the **main axis**.  
 **`align-items`** places them along the **cross axis**.  
 Simple. Precise. Performative.
-
-import MiniMo from '../../../components/MiniMo.astro';
 
 <MiniMo
   src="/demos/12-flexbox-fluid-architecture/04-justify-and-align-minimo.html"
@@ -101,7 +102,34 @@ and it sets the stage for the spatial negotiations coming next.
 
 ---
 
-## Next Step: Space Negotiation
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/flexbox/04-justify-and-align.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Justify & Align Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/flexbox/04-justify-and-align.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Justify & Align Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/flexbox/04-justify-and-align.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Next Meeting: Space Negotiation
 
 With alignment under our belt,
 we move into grow, shrink, and basis... How items bargain for space along the main axis,

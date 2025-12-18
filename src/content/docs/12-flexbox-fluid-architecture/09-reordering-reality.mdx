@@ -7,6 +7,7 @@ sidebar:
 draft: false
 ---
 
+import { LinkButton } from '@astrojs/starlight/components';
 import MiniMo from '../../../components/MiniMo.astro';
 
 ## When Visual Order Lies
@@ -24,7 +25,7 @@ Used carelessly, it breaks expectations, accessibility, and reading flow.
 <MiniMo
   src="/demos/12-flexbox-fluid-architecture/08-reordering-reality-minimo.html"
   title="Reordering Reality"
-  height="600px"
+  height="560px"
 />
 
 ---
@@ -111,5 +112,37 @@ If the visual order and source order drift too far apart:
 - `order` only adjusts the **presentation along the main axis**.
 - We prefer to design layouts that **do not rely heavily** on reordering.
 
-In the Flexbox Codex, we will still document a few careful recipes —  
-but we will treat `order` as a **precision tool**, not a default layout strategy.
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/slide-decks/flexbox/09-reordering-power-and-peril.pdf"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Reordering, Responsibly - Study Guide (PDF)
+</LinkButton>
+
+<LinkButton
+  href="/assets/resources/infographics/flexbox/09-reordering-power-and-peril.png"
+  target="_blank"
+  icon="external"
+  variant="secondary"
+>
+  📘 Reordering, Responsibly - Infographic (PNG)
+</LinkButton>
+
+<img
+  src="/assets/resources/infographics/flexbox/09-reordering-power-and-peril.png"
+  alt="Infographic explaining CSS Flexbox direction and axes, showing how flex-direction defines the main axis and cross axis, with visual examples for row, row-reverse, column, and column-reverse, and how justify-content and align-items map to each axis."
+/>
+
+---
+
+## ⏭ Take the Wheel, Check the Codex
+
+Time for you to exercise you new skills with some challenges.
+
+Then, in the Flexbox Codex, you'll find a few handy flex recipes.
