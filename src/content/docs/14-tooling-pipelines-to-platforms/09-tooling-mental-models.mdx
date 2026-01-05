@@ -1,0 +1,153 @@
+---
+title: 'Tooling Mental Models'
+description: 'How to reason about front-end tooling across eras without memorizing specific tools.'
+sidebar:
+  order: 9
+  label: 'Tooling Mental Models'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Tools Change. Models Last.
+
+Specific tools come and go.
+
+Mental models stick.
+
+If you understand _why_ a tool exists, you can usually:
+
+- understand it faster
+- debug it more calmly
+- replace it when needed
+
+This page is about locking those models in.
+
+---
+
+## Model 1: Pipelines
+
+Pipeline-based tools think like this:
+
+```
+files → process → output
+```
+
+Characteristics:
+
+- build steps are explicit
+- output files matter
+- development and build blur together
+
+This model made sense when:
+
+- browsers were slow
+- assets were large
+- feedback speed was secondary
+
+You’ll still see this model in legacy projects.
+
+---
+
+## Model 2: Platforms
+
+Platform-based tools think differently:
+
+- run a dev server
+- serve files directly
+- optimize later
+- build once at the end
+
+Characteristics:
+
+- development is the priority
+- tooling stays invisible
+- browsers do more of the work
+
+This model fits the modern web.
+
+---
+
+## Model 3: Phases, Not Tasks
+
+Modern tooling separates concerns:
+
+- **development** → speed and feedback
+- **build** → optimization and output
+
+If a tool mixes these phases aggressively, expect friction.
+
+If it separates them cleanly, expect flow.
+
+---
+
+## Model 4: Configuration as a Smell
+
+Configuration isn’t bad.
+
+But excessive configuration often signals:
+
+- missing defaults
+- mismatched abstractions
+- tools fighting each other
+
+Good tooling feels boring.
+
+That’s a feature.
+
+---
+
+## Model 5: Tools Are Contextual
+
+No tool is “good” or “bad” in isolation.
+
+Every tool reflects:
+
+- the problems of its era
+- the capabilities of the browser at the time
+- the scale it was designed for
+
+Understanding context prevents dogma.
+
+---
+
+## Reading an Unfamiliar Toolchain
+
+When you open a new project, ask:
+
+- Where does development start?
+- What runs the dev server?
+- When does bundling happen?
+- Where is the output written?
+
+Answer those, and the rest is details.
+
+---
+
+## The Professional Advantage
+
+Developers who understand tooling:
+
+- panic less
+- adapt faster
+- make better decisions
+
+You don’t need to chase tools.
+
+You need to recognize patterns.
+
+---
+
+## ⏭ Lock It In
+
+You’ve now seen:
+
+- why pipelines existed
+- why they broke down
+- what replaced them
+- how to reason about both
+
+From here on out, Vite is our baseline.
+
+Everything else plugs into it.

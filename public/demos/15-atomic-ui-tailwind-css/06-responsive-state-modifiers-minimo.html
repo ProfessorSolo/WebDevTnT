@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMo — State Modifiers</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body class="p-5 bg-slate-950 text-slate-100">
+  <main class="shell w-full max-w-full box-border">
+    <article class="border border-slate-800 bg-slate-900/50 p-4 shadow-sm min-w-0">
+      <header class="flex items-start justify-between gap-3 min-w-0">
+        <div class="min-w-0">
+          <div class="text-xs font-medium text-slate-400">MiniMo</div>
+          <h1 class="mt-1 text-base font-semibold">State Modifiers</h1>
+          <p class="mt-2 text-sm text-slate-300">
+            Everything about interaction lives inline:
+            <span class="font-mono">hover:</span>,
+            <span class="font-mono">focus-visible:</span>,
+            <span class="font-mono">active:</span>,
+            <span class="font-mono">disabled:</span>.
+          </p>
+        </div>
+        <span class="shrink-0 inline-flex items-center rounded-full bg-sky-500/15 px-2 py-1 text-xs font-medium text-sky-200">
+          hover · focus · active · disabled
+        </span>
+      </header>
+
+      <section class="mt-4 grid gap-4 md:grid-cols-2 min-w-0">
+        <!-- Controls -->
+        <div class="rounded-lg border border-slate-800 bg-slate-950/40 p-4 min-w-0">
+          <div class="text-sm font-semibold">Toggle modifiers</div>
+          <p class="mt-1 text-sm text-slate-300">
+            Turn modifiers on/off to see how behavior is declared next to base styles.
+          </p>
+
+          <div class="mt-4 grid gap-2 min-w-0">
+            <label class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3
+                       rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 min-w-0">
+              <span class="min-w-0 break-words text-sm text-slate-200">
+                <span class="font-mono">hover:</span> enabled
+              </span>
+              <input id="tHover" type="checkbox" class="h-4 w-4 accent-sky-500" checked />
+            </label>
+
+            <label class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3
+                       rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 min-w-0">
+              <span class="min-w-0 break-words text-sm text-slate-200">
+                <span class="font-mono">focus-visible:</span> enabled
+              </span>
+              <input id="tFocus" type="checkbox" class="h-4 w-4 accent-sky-500" checked />
+            </label>
+
+            <label class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3
+                       rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 min-w-0">
+              <span class="min-w-0 break-words text-sm text-slate-200">
+                <span class="font-mono">active:</span> enabled
+              </span>
+              <input id="tActive" type="checkbox" class="h-4 w-4 accent-sky-500" checked />
+            </label>
+
+            <label class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3
+                       rounded-lg border border-slate-800 bg-slate-950 px-3 py-2 min-w-0">
+              <span class="min-w-0 break-words text-sm text-slate-200">
+                <span class="font-mono">disabled:</span> ON
+              </span>
+              <input id="tDisabled" type="checkbox" class="h-4 w-4 accent-sky-500" />
+            </label>
+          </div>
+
+          <div class="mt-4 rounded-lg border border-slate-800 bg-slate-950 p-3 text-xs text-slate-300 min-w-0">
+            Demo steps:
+            <div class="mt-2 font-mono text-slate-200 whitespace-pre-wrap break-words">
+              1) Hover
+              2) Tab to focus
+              3) Click + hold for active
+              4) Toggle disabled
+            </div>
+          </div>
+        </div>
+
+        <!-- Live demo -->
+        <div class="rounded-lg border border-slate-800 bg-slate-950/40 p-4 min-w-0">
+          <div class="text-sm font-semibold">Interact</div>
+          <p class="mt-1 text-sm text-slate-300">
+            Big visual changes so no one squints at subtle hover.
+          </p>
+
+          <div class="mt-4 grid gap-3 min-w-0">
+            <button id="btn" type="button" class="w-full inline-flex items-center justify-center
+                       rounded-xl border border-sky-500/40 bg-sky-500/15 text-sky-50
+                       px-4 py-4 text-base font-semibold
+                       transition">
+              Press / Hover / Focus me
+            </button>
+
+            <div class="grid grid-cols-2 gap-2 min-w-0">
+              <button id="focusHelper" type="button" class="rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-sm text-slate-100
+                         hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-sky-500 min-w-0">
+                Focus the big button
+              </button>
+
+              <div class="rounded-lg border border-slate-800 bg-slate-950 p-3 text-xs text-slate-300 min-w-0">
+                Tip: click here, then hit <span class="font-mono text-slate-100">Tab</span>.
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 min-w-0">
+            <div class="text-xs text-slate-400">Class readout</div>
+            <pre class="mt-2 rounded-md border border-slate-800 bg-slate-950 p-3 text-xs leading-relaxed
+                       overflow-x-auto max-w-full"><code id="readout" class="text-slate-200"></code></pre>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    (function() {
+      const tHover = document.getElementById("tHover");
+      const tFocus = document.getElementById("tFocus");
+      const tActive = document.getElementById("tActive");
+      const tDisabled = document.getElementById("tDisabled");
+
+      const btn = document.getElementById("btn");
+      const readout = document.getElementById("readout");
+      const focusHelper = document.getElementById("focusHelper");
+
+      const BASE =
+        "w-full inline-flex items-center justify-center rounded-xl border border-sky-500/40 bg-sky-500/15 text-sky-50 px-4 py-4 text-base font-semibold transition";
+
+      const HOVER =
+        "hover:bg-sky-500/35 hover:scale-[1.03] hover:-translate-y-[1px] hover:border-sky-500/70";
+
+      const FOCUS =
+        "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950";
+
+      const ACTIVE =
+        "active:scale-[0.98] active:translate-y-[1px] active:bg-sky-500/45";
+
+      // Always present so disabled state is predictable when toggled on
+      const DISABLED =
+        "disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:translate-y-0 disabled:hover:bg-sky-500/15";
+
+      function composeClasses() {
+        const parts = [BASE];
+        if (tHover.checked) parts.push(HOVER);
+        if (tFocus.checked) parts.push(FOCUS);
+        if (tActive.checked) parts.push(ACTIVE);
+        parts.push(DISABLED);
+        return parts.join(" ");
+      }
+
+      function render() {
+        btn.className = composeClasses();
+        btn.disabled = tDisabled.checked;
+        readout.textContent = btn.className.trim().replace(/\s+/g, " ");
+      }
+
+      tHover.addEventListener("change", render);
+      tFocus.addEventListener("change", render);
+      tActive.addEventListener("change", render);
+      tDisabled.addEventListener("change", render);
+
+      focusHelper.addEventListener("click", () => btn.focus());
+
+      render();
+    })();
+  </script>
+</body>
+
+</html>

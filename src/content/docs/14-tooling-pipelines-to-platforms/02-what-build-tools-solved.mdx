@@ -1,0 +1,129 @@
+---
+title: 'What Build Tools Solved'
+description: 'The specific problems that manual front-end workflows could not scale to handle.'
+sidebar:
+  order: 2
+  label: 'What Build Tools Solved'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## When Discipline Wasn’t Enough
+
+Manual workflows didn’t fail overnight.
+
+They failed slowly.
+
+A missed optimization here.  
+A forgotten file there.  
+A “we’ll fix it later” that never got fixed.
+
+As projects grew, **discipline stopped being reliable**.
+
+---
+
+## Repetition Without Guarantees
+
+Front-end work involved the same steps over and over:
+
+- compress images
+- combine scripts
+- minify files
+- copy assets to a final folder
+
+Nothing about these steps was hard.
+
+What _was_ hard was doing them:
+
+- every time
+- in the right order
+- without forgetting anything
+
+Humans are bad at that.
+
+---
+
+## Consistency Became the Problem
+
+On teams, the cracks widened:
+
+- one person optimized images
+- another forgot
+- someone shipped the wrong file
+- someone else overwrote it
+
+The code wasn’t broken.
+
+**The process was.**
+
+---
+
+## Automation as a Safety Net
+
+Build tools didn’t exist to make developers faster.
+
+They existed to make results **predictable**.
+
+Instead of trusting memory, you could:
+
+- define steps once
+- run them the same way every time
+- get identical output on every machine
+
+That was the breakthrough.
+
+---
+
+## From Steps to Pipelines
+
+Rather than thinking in terms of actions, build tools encouraged a new model:
+
+**input → process → output**
+
+Files went in.  
+Transformations happened.  
+Optimized files came out.
+
+Once defined, the pipeline didn’t forget.
+
+---
+
+## The Shift in Responsibility
+
+With build tools:
+
+- humans stopped being the enforcers
+- machines took over repetition
+- mistakes became harder to make
+
+This wasn’t about convenience.
+
+It was about **trust**.
+
+---
+
+## The Tradeoff
+
+Early build tools solved real problems, but they introduced something new:
+
+- configuration
+- setup
+- maintenance
+- glue code
+
+For a while, that tradeoff was worth it.
+
+Eventually, it wasn’t.
+
+---
+
+## ⏭ Enter Automation
+
+The pressure for consistency created a new class of tools.
+
+Tools that didn’t write your code —  
+they just made sure it was processed the same way, every time.
+
+One of the most popular of those tools was **Gulp**.

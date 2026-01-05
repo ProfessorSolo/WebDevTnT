@@ -1,0 +1,156 @@
+---
+title: 'Your Turn: Composing Atomic UI'
+description: 'Practice reading, composing, and modifying UI using atomic principles instead of authored CSS.'
+sidebar:
+  order: 98
+  label: 'Your Turn'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## This Is About Reasoning, Not Memorization
+
+You are not expected to remember utility names.
+
+You *are* expected to reason about:
+- structure
+- spacing
+- hierarchy
+- responsiveness
+- state
+
+Atomic UI rewards understanding, not recall.
+
+---
+
+## Your Starter Snippet
+
+Copy/paste this into **Tailwind Play**:
+https://play.tailwindcss.com
+
+Your job is to **read it**, **predict it**, then **improve it** — without writing custom CSS.
+
+```html
+<main class="min-h-screen bg-slate-950 text-slate-100 p-6">
+  <section class="max-w-md mx-auto border border-slate-800 bg-slate-900/40 rounded-xl p-4 space-y-3">
+    <header class="space-y-1">
+      <h1 class="text-lg font-semibold">Project Status</h1>
+      <p class="text-sm text-slate-300">A tiny UI you will improve using tokens, modifiers, and composition.</p>
+    </header>
+
+    <div class="flex items-center justify-between gap-3">
+      <span class="text-sm text-slate-200">Build</span>
+      <span class="text-xs bg-slate-800 rounded-full px-2 py-1 text-slate-200">Passing</span>
+    </div>
+
+    <div class="flex items-center justify-between gap-3">
+      <span class="text-sm text-slate-200">Deploy</span>
+      <span class="text-xs bg-slate-800 rounded-full px-2 py-1 text-slate-200">Pending</span>
+    </div>
+
+    <button class="w-full rounded-lg border border-sky-500/40 bg-sky-500/15 px-4 py-3 text-sm font-semibold
+                   hover:bg-sky-500/25 hover:border-sky-500/70
+                   focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+      View details
+    </button>
+  </section>
+</main>
+```
+
+---
+
+## Step 1: Read Before You Run
+
+Before rendering, answer:
+
+- What is the layout?
+- Where is spacing applied?
+- What tokens are being used (spacing, color, radius, typography)?
+- What states are defined?
+
+Write your prediction in 3–5 sentences.
+
+---
+
+## Step 2: Improve It Without Rewriting
+
+Make **three upgrades**:
+
+### Upgrade A — Spacing Rhythm
+Goal: make it feel more intentional.
+
+- increase the vertical rhythm in the card
+- increase spacing between header + rows
+- avoid random one-off values
+
+Hint: you’re changing *spacing tokens*, not “CSS”.
+
+### Upgrade B — Hierarchy
+Goal: improve scanability.
+
+- make the title feel more “title”
+- make the description feel more secondary
+- make row labels and badges distinct
+
+Hint: change *typography tokens* and *contrast tokens*.
+
+### Upgrade C — Responsiveness
+Goal: make it scale gracefully.
+
+- keep it readable on small screens
+- at `md:` widen the card and increase padding
+- at `md:` consider a two-column layout for the rows (optional)
+
+Hint: modifiers should sit inline next to base utilities.
+
+---
+
+## Step 3: Spot the Token
+
+For each upgrade, document:
+
+- **what token you changed**
+- **why it was the right level of change**
+- **what else it affected**
+
+Bullet points are fine.
+
+---
+
+## Step 4: Know When to Stop
+
+If you feel the urge to:
+- extract classes
+- reach for `@apply`
+- write custom CSS
+
+Pause and ask:
+
+> “Is this a real pattern, or just discomfort?”
+
+Only abstract when it’s a **repeatable pattern**.
+
+---
+
+## Self-Check Rubric
+
+You’re done when:
+
+- [ ] You can explain the layout just by reading the classnames
+- [ ] You made spacing more consistent without custom CSS
+- [ ] You improved hierarchy using tokens
+- [ ] You added at least one responsive modifier (`md:`)
+- [ ] Your button has clear hover + focus-visible states
+- [ ] You can name at least 3 tokens you changed and why
+
+---
+
+## What You Should Walk Away With
+
+- Less fear of “messy” markup  
+- More confidence editing UI in place  
+- Clearer understanding of how atomic systems scale  
+
+That’s progress.

@@ -1,0 +1,140 @@
+---
+title: 'What Tailwind Is (and Isn’t)'
+description: 'Setting clear boundaries around what Tailwind CSS does, and what it intentionally avoids.'
+sidebar:
+  order: 3
+  label: 'What Tailwind Is / Isn’t'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Clearing the Air Early
+
+Before we go any further, we need to reset expectations.
+
+Tailwind tends to trigger strong reactions:
+- “It’s just inline styles.”
+- “It’s unreadable.”
+- “It replaces CSS.”
+
+None of those are accurate.
+
+Let’s draw the boundaries clearly.
+
+---
+
+## What Tailwind *Is*
+
+Tailwind is:
+
+- a utility-first CSS framework
+- a predefined design system
+- a constraint engine
+- a composition tool
+
+It gives you **approved building blocks** for UI.
+
+Nothing more.  
+Nothing less.
+
+---
+
+## What Tailwind Is *Not*
+
+Tailwind is not:
+
+- inline styles  
+- a component library  
+- a replacement for understanding CSS  
+- a magic bullet for bad design  
+
+If you don’t understand layout, spacing, and flow, Tailwind won’t save you.
+
+---
+
+## Utilities ≠ Inline Styles
+
+Inline styles:
+- bypass the cascade
+- can’t be reused
+- don’t scale
+
+Tailwind utilities:
+- compile to real CSS
+- participate in the cascade
+- come from a shared system
+
+They look similar.
+
+They behave very differently.
+
+---
+
+## Tailwind Doesn’t Remove CSS
+
+Tailwind changes **where CSS decisions live**.
+
+Instead of:
+- inventing names
+- managing specificity
+- maintaining large stylesheets
+
+You:
+- compose utilities
+- follow a system
+- keep decisions visible
+
+CSS is still doing the work.
+
+Tailwind just organizes the inputs.
+
+---
+
+## Opinionated on Purpose
+
+Tailwind is opinionated about:
+- spacing scales
+- color usage
+- typography
+- responsiveness
+
+Those opinions exist to:
+- reduce entropy
+- improve consistency
+- speed teams up
+
+You trade freedom for leverage.
+
+---
+
+## Why This Boundary Matters
+
+Misunderstanding Tailwind leads to:
+- misuse
+- frustration
+- unnecessary abstraction
+
+Understanding its role makes it:
+- predictable
+- boring (in a good way)
+- easy to reason about
+
+---
+
+## The Contract
+
+Tailwind makes a deal with you:
+
+> “Stay within the system, and UI becomes easier to scale.”
+
+Break the system, and you’re back to fighting CSS.
+
+---
+
+## ⏭ From Boundaries to Building Blocks
+
+Now that the edges are clear, we can look at what actually makes Tailwind powerful.
+
+Next up: **Utilities as Design Tokens**

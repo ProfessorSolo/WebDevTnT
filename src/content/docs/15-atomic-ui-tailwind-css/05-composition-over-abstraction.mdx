@@ -1,0 +1,143 @@
+---
+title: 'Composition Over Abstraction'
+description: 'Why composing UI from utilities often scales better than creating custom CSS abstractions.'
+sidebar:
+  order: 5
+  label: 'Composition > Abstraction'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Instinct to Abstract
+
+When developers see repetition, they instinctively reach for abstraction.
+
+In CSS, that usually means:
+
+- creating new class names
+- extracting shared rules
+- building layers of indirection
+
+This feels tidy.
+
+At scale, it often isn’t.
+
+---
+
+## Abstractions Drift
+
+CSS abstractions tend to age poorly:
+
+- their original intent fades
+- edge cases pile up
+- overrides appear
+- names stop matching behavior
+
+Eventually, developers are afraid to touch them.
+
+The abstraction becomes a liability.
+
+---
+
+## Composition Keeps Intent Local
+
+Atomic UI favors **composition** instead.
+
+You assemble UI at the point of use:
+
+- spacing
+- layout
+- color
+- state
+
+Everything that matters is visible where it’s applied.
+
+There’s no guessing what a class does.
+
+---
+
+## HTML as the Source of Truth
+
+With composition:
+
+- HTML expresses layout
+- classes express intent
+- CSS stays predictable
+
+You don’t have to jump between files to understand UI.
+
+That dramatically improves maintainability.
+
+---
+
+## Fewer Layers, Fewer Surprises
+
+Composition avoids:
+
+- deep inheritance chains
+- magical overrides
+- specificity battles
+
+Each utility does one thing.
+
+Together, they describe the interface.
+
+---
+
+## When Abstraction _Does_ Make Sense
+
+This is not an absolutist rule.
+
+Abstraction is still useful for:
+
+- repeated animations
+- complex interactions
+- shared component behavior
+- non-visual logic
+
+The key is **intentional abstraction**, not reflexive abstraction.
+
+---
+
+## The `@apply` Trap
+
+Tailwind allows `@apply`.
+
+That doesn’t mean you should reach for it immediately.
+
+Overusing `@apply`:
+
+- recreates traditional CSS problems
+- hides decisions again
+- increases coupling
+
+Compose first.
+Abstract later — if needed.
+
+---
+
+## 🧪 MiniMo — Compose vs Abstract
+
+<MiniMo
+  src="/demos/15-atomic-ui-tailwind-css/05-composition-vs-abstraction-minimo.html"
+  title="Composition vs Abstraction"
+  height="720px"
+/>
+
+Compare a utility-composed UI to an abstracted version.
+
+Notice:
+
+- readability
+- flexibility
+- ease of change
+
+---
+
+## ⏭ Scaling Without Layers
+
+Once composition feels natural, the next question is how it adapts across screens and states.
+
+Next up: **Responsive and State Modifiers**

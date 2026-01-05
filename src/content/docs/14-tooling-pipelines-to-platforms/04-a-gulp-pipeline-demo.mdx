@@ -1,0 +1,197 @@
+---
+title: 'A Minimal Gulp Pipeline'
+description: 'A controlled demo showing how task runners automated front-end workflows.'
+sidebar:
+  order: 4
+  label: 'Gulp: Pipeline Demo'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Goal of This Demo
+
+This is not about mastery.
+
+This is about **seeing the model once**.
+
+You are not learning Gulp as a tool you’ll reuse.  
+You are learning what _pipeline-based automation_ looked like.
+
+That’s it.
+
+---
+
+## What We’re Building
+
+A tiny “chapter” that:
+
+- uses shared WebDevTnT CSS/JS during development
+- includes chapter-local CSS/JS and a hero image
+- runs a **build step** that produces a fully portable `dist/`
+- supports hot reload via a local dev server
+
+**Key output goal:** `dist/` is deploy-ready (no references to files outside `dist/`).
+
+---
+
+## Folder Architecture
+
+This chapter lives inside the usual demos layout. Shared assets live above the chapter.
+
+Example (simplified):
+
+- `Day07/`
+  - `styles/` (shared: `reset.css`, `brand.css`, `layout.css`)
+  - `scripts/` (shared: `ui.js`)
+  - `01-a-sip-of-gulp/`
+    - `src/` (chapter source)
+    - `dist/` (build output)
+    - `gulpfile.js`
+
+---
+
+## One-Time Global Install
+
+Install the Gulp CLI globally (one-time per machine):
+
+```bash
+npm install --global gulp-cli
+```
+
+Quick check:
+
+```bash
+gulp --version
+```
+
+---
+
+## Project Setup
+
+From inside the chapter folder (e.g., `01-a-sip-of-gulp/`):
+
+### 1) Initialize npm
+
+```bash
+npm init -y
+```
+
+### 2) Install Gulp + Plugins
+
+Install everything needed for this demo pipeline:
+
+```bash
+npm install --save-dev   gulp   browser-sync   gulp-concat   gulp-terser   gulp-clean-css   gulp-htmlmin   gulp-replace   del
+```
+
+What these do:
+
+- `gulp`: the task runner
+- `browser-sync`: dev server + hot reload
+- `gulp-concat`: concatenate files
+- `gulp-terser`: minify JavaScript
+- `gulp-clean-css`: minify CSS
+- `gulp-htmlmin`: minify HTML
+- `gulp-replace`: rewrite build blocks in HTML
+- `del`: reliable cleaning of the `dist/` folder
+
+---
+
+## npm Scripts
+
+Add these scripts to `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp build"
+  }
+}
+```
+
+---
+
+## Pipeline Tasks
+
+This demo defines a few core tasks:
+
+- **clean**: wipe `dist/`
+- **styles**: pull shared + local CSS → concat/minify → `dist/assets/app.min.css`
+- **scripts**: pull shared + local JS → concat/minify → `dist/assets/app.min.js`
+- **images**: copy hero image(s) → `dist/images/`
+- **html**: rewrite CSS/JS build blocks → minify → `dist/*.html`
+- **serve**: BrowserSync + watch + hot reload
+
+---
+
+## Running the Demo
+
+### Dev mode (watch + hot reload)
+
+```bash
+npm run dev
+```
+
+### Production build (portable `dist/`)
+
+```bash
+npm run build
+```
+
+After a build, your `dist/` folder should contain:
+
+- `dist/01-a-sip-of-gulp.html` (or `index.html` if you use that convention)
+- `dist/assets/app.min.css`
+- `dist/assets/app.min.js`
+- `dist/images/…`
+- `dist/LICENSE` (if you copy it over)
+
+---
+
+## What Just Happened
+
+You didn’t write better code.
+
+You didn’t change your app logic.
+
+You **changed the workflow**.
+
+Instead of relying on memory and discipline, you:
+
+- defined steps once
+- ran them consistently
+- produced predictable output
+
+That was the power of task runners.
+
+---
+
+## The Cost of This Model
+
+Notice what else appeared:
+
+- configuration files
+- plugin dependencies
+- explicit glue code
+- a separate “build mindset”
+
+For a while, this tradeoff was acceptable.
+
+As projects grew, it became friction.
+
+---
+
+## ⏭ The Cracks Appear
+
+Pipelines worked.
+
+But they were brittle.
+
+As front-end applications became more dynamic and stateful, this model began to strain.
+
+That pressure is what led to the next generation of tooling.
+
+And that’s where we’re headed next.

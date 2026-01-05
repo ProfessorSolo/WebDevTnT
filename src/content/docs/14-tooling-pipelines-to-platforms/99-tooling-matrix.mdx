@@ -1,0 +1,138 @@
+---
+title: 'Tooling Matrix'
+description: 'A reference map of front-end tooling models, the problems they solved, what replaced them — and what is coming next.'
+sidebar:
+  order: 99
+  label: 'Tooling Matrix'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## A Map, Not a Scorecard
+
+This page is not about ranking tools.
+
+It’s about **context**.
+
+Every major front-end tooling model emerged to solve a specific set of problems, under specific constraints, at a specific time — and was eventually shaped or replaced when those constraints changed.
+
+Understanding that makes everything else easier.
+
+---
+
+## The Tooling Matrix
+
+| Era | Tool / Model | Core Problem Solved | Mental Model | What Replaced / Extends It |
+|---|---|---|---|---|
+| Early Web | Manual Workflow | Small sites, few files | Human discipline | Task runners |
+| ~2014–2017 | Gulp / Pipelines | Repetition, consistency | Files → Process → Output | Dev platforms |
+| ~2016–2019 | Webpack (heavy config) | Module bundling | Build-first | Lighter platforms |
+| Modern | Vite / Platforms | Fast dev, instant feedback | Dev server first | AI‑assisted platforms |
+| Emerging | AI‑Augmented Tooling | Cognitive load, iteration speed | Intent → Diff → Review | (forming) |
+
+This isn’t linear “progress.”  
+It’s **pressure and response**.
+
+---
+
+## What Changed Each Time
+
+Each transition happened because an assumption broke:
+
+- Humans can’t enforce perfect repetition
+- Build-first workflows slow development
+- Configuration complexity compounds
+- Browsers became powerful runtimes
+- Cognitive overhead became the bottleneck
+
+Tooling evolves to remove the *current* pain.
+
+---
+
+## The Emerging Pattern
+
+The next shift is not about faster bundlers.
+
+It’s about **how humans interact with tooling**.
+
+We’re already seeing:
+- Smaller, more readable configs
+- Strong defaults
+- Fewer required decisions
+- AI assisting with changes, not ownership
+
+The tooling itself is becoming *less interesting* — by design.
+
+---
+
+## What AI Actually Changes (and what it doesn’t)
+
+AI is not replacing build tools.
+
+It’s changing **how we modify them**.
+
+Old workflow:
+- Read docs
+- Trial and error
+- Accidental breakage
+
+Emerging workflow:
+- Describe intent
+- Review a proposed diff
+- Accept or reject changes
+
+The human role shifts from *mechanic* to *editor*.
+
+---
+
+## How to Use This Matrix
+
+When you encounter a new tool, setup, or workflow:
+
+1. Identify the era it comes from  
+2. Identify the problem it is solving  
+3. Identify the assumptions it makes  
+4. Identify what it removes from your workload  
+5. Decide whether those assumptions still hold  
+
+This works for today’s tools — and tomorrow’s.
+
+---
+
+## Why This Matters Long‑Term
+
+Five years from now, Vite may not be the default.
+
+But these ideas will persist:
+- fast feedback loops
+- minimal, readable configuration
+- dev‑first mental models
+- human‑reviewed automation
+
+If you understand the **model**, the tool is just an implementation detail.
+
+---
+
+## Closing the Chapter
+
+You’ve now walked through:
+
+- why manual workflows broke down
+- how pipelines solved early problems
+- why pipelines stopped scaling
+- how platforms replaced them
+- how AI is reshaping interaction with tools
+
+From here on out, we stop chasing tooling.
+
+We focus on building interfaces.
+
+---
+
+## ⏭ What’s Next
+
+With a modern platform — and a clear mental model — in place, we can finally focus on **how UI is designed and composed**.
+
+Next up: **Atomic UI with Tailwind CSS**

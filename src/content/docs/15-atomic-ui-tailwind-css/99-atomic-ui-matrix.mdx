@@ -1,0 +1,102 @@
+---
+title: 'Atomic UI Matrix'
+description: 'A reference map of UI styling approaches, what they optimize for, and where they break down.'
+sidebar:
+  order: 99
+  label: 'Atomic UI Matrix'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## A Map, Not a Battle
+
+This is not a “best tool” debate.
+
+Different UI approaches optimize for different constraints:
+- team size
+- product lifespan
+- design consistency needs
+- change frequency
+
+This matrix helps you choose deliberately.
+
+---
+
+## The UI Approach Matrix
+
+| Approach | Optimizes For | Typical Failure Mode | Best Used When |
+|---|---|---|---|
+| Authored CSS (handwritten) | Freedom, expressiveness | Entropy, drift, naming fatigue | Small projects, bespoke UI |
+| Utility-First (Tailwind) | Consistency, speed, scalability | Markup noise, early discomfort | Teams, fast iteration, design systems |
+| Component Libraries | Delivery speed, proven patterns | Generic look, customization limits | Products needing fast, stable UI |
+| Hybrid (Utilities + CSS) | Balance | Over-complication if unmanaged | Most real-world projects |
+
+No approach is “pure.”  
+Most professional work is hybrid.
+
+---
+
+## What Tailwind Specifically Optimizes
+
+Tailwind is engineered to reduce:
+
+- naming decisions
+- style drift
+- specificity battles
+- refactor fear
+
+It trades away:
+- “clean” markup aesthetics
+- early comfort
+
+For:
+- long-term maintainability
+- predictable UI
+- fast iteration
+
+---
+
+## The Decision Rule
+
+When choosing an approach, ask:
+
+- How many people touch the UI?
+- How often will it change?
+- How important is consistency?
+- How long will this live?
+
+The more “team + time + change” increases, the more atomic approaches win.
+
+---
+
+## The Takeaway
+
+Tailwind isn’t popular because it’s fashionable.
+
+It’s popular because it addresses the real bottleneck:
+
+**UI decisions don’t scale when they’re implicit.**
+
+Atomic UI makes them explicit.
+
+---
+
+## Closing the Chapter
+
+You’ve now seen:
+
+- why CSS struggles at scale
+- what atomic thinking changes
+- how Tailwind encodes decisions
+- how composition replaces fragile abstractions
+- how to stay flexible without dogma
+
+From here, we build interfaces faster — and with fewer surprises.
+
+---
+
+## ⏭ What’s Next
+
+Next, we’ll move from “why” to “how” and start using Tailwind as a daily tool — inside the same Vite baseline established in Chapter 14.

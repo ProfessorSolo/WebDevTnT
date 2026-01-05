@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMo — Reading UI from HTML</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Make markup readable and contained */
+    pre.markup {
+      height: 260px;
+      /* explicit height */
+      overflow: auto;
+      /* scroll inside */
+      white-space: pre;
+      /* keep indentation */
+      tab-size: 2;
+    }
+
+    code {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="p-5 bg-slate-950 text-slate-100">
+  <main class="w-full max-w-full box-border">
+    <article class="border border-slate-800 bg-slate-900/50 p-4 shadow-sm min-w-0">
+      <header class="flex items-start justify-between gap-3 min-w-0">
+        <div class="min-w-0">
+          <div class="text-xs font-medium text-slate-400">MiniMo</div>
+          <h1 class="mt-1 text-base font-semibold">Read the UI Without Rendering</h1>
+          <p class="mt-2 text-sm text-slate-300">
+            Read the markup. Predict spacing, hierarchy, containment, and state — without running it.
+          </p>
+        </div>
+        <span class="shrink-0 inline-flex items-center rounded-full bg-violet-500/15 px-2 py-1 text-xs font-medium text-violet-200">
+          predict first
+        </span>
+      </header>
+
+      <section class="mt-4 grid gap-4 md:grid-cols-2 min-w-0">
+        <!-- MARKUP -->
+        <div class="rounded-lg border border-slate-800 bg-slate-950/40 p-4 min-w-0">
+          <div class="flex items-center justify-between gap-2 min-w-0">
+            <div class="text-sm font-semibold">Markup</div>
+
+            <div class="flex gap-2">
+              <button id="toggleHints" type="button" class="rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-xs font-semibold text-slate-100
+                         hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-violet-500">
+                Reveal hints
+              </button>
+
+              <button id="mutate" type="button" class="rounded-lg border border-violet-500/40 bg-violet-500/15 px-3 py-2 text-xs font-semibold text-violet-100
+                         hover:bg-violet-500/20 focus:outline-none focus:ring-2 focus:ring-violet-500">
+                Mutate
+              </button>
+
+              <button id="reset" type="button" class="rounded-lg border border-slate-700 bg-slate-950/60 px-3 py-2 text-xs font-semibold text-slate-100
+                         hover:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-violet-500">
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <p class="mt-2 text-sm text-slate-300">
+            Don’t run it yet. Read the classnames like a sentence.
+          </p>
+
+          <pre class="markup mt-3 rounded-md border border-slate-800 bg-slate-950 p-3 text-xs leading-relaxed text-slate-200 font-mono">
+<code id="codeBlock"></code>
+</pre>
+
+          <div id="hints" class="mt-3 hidden rounded-lg border border-slate-800 bg-slate-950 p-3">
+            <div class="text-xs text-slate-400">Hint map</div>
+            <ul class="mt-2 grid gap-1 text-xs text-slate-200">
+              <li><span class="font-mono text-slate-300">max-w-md</span> → capped width</li>
+              <li><span class="font-mono text-slate-300">p-6</span> / <span class="font-mono text-slate-300">space-y-3</span> → roomy + rhythm</li>
+              <li><span class="font-mono text-slate-300">rounded-*</span> / <span class="font-mono text-slate-300">shadow-*</span> → surface feel</li>
+              <li><span class="font-mono text-slate-300">text-lg</span> / <span class="font-mono text-slate-300">font-semibold</span> → hierarchy</li>
+              <li><span class="font-mono text-slate-300">hover:</span> / <span class="font-mono text-slate-300">focus-visible:</span> → state intent inline</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RENDER -->
+        <div class="rounded-lg border border-slate-800 bg-slate-950/40 p-4 min-w-0">
+          <div class="text-sm font-semibold">Rendered UI</div>
+          <p class="mt-2 text-sm text-slate-300">
+            Compare your prediction to the actual UI.
+          </p>
+
+          <div class="mt-4 flex justify-center">
+            <div id="renderTarget" class="min-w-0"></div>
+          </div>
+
+          <div class="mt-4 rounded-lg border border-slate-800 bg-slate-950 p-3">
+            <div class="text-xs text-slate-400">What to predict</div>
+            <ul class="mt-2 grid gap-1 text-xs text-slate-200">
+              <li>Spacing: tight or roomy?</li>
+              <li>Hierarchy: what pops first?</li>
+              <li>Containment: full width or capped?</li>
+              <li>State: what changes on hover/focus?</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    (function() {
+      const codeBlock = document.getElementById("codeBlock");
+      const renderTarget = document.getElementById("renderTarget");
+      const toggleHints = document.getElementById("toggleHints");
+      const hints = document.getElementById("hints");
+      const mutateBtn = document.getElementById("mutate");
+      const resetBtn = document.getElementById("reset");
+
+      const base = {
+        wrapper: "max-w-md w-full border border-slate-700 bg-slate-900/60 shadow-sm rounded-xl p-6 space-y-3",
+        title: "text-lg font-semibold tracking-tight",
+        body: "text-sm text-slate-300 leading-relaxed",
+        row: "flex items-center justify-between gap-3",
+        pill: "inline-flex items-center rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-200",
+        button: "w-full inline-flex items-center justify-center rounded-lg border border-sky-500/40 bg-sky-500/15 text-sky-50 px-4 py-3 text-sm font-semibold transition " +
+          "hover:bg-sky-500/25 hover:border-sky-500/70 " +
+          "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+      };
+
+      const mutated = {
+        wrapper: "max-w-md w-full border border-slate-700 bg-slate-900/60 shadow-sm rounded-2xl p-3 space-y-1",
+        title: "text-base font-medium tracking-tight",
+        body: "text-xs text-slate-300 leading-snug",
+        row: "flex items-center justify-between gap-2",
+        pill: "inline-flex items-center rounded-full bg-slate-800 px-2 py-0.5 text-[11px] text-slate-200",
+        button: "w-full inline-flex items-center justify-center rounded-md border border-sky-500/40 bg-sky-500/15 text-sky-50 px-3 py-2 text-xs font-semibold transition " +
+          "hover:bg-sky-500/25 hover:border-sky-500/70 " +
+          "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-sky-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950",
+      };
+
+      let isMutated = false;
+
+      function prettyMarkup(m) {
+        return [
+          `<div class="${m.wrapper}">`,
+          `  <div class="${m.row}">`,
+          `    <h2 class="${m.title}">Card Title</h2>`,
+          `    <span class="${m.pill}">status: ready</span>`,
+          `  </div>`,
+          `  <p class="${m.body}">`,
+          `    Supporting content goes here. You can predict spacing, hierarchy, and tone from utilities.`,
+          `  </p>`,
+          `  <button class="${m.button}">Primary action</button>`,
+          `</div>`,
+        ].join("\n");
+      }
+
+      function renderUI(m) {
+        renderTarget.innerHTML = "";
+
+        const wrapper = document.createElement("div");
+        wrapper.className = m.wrapper;
+
+        const row = document.createElement("div");
+        row.className = m.row;
+
+        const h2 = document.createElement("h2");
+        h2.className = m.title;
+        h2.textContent = "Card Title";
+
+        const pill = document.createElement("span");
+        pill.className = m.pill;
+        pill.textContent = "status: ready";
+
+        row.appendChild(h2);
+        row.appendChild(pill);
+
+        const p = document.createElement("p");
+        p.className = m.body;
+        p.textContent =
+          "Supporting content goes here. You can predict spacing, hierarchy, and tone from utilities.";
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = m.button;
+        btn.textContent = "Primary action";
+
+        wrapper.appendChild(row);
+        wrapper.appendChild(p);
+        wrapper.appendChild(btn);
+
+        renderTarget.appendChild(wrapper);
+      }
+
+      function apply() {
+        const m = isMutated ? mutated : base;
+        codeBlock.textContent = prettyMarkup(m);
+        renderUI(m);
+      }
+
+      toggleHints.addEventListener("click", () => {
+        const hidden = hints.classList.contains("hidden");
+        hints.classList.toggle("hidden", !hidden ? true : false);
+        toggleHints.textContent = hidden ? "Hide hints" : "Reveal hints";
+      });
+
+      mutateBtn.addEventListener("click", () => {
+        isMutated = !isMutated;
+        mutateBtn.textContent = isMutated ? "Un-mutate" : "Mutate";
+        apply();
+      });
+
+      resetBtn.addEventListener("click", () => {
+        isMutated = false;
+        mutateBtn.textContent = "Mutate";
+        hints.classList.add("hidden");
+        toggleHints.textContent = "Reveal hints";
+        apply();
+      });
+
+      apply();
+    })();
+  </script>
+</body>
+
+</html>

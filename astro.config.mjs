@@ -81,15 +81,15 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: 'Flexbox and Grid',
-    directory: '06-css-layouts-flexbox-grid',
-    released: false,
-  }, // UNRELEASED
+    label: 'Tooling - Pipelines to Platforms',
+    directory: '14-tooling-pipelines-to-platforms',
+    released: true,
+  },
   {
-    label: 'SASS',
-    directory: '07-css-preprocessing-sass',
-    released: false,
-  }, // UNRELEASED
+    label: 'Atomic UI - Tailwind CSS',
+    directory: '15-atomic-ui-tailwind-css',
+    released: true,
+  },
   {
     label: 'Gulp',
     directory: '08-automated-task-runners-gulp',

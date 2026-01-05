@@ -1,0 +1,134 @@
+---
+title: 'The Pre-Build Web'
+description: 'What front-end development looked like before build tools, and why manual workflows stopped scaling.'
+sidebar:
+  order: 1
+  label: 'The Pre-Build Web'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Before Tooling Was Normal
+
+There was a time when front-end development didn’t have a build step.
+
+You wrote files.  
+You saved them.  
+You refreshed the browser.
+
+That was it.
+
+For small pages, this worked just fine.
+
+For anything bigger, it didn’t.
+
+---
+
+## Many Files, One Browser
+
+Early front-end projects often looked like this:
+
+- multiple JavaScript files
+- large, unoptimized images
+- separate CSS files per feature
+
+Every file meant:
+
+- another request
+- another thing to manage
+- another thing to forget
+
+Browsers could handle it…  
+until they couldn’t.
+
+---
+
+## Manual Optimization Was the Job
+
+If you wanted performance, you did it by hand:
+
+- compress images manually
+- concatenate JavaScript yourself
+- minify code before shipping
+- remember which file was “the final one”
+
+Nothing enforced consistency.
+
+Everything relied on discipline.
+
+---
+
+## The Refresh Loop
+
+The development cycle looked like this:
+
+1. Change a file
+2. Save
+3. Switch to the browser
+4. Refresh
+5. Repeat
+
+No live reload.  
+No hot updates.  
+No feedback loop.
+
+Fast iteration simply wasn’t possible.
+
+---
+
+## Scaling Broke the Workflow
+
+As projects grew:
+
+- file counts exploded
+- mistakes multiplied
+- teams drifted out of sync
+- performance became unpredictable
+
+The browser wasn’t the problem.
+
+**The workflow was.**
+
+---
+
+## The Core Limitation
+
+The pre-build web assumed:
+
+- humans would remember every step
+- humans would repeat those steps perfectly
+- humans would never forget to optimize
+
+That assumption doesn’t scale.
+
+---
+
+## The Pressure That Created Tooling
+
+Developers didn’t want _new tools_.
+
+They wanted:
+
+- fewer mistakes
+- repeatable steps
+- predictable output
+
+They wanted to **automate the boring, fragile parts**.
+
+That pressure created the first generation of front-end build tools.
+
+---
+
+## ⏭ Pressure Builds
+
+As front-end projects grew, the gap widened.
+
+Browsers couldn’t optimize for you.  
+Manual workflows couldn’t keep up.  
+Human discipline became the weakest link.
+
+Something had to change.
+
+That firehose is what gave rise to the first generation of build tools.

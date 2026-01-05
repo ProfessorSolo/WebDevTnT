@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMo — Composition vs Abstraction</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    /* ==============================
+         ABSTRACTED CSS LAYER
+         ============================== */
+
+    .card {
+      border: 1px solid rgb(51 65 85 / 1);
+      background: rgb(15 23 42 / 0.6);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    }
+
+    .card--dense {
+      padding: 0.75rem;
+    }
+
+    .card--cozy {
+      padding: 1.25rem;
+    }
+
+    .stack>*+* {
+      margin-top: 0.75rem;
+    }
+
+    .stack--dense>*+* {
+      margin-top: 0.5rem;
+    }
+
+    .stack--cozy>*+* {
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      border-radius: 0.5rem;
+    }
+
+    .btn--dense {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+
+    .btn--cozy {
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* Color abstraction — tokens hidden */
+    .btn--primary {
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: rgba(56, 189, 248, 0.15);
+      color: rgb(224 242 254);
+    }
+
+    .btn--primary:hover {
+      background: rgba(56, 189, 248, 0.25);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      border-radius: 999px;
+      background: rgb(30 41 59);
+      color: rgb(226 232 240);
+    }
+
+    .muted {
+      font-size: 0.875rem;
+      color: rgb(148 163 184);
+    }
+  </style>
+</head>
+
+<body class="p-5 bg-slate-950 text-slate-100">
+  <main class="shell w-full">
+    <article class="border border-slate-800 bg-slate-900/50 p-4 shadow-sm">
+      <header class="mb-4">
+        <h1 class="text-base font-semibold">Composition vs Abstraction</h1>
+        <p class="mt-1 text-sm text-slate-300">
+          Same UI. Different mental models.
+        </p>
+      </header>
+
+      <label class="block mb-4">
+        <span class="block mb-1 text-xs font-medium text-slate-300">Density</span>
+        <select id="density" class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm
+                   focus:outline-none focus:ring-2 focus:ring-violet-500">
+          <option value="dense">dense</option>
+          <option value="cozy" selected>cozy</option>
+        </select>
+      </label>
+
+      <section class="grid gap-4 md:grid-cols-2">
+        <!-- COMPOSED -->
+        <div>
+          <div class="mb-2 text-xs font-semibold">Composed (utilities)</div>
+
+          <div id="composedCard" class="border border-slate-700 bg-slate-900/60 shadow-sm p-5">
+            <div id="composedStack" class="grid gap-3">
+              <div class="text-sm font-semibold">Team profile</div>
+
+              <div class="flex flex-wrap gap-2">
+                <span class="pill">layout</span>
+                <span class="pill">spacing</span>
+                <span class="pill">state</span>
+              </div>
+
+              <button id="composedBtn" class="inline-flex w-full items-center justify-center
+                         border border-sky-500/40 bg-sky-500/15 text-sky-100
+                         py-3 px-4 text-sm font-semibold
+                         hover:bg-sky-500/20
+                         focus:outline-none focus:ring-2 focus:ring-sky-500
+                         rounded-lg">
+                Save changes
+              </button>
+            </div>
+          </div>
+
+          <p class="mt-2 text-xs text-slate-400">
+            Spacing and intent are visible right here.
+          </p>
+        </div>
+
+        <!-- ABSTRACTED -->
+        <div>
+          <div class="mb-2 text-xs font-semibold">Abstracted (custom CSS)</div>
+
+          <div id="abstractCard" class="card card--cozy">
+            <div id="abstractStack" class="stack stack--cozy">
+              <div class="text-sm font-semibold">Team profile</div>
+
+              <div class="flex flex-wrap gap-2">
+                <span class="pill">layout</span>
+                <span class="pill">spacing</span>
+                <span class="pill">state</span>
+              </div>
+
+              <button id="abstractBtn" class="btn btn--primary btn--cozy">
+                Save changes
+              </button>
+
+              <div class="muted">
+                Where did the spacing and color decisions come from?
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-2 text-xs text-slate-400">
+            Meaning lives somewhere else.
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <script>
+    const density = document.getElementById("density");
+
+    const composedCard = document.getElementById("composedCard");
+    const composedStack = document.getElementById("composedStack");
+    const composedBtn = document.getElementById("composedBtn");
+
+    const abstractCard = document.getElementById("abstractCard");
+    const abstractStack = document.getElementById("abstractStack");
+    const abstractBtn = document.getElementById("abstractBtn");
+
+    function render() {
+      const mode = density.value;
+
+      // Composed: visible utility swaps
+      composedCard.classList.toggle("p-3", mode === "dense");
+      composedCard.classList.toggle("p-5", mode === "cozy");
+
+      composedStack.classList.toggle("gap-2", mode === "dense");
+      composedStack.classList.toggle("gap-3", mode === "cozy");
+
+      composedBtn.classList.toggle("py-2", mode === "dense");
+      composedBtn.classList.toggle("py-3", mode === "cozy");
+
+      // Abstracted: hidden variant toggles
+      abstractCard.classList.toggle("card--dense", mode === "dense");
+      abstractCard.classList.toggle("card--cozy", mode === "cozy");
+
+      abstractStack.classList.toggle("stack--dense", mode === "dense");
+      abstractStack.classList.toggle("stack--cozy", mode === "cozy");
+
+      abstractBtn.classList.toggle("btn--dense", mode === "dense");
+      abstractBtn.classList.toggle("btn--cozy", mode === "cozy");
+    }
+
+    density.addEventListener("change", render);
+    render();
+  </script>
+</body>
+
+</html>

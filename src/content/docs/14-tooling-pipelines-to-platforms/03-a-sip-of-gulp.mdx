@@ -1,0 +1,134 @@
+---
+title: 'A Sip of Gulp'
+description: 'What Gulp is, what a task runner does, and why this model once made perfect sense.'
+sidebar:
+  order: 3
+  label: 'A Sip of Gulp'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Meet the Task Runner
+
+<figure>
+  <img
+    src="/assets/lessons/m14-gulp-pipeline.png"
+    alt="Gulp task pipeline: clean, optimize, bundle"
+  />
+  <figcaption>
+    Gulp orchestrates your asset pipeline before deployment.
+  </figcaption>
+</figure>
+
+At some point, developers stopped asking:
+
+> “How do I remember to do all this?”
+
+And started asking:
+
+> “Why am I doing this by hand at all?”
+
+That question gave rise to **task runners**.
+
+---
+
+## What Is Gulp?
+
+Gulp is a **task runner**.
+
+It doesn’t change your code.  
+It doesn’t understand your app.
+
+It simply automates **steps you already know how to do**.
+
+You define tasks.  
+Gulp runs them.  
+Every time.  
+The same way.
+
+---
+
+## The Core Idea: Pipelines
+
+At the heart of Gulp is a simple model:
+
+**files → transformations → output**
+
+Each task is a pipeline:
+
+- read files from disk
+- pass them through a series of steps
+- write the result somewhere else
+
+Nothing magical.  
+Just automation.
+
+---
+
+## What Gulp Was Great At
+
+In its time, Gulp solved very real problems:
+
+- image optimization
+- JavaScript concatenation
+- minification
+- copying files into a `dist/` folder
+
+Instead of doing these steps manually, you ran **one command**.
+
+That was a huge win.
+
+---
+
+## Why Developers Loved It
+
+Gulp felt:
+
+- fast
+- explicit
+- predictable
+
+You could open a `gulpfile.js` and _see the entire build process_.
+
+No mystery.  
+No hidden behavior.
+
+For a while, this was exactly what the web needed.
+
+---
+
+## Important Framing
+
+Let’s be very clear:
+
+- This is **not** a recommendation.
+- This is **not** a modern default.
+- This is **not** something you’re expected to adopt.
+
+This is context.
+
+Understanding Gulp helps you understand **what came next**.
+
+---
+
+## A Controlled Taste
+
+We’re going to take a **very small sip**:
+
+- one `gulpfile.js`
+- a few focused tasks
+- no watchers
+- no Sass
+- no plugins beyond the essentials
+
+Just enough to understand the model.
+
+Then we move on.
+
+---
+
+## ⏭ Enter the Pipeline: **A Minimal Gulp Build**
+
+Let’s wire up a simple pipeline and see what “automation” looked like before modern platforms took over.

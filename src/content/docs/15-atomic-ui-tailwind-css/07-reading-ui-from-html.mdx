@@ -1,0 +1,141 @@
+---
+title: 'Reading UI from HTML'
+description: 'How atomic UI makes interface intent readable directly from markup.'
+sidebar:
+  order: 7
+  label: 'Reading UI'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Markup Becomes the Interface
+
+In traditional CSS workflows, understanding UI often means:
+
+- finding the right stylesheet
+- chasing class names
+- resolving specificity
+- reconstructing intent
+
+Atomic UI collapses that distance.
+
+The markup _is_ the interface.
+
+---
+
+## Intent Lives at the Point of Use
+
+When utilities describe:
+
+- spacing
+- layout
+- color
+- state
+
+You no longer ask:
+
+> “What does this class do?”
+
+You can see it.
+
+---
+
+## Reading Without Rendering
+
+Consider this markup:
+
+```html
+<div class="max-w-xl p-6 bg-white rounded-lg shadow-md">
+  <h2 class="text-lg font-semibold mb-2">Card Title</h2>
+  <p class="text-slate-600 text-sm">Supporting content goes here.</p>
+</div>
+```
+
+Before opening a browser, you can predict:
+
+- size and containment
+- padding and spacing
+- visual hierarchy
+- tonal contrast
+
+That’s not accidental.
+
+---
+
+## Faster Onboarding
+
+When UI intent is visible:
+
+- new team members ramp faster
+- code reviews focus on decisions
+- refactors feel safer
+
+You spend less time asking “where is this defined?”
+
+---
+
+## Debugging Becomes Local
+
+When something looks wrong:
+
+- you inspect the element
+- you see the utilities
+- you adjust them in place
+
+No searching.
+No side effects.
+No fear.
+
+---
+
+## Predictability Beats Cleverness
+
+This approach favors:
+
+- boring markup
+- explicit decisions
+- readable repetition
+
+Clever abstractions age poorly.
+
+Clear intent doesn’t.
+
+---
+
+## 🧪 MiniMo — Predict the UI
+
+<MiniMo
+  src="/demos/15-atomic-ui-tailwind-css/07-reading-ui-minimo.html"
+  title="Read the UI Without Rendering"
+  height="1000px"
+/>
+
+Read the markup.  
+Predict the layout.  
+Then run it.
+
+Notice how close you were.
+
+---
+
+## The Professional Payoff
+
+Developers who can read UI from markup:
+
+- debug faster
+- collaborate better
+- move confidently in large codebases
+
+That’s not a Tailwind trick.
+
+That’s a skill.
+
+---
+
+## ⏭ Drawing the Line
+
+Atomic UI is powerful — but it’s not the answer to everything.
+
+Next up: **Where Custom CSS Still Belongs**

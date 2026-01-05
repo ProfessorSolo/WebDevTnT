@@ -1,0 +1,141 @@
+---
+title: 'Utilities as Design Tokens'
+description: 'How Tailwind utilities encode design decisions and enforce consistency at scale.'
+sidebar:
+  order: 4
+  label: 'Utilities as Tokens'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Design Decisions, Made Explicit
+
+In traditional CSS, design decisions are often implicit.
+
+- spacing values vary
+- colors drift
+- font sizes multiply
+- “just this once” becomes routine
+
+Over time, consistency erodes.
+
+Atomic systems solve this by **making decisions explicit**.
+
+---
+
+## What a Design Token Is
+
+A design token is a named decision:
+
+- spacing unit
+- color value
+- font size
+- border radius
+
+Tokens are not styles.
+
+They are **constraints**.
+
+---
+
+## Tailwind Utilities *Are* Tokens
+
+In Tailwind:
+
+- `p-4` is not “padding 1rem”
+- `text-sm` is not “font-size 0.875rem”
+- `bg-slate-800` is not “that dark gray we like”
+
+They are *references* to a shared system.
+
+You don’t pick values.
+
+You pick from approved options.
+
+---
+
+## Why This Matters
+
+When everyone uses the same tokens:
+
+- spacing stays consistent
+- colors don’t drift
+- typography feels intentional
+- UI looks cohesive by default
+
+Consistency stops being a policing problem.
+
+It becomes automatic.
+
+---
+
+## Fewer Decisions, Better Focus
+
+Atomic UI removes hundreds of micro-decisions:
+
+- “Is this 14px or 15px?”
+- “Should this be #333 or #444?”
+- “Is this margin slightly bigger?”
+
+Those decisions were never where value was created.
+
+Now they’re gone.
+
+---
+
+## Reading Tokens as Intent
+
+Seeing this:
+
+```html
+<div class="p-6 bg-slate-800 text-white">
+```
+
+Tells you immediately:
+
+- spacing is deliberate
+- contrast is intentional
+- hierarchy is clear
+
+You don’t need to inspect a stylesheet.
+
+The intent is visible.
+
+---
+
+## Tokens Scale Better Than Rules
+
+Rules change meaning as systems grow.
+
+Tokens don’t.
+
+They’re reused.
+They’re limited.
+They’re predictable.
+
+That’s why atomic systems age better.
+
+---
+
+## 🧪 MiniMo — Token-Driven Consistency
+
+<MiniMo
+  src="/demos/15-atomic-ui-tailwind-css/04-design-tokens-minimo.html"
+  title="Utilities as Design Tokens"
+  height="720px"
+/>
+
+Change the spacing token.  
+Watch the UI update everywhere.
+
+That’s leverage.
+
+---
+
+## ⏭ Composition Is Next
+
+Once decisions are encoded as tokens, the real power comes from **combining them**.
+
+Next up: **Composition Over Abstraction**

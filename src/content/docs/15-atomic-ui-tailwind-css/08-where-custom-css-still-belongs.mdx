@@ -1,0 +1,132 @@
+---
+title: 'Where Custom CSS Still Belongs'
+description: 'How to use Tailwind without becoming dogmatic, and when authored CSS is still the right tool.'
+sidebar:
+  order: 8
+  label: 'Where Custom CSS Fits'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Tailwind Isn’t a Religion
+
+Tailwind is powerful.
+
+But the goal is not:
+> “Do everything with utilities.”
+
+The goal is:
+> “Ship consistent UI with minimal chaos.”
+
+That sometimes means writing custom CSS.
+
+---
+
+## Use Tailwind for the Common Case
+
+Tailwind is strongest when the UI is:
+
+- layout and spacing heavy
+- responsive
+- component-oriented
+- made of repeatable patterns
+
+This is most UI.
+
+That’s why Tailwind feels like a superpower.
+
+---
+
+## Write Custom CSS for the Rare Case
+
+Custom CSS is often the better tool for:
+
+- complex animations
+- keyframes and timing systems
+- highly bespoke one-off visuals
+- advanced selectors
+- non-trivial calculations
+- browser quirks and fallbacks
+
+For these, utilities can become noise.
+
+---
+
+## The “Escape Hatch” Pattern
+
+A healthy Tailwind project typically includes:
+
+- Tailwind utilities for composition
+- a small custom stylesheet for specialized rules
+- tokens / theme configuration where needed
+
+The system stays coherent.
+
+---
+
+## When `@apply` Helps
+
+`@apply` can be useful when:
+
+- a pattern repeats widely
+- the pattern has a clear name
+- the abstraction stays stable
+
+Use it as a tool of last resort, not a first reflex.
+
+Compose first.
+
+---
+
+## When `@apply` Hurts
+
+`@apply` becomes dangerous when it:
+
+- hides decisions again
+- creates “mystery classes”
+- reintroduces override chains
+- makes refactors risky
+
+If your CSS starts to feel like it did before Tailwind, you’ve looped back.
+
+---
+
+## Component Libraries Are Not Cheating
+
+Sometimes the right move is to use a component library that already solved the problem.
+
+That’s not weakness.
+
+That’s professional judgment.
+
+Tailwind works well *with* component libraries.
+
+---
+
+## The Rule of Thumb
+
+Use Tailwind to express:
+
+- structure
+- spacing
+- layout
+- state
+- responsiveness
+
+Use custom CSS to express:
+
+- behavior that doesn’t map cleanly to tokens
+- visuals that are truly bespoke
+- animation systems
+
+The goal is clarity.
+
+---
+
+## ⏭ Productive Friction
+
+If Tailwind ever feels annoying, that feeling is useful.
+
+Next up: **Productive Friction**

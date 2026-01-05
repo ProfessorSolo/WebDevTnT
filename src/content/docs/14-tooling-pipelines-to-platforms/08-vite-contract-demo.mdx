@@ -1,0 +1,205 @@
+---
+title: 'A Minimal Vite Workflow'
+description: 'A controlled demo showing how modern tooling replaced task-runner pipelines.'
+sidebar:
+  order: 8
+  label: 'Vite: Contract Demo'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Goal of This Demo
+
+This is not about learning Vite.
+
+This is about **seeing the modern contract once**.
+
+You are not memorizing commands.  
+You are learning how modern front-end tooling *expects* projects to behave.
+
+---
+
+## What We’re Building
+
+The **same chapter** you just saw with Gulp:
+
+- static HTML
+- local CSS and JavaScript
+- shared global assets
+- a hero image
+- a deployable `dist/` output
+
+The difference is not the result.
+
+The difference is **how little we have to describe to get there**.
+
+---
+
+## The Mental Shift
+
+With Gulp, we *defined steps*.
+
+With Vite, we accept a **contract**:
+
+- HTML is the entry point
+- JavaScript uses ES modules
+- CSS is imported, not concatenated
+- the dev server understands the graph
+- the build step formalizes what already works
+
+No task graph.  
+No plugin choreography.
+
+---
+
+## Project Setup
+
+From inside the chapter folder (e.g. `02-vite-vite/`):
+
+### 1) Initialize npm
+
+```bash
+npm init -y
+```
+
+### 2) Install Vite
+
+```bash
+npm install --save-dev vite
+```
+
+That’s it.
+
+No additional plugins are required for this demo.
+
+---
+
+## npm Scripts
+
+Add these scripts to `package.json`:
+
+```json
+{
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}
+```
+
+Each command has a clear role.
+
+---
+
+## The Vite Config
+
+Vite requires **very little configuration**.
+
+Our config does just three things:
+
+- treats `src/` as the project root
+- outputs a portable `dist/` folder
+- allows access to shared assets one level up
+
+That’s not a pipeline.
+
+That’s a contract.
+
+---
+
+## Development Mode
+
+When you run:
+
+```bash
+npm run dev
+```
+
+Vite:
+
+- starts a dev server
+- serves files directly from `src/`
+- rewrites imports on demand
+- enables hot module replacement
+
+Nothing is built.
+
+Nothing is copied.
+
+You work directly against the source.
+
+---
+
+## Imports Replace Build Steps
+
+Instead of defining tasks, we use imports:
+
+- CSS imports pull styles into the graph
+- JS imports define dependencies
+- shared assets are referenced explicitly
+
+The browser and the dev server do the rest.
+
+---
+
+## The Build Step
+
+When you run:
+
+```bash
+npm run build
+```
+
+Vite:
+
+- analyzes the module graph
+- bundles dependencies
+- optimizes assets
+- writes a complete `dist/` folder
+
+The build output reflects what already worked in dev.
+
+---
+
+## What Just Happened
+
+You didn’t configure a workflow.
+
+You **accepted one**.
+
+You wrote code that followed modern assumptions, and the tooling handled the rest.
+
+That is the shift.
+
+---
+
+## The Cost of This Model
+
+The complexity did not disappear.
+
+It moved:
+
+- into conventions
+- into standards
+- into the tooling itself
+
+You trade explicit control for leverage.
+
+Most teams accept that trade.
+
+---
+
+## ⏭ Why This Won
+
+This model scaled.
+
+It reduced glue code.  
+It reduced configuration.  
+It reduced cognitive overhead.
+
+That’s why this is the baseline today.
+
+And it sets the stage for everything that comes next.

@@ -1,0 +1,151 @@
+---
+title: 'Why Task Runners Stopped Scaling'
+description: 'How pipeline-based tooling became brittle as front-end development grew more interactive.'
+sidebar:
+  order: 5
+  label: 'Why Task Runners Broke'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Pipelines Worked — Until They Didn’t
+
+Task runners like Gulp solved real problems.
+
+They automated repetition.  
+They enforced consistency.  
+They reduced human error.
+
+For a while, that was enough.
+
+Then front-end development changed.
+
+---
+
+## The Web Became Interactive
+
+Front-end projects stopped being:
+
+- mostly static files
+- processed once
+- shipped as a bundle
+
+They became:
+
+- stateful
+- component-driven
+- constantly changing during development
+
+Pipelines were built for *outputs*.
+
+Modern front-end work needed **environments**.
+
+---
+
+## Configuration Fatigue
+
+As projects grew, so did the build files:
+
+- more plugins
+- more glue code
+- more edge cases
+- more things that could break
+
+Small changes required touching multiple parts of the pipeline.
+
+The tooling became something you had to *maintain*, not just run.
+
+---
+
+## Watchers Everywhere
+
+To feel “modern,” pipelines started adding:
+
+- file watchers
+- live reload plugins
+- chained rebuilds
+
+Suddenly you had:
+- build logic
+- watch logic
+- dev logic
+
+All wired together manually.
+
+This worked — until it didn’t.
+
+---
+
+## Slow Feedback Loops
+
+Pipelines were optimized for building.
+
+Not for development.
+
+Every change often meant:
+- re-running tasks
+- reprocessing files
+- waiting for output
+
+As applications grew, this delay became painful.
+
+Fast feedback wasn’t optional anymore.
+
+---
+
+## Mental Overhead Increased
+
+Developers had to think about:
+
+- source files vs output files
+- which task to run
+- which watcher was active
+- why something didn’t rebuild
+
+The tooling stopped feeling invisible.
+
+That’s usually a sign something is wrong.
+
+---
+
+## The Core Mismatch
+
+Task runners assumed:
+
+- development and build were the same phase
+- files flowed in one direction
+- output mattered more than iteration
+
+Modern development needed the opposite.
+
+---
+
+## The Pressure for a New Model
+
+What teams wanted wasn’t more tasks.
+
+They wanted:
+- instant feedback
+- fewer moving parts
+- less configuration
+- tooling that stayed out of the way
+
+The solution wasn’t a better pipeline.
+
+It was a different foundation.
+
+---
+
+## ⏭ Platforms Take Over
+
+Instead of asking:
+
+“How do we process files?”
+
+The question shifted to:
+
+“How do we run a development environment?”
+
+That shift leads directly to modern platforms like Vite.

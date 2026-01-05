@@ -1,0 +1,141 @@
+---
+title: 'Responsive and State Modifiers'
+description: 'How Tailwind handles responsiveness and interaction without new CSS or media queries.'
+sidebar:
+  order: 6
+  label: 'Responsive & State'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## One System, Many Conditions
+
+In traditional CSS, responsiveness and state add complexity fast:
+
+- media queries multiply
+- selectors grow longer
+- overrides pile up
+
+Atomic UI approaches this differently.
+
+Conditions become **modifiers**, not new rules.
+
+---
+
+## Responsive Modifiers
+
+Tailwind encodes breakpoints directly into class names:
+
+- `sm:`
+- `md:`
+- `lg:`
+- `xl:`
+
+Instead of asking:
+> “Where is the media query for this?”
+
+You can ask:
+> “Under what condition does this apply?”
+
+---
+
+## Reading Responsiveness Inline
+
+Seeing this:
+
+```html
+<div class="p-4 md:p-6 lg:p-8">
+```
+
+Tells you immediately:
+
+- base padding is `p-4`
+- increases at medium screens
+- increases again at large screens
+
+No stylesheet spelunking required.
+
+---
+
+## State Modifiers
+
+Tailwind uses the same idea for interaction states:
+
+- `hover:`
+- `focus:`
+- `active:`
+- `disabled:`
+
+States don’t live in separate rule blocks.
+
+They live **next to the base style**.
+
+---
+
+## Visibility of Intent
+
+Compare:
+
+- “somewhere there’s a hover rule”
+
+vs
+
+```html
+<button class="bg-blue-600 hover:bg-blue-700 focus:ring-2">
+```
+
+The second one is explicit.
+
+Intent is visible at the point of use.
+
+---
+
+## Combining Conditions
+
+Modifiers stack cleanly:
+
+```html
+<button class="p-4 md:p-6 hover:bg-slate-200">
+```
+
+No special syntax.
+No new CSS.
+No specificity surprises.
+
+---
+
+## Why This Scales
+
+This model:
+
+- avoids override chains
+- keeps related decisions together
+- reduces cognitive load
+
+You change behavior by editing markup, not hunting rules.
+
+---
+
+## 🧪 MiniMo — Responsive + State in One Place
+
+<MiniMo
+  src="/demos/15-atomic-ui-tailwind-css/06-responsive-state-modifiers-minimo.html"
+  title="Responsive and State Modifiers"
+  height="760px"
+/>
+
+Resize the viewport.  
+Hover the elements.  
+Notice how all behavior is declared inline.
+
+---
+
+## ⏭ Reading UI as Code
+
+Once responsiveness and state live in the markup, something interesting happens.
+
+You can understand UI **without running it**.
+
+Next up: **Reading UI from HTML**

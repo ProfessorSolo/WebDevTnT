@@ -1,0 +1,141 @@
+---
+title: 'Tooling: Pipelines → Platforms'
+description: 'Why front-end tooling exists, what problems it solved, and how we arrived at modern platforms like Vite.'
+sidebar:
+  order: 0
+  label: 'Tools for Building'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why We’re Starting Here
+
+Welcome back.
+
+Before we write more CSS.  
+Before we go atomic with Tailwind.  
+We need to talk about **how modern front-end work actually runs**.
+
+Not frameworks.  
+Not syntax.
+
+**Tooling.**
+
+Because every line of code we write lives inside a system that:
+
+- watches files
+- reloads browsers
+- transforms assets
+- and eventually produces something shippable
+
+Most of the time, that system is invisible.
+
+Today, we make it visible.
+
+---
+
+## A Quick Reset
+
+You’ve already been using modern tooling.
+
+- Vite in React
+- Vite in Vue
+- Vite under Angular’s hood
+
+But for most of you, that experience has been:
+
+> “Run this command. Don’t touch anything else.”
+
+That’s fine... until something breaks.
+
+This chapter is about understanding **what that tooling is doing**, and _why it exists at all_.
+
+---
+
+## The Core Problem Tooling Solves
+
+Front-end tooling didn’t appear because developers enjoy complexity.
+
+It appeared because:
+
+- browsers used to be slower
+- assets used to be larger
+- workflows didn’t scale
+- teams needed repeatability
+
+As the web evolved, **manual workflows stopped being viable**.
+
+Tooling filled that gap.
+
+---
+
+## Pipelines vs Platforms
+
+Historically, front-end tooling focused on **pipelines**:
+
+- take files
+- run them through steps
+- output optimized assets
+
+Modern tooling focuses on **platforms**:
+
+- run a dev server
+- watch files automatically
+- reload instantly
+- build only when you’re done
+
+This chapter is about that shift.
+
+---
+
+## How This Chapter Flows
+
+We’ll move through this in order:
+
+1. **The Past**  
+   When task runners like Gulp solved real, painful problems.
+
+2. **The Breaking Point**  
+   Why pipeline-based tooling stopped scaling.
+
+3. **The Present**  
+   How platforms like Vite absorbed those ideas and simplified everything.
+
+This isn’t nostalgia.  
+It’s context.
+
+---
+
+## What This Chapter Is _Not_
+
+Let’s be explicit:
+
+- This is **not** a recommendation to use Gulp.
+- This is **not** a deep dive into build configuration.
+- This is **not** something you’ll be memorizing.
+
+This chapter is about **mental models**.
+
+---
+
+## The Takeaway Goal
+
+By the end of this chapter, you should be able to:
+
+- recognize tooling patterns in any project
+- understand _why_ a tool exists
+- reason about unfamiliar setups without panic
+
+That’s a professional skill.
+
+---
+
+## ⏭ Down the Pipe: **The Pre-Build Web**
+
+Before Vite.  
+Before dev servers.  
+Before hot reload.
+
+Back to a time when the browser wasn’t ready and developers had to compensate.

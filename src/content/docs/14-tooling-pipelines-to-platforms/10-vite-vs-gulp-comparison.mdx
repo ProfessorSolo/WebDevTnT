@@ -1,0 +1,157 @@
+---
+title: 'Vite vs Gulp'
+description: 'A direct comparison between pipeline-based tooling and modern development platforms.'
+sidebar:
+  order: 10
+  label: 'Vite vs Gulp'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Same Goal, Different Eras
+
+Gulp and Vite both exist for the same reason:
+
+To make front-end development manageable at scale.
+
+They just come from **different eras** of the web.
+
+---
+
+## The Core Question Each Tool Asks
+
+Every tool is shaped by the problem it tries to answer.
+
+**Gulp asks:**  
+“How do we process files efficiently?”
+
+**Vite asks:**  
+“How do we run a fast, modern development environment?”
+
+That difference drives everything else.
+
+---
+
+## Pipelines vs Platforms
+
+**Gulp**
+
+- task-based
+- file-in / file-out
+- build-first mindset
+- explicit pipelines
+
+**Vite**
+
+- environment-based
+- dev server at the center
+- dev-first mindset
+- implicit workflows
+
+Both work.
+
+Only one scales cleanly today.
+
+---
+
+## Development Experience
+
+With Gulp:
+
+- you run tasks
+- you wait for output
+- you refresh the browser
+- you debug the pipeline
+
+With Vite:
+
+- you edit files
+- the browser updates instantly
+- state is preserved
+- the tooling disappears
+
+Speed changes how you think.
+
+---
+
+## Configuration Surface Area
+
+**Gulp**
+
+- many plugins
+- lots of glue code
+- custom wiring
+- easy to break unintentionally
+
+**Vite**
+
+- minimal config
+- opinionated defaults
+- plugins stay isolated
+- fewer moving parts
+
+Less surface area means fewer problems.
+
+---
+
+## Build Timing
+
+**Gulp**
+
+- build is constant
+- optimization happens all the time
+- feedback slows as projects grow
+
+**Vite**
+
+- build is deferred
+- optimization happens once
+- development stays fast
+
+Different priorities.
+
+---
+
+## When You’ll Still See Gulp
+
+This isn’t about erasing history.
+
+You’ll still encounter Gulp in:
+
+- legacy projects
+- older CMS themes
+- inherited codebases
+
+Understanding it helps you read those projects calmly.
+
+---
+
+## Why Vite Won
+
+Vite didn’t win by adding features.
+
+It won by:
+
+- aligning with modern browsers
+- removing unnecessary steps
+- separating development from production
+
+The web finally caught up.
+
+---
+
+## The Takeaway
+
+Gulp taught developers how to automate.
+
+Vite removed the need to think about automation at all.
+
+That’s progress.
+
+---
+
+## ⏭ Zoom Out
+
+Now that the contrast is clear, it’s time to step back and lock in the mental models that will help you reason about _any_ tool you meet next.

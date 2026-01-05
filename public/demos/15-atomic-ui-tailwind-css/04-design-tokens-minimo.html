@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MiniMo — Utilities as Design Tokens</title>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+  </style>
+</head>
+
+<body class="p-5 bg-slate-950 text-slate-100">
+  <main class="shell w-full max-w-full box-border">
+    <article id="card" class="border border-slate-800 bg-slate-900/50 p-4 shadow-sm">
+      <!-- Title -->
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <div class="text-xs font-medium text-slate-400">MiniMo</div>
+          <h1 class="mt-1 text-base font-semibold">Utilities as Design Tokens</h1>
+          <p class="mt-2 text-sm text-slate-300">
+            Change a token once. Watch it apply everywhere in this component.
+          </p>
+        </div>
+
+        <span id="badge" class="shrink-0 inline-flex items-center rounded-full px-2 py-1 text-xs font-medium
+                   bg-sky-500/15 text-sky-200">
+          tokenized
+        </span>
+      </div>
+
+      <!-- Controls -->
+      <div id="controls" class="mt-4 grid gap-3 sm:grid-cols-3">
+        <label class="block">
+          <span class="mb-1 block text-xs font-medium text-slate-300">Spacing token</span>
+          <select id="spaceToken" class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100
+                     focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="p-3">p-3</option>
+            <option value="p-4" selected>p-4</option>
+            <option value="p-5">p-5</option>
+            <option value="p-6">p-6</option>
+            <option value="p-8">p-8</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="mb-1 block text-xs font-medium text-slate-300">Radius token</span>
+          <select id="radiusToken" class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100
+                     focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="none" selected>none</option>
+            <option value="rounded-lg">rounded-lg</option>
+            <option value="rounded-xl">rounded-xl</option>
+            <option value="rounded-2xl">rounded-2xl</option>
+          </select>
+        </label>
+
+        <label class="block">
+          <span class="mb-1 block text-xs font-medium text-slate-300">Color token</span>
+          <select id="colorToken" class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100
+                     focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <option value="sky" selected>sky</option>
+            <option value="violet">violet</option>
+            <option value="emerald">emerald</option>
+            <option value="rose">rose</option>
+            <option value="amber">amber</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Active tokens -->
+      <div class="mt-3 rounded-lg border border-slate-800 bg-slate-950/40 p-3">
+        <div class="text-xs text-slate-400">Active tokens</div>
+        <div id="activeTokens" class="mt-1 font-mono text-xs text-slate-200">
+          p-4 · none · sky
+        </div>
+      </div>
+
+      <!-- UI area -->
+      <div id="stack" class="mt-4 grid gap-3">
+        <div class="flex items-center gap-3">
+          <div id="avatar" class="h-10 w-10 rounded-full bg-gradient-to-br from-sky-500 to-violet-500"></div>
+          <div class="min-w-0">
+            <div class="truncate text-sm font-medium">Alex Rivera</div>
+            <div class="truncate text-xs text-slate-400">UI Engineer</div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-200">p-token</span>
+          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-200">radius-token</span>
+          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-200">color-token</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button id="btnSecondary" class="inline-flex items-center justify-center border border-slate-700 bg-slate-950/60
+                     text-sm font-medium text-slate-100 hover:bg-slate-950
+                     focus:outline-none focus:ring-2 focus:ring-sky-500" type="button">
+            Cancel
+          </button>
+
+          <button id="btnPrimary" class="inline-flex items-center justify-center border border-sky-500/40 bg-sky-500/15
+                     text-sm font-medium text-sky-100 hover:bg-sky-500/20
+                     focus:outline-none focus:ring-2 focus:ring-sky-500" type="button">
+            Save
+          </button>
+        </div>
+
+        <p class="text-xs text-slate-400">
+          Read <span class="font-mono text-slate-300">p-6</span> as “approved spacing level 6” — not “24px.”
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    (function() {
+      // Elements
+      const spaceSelect = document.getElementById("spaceToken");
+      const radiusSelect = document.getElementById("radiusToken");
+      const colorSelect = document.getElementById("colorToken");
+      const activeTokens = document.getElementById("activeTokens");
+
+      const card = document.getElementById("card");
+      const controls = document.getElementById("controls");
+      const stack = document.getElementById("stack");
+
+      const badge = document.getElementById("badge");
+      const btnPrimary = document.getElementById("btnPrimary");
+      const btnSecondary = document.getElementById("btnSecondary");
+      const avatar = document.getElementById("avatar");
+
+      // Allowed token classes
+      const SPACE_CLASSES = ["p-3", "p-4", "p-5", "p-6", "p-8"];
+      const RADIUS_CLASSES = ["rounded-lg", "rounded-xl", "rounded-2xl"];
+
+      // Color token -> multiple utility classes (the whole point)
+      const COLOR_MAP = {
+        sky: {
+          badge: ["bg-sky-500/15", "text-sky-200"],
+          primary: [
+            "border-sky-500/40",
+            "bg-sky-500/15",
+            "text-sky-100",
+            "hover:bg-sky-500/20",
+            "focus:ring-sky-500",
+          ],
+          secondaryRing: ["focus:ring-sky-500"],
+          avatarFrom: "from-sky-500",
+        },
+        violet: {
+          badge: ["bg-violet-500/15", "text-violet-200"],
+          primary: [
+            "border-violet-500/40",
+            "bg-violet-500/15",
+            "text-violet-100",
+            "hover:bg-violet-500/20",
+            "focus:ring-violet-500",
+          ],
+          secondaryRing: ["focus:ring-violet-500"],
+          avatarFrom: "from-violet-500",
+        },
+        emerald: {
+          badge: ["bg-emerald-500/15", "text-emerald-200"],
+          primary: [
+            "border-emerald-500/40",
+            "bg-emerald-500/15",
+            "text-emerald-100",
+            "hover:bg-emerald-500/20",
+            "focus:ring-emerald-500",
+          ],
+          secondaryRing: ["focus:ring-emerald-500"],
+          avatarFrom: "from-emerald-500",
+        },
+        rose: {
+          badge: ["bg-rose-500/15", "text-rose-200"],
+          primary: [
+            "border-rose-500/40",
+            "bg-rose-500/15",
+            "text-rose-100",
+            "hover:bg-rose-500/20",
+            "focus:ring-rose-500",
+          ],
+          secondaryRing: ["focus:ring-rose-500"],
+          avatarFrom: "from-rose-500",
+        },
+        amber: {
+          badge: ["bg-amber-500/15", "text-amber-200"],
+          primary: [
+            "border-amber-500/40",
+            "bg-amber-500/15",
+            "text-amber-100",
+            "hover:bg-amber-500/20",
+            "focus:ring-amber-500",
+          ],
+          secondaryRing: ["focus:ring-amber-500"],
+          avatarFrom: "from-amber-500",
+        },
+      };
+
+      // Flatten for easy cleanup
+      const ALL_BADGE = Object.values(COLOR_MAP).flatMap((v) => v.badge);
+      const ALL_PRIMARY = Object.values(COLOR_MAP).flatMap((v) => v.primary);
+      const ALL_SECONDARY_RING = Object.values(COLOR_MAP).flatMap((v) => v.secondaryRing);
+      const ALL_AVATAR_FROM = Object.values(COLOR_MAP).map((v) => v.avatarFrom);
+
+      // Small helpers
+      function removeAll(el, classes) {
+        for (const c of classes) el.classList.remove(c);
+      }
+
+      function addAll(el, classes) {
+        el.classList.add(...classes);
+      }
+
+      // 1) Spacing token
+      function applySpacing(spaceToken) {
+        // same spacing token applied to multiple regions
+        for (const el of [card, controls, stack]) {
+          removeAll(el, SPACE_CLASSES);
+          el.classList.add(spaceToken);
+        }
+      }
+
+      // 2) Radius token
+      function applyRadius(radiusToken) {
+        // remove existing radius classes
+        for (const el of [card, btnPrimary, btnSecondary]) {
+          removeAll(el, RADIUS_CLASSES);
+          if (radiusToken !== "none") el.classList.add(radiusToken);
+        }
+      }
+
+      // 3) Color token
+      function applyColor(colorToken) {
+        const map = COLOR_MAP[colorToken] || COLOR_MAP.sky;
+
+        // badge
+        removeAll(badge, ALL_BADGE);
+        addAll(badge, map.badge);
+
+        // primary button
+        removeAll(btnPrimary, ALL_PRIMARY);
+        addAll(btnPrimary, map.primary);
+
+        // secondary ring (subtle consistency)
+        removeAll(btnSecondary, ALL_SECONDARY_RING);
+        addAll(btnSecondary, map.secondaryRing);
+
+        // avatar gradient start
+        removeAll(avatar, ALL_AVATAR_FROM);
+        avatar.classList.add(map.avatarFrom);
+      }
+
+      function render() {
+        const p = spaceSelect.value;
+        const r = radiusSelect.value;
+        const c = colorSelect.value;
+
+        applySpacing(p);
+        applyRadius(r);
+        applyColor(c);
+
+        activeTokens.textContent = `${p} · ${r} · ${c}`;
+      }
+
+      // events
+      spaceSelect.addEventListener("change", render);
+      radiusSelect.addEventListener("change", render);
+      colorSelect.addEventListener("change", render);
+
+      // initial
+      render();
+    })();
+  </script>
+</body>
+
+</html>

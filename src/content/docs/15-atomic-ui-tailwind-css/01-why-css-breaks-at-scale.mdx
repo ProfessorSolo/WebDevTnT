@@ -1,0 +1,128 @@
+---
+title: 'Why CSS Breaks at Scale'
+description: 'The real reasons traditional CSS becomes difficult to manage as projects and teams grow.'
+sidebar:
+  order: 1
+  label: 'Why CSS Breaks'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## CSS Isn’t the Problem
+
+CSS is powerful.
+
+It can:
+- express layout
+- define visual systems
+- adapt responsively
+- animate interfaces
+
+The issue isn’t capability.
+
+The issue is **scale**.
+
+---
+
+## Small Projects Hide the Cracks
+
+On small projects:
+- one developer writes most of the CSS
+- styles live in a few files
+- naming feels manageable
+- everything is still fresh in memory
+
+This creates a false sense of safety.
+
+---
+
+## Entropy Sets In
+
+As projects grow:
+
+- styles accumulate
+- patterns drift
+- rules overlap
+- intent becomes unclear
+
+CSS doesn’t rot —  
+**systems rot**.
+
+---
+
+## Naming Becomes a Burden
+
+Traditional CSS relies heavily on naming:
+
+- class names
+- component names
+- modifier names
+- utility names you invent yourself
+
+Over time, teams ask:
+- “Is there already a class for this?”
+- “Can I reuse this safely?”
+- “What will this break?”
+
+Progress slows.
+
+---
+
+## Specificity Creeps Up
+
+When styles conflict, developers respond by:
+
+- adding more selectors
+- increasing specificity
+- reaching for `!important`
+
+Each fix works locally.
+
+Each fix makes the system harder to reason about globally.
+
+---
+
+## Global Scope, Global Risk
+
+CSS is global by default.
+
+That means:
+- small changes can have wide effects
+- refactors feel dangerous
+- teams become hesitant to clean things up
+
+Fear replaces confidence.
+
+---
+
+## The Core Issue
+
+Traditional CSS assumes:
+
+- developers remember existing styles
+- naming stays consistent
+- everyone follows the same mental model
+
+That assumption doesn’t hold at scale.
+
+---
+
+## The Question Teams Started Asking
+
+Not:
+> “How do we write more CSS?”
+
+But:
+> “How do we stop fighting our own styles?”
+
+That question leads directly to atomic approaches.
+
+---
+
+## ⏭ From Symptoms to Strategy
+
+Before introducing new tools, we need a different way of *thinking* about UI.
+
+Next up: **Atomic Thinking**

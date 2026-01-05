@@ -1,0 +1,133 @@
+---
+title: 'Vite: Under the Hood'
+description: 'What actually happens when you run a Vite dev server, without diving into configuration overload.'
+sidebar:
+  order: 7
+  label: 'Vite: Under the Hood'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Invisible Until It Isn’t
+
+One of Vite’s biggest strengths is that you rarely have to think about it.
+
+You run a command.  
+A server starts.  
+Things just work.
+
+But understanding *why* they work makes everything else easier.
+
+---
+
+## The Dev Server Is the Product
+
+With Vite, the dev server isn’t a convenience.
+
+It **is the tool**.
+
+Its job is to:
+- serve files to the browser
+- watch for changes
+- respond instantly when something updates
+
+Everything else builds on that.
+
+---
+
+## Native ES Modules in Action
+
+When the browser requests a file:
+
+- Vite serves it directly
+- imports are resolved on demand
+- only the files you touch are reloaded
+
+There’s no giant bundle being rebuilt on every save.
+
+That’s why it feels instant.
+
+---
+
+## Hot Module Replacement (HMR)
+
+When you edit a file:
+
+- Vite detects the change
+- sends only the updated module
+- the browser swaps it in
+
+The page doesn’t fully reload.
+
+State stays intact.
+
+That tight feedback loop is the difference between *working* and *waiting*.
+
+---
+
+## Why There’s No Bundling (Yet)
+
+Bundling is expensive.
+
+So Vite doesn’t do it during development.
+
+Instead:
+- files stay separate
+- the browser does the linking
+- speed stays high
+
+Bundling happens later — when it actually matters.
+
+---
+
+## The Build Step Is Still There
+
+Vite isn’t skipping optimization.
+
+It’s **deferring it**.
+
+When you run `vite build`:
+- files are bundled
+- assets are optimized
+- output is production-ready
+
+Same project.  
+Different phase.
+
+---
+
+## Less Configuration by Design
+
+Because the browser does more of the work:
+
+- fewer defaults are needed
+- fewer rules are required
+- fewer edge cases appear
+
+This is why most Vite projects have very small config files.
+
+Or none at all.
+
+---
+
+## The Mental Model to Keep
+
+Think of Vite as:
+
+- a smart file server
+- with opinions about speed
+- and just enough build logic to ship
+
+Not a pile of tasks.
+
+Not a maze of scripts.
+
+Just ground to stand on.
+
+---
+
+## ⏭ Cement the Contrast
+
+Now that you’ve seen how Vite works, it’s time to put it directly next to the old model and lock the difference in place.

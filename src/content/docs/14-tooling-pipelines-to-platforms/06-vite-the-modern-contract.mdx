@@ -1,0 +1,156 @@
+---
+title: 'Vite: The Modern Contract'
+description: 'How modern front-end tooling shifted from build pipelines to development platforms.'
+sidebar:
+  order: 6
+  label: 'Vite: The Modern Contract'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## A Different Question
+
+<figure>
+  <img
+    src="/assets/lessons/m14-vite-build-tool.png"
+    alt="Vite development workflow showing instant dev server startup and optimized production build"
+  />
+  <figcaption>
+    Vite splits the workflow: lightning-fast module-based development, followed
+    by an optimized production build.
+  </figcaption>
+</figure>
+
+Pipeline-based tools asked:
+
+“How do we process files?”
+
+Modern tooling asks a different question:
+
+“How do we run front-end development?”
+
+That shift changes everything.
+
+---
+
+## Vite Is Not a Task Runner
+
+Vite is not a collection of build steps.
+
+It is a **development platform**.
+
+Instead of defining pipelines, Vite provides:
+
+- a dev server
+- file watching
+- instant reload
+- a production build step
+
+All from a single foundation.
+
+---
+
+## HTML Is the Entry Point
+
+One of the biggest mental shifts Vite introduces:
+
+Your app starts at **`index.html`**.
+
+Not a config file.  
+Not a build script.
+
+The browser loads HTML.  
+Everything else flows from there.
+
+This aligns tooling with how the web actually works.
+
+---
+
+## Native Modules, Finally
+
+Modern browsers support ES modules.
+
+Vite takes advantage of that:
+
+- files are served directly
+- imports work natively
+- no bundling during development
+
+You edit a file.
+The browser reloads instantly.
+
+No pipeline required.
+
+---
+
+## Dev First, Build Later
+
+With Vite, development and build are **separate phases**.
+
+- Development is fast and unbundled
+- Builds happen once, at the end
+- Optimization is deferred until it matters
+
+This eliminates the slow feedback loops of pipeline-based tools.
+
+---
+
+## Plugins Replace Pipelines
+
+Where Gulp required glue code, Vite uses plugins.
+
+Each plugin:
+
+- hooks into the dev server
+- extends behavior
+- stays isolated
+
+Tailwind.
+Sass.
+TypeScript.
+
+They all plug into the same contract.
+
+---
+
+## Why Frameworks Chose Vite
+
+React.
+Vue.
+Svelte.
+Astro.
+
+They didn’t choose Vite because it was trendy.
+
+They chose it because:
+
+- it matches modern browser capabilities
+- it minimizes configuration
+- it keeps tooling invisible
+
+The platform fades into the background.
+
+---
+
+## The New Baseline
+
+Vite replaces:
+
+- task runners
+- manual watchers
+- custom build glue
+
+Not by doing more —  
+but by **doing less, better**.
+
+It becomes the ground everything else stands on.
+
+---
+
+## ⏭ Under the Hood
+
+Vite feels simple on the surface.
+
+Next, we’ll peek just enough under the hood to understand _why_ it feels that way — without falling into config rabbit holes.
