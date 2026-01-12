@@ -1,0 +1,121 @@
+---
+title: 'Sass Yourself'
+description: 'A guided exercise to apply Sass concepts deliberately and reflect on when they add value.'
+sidebar:
+  order: 98
+  label: 'Sass Yourself'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## The Point of This Exercise
+
+This chapter covered a lot of capability.
+
+This page is about **judgment**.
+
+The goal is not to use every Sass feature.  
+The goal is to decide which ones actually help in a given situation.
+
+---
+
+## Starting Point
+
+Imagine a small but growing UI with:
+
+- cards
+- buttons
+- panels
+- spacing utilities
+- a light and dark theme
+
+Assume we already have a modern build setup in place.
+
+Our task is to decide **where Sass helps** and **where plain CSS or utilities are enough**.
+
+---
+
+## Step 1: Identify Repetition
+
+Scan the styles (real or imagined) and ask:
+
+- Are values repeating?
+- Are patterns repeating?
+- Are roles repeating?
+
+Make a short list of:
+- repeated values (colors, spacing, sizes)
+- repeated structures (layout, surfaces, text treatments)
+- repeated behaviors (states, variants)
+
+Do not write code yet. Just identify pressure points.
+
+---
+
+## Step 2: Choose the Right Tool
+
+For each item you identified, decide:
+
+- Variable?
+- Placeholder?
+- Mixin?
+- Function?
+- Loop?
+- Or none of the above?
+
+Be explicit about *why*.
+
+If plain CSS is clearer, that is a valid and often correct answer.
+
+---
+
+## Step 3: Avoid Overreach
+
+Ask a second set of questions:
+
+- Does this abstraction reduce repetition *and* improve clarity?
+- Will someone else understand this without explanation?
+- Does the generated output remain predictable?
+
+If the answer is unclear, scale the abstraction back.
+
+---
+
+## Step 4: Combine with CSS Variables
+
+Where runtime flexibility matters:
+
+- themes
+- user preferences
+- responsive overrides
+
+Decide whether Sass should:
+- generate CSS custom properties, or
+- stay out of the decision entirely
+
+Avoid solving runtime problems at compile time.
+
+---
+
+## Reflection
+
+Answer these honestly:
+
+- Where did Sass feel helpful?
+- Where did it feel unnecessary?
+- Which features were easiest to misuse?
+- Which ones improved readability the most?
+
+The goal is not feature coverage.
+
+It’s **disciplined use**.
+
+---
+
+## ⏭ Compact Reference
+
+Now that we’ve applied Sass intentionally, the final page collects the core syntax, patterns, and reminders in one place.
+
+Next, we’ll close with a compact Sass compendium.

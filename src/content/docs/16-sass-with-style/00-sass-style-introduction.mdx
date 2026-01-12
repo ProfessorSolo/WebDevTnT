@@ -1,0 +1,170 @@
+---
+title: 'Sass with Style'
+description: 'How Sass helps us structure and scale CSS when projects grow beyond the single-file phase.'
+sidebar:
+  order: 0
+  label: 'Why Sass?'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why We’re Talking About Sass
+
+We already know CSS.
+
+We can:
+
+- write selectors
+- build layouts
+- manage responsiveness
+- ship working styles
+
+So why bring Sass into the conversation at all?
+
+Because **writing CSS** and **maintaining CSS** are not the same problem.
+
+---
+
+## The Shift That Already Happened
+
+Modern CSS is powerful.
+
+We now have:
+
+- custom properties
+- layers
+- container queries
+- better layout primitives
+
+But even with those advances, one challenge hasn’t gone away:
+
+> **Large stylesheets still get messy.**
+
+As projects grow, we start needing:
+
+- structure
+- reuse
+- clear ownership of decisions
+- ways to avoid repeating ourselves
+
+That’s the gap Sass was designed to fill.
+
+---
+
+## Sass, Plainly
+
+Sass is a **CSS preprocessor**.
+
+We write enhanced CSS (`.scss`), and it compiles down to plain, standard CSS.
+
+A few important constraints:
+
+- Browsers never see Sass
+- Sass runs only at build time
+- The output is just CSS
+
+Sass doesn’t replace CSS.
+
+It **improves how we author it**.
+
+If this feels familiar, that’s intentional.
+
+The relationship between Sass and CSS is similar to the relationship between TypeScript and JavaScript: we write in a more expressive language, and a build step produces the simpler form that actually runs in the browser.
+
+The analogy stops there.
+
+Sass doesn’t add safety or correctness guarantees the way TypeScript does. Its value is organizational, not semantic. It helps us write CSS that’s easier to reason about and maintain.
+
+---
+
+## What Sass Is Good At
+
+Sass shines when we need:
+
+- variables resolved at compile time
+- consistent reuse of patterns
+- file-level organization
+- logic for generating styles
+- guardrails against duplication
+
+---
+
+## What Sass Is Not
+
+Sass is not:
+
+- a runtime system
+- a replacement for CSS custom properties
+- a framework
+- something we must use everywhere
+
+If a project is small or short-lived, Sass may add more overhead than value.
+
+That judgment call matters.
+
+---
+
+## Sass and Modern CSS
+
+Sass and modern CSS overlap — but they solve different problems.
+
+- CSS custom properties are **runtime**
+- Sass variables are **compile-time**
+
+- CSS is declarative
+- Sass is imperative
+
+In practice, they work best **together**, each doing what it does best.
+
+We’ll use Sass for:
+
+- structure
+- generation
+- organization
+
+And we’ll rely on modern CSS where runtime flexibility is required.
+
+---
+
+## What This Chapter Will Do
+
+This chapter will help us:
+
+- understand where Sass fits today
+- write clean, readable SCSS
+- structure styles across multiple files
+- reuse patterns responsibly
+- combine Sass with modern tooling
+- recognize when Sass helps — and when to skip it
+
+No nostalgia.
+No dogma.
+
+Just deliberate choices.
+
+---
+
+## How We’ll Approach It
+
+We’ll move deliberately:
+
+1. See how Sass fits into a modern workflow
+2. Learn core SCSS syntax and structure
+3. Use partials and `@use` for organization
+4. Explore reuse patterns like mixins and placeholders
+5. Combine Sass with CSS variables
+6. Close with Sass alongside utility-first CSS
+
+We don’t need to memorize features.
+
+We need to understand **why we’d reach for them**.
+
+---
+
+## ⏭ Modern Workflow First
+
+Before we write any serious SCSS, we’ll wire Sass into a modern dev setup and get instant feedback as we work.
+
+Structure comes next.

@@ -1,0 +1,95 @@
+---
+title: 'When Sass Helps (and When It Doesn’t)'
+description: 'Using judgment to decide when Sass adds clarity and when it adds unnecessary complexity.'
+sidebar:
+  order: 13
+  label: 'When to Use Sass'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## This Is the Real Skill
+
+By now, we’ve seen what Sass can do.
+
+The most important takeaway is not *how* to use Sass features.
+It’s **when to use Sass at all**.
+
+Tools don’t make decisions for us. We do.
+
+---
+
+## When Sass Helps
+
+Sass tends to add value when:
+
+- styles are large enough to benefit from structure
+- repetition appears at the level of intent, not just values
+- generation replaces error-prone manual work
+- tokens, scales, or systems need to stay consistent
+- authoring clarity matters more than raw minimal output
+
+In these cases, Sass reduces cognitive load and improves maintainability.
+
+---
+
+## When Sass Gets in the Way
+
+Sass often adds unnecessary complexity when:
+
+- styles are small and unlikely to grow
+- most styling is already expressed through utilities
+- abstractions hide simple CSS
+- debugging requires jumping between generated output and source logic
+- the team is unfamiliar with Sass patterns
+
+In these cases, plain CSS is often clearer and easier to maintain.
+
+---
+
+## Common Overuse Patterns
+
+Some warning signs that Sass is being overused:
+
+- deeply nested files with minimal content
+- mixins that read like mini frameworks
+- excessive generation for rarely used variants
+- abstractions that exist “just in case”
+
+Complexity should solve a real problem, not anticipate one.
+
+---
+
+## Sass Is a Tool, Not a Requirement
+
+Modern CSS has absorbed many ideas that once required preprocessors:
+- nesting
+- custom properties
+- improved selectors
+- better layout primitives
+
+That doesn’t make Sass obsolete.
+
+It means Sass should be used **intentionally**, alongside native CSS features, not as a default layer.
+
+---
+
+## A Reasonable Mental Model
+
+A simple way to think about it:
+
+- start with plain CSS
+- introduce Sass when repetition or structure demands it
+- stop adding abstraction once clarity begins to drop
+
+The goal is readable, predictable output and an authoring experience that supports the team.
+
+---
+
+## ⏭ Practice and Reference
+
+Understanding Sass comes from both practice and reference.
+
+Next, we’ll apply what we’ve learned in a guided exercise, then close the chapter with a compact Sass reference you can return to later.

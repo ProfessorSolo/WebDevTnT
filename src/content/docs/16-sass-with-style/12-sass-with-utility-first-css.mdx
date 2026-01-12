@@ -1,0 +1,120 @@
+---
+title: 'Sass with Utility-First CSS'
+description: 'How Sass and utility-first CSS coexist, and how to divide responsibilities without overlap.'
+sidebar:
+  order: 12
+  label: 'Sass + Utilities'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why This Combination Comes Up
+
+In modern projects, Sass and utility-first CSS often appear together.
+
+This can feel redundant at first:
+- Sass already generates CSS
+- utility classes already encode design decisions
+
+The key is understanding that they solve *different* problems.
+
+---
+
+## Different Responsibilities
+
+Utility-first CSS focuses on:
+- composition at the markup level
+- consistent application of spacing, color, and layout
+- rapid iteration without writing new selectors
+
+Sass focuses on:
+- authoring structure
+- data and generation
+- compile-time decision making
+
+Used together, Sass supports the system, while utilities express intent in the HTML.
+
+---
+
+## What We Do *Not* Use Sass For
+
+When using a utility-first approach, Sass is usually not responsible for:
+
+- recreating utility classes
+- generating one-to-one replacements for framework utilities
+- styling individual components that already compose cleanly with utilities
+
+Duplicating utilities in Sass adds complexity without benefit.
+
+---
+
+## Where Sass Fits Well
+
+Sass works well alongside utilities when it is used to:
+
+- define design tokens
+- generate CSS custom properties
+- create small, focused abstractions utilities can consume
+- organize non-utility styles (resets, base styles, layout primitives)
+
+This keeps responsibilities clear and avoids overlap.
+
+---
+
+## A Practical Pattern
+
+A common pattern is:
+
+1. Define tokens in Sass
+2. Generate CSS custom properties
+3. Consume those variables from utilities
+
+For example:
+
+```scss
+$colors: (
+  primary: #3366ff,
+  surface: #ffffff,
+  text: #111111
+);
+
+:root {
+  @each $name, $value in $colors {
+    --#{$name}: #{$value};
+  }
+}
+```
+
+Utilities (or custom utilities) can then reference these variables rather than hard-coded values.
+
+---
+
+## Sass Is Not Competing with Utilities
+
+Utility-first CSS is about *usage*.
+
+Sass is about *authoring*.
+
+When those roles are respected, the two tools complement each other instead of competing.
+
+---
+
+## When This Combination Makes Sense
+
+Using Sass with utilities makes sense when:
+
+- the project has shared tokens or themes
+- generation or data structures reduce duplication
+- runtime flexibility is still required
+
+It makes less sense when Sass is used only to recreate utilities that already exist.
+
+---
+
+## ⏭ Knowing When to Stop
+
+The last skill is judgment.
+
+Next, we’ll look at when Sass genuinely helps a project — and when it’s better to leave it out entirely.

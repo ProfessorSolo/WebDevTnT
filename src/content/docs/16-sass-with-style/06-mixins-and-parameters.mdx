@@ -1,0 +1,155 @@
+---
+title: 'Mixins and Parameters'
+description: 'Using mixins for configurable reuse, and correcting the coupling problems introduced by @extend.'
+sidebar:
+  order: 6
+  label: 'Mixins'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Mixins Exist
+
+In the previous section, we saw how placeholders and `@extend` support semantic reuse.
+
+We also saw where that pattern breaks down:
+- selector merging becomes global
+- state-specific behavior gets coupled
+- intent is no longer obvious from the source
+
+Mixins exist to solve a different problem.
+
+They support **configurable reuse** without rewriting selector relationships.
+
+---
+
+## What a Mixin Is
+
+A mixin is a named block of Sass declarations that can be inserted into other selectors.
+
+Unlike placeholders:
+- mixins do not merge selectors
+- mixins copy declarations where they are included
+- output remains local and predictable
+
+A basic mixin looks like this:
+
+```scss
+@mixin elevated {
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+}
+```
+
+---
+
+## Correcting the `@extend` Anti-Pattern
+
+Recall the problematic example from the previous section:
+
+- cards were elevated only on hover
+- buttons were elevated by default
+- selector merging coupled those two behaviors
+
+Using a mixin avoids that coupling entirely.
+
+```scss
+@mixin elevated {
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+}
+
+.card {
+  &:hover {
+    @include elevated;
+  }
+}
+
+.button {
+  @include elevated;
+}
+```
+
+Each selector receives the declarations independently. No selectors are merged, and no unintended relationships are created.
+
+---
+
+## Mixins with Parameters
+
+Mixins become more powerful when they accept parameters.
+
+```scss
+@mixin elevated($intensity: medium) {
+  @if $intensity == light {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+  } @else if $intensity == strong {
+    box-shadow: 0 0.75rem 1.75rem rgba(0, 0, 0, 0.35);
+  } @else {
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+  }
+}
+```
+
+Usage:
+
+```scss
+.card {
+  &:hover {
+    @include elevated(light);
+  }
+}
+
+.button {
+  @include elevated;
+}
+```
+
+This kind of variation is not something placeholders are designed to handle safely.
+
+---
+
+## When Mixins Work Well
+
+Mixins are a good fit when:
+
+- reuse requires configuration
+- output differs intentionally per use
+- behavior is state-specific
+- selector coupling would be problematic
+
+Common use cases include:
+- state-based styling
+- responsive patterns
+- feature flags and conditional output
+
+---
+
+## When to Be Careful
+
+Because mixins duplicate declarations, overuse can increase CSS size.
+
+Good practice includes:
+- keeping mixins focused
+- avoiding large, catch-all mixins
+- preferring placeholders when structure is truly identical
+
+The goal is clarity first, optimization second.
+
+---
+
+## Placeholders vs Mixins, Revisited
+
+After seeing both patterns in action:
+
+- **Placeholders** share meaning by merging selectors
+- **Mixins** share behavior by copying declarations
+
+Choosing correctly depends on whether reuse is semantic or configurable.
+
+---
+
+## ⏭ Computing Values
+
+So far, mixins help us reuse blocks of styles.
+
+Next, we’ll look at **Sass functions**, which allow us to compute and return values instead of emitting declarations.

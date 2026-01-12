@@ -1,0 +1,126 @@
+---
+title: 'Structuring Files with Sass'
+description: 'How we organize Sass files, define entry points, and compose styles intentionally.'
+sidebar:
+  order: 3
+  label: 'Sassy Stylish Partial Files'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why File Structure Matters
+
+As stylesheets grow, the challenge is no longer writing rules.
+
+It’s **finding them**, **understanding them**, and **changing them safely**.
+
+Good file structure doesn’t change what CSS can do.  
+It changes how we reason about the codebase.
+
+---
+
+## One Entry Point
+
+In a Sass-based workflow, we typically compile **one primary file**.
+
+That file acts as the entry point for the entire stylesheet.
+
+For example:
+
+```text
+styles/
+└─ main.scss
+```
+
+The build platform compiles this file and produces the final CSS.
+
+Everything else exists to support that entry point.
+
+---
+
+## Why a Single Entry File Works
+
+Using a single entry file gives us:
+
+- a predictable compilation target
+- a clear place to start reading styles
+- control over load order
+- consistency with how JavaScript entry points work
+
+Rather than scattering compiled outputs across multiple files, we compose styles deliberately from one place.
+
+---
+
+## Splitting Files for Clarity
+
+As a project grows, a single file becomes harder to manage.
+
+Sass allows us to split styles across multiple files and compose them back together.
+
+For example:
+
+```text
+styles/
+├─ main.scss
+├─ _base.scss
+├─ _layout.scss
+└─ _components.scss
+```
+
+Only `main.scss` is intended to compile directly.
+
+The other files exist to organize related concerns.
+
+---
+
+## Partials
+
+Files that begin with an underscore are called **partials**.
+
+Partials:
+
+- are not compiled on their own
+- exist to be included by other files
+- help break large stylesheets into manageable pieces
+
+This naming convention makes it clear which files are entry points and which are supporting pieces.
+
+---
+
+## Composing Files with `@use`
+
+Modern Sass uses the `@use` rule to pull files together.
+
+For example:
+
+```scss
+@use 'base';
+@use 'layout';
+@use 'components';
+```
+
+This makes file relationships explicit and avoids unintentional global side effects.
+
+We’ll look more closely at `@use` and namespacing later in the chapter.
+
+---
+
+## File Structure Before Variables
+
+At this stage, the goal is not reuse or abstraction.
+
+It’s clarity.
+
+Before introducing variables, mixins, or logic, we want a file structure that makes the stylesheet easy to navigate and reason about.
+
+Once the structure is solid, adding shared values and patterns becomes much more straightforward.
+
+---
+
+## ⏭ Variables and Scope
+
+With files organized and entry points established, we can introduce variables and talk about scope.
+
+Next, we’ll look at how Sass variables work and how they differ from CSS custom properties.

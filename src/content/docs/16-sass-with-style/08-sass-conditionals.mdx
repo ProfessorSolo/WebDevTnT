@@ -1,0 +1,109 @@
+---
+title: 'Sass Conditionals'
+description: 'Using @if and @else to control what Sass emits at compile time.'
+sidebar:
+  order: 8
+  label: 'Conditionals'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Conditionals Matter
+
+Sometimes we want Sass to make a decision while compiling.
+
+Conditionals let us:
+
+- select between values
+- include or exclude declarations
+- keep patterns consistent while allowing controlled variation
+
+All of this happens at compile time. The browser receives only the resulting CSS.
+
+---
+
+## `@if` and `@else`, Plainly
+
+Sass supports conditional logic using `@if`, `@else if`, and `@else`.
+
+Here is a simple example that returns a value from a function:
+
+```scss
+@function radius($kind) {
+  @if $kind == soft {
+    @return 0.75rem;
+  } @else if $kind == sharp {
+    @return 0.25rem;
+  } @else {
+    @return 0.5rem;
+  }
+}
+
+.card {
+  border-radius: radius(soft);
+}
+```
+
+Conditionals allow a single, named abstraction to map to a small set of deliberate options.
+
+---
+
+## Conditional Output in a Mixin
+
+Conditionals are also useful inside mixins when we want optional declarations.
+
+```scss
+@mixin elevated($enabled: true) {
+  @if $enabled {
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+  }
+}
+```
+
+Usage:
+
+```scss
+.card {
+  @include elevated;
+}
+
+.flat-card {
+  @include elevated(false);
+}
+```
+
+This keeps the calling code readable while making the emission of CSS explicit.
+
+---
+
+## Keeping Conditionals Constrained
+
+Conditionals are most effective when they control a small, well-defined set of outcomes.
+
+Good practice includes:
+
+- preferring a few named options over open-ended branching
+- avoiding long chains of `@else if` unless the options are stable and intentional
+- keeping conditionals close to the abstraction they control
+
+The goal is predictable output and clear intent.
+
+---
+
+## What Conditionals Are Not
+
+Conditionals do not run in the browser.
+
+They do not respond to user interaction, media queries, or JavaScript after compilation.
+
+If we need runtime variation, we use CSS custom properties, media queries, or separate selectors.
+
+---
+
+## ⏭ Controlled Generation
+
+Once we can branch, we can also generate repeated patterns intentionally.
+
+Next, we’ll look at Sass loops and how they can help (or harm) readability depending on how they’re used.

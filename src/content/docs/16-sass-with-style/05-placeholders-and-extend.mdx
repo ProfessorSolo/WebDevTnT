@@ -1,0 +1,203 @@
+---
+title: 'Placeholders and @extend'
+description: 'Using placeholders and @extend for semantic reuse, and understanding where the pattern breaks down.'
+sidebar:
+  order: 5
+  label: 'Placeholders & @extend'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Semantic Reuse Matters
+
+As styles grow, repetition often shows up as repeated *roles* rather than repeated values.
+
+We may have multiple components that:
+- share the same structural foundation
+- represent the same conceptual idea
+- differ only in emphasis or context
+
+Placeholders and `@extend` exist to support this kind of **semantic reuse**.
+
+---
+
+## What a Placeholder Is
+
+A placeholder is a selector that never appears in the final CSS.
+
+It exists only to be extended by other selectors.
+
+Placeholders are defined using a `%` prefix:
+
+```scss
+%card-base {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+```
+
+On its own, this produces no CSS output.
+
+---
+
+## Using `@extend`
+
+We reuse a placeholder with `@extend`:
+
+```scss
+.card {
+  @extend %card-base;
+}
+```
+
+When Sass compiles, it merges selectors that share the same placeholder styles. The placeholder itself does not appear in the output.
+
+---
+
+## Building on a Shared Base
+
+Placeholders work best when multiple components share a common foundation but still need to express different roles.
+
+For example, we might have:
+- a standard card
+- a featured card
+- a panel
+
+All three share core layout and surface styles, but each adds its own emphasis.
+
+---
+
+## Defining a Base Placeholder
+
+```scss
+%card-base {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+```
+
+This placeholder defines the shared structure but produces no CSS on its own.
+
+---
+
+## Extending the Base
+
+Each component extends the base and layers on its own intent:
+
+```scss
+.card {
+  @extend %card-base;
+}
+```
+
+```scss
+.feature-card {
+  @extend %card-base;
+  border-color: gold;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.15);
+}
+```
+
+```scss
+.panel {
+  @extend %card-base;
+  background-color: #f7f7f7;
+}
+```
+
+---
+
+## What This Produces
+
+```css
+.card,
+.feature-card,
+.panel {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.feature-card {
+  border-color: gold;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+.panel {
+  background-color: #f7f7f7;
+}
+```
+
+The shared structure is defined once, and each component adds what makes it distinct.
+
+---
+
+## Where `@extend` Starts to Break Down
+
+Because `@extend` works by **merging selectors**, its effects are global rather than local.
+
+Problems arise when placeholders are extended from contexts that carry additional meaning, such as states or nested selectors.
+
+---
+
+## An `@extend` Anti‑Pattern
+
+Consider the following SCSS:
+
+```scss
+%elevated {
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+}
+
+.card {
+  &:hover {
+    @extend %elevated;
+  }
+}
+
+.button {
+  @extend %elevated;
+}
+```
+
+At a glance, this appears reasonable:
+- cards gain elevation on hover
+- buttons are elevated by default
+
+However, Sass must merge selectors globally. The compiled CSS looks like this:
+
+```css
+.card:hover,
+.button {
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
+}
+```
+
+The hover state of one component and the base state of another are now coupled in a single rule. Any future change affects both, and the relationship is not obvious when reading the source.
+
+This is the point where semantic reuse turns into unintended coupling.
+
+---
+
+## When Placeholders Are the Right Tool
+
+Placeholders work well when:
+- reused styles are truly identical
+- selectors represent the same conceptual role
+- extensions occur at comparable levels of specificity
+
+When reuse involves configuration, variation, or state-specific behavior, placeholders are usually not the best fit.
+
+---
+
+## ⏭ Reuse with Parameters
+
+Placeholders help us share meaning and structure.
+
+Next, we’ll look at **mixins**, which handle configurable and state-dependent reuse without selector coupling.

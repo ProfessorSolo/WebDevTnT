@@ -1,0 +1,265 @@
+---
+title: 'Compendium of Sass'
+description: 'A compact reference of Sass syntax, patterns, and decision reminders.'
+sidebar:
+  order: 99
+  label: 'Sass Compendium'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## What This Page Is
+
+This page is a **reference**, not a lesson.
+
+It exists to:
+- jog memory
+- clarify syntax
+- reinforce intent
+- support decision-making
+
+If something here feels unfamiliar, the earlier pages explain *why* it exists.
+
+---
+
+## Core Syntax
+
+### Variables
+
+```scss
+$primary: #3366ff;
+$spacing: 1rem;
+```
+
+Compile-time only. Replaced with literal values in output.
+
+---
+
+### Nesting
+
+```scss
+.card {
+  h2 {
+    margin-top: 0;
+  }
+}
+```
+
+Use for structural relationships. Keep nesting shallow.
+
+---
+
+### Parent Selector (`&`)
+
+```scss
+.button {
+  &:hover {
+    background-color: darkblue;
+  }
+}
+```
+
+Expands to the full selector at compile time.
+
+---
+
+## File Composition
+
+### Partials
+
+```text
+_base.scss
+_layout.scss
+_components.scss
+```
+
+- Not compiled directly
+- Pulled into an entry file
+- Used for organization
+
+---
+
+### Entry File
+
+```scss
+// main.scss
+@use 'base';
+@use 'layout';
+@use 'components';
+```
+
+One compilation target. Everything else supports it.
+
+---
+
+## Reuse Patterns
+
+### Placeholders + `@extend`
+
+```scss
+%card-base {
+  padding: 1rem;
+}
+
+.card {
+  @extend %card-base;
+}
+```
+
+- Merges selectors
+- Best for shared meaning
+- Avoid nested or state-based extends
+
+---
+
+### Mixins
+
+```scss
+@mixin elevated {
+  box-shadow: 0 0.5rem 1.25rem rgba(0,0,0,0.25);
+}
+
+.card {
+  @include elevated;
+}
+```
+
+- Copies declarations
+- Good for configurable or state-based reuse
+
+---
+
+### Functions
+
+```scss
+@function space($step) {
+  @return $step * 0.5rem;
+}
+```
+
+- Returns values
+- No CSS emitted directly
+- Ideal for scales and derived values
+
+---
+
+## Logic and Generation
+
+### Conditionals
+
+```scss
+@if $mode == compact {
+  padding: 0.5rem;
+}
+```
+
+- Compile-time only
+- Keep option sets small and deliberate
+
+---
+
+### Loops
+
+```scss
+@for $i from 1 through 4 {
+  .gap-#{$i} {
+    gap: $i * 0.5rem;
+  }
+}
+```
+
+- Use for bounded, predictable output
+- Avoid large or hidden expansions
+
+---
+
+### Lists
+
+```scss
+$states: (success, warning, danger);
+```
+
+Ordered values. Use when names alone are enough.
+
+---
+
+### Maps
+
+```scss
+$gaps: (
+  sm: 0.5rem,
+  md: 1rem,
+  lg: 1.5rem
+);
+```
+
+Key/value pairs. Use when intent and naming matter.
+
+---
+
+## Sass vs CSS Variables
+
+### Sass Variables
+
+- compile-time
+- lexical scope
+- not visible to the browser
+
+### CSS Custom Properties
+
+- runtime
+- cascade-aware
+- adjustable via classes, media queries, JS
+
+---
+
+## Common Pairing Pattern
+
+```scss
+$tokens: (
+  primary: #3366ff,
+  surface: #ffffff
+);
+
+:root {
+  @each $name, $value in $tokens {
+    --#{$name}: #{$value};
+  }
+}
+```
+
+Sass authors the system. CSS variables enable runtime flexibility.
+
+---
+
+## Decision Reminders
+
+Ask these before adding Sass features:
+
+- Is this solving real repetition?
+- Does this improve clarity?
+- Will the output be predictable?
+- Would plain CSS be simpler?
+
+If the answer is unclear, don’t abstract yet.
+
+---
+
+## Final Thought
+
+Sass is most effective when it:
+- reduces cognitive load
+- makes intent explicit
+- stays out of the browser’s way
+
+Use it deliberately.
+
+---
+
+## ⏭ Chapter Complete
+
+This concludes the Sass chapter.
+
+Return here as a reference, not a checklist.

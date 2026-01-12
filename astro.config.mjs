@@ -91,10 +91,10 @@ const COURSE_MODULES = [
     released: true,
   },
   {
-    label: 'Gulp',
-    directory: '08-automated-task-runners-gulp',
-    released: false,
-  }, // UNRELEASED
+    label: 'SASS with Style',
+    directory: '16-sass-with-style',
+    released: true,
+  },
   {
     label: 'Bits, Bytes, and Bobs: Course Resources, Guides, and Tips',
     directory: '99-bits-bytes-and-bobs',

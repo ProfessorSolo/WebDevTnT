@@ -1,0 +1,182 @@
+---
+title: 'SCSS Syntax Fundamentals'
+description: 'An introduction to SCSS syntax, how it extends CSS, and where the original Sass syntax fits today.'
+sidebar:
+  order: 2
+  label: 'SCSS Syntax'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Syntax Matters
+
+Before we talk about structure, reuse, or logic, we need to be clear about the language itself.
+
+Sass is not a single syntax.
+
+There are **two valid ways** to write Sass, and understanding that distinction helps explain many examples we’ll see online.
+
+---
+
+## Two Sass Syntaxes
+
+Sass supports:
+
+- **SCSS** — the syntax we’ll use in this course
+- **Sass (indented syntax)** — the original form of the language
+
+Both compile to CSS.  
+Both are fully supported.  
+Both are still valid today.
+
+The difference is how closely they resemble CSS.
+
+---
+
+## SCSS: CSS, Extended
+
+SCSS (Sassy CSS) was introduced to lower the barrier to adoption.
+
+SCSS:
+
+- uses curly braces and semicolons
+- looks and feels like CSS
+- allows plain CSS to be copied directly into a `.scss` file
+- adds Sass features incrementally on top
+
+For example:
+
+```scss
+.button {
+  background-color: blue;
+  color: white;
+}
+```
+
+This is valid CSS _and_ valid SCSS.
+
+Because of that compatibility, SCSS is the most widely used syntax today and the one we’ll focus on going forward.
+
+---
+
+## The Original Sass Syntax
+
+The original Sass syntax uses indentation instead of braces and semicolons.
+
+The same example written in Sass syntax looks like this:
+
+```sass
+.button
+  background-color: blue
+  color: white
+```
+
+This form is concise and expressive, but it requires learning a new structure that differs from CSS.
+
+You may encounter this syntax in older projects or documentation. It is not deprecated, and it behaves the same way as SCSS once compiled.
+
+For consistency, all examples in this course will use **SCSS**.
+
+---
+
+## Nesting Rules
+
+One of the first features people associate with Sass is nesting.
+
+Nesting allows us to write selectors inside other selectors:
+
+```scss
+.card {
+  padding: 1rem;
+
+  h2 {
+    margin-top: 0;
+  }
+}
+```
+
+This can improve readability by keeping related rules together.
+
+It can also make styles harder to reason about if nesting becomes too deep.
+
+A good rule of thumb is to nest only when there is a clear structural relationship and to avoid nesting purely for convenience.
+
+---
+
+### A Note on Nesting and Modern CSS
+
+Sass introduced nesting long before native CSS supported it.
+
+For years, nesting was one of the most compelling reasons to use Sass, because it allowed related selectors to live together in a way that plain CSS could not express cleanly.
+
+More recently, CSS has begun to adopt its own form of nesting. That evolution wasn’t accidental. The Sass approach proved useful enough in real-world authoring that it influenced how the platform itself evolved.
+
+Even as native CSS nesting becomes more widely supported, Sass-style nesting remains relevant, especially in projects that already rely on preprocessing for structure and organization.
+
+---
+
+## The Parent Selector (`&`)
+
+Sass introduces the parent selector, written as `&`.
+
+It represents the full selector of the current context.
+
+```scss
+.button {
+  background-color: blue;
+
+  &:hover {
+    background-color: darkblue;
+  }
+}
+```
+
+The `&` helps keep related states and variations close to the base selector without repeating it manually.
+
+Sass compiles the above to the following CSS:
+
+```css
+.button {
+  background-color: blue;
+}
+
+.button:hover {
+  background-color: darkblue;
+}
+```
+
+---
+
+## Comments in SCSS
+
+SCSS supports two kinds of comments:
+
+```scss
+/* This comment appears in the compiled CSS */
+
+// This comment exists only in the source file
+```
+
+Single-line comments are useful for documentation and notes that shouldn’t ship to production.
+
+Block comments behave like standard CSS comments and are preserved in output.
+
+---
+
+## Readability Over Cleverness
+
+Sass makes many patterns possible.
+
+Not all of them are worth using.
+
+Clear selectors, shallow nesting, and predictable output are more valuable than compact or clever syntax. As we move forward, we’ll prioritize readability and maintainability over terseness.
+
+---
+
+## ⏭ Structure Before Reuse
+
+Now that we understand the surface of the language, we can look at how Sass helps organize styles across files.
+
+Next, we’ll focus on structuring styles with Sass before introducing variables or reuse patterns.

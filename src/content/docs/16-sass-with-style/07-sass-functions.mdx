@@ -1,0 +1,126 @@
+---
+title: 'Sass Functions'
+description: 'How we compute and return values in Sass, and when functions are a better fit than mixins.'
+sidebar:
+  order: 7
+  label: 'Functions'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Functions Matter
+
+Mixins help us reuse declarations.
+
+Sometimes, we don’t want to emit a block of CSS at all.  
+We want to compute a value and use it in a property.
+
+That is the job of a function.
+
+---
+
+## Functions, Plainly
+
+A Sass function takes inputs and returns a single value.
+
+We define a function with `@function` and return a value with `@return`.
+
+```scss
+@function space($multiplier) {
+  @return $multiplier * 0.5rem;
+}
+```
+
+Usage:
+
+```scss
+.card {
+  padding: space(2);
+  margin-bottom: space(3);
+}
+```
+
+---
+
+## Why Use a Function Instead of a Variable?
+
+Variables store values. Functions compute values.
+
+Functions are useful when:
+- we want consistent math across the stylesheet
+- we need a reusable formula
+- the output should change based on input
+
+A spacing function is a common example because it centralizes the scale and enforces consistency.
+
+---
+
+## A Practical Example: Spacing Scale
+
+```scss
+@function space($step) {
+  @return $step * 0.5rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+}
+```
+
+This keeps spacing decisions consistent and avoids scattering “magic numbers” throughout the codebase.
+
+---
+
+## Returning Computed Colors
+
+Functions are also useful for deriving colors.
+
+```scss
+@function tint($color, $amount) {
+  @return mix(white, $color, $amount);
+}
+
+.badge {
+  background-color: tint(#3366ff, 20%);
+}
+```
+
+The goal is not to generate endless variants, but to keep relationships between colors deliberate.
+
+---
+
+## Functions vs Mixins
+
+Both features can contain logic, but they serve different roles.
+
+- Functions return values
+- Mixins emit declarations
+
+If we want a value for a single property, a function is usually the better fit.
+
+If we want a reusable block of rules, a mixin is usually the better fit.
+
+---
+
+## Keeping Functions Predictable
+
+Functions are most helpful when:
+- inputs and outputs are obvious
+- naming reflects intent
+- results are stable and easy to reason about
+
+Functions can become confusing when they hide too much styling logic or generate unexpected results.
+
+We want functions that improve consistency, not functions that obscure decisions.
+
+---
+
+## ⏭ Conditional Logic
+
+Functions become even more useful once we can branch based on input.
+
+Next, we’ll look at `@if` and `@else`, and how conditional logic affects what Sass emits at compile time.

@@ -1,0 +1,132 @@
+---
+title: 'Sass Loops'
+description: 'Using loops to generate repeated CSS intentionally, and knowing when generation makes maintenance harder.'
+sidebar:
+  order: 9
+  label: 'Loops'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Loops Matter
+
+Once we start building systems, repetition is not always a mistake.
+
+Some repetition is structural:
+- spacing utilities
+- column variants
+- predictable state classes
+
+Loops let us generate repeated patterns from a small set of inputs.
+
+The tradeoff is that generation can also hide what we are shipping. Our goal is controlled, readable output.
+
+---
+
+## `@for`: Counting with Bounds
+
+`@for` is used when we want a numeric range.
+
+```scss
+@for $i from 1 through 4 {
+  .cols-#{$i} {
+    grid-template-columns: repeat(#{$i}, 1fr);
+  }
+}
+```
+
+This produces `.cols-1` through `.cols-4`.
+
+The `#{$i}` syntax is interpolation, which inserts values into selector names.
+
+---
+
+## `@each`: Iterating Over a Set
+
+`@each` is used when we have a defined list of values.
+
+```scss
+$states: (success, warning, danger);
+
+@each $state in $states {
+  .badge--#{$state} {
+    font-weight: 600;
+  }
+}
+```
+
+This creates a predictable set of class names.
+
+At this stage, we are focusing on the looping mechanism itself. We’ll cover lists and maps in more detail later.
+
+---
+
+## `@while`: Rare, but Real
+
+`@while` loops exist, but they are less common in stylesheet authoring.
+
+They can be useful for algorithmic generation, but they are easy to misuse because the stopping condition is less obvious.
+
+```scss
+$i: 1;
+
+@while $i <= 3 {
+  .step-#{$i} {
+    opacity: $i * 0.3;
+  }
+
+  $i: $i + 1;
+}
+```
+
+If we can use `@for` or `@each`, those are usually easier to read.
+
+---
+
+## Using Loops Responsibly
+
+Loops work well when:
+
+- the output is small and bounded
+- the naming is obvious
+- the generated CSS improves consistency
+
+Loops become costly when:
+
+- output explodes into dozens or hundreds of rules
+- generated selectors are hard to discover
+- debugging requires reverse-engineering the loop
+
+A useful guideline is to keep generated output small enough that we can still scan the compiled CSS without surprise.
+
+---
+
+## Loops and Values
+
+Loops are often paired with functions and variables to keep output consistent.
+
+For example, we might generate spacing classes from a single scale function:
+
+```scss
+@function space($step) {
+  @return $step * 0.5rem;
+}
+
+@for $i from 1 through 6 {
+  .gap-#{$i} {
+    gap: space($i);
+  }
+}
+```
+
+The loop controls the number of variants, and the function controls the relationships between values.
+
+---
+
+## ⏭ Structured Data
+
+Loops become significantly more useful once we can drive them with structured data.
+
+Next, we’ll look at Sass lists and maps, and the common patterns for using them with `@each`.

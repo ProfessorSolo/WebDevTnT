@@ -1,0 +1,131 @@
+---
+title: 'Sass Variables and Scope'
+description: 'How Sass variables work, where they apply, and how scope affects maintainability.'
+sidebar:
+  order: 4
+  label: 'Variables & Scope'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Variables Matter
+
+Once files are structured, the next pressure point is repetition.
+
+We start seeing the same values appear in multiple places:
+- colors
+- spacing values
+- font sizes
+- breakpoints
+
+Variables give us a way to name those decisions and reuse them consistently.
+
+---
+
+## Sass Variables, Plainly
+
+Sass variables are **compile-time values**.
+
+They exist only while Sass is compiling our styles and are replaced with literal values in the generated CSS.
+
+A basic example:
+
+```scss
+$primary-color: #3366ff;
+
+.button {
+  background-color: $primary-color;
+}
+```
+
+After compilation, the browser receives plain CSS with no awareness that variables were ever involved.
+
+---
+
+## Variable Scope
+
+Unlike CSS custom properties, Sass variables follow **lexical scope**.
+
+That means where a variable is defined determines where it can be used.
+
+```scss
+$base-padding: 1rem;
+
+.card {
+  padding: $base-padding;
+}
+```
+
+Variables defined at the top level are available throughout the file (and to files that import them).
+
+Variables defined inside a selector or block are limited to that scope.
+
+---
+
+## Local Scope Example
+
+```scss
+.card {
+  $card-padding: 1.5rem;
+
+  padding: $card-padding;
+}
+```
+
+In this case, `$card-padding` is only available inside `.card`.
+
+This can be useful for localized logic, but it’s generally better to keep shared values at higher, more visible levels.
+
+---
+
+## Defaults and Configuration
+
+Sass allows variables to be defined with defaults using `!default`.
+
+```scss
+$gap: 1rem !default;
+```
+
+This pattern allows a value to be overridden before it’s used, while still providing a fallback.
+
+Defaults become especially useful when variables are defined in one file and configured from another.
+
+---
+
+## Sass Variables vs CSS Custom Properties
+
+Sass variables and CSS custom properties serve different purposes.
+
+Sass variables:
+- are resolved at compile time
+- do not exist in the browser
+- cannot change at runtime
+
+CSS custom properties:
+- exist at runtime
+- participate in the cascade
+- can be modified by media queries or JavaScript
+
+In practice, Sass variables are well-suited for defining constants and generating styles, while CSS custom properties are better for theming and runtime flexibility.
+
+We’ll explore how to combine the two later in the chapter.
+
+---
+
+## Naming and Intent
+
+Variables are most effective when they express intent, not implementation details.
+
+Names like `$primary-color` or `$base-spacing` communicate purpose more clearly than raw values or overly specific labels.
+
+The goal is not to eliminate all repetition, but to make shared decisions explicit and easy to change.
+
+---
+
+## ⏭ Reuse, by Design
+
+With variables in place, we can start looking at structured reuse.
+
+Next, we’ll explore placeholders and `@extend`, and how they differ from mixins.

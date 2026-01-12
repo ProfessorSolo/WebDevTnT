@@ -1,0 +1,155 @@
+---
+title: 'Sass Lists and Maps'
+description: 'Using lists and maps to drive consistent generation and keep Sass data structured and readable.'
+sidebar:
+  order: 10
+  label: 'Lists & Maps'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Lists and Maps Matter
+
+Loops are most effective when we can drive them with a small, deliberate source of truth.
+
+Lists and maps give us structured data in Sass so that:
+
+- we can generate consistent variants
+- we can keep naming predictable
+- we can avoid scattering related values throughout the stylesheet
+
+---
+
+## Lists, Plainly
+
+A Sass list is an ordered set of values.
+
+Lists can be space-separated or comma-separated.
+
+```scss
+$states: success warning danger;
+```
+
+or:
+
+```scss
+$states: (success, warning, danger);
+```
+
+We typically use lists when we only need the values themselves, not key/value pairing.
+
+---
+
+## Looping Over a List
+
+```scss
+$states: (success, warning, danger);
+
+@each $state in $states {
+  .badge--#{$state} {
+    font-weight: 600;
+  }
+}
+```
+
+This creates a predictable set of selectors without hard-coding each one.
+
+---
+
+## Lists with Multiple Values Per Item
+
+Lists can also contain sub-lists, which is useful when we want multiple values per item.
+
+```scss
+$spacings: (sm 0.5rem, md 1rem, lg 1.5rem);
+
+@each $name, $value in $spacings {
+  .gap-#{$name} {
+    gap: $value;
+  }
+}
+```
+
+This pattern is compact, but as datasets grow, maps tend to be easier to read and maintain.
+
+---
+
+## Maps, Plainly
+
+A Sass map is a set of key/value pairs.
+
+```scss
+$gaps: (
+  sm: 0.5rem,
+  md: 1rem,
+  lg: 1.5rem
+);
+```
+
+Maps are a good fit when we want:
+- a named key
+- a corresponding value
+- a dataset that may grow over time
+
+---
+
+## Looping Over a Map
+
+```scss
+$gaps: (
+  sm: 0.5rem,
+  md: 1rem,
+  lg: 1.5rem
+);
+
+@each $name, $value in $gaps {
+  .gap-#{$name} {
+    gap: $value;
+  }
+}
+```
+
+The intent is clear: each key becomes part of the class name, and each value becomes the property value.
+
+---
+
+## Looking Up Values in a Map
+
+Maps become even more useful when we want to look up a value by key.
+
+```scss
+$breakpoints: (
+  sm: 40rem,
+  md: 52rem,
+  lg: 64rem
+);
+
+.container {
+  max-width: map-get($breakpoints, md);
+}
+```
+
+This keeps key decisions centralized and makes refactoring easier.
+
+---
+
+## Choosing Between Lists and Maps
+
+A simple guideline:
+
+- choose a **list** when the values alone are enough
+- choose a **map** when we need stable names paired with values
+
+Lists tend to be lighter weight.
+
+Maps tend to be more maintainable as the dataset grows.
+
+---
+
+## ⏭ Runtime Flexibility
+
+So far, Sass data structures have helped us generate consistent CSS at compile time.
+
+Next, we’ll look at CSS custom properties and how they provide runtime flexibility that Sass variables cannot.

@@ -1,0 +1,158 @@
+---
+title: 'Sass and CSS Custom Properties'
+description: 'How Sass variables and CSS custom properties complement each other, and how we choose between compile-time and runtime.'
+sidebar:
+  order: 11
+  label: 'Sass + CSS Vars'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why We Need Two Kinds of Variables
+
+By this point, we’ve used Sass variables, functions, and data structures to make authoring more consistent.
+
+That works well for decisions that should be resolved at compile time.
+
+But some decisions need to remain flexible after compilation:
+- theming
+- user preferences
+- feature toggles
+- runtime adjustments
+
+That’s where CSS custom properties fit.
+
+---
+
+## Compile-Time vs Runtime
+
+Sass variables are resolved during compilation.
+
+```scss
+$gap: 1rem;
+
+.stack {
+  gap: $gap;
+}
+```
+
+After compilation, the browser receives a literal value:
+
+```css
+.stack {
+  gap: 1rem;
+}
+```
+
+CSS custom properties are resolved at runtime by the browser.
+
+```css
+:root {
+  --gap: 1rem;
+}
+
+.stack {
+  gap: var(--gap);
+}
+```
+
+This difference affects everything: scope, overrides, and whether JavaScript can change values.
+
+---
+
+## What CSS Custom Properties Do Well
+
+Custom properties are valuable when we need:
+
+- cascade-based overrides
+- theme switching via classes or media queries
+- runtime updates via JavaScript
+- per-component variations through inheritance
+
+Because they live in the browser, they remain adjustable after the CSS ships.
+
+---
+
+## What Sass Variables Do Well
+
+Sass variables are valuable when we need:
+
+- compile-time constants
+- consistent math and derived values
+- generation via loops and maps
+- centralized authoring decisions that do not need runtime change
+
+Because Sass runs before the browser ever sees the CSS, variables are best used for authoring systems.
+
+---
+
+## A Practical Pattern: Sass Generates CSS Variables
+
+One of the most practical combinations is:
+
+- define a source of truth in Sass
+- generate a `:root` block of CSS variables
+- use `var(--token)` throughout the stylesheet
+
+For example:
+
+```scss
+$tokens: (
+  primary: #3366ff,
+  surface: #ffffff,
+  text: #111111
+);
+
+:root {
+  @each $name, $value in $tokens {
+    --#{$name}: #{$value};
+  }
+}
+
+.button {
+  background-color: var(--primary);
+  color: var(--text);
+}
+```
+
+This keeps design decisions centralized while still enabling runtime flexibility.
+
+---
+
+## A Note on Scope
+
+Sass scope is lexical and file-based.
+
+CSS custom property scope follows the cascade and inheritance model.
+
+That makes CSS variables especially useful for theming patterns like:
+
+```css
+[data-theme='dark'] {
+  --surface: #0b1020;
+  --text: #e9eefc;
+}
+```
+
+The browser resolves these values based on DOM context.
+
+---
+
+## Choosing the Right Tool
+
+A simple guideline:
+
+- choose **Sass** when the value should be decided before the browser runs
+- choose **CSS custom properties** when the value needs to remain adjustable after shipping
+
+We can use both together without conflict as long as we keep the distinction clear.
+
+---
+
+## ⏭ Utility-First Integration
+
+Now that we understand how Sass can generate stable tokens and CSS variables, we can integrate that approach with utility-first CSS.
+
+Next, we’ll look at Sass alongside Tailwind, and how to divide responsibilities cleanly.

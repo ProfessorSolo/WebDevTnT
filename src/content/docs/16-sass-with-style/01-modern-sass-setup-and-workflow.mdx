@@ -1,0 +1,210 @@
+---
+title: 'Modern Sass Setup and Workflow'
+description: 'How we integrate Sass into a modern development workflow without global tools or manual watchers.'
+sidebar:
+  order: 1
+  label: 'Setup for Sass'
+draft: false
+---
+
+import { LinkButton } from '@astrojs/starlight/components';
+import MiniMo from '../../../components/MiniMo.astro';
+
+## Why Setup Matters
+
+How we wire tools together shapes how we work.
+
+A brittle setup:
+
+- adds friction
+- encourages shortcuts
+- gets abandoned under pressure
+
+A good setup fades into the background and lets us focus on writing styles.
+
+Our goal here is simple: **Sass should feel invisible while we’re working.**
+
+---
+
+## Old School Sass
+
+## Old School Sass
+
+In the previous chapter, we drew a clear distinction between **pipelines** and **platforms**.
+
+Tools like Gulp represent a pipeline mindset:
+
+- each concern has its own task
+- Sass runs as a separate step
+- watching, compiling, and serving are loosely connected
+
+Classic Sass workflows grew up in that world.
+
+A typical setup involved:
+
+- installing Sass globally
+- running a dedicated watcher for `.scss` files
+- managing a separate command just for styles
+- treating compiled CSS as something produced _alongside_ the app, not inside it
+
+That model worked when front-end tooling was a collection of independent pipes.
+
+Modern build platforms change the equation.
+
+When Sass is handled by the build platform itself, it becomes just another asset flowing through the same system as JavaScript, HTML, and images. There’s no separate watcher to manage and no parallel pipeline to keep in sync.
+
+In this chapter, we leave the pipeline mindset behind and treat Sass as part of the platform-driven workflow.
+
+---
+
+## The Platform Expectation
+
+When we work within a build **platform** rather than a collection of pipelines, a few expectations naturally follow.
+
+We expect:
+
+- immediate feedback on save
+- a single dev server responsible for all assets
+- consistent behavior across machines
+- minimal, repeatable setup steps
+
+In that environment, Sass fits best when it is integrated into the same workflow as our HTML and JavaScript, rather than managed as a separate process.
+
+---
+
+## Where Sass Lives in the Platform
+
+In this course, Sass lives **inside the platform**, not alongside it.
+
+That means it is part of the same build step as the rest of the application.
+
+The flow looks like this:
+
+1. We author styles in `.scss`
+2. The platform watches for changes
+3. Sass is compiled to CSS automatically
+4. The browser updates immediately
+
+We never invoke Sass directly.
+
+There is no separate watcher, no parallel process, and no extra command to remember.
+
+The platform handles compilation so we can focus on structure and intent.
+
+---
+
+## Why We Use Vite Here
+
+Vite functions as a build platform rather than a task runner.
+
+It provides:
+
+- fast startup
+- fast incremental rebuilds
+- built-in handling for Sass
+- a single place to reason about front-end assets
+
+We are not studying Vite itself in this chapter.
+
+We are using it because it represents the platform model we described earlier, where Sass integrates cleanly into the overall workflow instead of operating as a standalone pipeline.
+
+---
+
+## A Minimal Project Structure
+
+With Vite, a few files define the workflow and make the build platform explicit.
+
+A minimal setup looks like this:
+
+```text
+.
+├─ index.html
+├─ package.json
+├─ vite.config.js
+├─ src/
+│  ├─ main.js
+│  └─ styles/
+│     └─ main.scss
+└─ public/
+   └─ (static assets, optional)
+```
+
+At this stage, we work with a single Sass entry file: main.scss.
+
+As the project grows, that file can be split into smaller pieces. For now, keeping everything in one place makes it easier to focus on the workflow rather than organization.
+
+---
+
+## Linking Styles Correctly
+
+In a Vite-based project, styles are treated as part of the JavaScript module graph.
+
+Rather than linking a compiled CSS file directly in HTML, we import our Sass entry file from JavaScript.
+
+For example, in `src/main.js`:
+
+```js
+import './styles/main.scss';
+```
+
+Vite handles the rest:
+
+it processes the Sass
+
+it generates CSS
+
+it injects styles into the page during development
+
+it extracts CSS automatically during production builds
+
+From our perspective, we author SCSS and let the platform manage how styles reach the browser.
+
+---
+
+## What This Workflow Buys Us
+
+With this setup, we get:
+
+- no global dependencies
+- no duplicated commands
+- no forgotten watchers
+- consistent results across environments
+
+Most importantly, we remove setup decisions from day-to-day development.
+
+That keeps attention on structure, not tooling.
+
+---
+
+## Working with Sass in VS Code
+
+Sass doesn’t require special tooling to function, but editor support makes it significantly easier to work with at scale.
+
+### Syntax Highlighting and Language Support
+
+VS Code handles `.scss` files well out of the box. For most workflows, no additional extension is strictly required.
+
+If syntax highlighting or IntelliSense feels incomplete, the following extensions are commonly used:
+
+- **Sass (Official / SCSS)** — improved syntax support
+- **SCSS IntelliSense** — autocomplete for variables, mixins, and functions
+
+These extensions do not change how Sass compiles. They only affect the authoring experience.
+
+---
+
+### Formatting and Prettier
+
+Prettier still applies cleanly to SCSS and is worth keeping enabled for consistency.
+
+If Prettier is already part of the project, no Sass-specific formatter is needed. We simply let Prettier handle `.scss` files the same way it handles CSS.
+
+A typical Prettier configuration works without modification:
+
+---
+
+## ⏭ Syntactically Awesome Syntax
+
+Now that the workflow is in place, we can focus on the language itself.
+
+Next, we’ll look at SCSS syntax (and the SASS variant).
