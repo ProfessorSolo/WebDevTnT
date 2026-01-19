@@ -17,6 +17,7 @@ By this point, we’ve used Sass variables, functions, and data structures to ma
 That works well for decisions that should be resolved at compile time.
 
 But some decisions need to remain flexible after compilation:
+
 - theming
 - user preferences
 - feature toggles
@@ -102,7 +103,7 @@ For example:
 $tokens: (
   primary: #3366ff,
   surface: #ffffff,
-  text: #111111
+  text: #111111,
 );
 
 :root {
@@ -148,6 +149,18 @@ A simple guideline:
 - choose **CSS custom properties** when the value needs to remain adjustable after shipping
 
 We can use both together without conflict as long as we keep the distinction clear.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/infographics/sass/11-sass-variables-css-custom-properties.png"
+  target="_blank"
+  variant="secondary"
+>
+  📘 Sass Variables versus CSS Custom Properties - Infographic
+</LinkButton>
 
 ---
 

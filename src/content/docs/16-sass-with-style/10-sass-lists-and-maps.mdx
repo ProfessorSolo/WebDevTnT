@@ -84,11 +84,12 @@ A Sass map is a set of key/value pairs.
 $gaps: (
   sm: 0.5rem,
   md: 1rem,
-  lg: 1.5rem
+  lg: 1.5rem,
 );
 ```
 
 Maps are a good fit when we want:
+
 - a named key
 - a corresponding value
 - a dataset that may grow over time
@@ -101,7 +102,7 @@ Maps are a good fit when we want:
 $gaps: (
   sm: 0.5rem,
   md: 1rem,
-  lg: 1.5rem
+  lg: 1.5rem,
 );
 
 @each $name, $value in $gaps {
@@ -123,7 +124,7 @@ Maps become even more useful when we want to look up a value by key.
 $breakpoints: (
   sm: 40rem,
   md: 52rem,
-  lg: 64rem
+  lg: 64rem,
 );
 
 .container {
@@ -145,6 +146,18 @@ A simple guideline:
 Lists tend to be lighter weight.
 
 Maps tend to be more maintainable as the dataset grows.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/infographics/sass/10-sass-lists-and-maps.png"
+  target="_blank"
+  variant="secondary"
+>
+  📘 Sass Lists & Maps Infographic
+</LinkButton>
 
 ---
 

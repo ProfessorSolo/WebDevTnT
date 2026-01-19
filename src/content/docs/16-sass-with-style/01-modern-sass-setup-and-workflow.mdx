@@ -28,9 +28,7 @@ Our goal here is simple: **Sass should feel invisible while we’re working.**
 
 ## Old School Sass
 
-## Old School Sass
-
-In the previous chapter, we drew a clear distinction between **pipelines** and **platforms**.
+In the previous lesson, we drew a clear distinction between **pipelines** and **platforms**.
 
 Tools like Gulp represent a pipeline mindset:
 
@@ -110,6 +108,103 @@ We are using it because it represents the platform model we described earlier, w
 
 ---
 
+## Vite + Sass Setup Guide: Neo-Retro Tech Edition
+
+This guide details the procedure for initializing a Vite project with native Sass integration, specifically configured for the **Neo-Retro Tech Classroom** aesthetic.
+
+---
+
+### Step 1: Initialize the Project
+
+Scaffold a new project using the Vite vanilla template. This provides a clean slate for custom implementation.
+
+```bash
+# Create the project structure
+npm create vite@latest vite-sass-demo -- --template vanilla
+
+# Navigate into the project folder
+cd vite-sass-demo
+
+# Install initial dependencies
+npm install
+```
+
+### Step 2: Install Sass
+
+Vite supports .scss and .sass files out of the box but requires the preprocessor as a development dependency for compilation.
+
+```bash
+# Install Sass as a project Dev Dependency
+npm install -D sass
+```
+
+### Step 3: Brand Variable Configuration
+
+Create a dedicated style directory
+
+    ```bash
+    mkdir src/styles
+    ```
+
+Create `src/styles/main.scss` to handle the core rendering of the implementation.
+
+```scss
+/* Neo-Retro Brand Variables (Standard CSS) */
+:root {
+  --electric-indigo: #6200ee;
+  --hot-magenta: #ff00ff;
+  --cyan-glow: #00f5ff;
+  --font-code: 'Fira Code', monospace;
+  --font-display: 'Orbitron', sans-serif;
+  --glow-effect: 0 0 10px var(--cyan-glow);
+}
+
+body {
+  background-color: #0d0d0d; /* Deep tech backdrop */
+  color: #ffffff;
+  font-family: var(--font-code);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  font-family: var(--font-display);
+  color: var(--hot-magenta);
+  text-shadow: var(--glow-effect);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+```
+
+### Step 5: Connect and Execute
+
+Replace the default CSS import in `main.js` with your Sass entry point to trigger the compilation pipeline.
+
+```javascript
+import './styles/main.scss';
+
+document.querySelector('#app').innerHTML = `
+  <div>
+    <h1>Environment Active</h1>
+    <p>Sass compilation successfully managed by Vite.</p>
+  </div>
+`;
+```
+
+### Step 6: Launch Dev Server
+
+Execute the development environment to verify the browser rendering within your workspace.
+
+```bash
+# Start the Vite development server
+npm run dev
+```
+
+---
+
 ## A Minimal Project Structure
 
 With Vite, a few files define the workflow and make the build platform explicit.
@@ -120,7 +215,6 @@ A minimal setup looks like this:
 .
 ├─ index.html
 ├─ package.json
-├─ vite.config.js
 ├─ src/
 │  ├─ main.js
 │  └─ styles/
@@ -208,3 +302,5 @@ A typical Prettier configuration works without modification:
 Now that the workflow is in place, we can focus on the language itself.
 
 Next, we’ll look at SCSS syntax (and the SASS variant).
+
+---

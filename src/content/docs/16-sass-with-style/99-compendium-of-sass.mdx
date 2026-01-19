@@ -15,12 +15,13 @@ import MiniMo from '../../../components/MiniMo.astro';
 This page is a **reference**, not a lesson.
 
 It exists to:
+
 - jog memory
 - clarify syntax
 - reinforce intent
 - support decision-making
 
-If something here feels unfamiliar, the earlier pages explain *why* it exists.
+If something here feels unfamiliar, the earlier pages explain _why_ it exists.
 
 ---
 
@@ -118,7 +119,7 @@ One compilation target. Everything else supports it.
 
 ```scss
 @mixin elevated {
-  box-shadow: 0 0.5rem 1.25rem rgba(0,0,0,0.25);
+  box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.25);
 }
 
 .card {
@@ -191,7 +192,7 @@ Ordered values. Use when names alone are enough.
 $gaps: (
   sm: 0.5rem,
   md: 1rem,
-  lg: 1.5rem
+  lg: 1.5rem,
 );
 ```
 
@@ -220,7 +221,7 @@ Key/value pairs. Use when intent and naming matter.
 ```scss
 $tokens: (
   primary: #3366ff,
-  surface: #ffffff
+  surface: #ffffff,
 );
 
 :root {
@@ -250,6 +251,7 @@ If the answer is unclear, don’t abstract yet.
 ## Final Thought
 
 Sass is most effective when it:
+
 - reduces cognitive load
 - makes intent explicit
 - stays out of the browser’s way
@@ -258,8 +260,12 @@ Use it deliberately.
 
 ---
 
-## ⏭ Chapter Complete
+## Extra Bits & Bytes
 
-This concludes the Sass chapter.
-
-Return here as a reference, not a checklist.
+<LinkButton
+  href="/assets/resources/slide-decks/sass/00-sass-toolkit.pdf"
+  target="_blank"
+  variant="secondary"
+>
+  📘 Sass Study Guide (PDF)
+</LinkButton>

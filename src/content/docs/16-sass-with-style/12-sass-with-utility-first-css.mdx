@@ -15,21 +15,24 @@ import MiniMo from '../../../components/MiniMo.astro';
 In modern projects, Sass and utility-first CSS often appear together.
 
 This can feel redundant at first:
+
 - Sass already generates CSS
 - utility classes already encode design decisions
 
-The key is understanding that they solve *different* problems.
+The key is understanding that they solve _different_ problems.
 
 ---
 
 ## Different Responsibilities
 
 Utility-first CSS focuses on:
+
 - composition at the markup level
 - consistent application of spacing, color, and layout
 - rapid iteration without writing new selectors
 
 Sass focuses on:
+
 - authoring structure
 - data and generation
 - compile-time decision making
@@ -38,7 +41,7 @@ Used together, Sass supports the system, while utilities express intent in the H
 
 ---
 
-## What We Do *Not* Use Sass For
+## What We Do _Not_ Use Sass For
 
 When using a utility-first approach, Sass is usually not responsible for:
 
@@ -77,7 +80,7 @@ For example:
 $colors: (
   primary: #3366ff,
   surface: #ffffff,
-  text: #111111
+  text: #111111,
 );
 
 :root {
@@ -93,9 +96,9 @@ Utilities (or custom utilities) can then reference these variables rather than h
 
 ## Sass Is Not Competing with Utilities
 
-Utility-first CSS is about *usage*.
+Utility-first CSS is about _usage_.
 
-Sass is about *authoring*.
+Sass is about _authoring_.
 
 When those roles are respected, the two tools complement each other instead of competing.
 
@@ -110,6 +113,122 @@ Using Sass with utilities makes sense when:
 - runtime flexibility is still required
 
 It makes less sense when Sass is used only to recreate utilities that already exist.
+
+## Adding Tailwind CSS to a Vite project with Sass
+
+We already have a Vite project compiling Sass (SCSS). Now we’re adding Tailwind on top of that same pipeline.
+
+---
+
+## 1) Install Tailwind + PostCSS deps
+
+From the project root:
+
+```bash
+npm install -D tailwindcss postcss autoprefixer
+```
+
+---
+
+## 2) Initialize Tailwind + PostCSS config
+
+```bash
+npx tailwindcss init -p
+```
+
+That generates:
+
+- `tailwind.config.js`
+- `postcss.config.js`
+
+Vite will automatically use PostCSS when it sees `postcss.config.js`.
+
+---
+
+## 3) Point Tailwind at your source files
+
+Open `tailwind.config.js` and set `content` so Tailwind can “see” every place you use utility classes:
+
+```js
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,vue,svelte,html}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+```
+
+If Tailwind classes aren’t showing up, this is the first place to look.
+
+---
+
+## 4) Add Tailwind directives to your main Sass file
+
+In your existing Sass entry file (example: `src/styles/main.scss`), put Tailwind at the top:
+
+```scss
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Your Sass can follow */
+@use './partials/variables' as *;
+@use './partials/mixins' as *;
+
+/* Example: keep your custom styles below Tailwind */
+body {
+  font-family: system-ui, sans-serif;
+}
+```
+
+Notes:
+
+- Keep the `@tailwind` directives **before** any Sass that uses Tailwind features like `@apply`.
+- You can still use Sass partials/modules as usual.
+
+---
+
+## 5) Make sure Vite imports your SCSS entry
+
+In `src/main.js` (or `src/main.ts`), import your SCSS file:
+
+```js
+import './styles/main.scss';
+```
+
+If you already import a CSS/SCSS file, just ensure it’s the one containing the Tailwind directives.
+
+---
+
+## 6) Run it
+
+```bash
+npm run dev
+```
+
+Then test quickly by dropping a Tailwind class into your markup, e.g. `class="p-6 text-xl"`.
+
+---
+
+## Common gotchas
+
+- **Nothing changes after adding Tailwind:** restart the dev server.
+- **Utilities don’t generate:** your `content` globs are wrong (or your HTML/JS lives somewhere Tailwind isn’t scanning).
+- **`@apply` errors:** make sure Tailwind directives are loaded first, and you’re not trying to `@apply` arbitrary values that require enabling features/plugins.
+
+---
+
+## Extra Bits & Bytes
+
+<LinkButton
+  href="/assets/resources/infographics/sass/12-sass-and-tailwind-together.png"
+  target="_blank"
+  variant="secondary"
+>
+  📘 Sass and Tailwind CSS, United - Infographic
+</LinkButton>
 
 ---
 

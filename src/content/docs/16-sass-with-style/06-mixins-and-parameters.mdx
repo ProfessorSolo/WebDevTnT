@@ -15,6 +15,7 @@ import MiniMo from '../../../components/MiniMo.astro';
 In the previous section, we saw how placeholders and `@extend` support semantic reuse.
 
 We also saw where that pattern breaks down:
+
 - selector merging becomes global
 - state-specific behavior gets coupled
 - intent is no longer obvious from the source
@@ -30,6 +31,7 @@ They support **configurable reuse** without rewriting selector relationships.
 A mixin is a named block of Sass declarations that can be inserted into other selectors.
 
 Unlike placeholders:
+
 - mixins do not merge selectors
 - mixins copy declarations where they are included
 - output remains local and predictable
@@ -118,6 +120,7 @@ Mixins are a good fit when:
 - selector coupling would be problematic
 
 Common use cases include:
+
 - state-based styling
 - responsive patterns
 - feature flags and conditional output
@@ -129,6 +132,7 @@ Common use cases include:
 Because mixins duplicate declarations, overuse can increase CSS size.
 
 Good practice includes:
+
 - keeping mixins focused
 - avoiding large, catch-all mixins
 - preferring placeholders when structure is truly identical
