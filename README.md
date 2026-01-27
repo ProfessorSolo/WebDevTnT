@@ -7,26 +7,26 @@ This course explores the essential tools and techniques that power the modern we
 
 ## 💥 Modules
 
-| Module | Title | Description |
-| ------ | ----- | ----------- |
-| 00 | **Course Introduction** | Overview of course objectives, expectations, and setup. |
-| 01 | **CSS Dynamite: Styling That Pops** | Master gradients, borders, opacity, and shadows that make designs _explode_ off the page. |
-| 02 | **Form Factor: Portal to Data** | Build accessible and stylish forms that capture user input like a pro. |
-| 03 | **Git Control of Your Code** | Branching, merging, and rescue ops — Git like you mean it. |
-| 04 | **Optimal Image Prime** | Responsive images, modern formats, performance, and the art of “sharp + fast.” |
-| 05 | **Hamburger Menu Magic** | Build clean, accessible navigation patterns (and make them feel slick). |
-| 06 | **Transformative Styling** | Transforms, transitions, and micro-interactions that make UI feel alive. |
-| 07 | **Ion Drive Transition Lab** | A transition-focused lab for motion polish, timing, and state changes. |
-| 08 | **Annie-mation** | Keyframes, motion choreography, and tasteful animation patterns. |
-| 09 | **CSS Variable Wizardry** | Design tokens, theming, and runtime styling superpowers with `:root`. |
-| 10 | **CSS Selector Spells** | Specificity, combinators, pseudo-classes — choose targets with precision. |
-| 11 | **CSS Function Forge** | `calc()`, `clamp()`, `min()`, `max()` and friends — responsive logic in CSS. |
-| 12 | **Flexbox Fluid Architecture** | One-dimensional layout mastery for modern UI composition. |
-| 13 | **Grid: The Second Dimension** | Two-dimensional layout systems and real page architecture. |
-| 14 | **Tooling: Pipelines to Platforms** | Build tooling, bundlers, tasks, and the path to shipping. |
-| 15 | **Atomic UI: Tailwind CSS** | Utility-first workflow and design systems thinking (with guardrails). |
-| 16 | **Sass with Style** | Sass modules, partials, organization, and scalable styling patterns. |
-| 99 | **Bits, Bytes, and Bobs** | Reference, snippets, and the “where was that thing again?” vault. |
+| Module | Title                               | Description                                                                               |
+| ------ | ----------------------------------- | ----------------------------------------------------------------------------------------- |
+| 00     | **Course Introduction**             | Overview of course objectives, expectations, and setup.                                   |
+| 01     | **CSS Dynamite: Styling That Pops** | Master gradients, borders, opacity, and shadows that make designs _explode_ off the page. |
+| 02     | **Form Factor: Portal to Data**     | Build accessible and stylish forms that capture user input like a pro.                    |
+| 03     | **Git Control of Your Code**        | Branching, merging, and rescue ops — Git like you mean it.                                |
+| 04     | **Optimal Image Prime**             | Responsive images, modern formats, performance, and the art of “sharp + fast.”            |
+| 05     | **Hamburger Menu Magic**            | Build clean, accessible navigation patterns (and make them feel slick).                   |
+| 06     | **Transformative Styling**          | Transforms, transitions, and micro-interactions that make UI feel alive.                  |
+| 07     | **Ion Drive Transition Lab**        | A transition-focused lab for motion polish, timing, and state changes.                    |
+| 08     | **Annie-mation**                    | Keyframes, motion choreography, and tasteful animation patterns.                          |
+| 09     | **CSS Variable Wizardry**           | Design tokens, theming, and runtime styling superpowers with `:root`.                     |
+| 10     | **CSS Selector Spells**             | Specificity, combinators, pseudo-classes — choose targets with precision.                 |
+| 11     | **CSS Function Forge**              | `calc()`, `clamp()`, `min()`, `max()` and friends — responsive logic in CSS.              |
+| 12     | **Flexbox Fluid Architecture**      | One-dimensional layout mastery for modern UI composition.                                 |
+| 13     | **Grid: The Second Dimension**      | Two-dimensional layout systems and real page architecture.                                |
+| 14     | **Tooling: Pipelines to Platforms** | Build tooling, bundlers, tasks, and the path to shipping.                                 |
+| 15     | **Atomic UI: Tailwind CSS**         | Utility-first workflow and design systems thinking (with guardrails).                     |
+| 16     | **Sass with Style**                 | Sass modules, partials, organization, and scalable styling patterns.                      |
+| 99     | **Bits, Bytes, and Bobs**           | Reference, snippets, and the “where was that thing again?” vault.                         |
 
 ---
 
@@ -57,7 +57,7 @@ All rights reserved.
 Licensed for educational and learner use under the **Professor Solo Learner License 1.0**  
 (**ProfessorSolo-LEARN-1.0**).
 
-Full terms in [LICENSE.txt](./LICENSE.txt)
+Full terms in [LICENSE](./LICENSE)
 
 For licensing inquiries, contact:  
 📧 [writesideup@joshinbox.com](mailto:writesideup@joshinbox.com)
